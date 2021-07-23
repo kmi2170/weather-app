@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import router, { useRouter } from 'next/router';
 
-import axios from 'axios';
 import { Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
@@ -10,23 +10,8 @@ import SEO from '../components/SEO';
 import Footer from '../components/Footer';
 import Preview from '../components/Preview';
 
-// const url =
-//   'https://api.weatherapi.com/v1/current.json?key=fe70157311594d36b81212236212107&q=98597';
-//
-const baseUrl = 'https://api.weatherapi.com/v1/';
-const weatherapi_key = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-const url = `https://api.weatherapi.com/v1/ip.json?key=${weatherapi_key}&q=auto:ip`;
-
-const fetcher = async (url: string) => {
-  try {
-    const { data } = await axios(url);
-    // console.log(data);
-    return { data, error: null };
-  } catch (error) {
-    console.error();
-    return { data: null, error };
-  }
-};
+import ipLookup from '../lib/ipLookup';
+import fetchOpenWeather from '../lib/fetchOpenWeather';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -37,14 +22,43 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Home: React.FC<any> = ({ data }) => {
-  const classes = useStyles();
+export type LocationType = {
+  city: string;
+  region: string;
+  postal: string;
+  country_code: string;
+  lat: number;
+  lon: number;
+};
 
-  const [location, setLocation] = useState({});
+const Home: React.FC<any> = ({ data }) => {
+  // const Home: React.FC<any> = () => {
+  const classes = useStyles();
+  const { query } = useRouter();
+
+  const [location, setLocation] = useState<LocationType | null>(null);
+  const [weaterData, setWeatherData] = useState<any>(null);
 
   useEffect(() => {
-    setLocation(data);
-  }, [data]);
+    const getLocation = async () => {
+      const res = await ipLookup();
+
+      setLocation(res);
+    };
+
+    getLocation();
+  }, []);
+
+  useEffect(() => {
+    if (location) {
+      router.push({
+        pathname: '/',
+        query: { lat: location.lat, lon: location.lon },
+      });
+
+      setWeatherData(data);
+    }
+  }, [query]);
 
   return (
     <div className={classes.root}>
@@ -57,6 +71,9 @@ const Home: React.FC<any> = ({ data }) => {
           <Grid item xs={12}>
             <Preview data={location} />
           </Grid>
+          <Grid item xs={12}>
+            <Preview data={weaterData} />
+          </Grid>
         </Grid>
         <Footer />
       </Container>
@@ -66,11 +83,11 @@ const Home: React.FC<any> = ({ data }) => {
 
 export default Home;
 
-const key = 'fe70157311594d36b81212236212107';
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { lat, lon } = query;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { data, error } = await fetcher(url);
-  // console.log(data, error);
+  const data = await fetchOpenWeather(+lat, +lon);
+  // console.log(query);
 
-  return { props: { data, error } };
+  return { props: { data } };
 };
