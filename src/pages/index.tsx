@@ -6,12 +6,18 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { GetServerSideProps } from 'next';
 
+import CurrentOpenWeather from '../components/CurrentOpenWeather';
 import SEO from '../components/SEO';
 import Footer from '../components/Footer';
 import Preview from '../components/Preview';
 
 import ipLookup from '../lib/ipLookup';
-import fetchOpenWeather from '../lib/fetchOpenWeather';
+import {
+  fetchOpenWeatherCurrentByCoordinates,
+  fetchOpenWeatherCurrentByCityName,
+  fetchOpenWeatherOnecall,
+} from '../lib/fetchOpenWeather';
+import { LocationType } from '../api/type_settings';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -22,42 +28,38 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export type LocationType = {
-  city: string;
-  region: string;
-  postal: string;
-  country_code: string;
-  lat: number;
-  lon: number;
-};
-
-const Home: React.FC<any> = ({ data }) => {
+const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   // const Home: React.FC<any> = () => {
   const classes = useStyles();
   const { query } = useRouter();
 
   const [location, setLocation] = useState<LocationType | null>(null);
-  const [weaterData, setWeatherData] = useState<any>(null);
+  const [weatherCurrent, setWeatherCurrent] = useState<any>(null);
+  const [weatherOnecall, setWeatherOnecall] = useState<any>(null);
 
   useEffect(() => {
     const getLocation = async () => {
       const res = await ipLookup();
 
       setLocation(res);
+
+      router.push({
+        pathname: '/',
+        query: {
+          // lat: res.lat,
+          // lon: res.lon,
+          city: res.city,
+          state: res.region,
+        },
+      });
     };
 
     getLocation();
   }, []);
 
   useEffect(() => {
-    if (location) {
-      router.push({
-        pathname: '/',
-        query: { lat: location.lat, lon: location.lon },
-      });
-
-      setWeatherData(data);
-    }
+    setWeatherCurrent(dataCurrent);
+    setWeatherOnecall(dataOnecall);
   }, [query]);
 
   return (
@@ -71,8 +73,15 @@ const Home: React.FC<any> = ({ data }) => {
           <Grid item xs={12}>
             <Preview data={location} />
           </Grid>
+
           <Grid item xs={12}>
-            <Preview data={weaterData} />
+            {weatherCurrent && (
+              <CurrentOpenWeather weatherCurrent={weatherCurrent} />
+            )}
+          </Grid>
+
+          <Grid item xs={12}>
+            {weatherOnecall && <Preview data={weatherOnecall} />}
           </Grid>
         </Grid>
         <Footer />
@@ -84,10 +93,24 @@ const Home: React.FC<any> = ({ data }) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { lat, lon } = query;
+  const { lat, lon, city, state } = query;
 
-  const data = await fetchOpenWeather(+lat, +lon);
-  // console.log(query);
+  //const data = await fetchOpenWeatherOnecall(+lat, +lon);
 
-  return { props: { data } };
+  // const dataCurrent = await fetchOpenWeatherCurrent(+lat, +lon);
+  const dataCurrent =
+    city && state
+      ? await fetchOpenWeatherCurrentByCityName(city as string, state as string)
+      : null;
+
+  const dataOnecall =
+    dataCurrent?.coord.lat && dataCurrent?.coord.lon
+      ? await fetchOpenWeatherOnecall(
+          +dataCurrent.coord.lat,
+          +dataCurrent.coord.lon
+        )
+      : null;
+  console.log('query', query);
+
+  return { props: { dataCurrent, dataOnecall } };
 };
