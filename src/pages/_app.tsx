@@ -7,6 +7,7 @@ import Head from 'next/head';
 // import queryClient from '../utils/reactQuery';
 // import { ReactQueryDevtools } from 'react-query/devtools';
 
+import WeatherContextProvider from '../reducer/reducer';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme/theme';
@@ -37,7 +38,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       </Head>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
-      <Component {...pageProps} />
+      <WeatherContextProvider>
+        <Component {...pageProps} />
+      </WeatherContextProvider>
       {/* <ReactQueryDevtools />
         </Hydrate>
       </QueryClientProvider> */}

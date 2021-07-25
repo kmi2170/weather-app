@@ -1,14 +1,27 @@
 import axios from 'axios';
+import { QueryType } from '../api/type_settings';
 
-const baseUrl = 'https://api.openweathermap.org/data/2.5';
+// const baseUrl = 'https://api.openweathermap.org/data/2.5';
 
-const key = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
+const api_key = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
 
-export const fetchOpenWeatherOnecall = async (lat: number, lon: number) => {
-  const url = `${baseUrl}/onecall?lat=${lat}&lon=${lon}&appid=${key}`;
+export const fetchOpenWeatherOnecall = async (
+  lat: number,
+  lon: number,
+  q: QueryType
+) => {
+  const url = `https://api.openweathermap.org/data/2.5/onecall`;
 
   try {
-    const { data } = await axios(url);
+    const { data } = await axios.get(url, {
+      params: {
+        lat,
+        lon,
+        units: q.units,
+        lang: q.lang,
+        appid: api_key,
+      },
+    });
 
     return data;
   } catch (error) {
@@ -18,12 +31,21 @@ export const fetchOpenWeatherOnecall = async (lat: number, lon: number) => {
 
 export const fetchOpenWeatherCurrentByCoordinates = async (
   lat: number,
-  lon: number
+  lon: number,
+  q: QueryType
 ) => {
-  const url = `${baseUrl}/weather?lat=${lat}&lon=${lon}&appid=${key}`;
+  const url = 'https://api.openweathermap.org/data/2.5/weather';
 
   try {
-    const { data } = await axios(url);
+    const { data } = await axios.get(url, {
+      params: {
+        lat,
+        lon,
+        units: q.units,
+        lang: q.lang,
+        appid: api_key,
+      },
+    });
 
     return data;
   } catch (error) {
@@ -31,16 +53,18 @@ export const fetchOpenWeatherCurrentByCoordinates = async (
   }
 };
 
-export const fetchOpenWeatherCurrentByCityName = async (
-  city: string,
-  state?: string
-) => {
-  const url = state
-    ? `${baseUrl}/weather?q=${city},${state}&appid=${key}`
-    : `${baseUrl}/weather?q=${city}&appid=${key}`;
+export const fetchOpenWeatherCurrentByCityName = async (q: QueryType) => {
+  const url = 'https://api.openweathermap.org/data/2.5/weather';
 
   try {
-    const { data } = await axios(url);
+    const { data } = await axios.get(url, {
+      params: {
+        q: `${q.city},${q.state}`,
+        units: q.units,
+        lang: q.lang,
+        appid: api_key,
+      },
+    });
 
     return data;
   } catch (error) {

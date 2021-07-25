@@ -8,10 +8,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   text: {},
 }));
 
-const CurrentOpenWeather: React.FC<any> = ({ weatherCurrent }) => {
+const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
   const classes = useStyles();
-  // console.log('CurrentOpenWeather', query);
-  // useEffect(() => {}, [query]);
 
   return (
     <>
@@ -23,4 +21,4 @@ const CurrentOpenWeather: React.FC<any> = ({ weatherCurrent }) => {
   );
 };
 
-export default CurrentOpenWeather;
+export default OpenWeatherCurrent;

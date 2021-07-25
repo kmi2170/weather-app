@@ -6,3 +6,10 @@ export type LocationType = {
   lat: number;
   lon: number;
 };
+
+export type QueryType = {
+  city: string;
+  state?: string;
+  units?: 'imperial|metric';
+  lang?: 'en|ja';
+};
