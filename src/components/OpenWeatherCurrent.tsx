@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import Image from 'next/image';
 
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Paper, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import moment from 'moment';
@@ -11,6 +11,31 @@ import Preview from './Preview';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
+  locationContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+    },
+    alignItems: 'center',
+  },
+  locationSubContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  weatherContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  countryName: {
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: '1rem',
+    },
+  },
 }));
 
 const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
@@ -29,6 +54,8 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
     snow,
   } = state.weatherCurrent;
 
+  const { city, state: state_name, country_name, timezone } = state.location;
+
   const tempUnits = () =>
     state.units === 'imperial' ? <span>&#8457;</span> : <span>&#8451;</span>;
 
@@ -40,84 +67,130 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
   const timeLocal = (dt: string, t_zone: string) =>
     moment(
       new Date(+dt * 1000).toLocaleString('en-US', { timeZone: t_zone })
-    ).format('HH:MM a');
+    ).format('H:MM a');
 
   return (
     <>
-      {state.timezone && (
-        <div>
-          <Grid container justifyContent="center" alignItems="center">
+      {timezone && (
+        <Paper style={{ padding: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="subtitle1" className={classes.text}>
+              Current Weather
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.text}
+              style={{ marginLeft: '1rem' }}
+            >
+              {moment.utc(new Date(dt * 1000).toUTCString()).fromNow()}
+            </Typography>
+          </div>
+
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={1}
+          >
             <Grid item xs={12}>
-              <Typography variant="h6" className={classes.text} gutterBottom>
-                Current Weather
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'cener',
-                }}
-              >
-                <Typography variant="h5" className={classes.text}>
-                  {state.city}, {state.state}
-                </Typography>
+              <div className={classes.locationContainer}>
+                <div className={classes.locationSubContainer}>
+                  <Typography variant="h5" className={classes.text}>
+                    {city},&nbsp;
+                  </Typography>
+                  <Typography variant="h6" className={classes.text}>
+                    {state_name}
+                  </Typography>
+                </div>
+
                 <Typography
                   variant="h6"
                   color="textSecondary"
-                  className={classes.text}
-                  style={{ marginLeft: '1rem' }}
+                  className={classes.countryName}
+                  style={{ fontStyle: 'italic' }}
                 >
-                  {state.country_name}
+                  {country_name}
                 </Typography>
               </div>
-              <Typography
-                variant="subtitle2"
-                color="textSecondary"
-                className={classes.text}
-              >
-                {moment.utc(new Date(dt * 1000).toUTCString()).fromNow()}
-              </Typography>
+            </Grid>
+
+            <Grid item xs={12} sm={6} container alignItems="center">
+              <Grid item xs={6}>
+                <div className={classes.weatherContainer}>
+                  <Typography variant="subtitle1" align="center">
+                    {weather[0].main}
+                  </Typography>
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Image
+                      src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
+                      alt={weather[0].icon}
+                      width={50}
+                      height={50}
+                      layout="fixed"
+                    />
+                  </div>
+                  <Typography variant="subtitle2" align="center">
+                    {weather[0].description}
+                  </Typography>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <div>
+                  <Typography variant="h5" align="center">
+                    {main.temp} {tempUnits()}
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    color="textSecondary"
+                    align="center"
+                  >
+                    Feels like {main.feels_like} {tempUnits()}
+                  </Typography>
+                </div>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12} sm={6} container>
+              <Grid item xs={12}>
+                <div>
+                  Wind {wind.speed} {speedUnits()},&nbsp;&nbsp; Direction{' '}
+                  {wind.deg} deg.
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                {wind.gust && (
+                  <div>
+                    Wind Gust {wind.gust} {speedUnits()}
+                  </div>
+                )}
+              </Grid>
+
+              <Grid item xs={6}>
+                <div>Clouds {clouds.all} %</div>
+              </Grid>
+              <Grid item xs={6}>
+                <div>Humidity {main.humidity} %</div>
+              </Grid>
+              <Grid item xs={12}>
+                {rain && rain['1h'] && (
+                  <div>Rain (Last 1 hour), {fallUnits(rain['1h'])}</div>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                {snow && snow['1h'] && (
+                  <div>Snow (Last 1 hour), {fallUnits(snow['1h'])}</div>
+                )}
+              </Grid>
+              <Grid item xs={6}>
+                <div>Sunrise {timeLocal(sys.sunrise, timezone)}</div>
+              </Grid>
+              <Grid item xs={6}>
+                <div>Sunset {timeLocal(sys.sunset, timezone)}</div>
+              </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <div>
-              {weather[0].main} {weather[0].description}
-            </div>
-            <Image
-              src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
-              alt={weather[0].icon}
-              width={50}
-              height={50}
-            />
-            <div>
-              {main.temp} {tempUnits()}
-            </div>
-            <div>
-              Feels like {main.feels_like} {tempUnits()}
-            </div>
-            <div>Humidity {main.humidity} %</div>
-            <div>
-              Wind {wind.speed} {speedUnits()} {wind.deg} deg.
-            </div>
-            {wind.gust && (
-              <div>
-                Wind Gust {wind.gust} {speedUnits()}
-              </div>
-            )}
-            <div>Sunrise {timeLocal(sys.sunrise, state.timezone)}</div>
-            <div>Sunset {timeLocal(sys.sunset, state.timezone)}</div>
-            <div>Clouds {clouds.all} %</div>
-            {rain && rain['1h'] && (
-              <div>Rain (Last 1 hour), {fallUnits(rain['1h'])}</div>
-            )}
-            {snow && snow['1h'] && (
-              <div>Snow (Last 1 hour), {fallUnits(snow['1h'])}</div>
-            )}
-            <div></div>
-          </Grid>
-        </div>
+        </Paper>
       )}
       <Preview data={weatherCurrent} />
     </>

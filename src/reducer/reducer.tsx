@@ -1,12 +1,14 @@
 import { createContext, useReducer, useMemo } from 'react';
 
 const initialState = {
-  city: '',
-  state: '',
-  country_name: '',
-  timezone: '',
-  lat: '',
-  lon: '',
+  location: {
+    city: '',
+    state: '',
+    country_name: '',
+    timezone: '',
+    lat: '',
+    lon: '',
+  },
   units: 'imperial',
   lang: 'en',
   weatherCurrent: null,
@@ -14,12 +16,14 @@ const initialState = {
 };
 
 type StateType = {
-  city: string;
-  state: string;
-  country_name: string;
-  timezone: string;
-  lat: string;
-  lon: string;
+  location: {
+    city: string;
+    state: string;
+    country_name: string;
+    timezone: string;
+    lat: string;
+    lon: string;
+  };
   units: string;
   lang: string;
   // units: 'imperial' | 'metric' | 'standard';
@@ -66,11 +70,15 @@ export const reducer = (state: StateType, action: ActionsType) => {
       console.log('dispatch location', action.payload);
       return {
         ...state,
-        city: action.payload.city,
-        state: action.payload.state,
-        country_name: action.payload.country_name,
-        timezone: action.payload.timezone,
+        location: action.payload,
       };
+    // return {
+    //   ...state,
+    //   city: action.payload.city,
+    //   state: action.payload.state,
+    //   country_name: action.payload.country_name,
+    //   timezone: action.payload.timezone,
+    // };
     case actionTypes.SET_UNITS:
       return { ...state, units: action.payload };
     case actionTypes.SET_LANG:
