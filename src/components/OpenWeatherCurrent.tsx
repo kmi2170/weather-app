@@ -52,6 +52,7 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
     sys,
     rain,
     snow,
+    timezone: timezoneOffset,
   } = state.weatherCurrent;
 
   const { city, state: state_name, country_name, timezone } = state.location;
@@ -64,14 +65,17 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
   const fallUnits = (fall: string) =>
     state.units === 'imperial' ? `${+fall / 25.4} in` : `${fall} mm`;
 
-  const timeLocal = (dt: string, t_zone: string) =>
-    moment(
-      new Date(+dt * 1000).toLocaleString('en-US', { timeZone: t_zone })
-    ).format('H:MM a');
+  const timeLocalwithTZOffset = (dt: string, t_offset: string) =>
+    moment(new Date(+dt * 1000 + +t_offset).toUTCString()).format('H:MM a');
 
+  // const timeLocal = (dt: string, t_zone: string) =>
+  //   moment(
+  //     new Date(+dt * 1000).toLocaleString('en-US', { timeZone: t_zone })
+  //   ).format('H:MM a');
+  //
   return (
     <>
-      {timezone && (
+      {timezoneOffset && (
         <Paper style={{ padding: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="subtitle1" className={classes.text}>
@@ -183,10 +187,14 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
                 )}
               </Grid>
               <Grid item xs={6}>
-                <div>Sunrise {timeLocal(sys.sunrise, timezone)}</div>
+                <div>
+                  Sunrise {timeLocalwithTZOffset(sys.sunrise, timezoneOffset)}
+                </div>
               </Grid>
               <Grid item xs={6}>
-                <div>Sunset {timeLocal(sys.sunset, timezone)}</div>
+                <div>
+                  Sunset {timeLocalwithTZOffset(sys.sunset, timezoneOffset)}
+                </div>
               </Grid>
             </Grid>
           </Grid>
