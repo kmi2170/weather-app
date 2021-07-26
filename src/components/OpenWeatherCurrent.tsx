@@ -62,8 +62,16 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
 
   const speedUnits = () => (state.units === 'imperial' ? 'mi/h' : 'm/s');
 
-  const fallUnits = (fall: string) =>
+  const fallWithUnits = (fall: string) =>
     state.units === 'imperial' ? `${+fall / 25.4} in` : `${fall} mm`;
+
+  const pressureWithUnits = (p: string) =>
+    state.units === 'imperial'
+      ? `${((+p / 1013.25) * 29.921).toLocaleString('en-US', {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        })} inHg`
+      : `${p} hPa`;
 
   const timeLocalwithTZOffset = (dt: string, t_offset: string) =>
     moment(new Date(+dt * 1000 + +t_offset).toUTCString()).format('H:MM a');
@@ -95,7 +103,7 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
             container
             justifyContent="center"
             alignItems="center"
-            spacing={1}
+            spacing={2}
           >
             <Grid item xs={12}>
               <div className={classes.locationContainer}>
@@ -153,6 +161,15 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
                   </Typography>
                 </div>
               </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  variant="subtitle2"
+                  color="textSecondary"
+                  align="center"
+                >
+                  Cloud Cover {clouds.all} %
+                </Typography>
+              </Grid>
             </Grid>
 
             <Grid item xs={12} sm={6} container>
@@ -170,15 +187,15 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
                 )}
               </Grid>
 
-              <Grid item xs={6}>
-                <div>Clouds {clouds.all} %</div>
+              <Grid item xs={7}>
+                <div>Pressure {pressureWithUnits(main.pressure)}</div>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <div>Humidity {main.humidity} %</div>
               </Grid>
               <Grid item xs={12}>
                 {rain && rain['1h'] && (
-                  <div>Rain (Last 1 hour), {fallUnits(rain['1h'])}</div>
+                  <div>Rain (Last 1 hour), {fallWithUnits(rain['1h'])}</div>
                 )}
               </Grid>
               <Grid item xs={12}>
