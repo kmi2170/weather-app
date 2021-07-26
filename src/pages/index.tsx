@@ -6,7 +6,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { GetServerSideProps } from 'next';
 
-import { WeatherContext } from '../reducer/reducer';
+import { WeatherContext, actionTypes } from '../reducer/reducer';
 import OpenWeatherCurrent from '../components/OpenWeatherCurrent';
 import SEO from '../components/SEO';
 import Buttons from '../components/Buttons';
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   // const Home: React.FC<any> = () => {
   const classes = useStyles();
-  const { state } = useContext(WeatherContext);
+  const { state, dispatch } = useContext(WeatherContext);
   const { query } = useRouter();
 
   const [location, setLocation] = useState<LocationType | null>(null);
@@ -48,14 +48,16 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
 
       setLocation(res);
 
+      const { city, region, country_name, timezone } = res;
+
+      dispatch({
+        type: actionTypes.SET_LOCATION,
+        payload: { city, state: region, country_name, timezone },
+      });
+
       router.push({
         pathname: '/',
-        query: {
-          // lat: res.lat,
-          // lon: res.lon,
-          city: res.city,
-          state: res.region,
-        },
+        query: { city, state: region, units: state.units, lang: state.lang },
       });
     };
 
@@ -63,6 +65,7 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   }, []);
 
   useEffect(() => {
+    dispatch({ type: actionTypes.SET_WEATHER_CURRENT, payload: dataCurrent });
     setWeatherCurrent(dataCurrent);
     setWeatherOnecall(dataOnecall);
   }, [query]);
@@ -75,12 +78,11 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
           Weather App
         </Typography>
         <Buttons />
-        <Typography variant="h5">
-          {state.lang} {state.units}
-        </Typography>
         <Grid container spacing={0}>
           <Grid item xs={12}>
+            {/*
             <Preview data={location} />
+          */}
           </Grid>
 
           <Grid item xs={12}>

@@ -3,6 +3,8 @@ import { createContext, useReducer, useMemo } from 'react';
 const initialState = {
   city: '',
   state: '',
+  country_name: '',
+  timezone: '',
   lat: '',
   lon: '',
   units: 'imperial',
@@ -14,6 +16,8 @@ const initialState = {
 type StateType = {
   city: string;
   state: string;
+  country_name: string;
+  timezone: string;
   lat: string;
   lon: string;
   units: string;
@@ -31,13 +35,22 @@ type ActionMap<M extends { [index: string]: any }> = {
 };
 
 export enum actionTypes {
+  SET_LOCATION = 'SET_LOCATION',
   SET_LANG = 'SET_LANG',
   SET_UNITS = 'SET_UNITS',
+  SET_WEATHER_CURRENT = 'SET_WEATHER_CURRENT',
 }
 
 type PayloadType = {
+  [actionTypes.SET_LOCATION]: {
+    city: string;
+    state: string;
+    country_name: string;
+    timezone: string;
+  };
   [actionTypes.SET_LANG]: string;
   [actionTypes.SET_UNITS]: string;
+  [actionTypes.SET_WEATHER_CURRENT]: {};
 };
 
 export type ActionsType = ActionMap<PayloadType>[keyof ActionMap<PayloadType>];
@@ -49,12 +62,21 @@ export const WeatherContext = createContext<{
 
 export const reducer = (state: StateType, action: ActionsType) => {
   switch (action.type) {
+    case actionTypes.SET_LOCATION:
+      console.log('dispatch location', action.payload);
+      return {
+        ...state,
+        city: action.payload.city,
+        state: action.payload.state,
+        country_name: action.payload.country_name,
+        timezone: action.payload.timezone,
+      };
     case actionTypes.SET_UNITS:
-      console.log('action units', action.payload);
       return { ...state, units: action.payload };
     case actionTypes.SET_LANG:
-      console.log('action lnag', action.payload);
       return { ...state, lang: action.payload };
+    case actionTypes.SET_WEATHER_CURRENT:
+      return { ...state, weatherCurrent: action.payload };
     default:
       return state;
   }

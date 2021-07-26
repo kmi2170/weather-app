@@ -9,7 +9,9 @@ const ipLookup = async () => {
     const {
       city,
       region,
+      country_name,
       country_code_iso3,
+      timezone,
       latitude,
       longitude,
       postal,
@@ -18,7 +20,9 @@ const ipLookup = async () => {
     return {
       city,
       region,
+      country_name,
       country_code: country_code_iso3,
+      timezone,
       lat: latitude,
       lon: longitude,
       postal,

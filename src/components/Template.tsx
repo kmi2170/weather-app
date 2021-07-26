@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Typography } from '@material-ui/core';
+import { useState, useEffect, useContext } from 'react';
+import router, { useRouter } from 'next/router';
 
+import { WeatherContext, actionTypes } from '../reducer/reducer';
+
+import { Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -9,6 +12,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Component: React.FC = () => {
   const classes = useStyles();
+
+  const { query } = useRouter();
+  const { state, dispatch } = useContext(WeatherContext);
 
   return (
     <div>
