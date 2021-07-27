@@ -3,11 +3,12 @@ import Image from 'next/image';
 
 import { Typography, Paper, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import './css/weather-icons.min.css';
 
 import moment from 'moment';
 
-import { WeatherContext, actionTypes } from '../reducer/reducer';
-import Preview from './Preview';
+import { WeatherContext, actionTypes } from '../../reducer/reducer';
+import Preview from '../Preview';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -200,7 +201,7 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
               </Grid>
               <Grid item xs={12}>
                 {snow && snow['1h'] && (
-                  <div>Snow (Last 1 hour), {fallUnits(snow['1h'])}</div>
+                  <div>Snow (Last 1 hour), {fallWithUnits(snow['1h'])}</div>
                 )}
               </Grid>
               <Grid item xs={6}>

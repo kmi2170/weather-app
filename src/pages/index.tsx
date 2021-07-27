@@ -7,7 +7,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { GetServerSideProps } from 'next';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
-import OpenWeatherCurrent from '../components/OpenWeatherCurrent';
+import OpenWeatherCurrent from '../components/OpenWeather/OpenWeatherCurrent';
 import SEO from '../components/SEO';
 import Buttons from '../components/Buttons';
 import Footer from '../components/Footer';
@@ -52,7 +52,12 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
 
       dispatch({
         type: actionTypes.SET_LOCATION,
-        payload: { city, state: region, country_name, timezone },
+        payload: {
+          city: city as string,
+          state: region as string,
+          country_name: country_name as string,
+          timezone: timezone as string,
+        },
       });
 
       router.push({

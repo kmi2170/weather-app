@@ -6,8 +6,6 @@ const initialState = {
     state: '',
     country_name: '',
     timezone: '',
-    lat: '',
-    lon: '',
   },
   units: 'imperial',
   lang: 'en',
@@ -21,8 +19,6 @@ type StateType = {
     state: string;
     country_name: string;
     timezone: string;
-    lat: string;
-    lon: string;
   };
   units: string;
   lang: string;
@@ -67,18 +63,7 @@ export const WeatherContext = createContext<{
 export const reducer = (state: StateType, action: ActionsType) => {
   switch (action.type) {
     case actionTypes.SET_LOCATION:
-      console.log('dispatch location', action.payload);
-      return {
-        ...state,
-        location: action.payload,
-      };
-    // return {
-    //   ...state,
-    //   city: action.payload.city,
-    //   state: action.payload.state,
-    //   country_name: action.payload.country_name,
-    //   timezone: action.payload.timezone,
-    // };
+      return { ...state, location: action.payload };
     case actionTypes.SET_UNITS:
       return { ...state, units: action.payload };
     case actionTypes.SET_LANG:
