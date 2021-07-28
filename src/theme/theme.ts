@@ -30,6 +30,7 @@ let theme = createTheme({
   },
   typography: {
     fontFamily: [
+      'Overlock',
       'Roboto',
       'Lobster',
       'Raleway',

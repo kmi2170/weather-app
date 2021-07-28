@@ -1,13 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import Image from 'next/image';
 
 import { Typography, Paper, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import './css/weather-icons.min.css';
 
 import moment from 'moment';
 
-import { WeatherContext, actionTypes } from '../../reducer/reducer';
+import { WeatherContext } from '../../reducer/reducer';
 import Preview from '../Preview';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -39,10 +38,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
+const OpenWeatherCurrent: React.FC = () => {
   const classes = useStyles();
 
-  const { state, dispatch } = useContext(WeatherContext);
+  const { state } = useContext(WeatherContext);
 
   const {
     weather,
@@ -218,7 +217,7 @@ const OpenWeatherCurrent: React.FC<any> = ({ weatherCurrent }) => {
           </Grid>
         </Paper>
       )}
-      <Preview data={weatherCurrent} />
+      <Preview data={state.weatherCurrent} />
     </>
   );
 };

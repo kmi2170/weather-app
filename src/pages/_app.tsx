@@ -13,6 +13,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme/theme';
 
 import '../styles/globals.css';
+import '../styles/css/weather-icons.min.css';
+import '../styles/css/weather-icons-wind.min.css';
 
 // const queryClient = new QueryClient();
 

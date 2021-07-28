@@ -37,6 +37,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap"
             rel="stylesheet"
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Overlock&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

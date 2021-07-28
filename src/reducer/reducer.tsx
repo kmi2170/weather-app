@@ -39,6 +39,7 @@ export enum actionTypes {
   SET_LANG = 'SET_LANG',
   SET_UNITS = 'SET_UNITS',
   SET_WEATHER_CURRENT = 'SET_WEATHER_CURRENT',
+  SET_WEATHER_ONECALL = 'SET_WEATHER_ONECALL',
 }
 
 type PayloadType = {
@@ -51,6 +52,7 @@ type PayloadType = {
   [actionTypes.SET_LANG]: string;
   [actionTypes.SET_UNITS]: string;
   [actionTypes.SET_WEATHER_CURRENT]: {};
+  [actionTypes.SET_WEATHER_ONECALL]: {};
 };
 
 export type ActionsType = ActionMap<PayloadType>[keyof ActionMap<PayloadType>];
@@ -70,6 +72,8 @@ export const reducer = (state: StateType, action: ActionsType) => {
       return { ...state, lang: action.payload };
     case actionTypes.SET_WEATHER_CURRENT:
       return { ...state, weatherCurrent: action.payload };
+    case actionTypes.SET_WEATHER_ONECALL:
+      return { ...state, weatherOnecall: action.payload };
     default:
       return state;
   }

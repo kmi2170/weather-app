@@ -12,6 +12,21 @@ const Footer = () => {
             Copyrihgt &copy; kmi {year}. All rights reserved. | Powered by
             {
               <a
+                href="https://www.openweathermap.org/"
+                title="Open Weather"
+                rel="noreferrer"
+                target="_blank"
+              >
+                OpenWeather.com
+              </a>
+            }
+            .
+          </Typography>
+          {/* 
+          <Typography variant="body2">
+            Copyrihgt &copy; kmi {year}. All rights reserved. | Powered by
+            {
+              <a
                 href="https://www.weatherapi.com/"
                 title="Free Weather API"
                 rel="noreferrer"
@@ -22,6 +37,7 @@ const Footer = () => {
             }
             .
           </Typography>
+          */}
         </Grid>
       </Grid>
     </footer>
