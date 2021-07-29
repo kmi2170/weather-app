@@ -3,6 +3,7 @@ dependencies:
   '@material-ui/icons': 4.11.2_46c39387f2dfee435486736a3e4022f5
   axios: 0.21.1
   moment: 2.29.1
+  moment-timezone: 0.5.33
   next: 11.0.0_f31b35bdaa3b7c2fce82404f09d2dac4
   package.json: 2.0.1
   react: 17.0.2
@@ -2383,6 +2384,12 @@ packages:
   /minimist/1.2.5:
     resolution:
       integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+  /moment-timezone/0.5.33:
+    dependencies:
+      moment: 2.29.1
+    dev: false
+    resolution:
+      integrity: sha512-PTc2vcT8K9J5/9rDEPe5czSIKgLoGsH8UNpA4qZTVw0Vd/Uz19geE9abbIOQKaAQFcnQ3v5YEXrbSc5BpshH+w==
   /moment/2.29.1:
     dev: false
     resolution:
@@ -3914,6 +3921,7 @@ specifiers:
   eslint: 7.29.0
   eslint-config-next: 11.0.0
   moment: ^2.29.1
+  moment-timezone: ^0.5.33
   next: 11.0.0
   package.json: ^2.0.1
   react: 17.0.2

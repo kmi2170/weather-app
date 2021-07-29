@@ -6,7 +6,12 @@ import { purple } from '@material-ui/core/colors';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  icon: { fontSize: '4rem', color: purple[500], padding: '1rem' },
+  icon: {
+    fontSize: '4rem',
+    color: purple[500],
+    // marginTop: '0.5rem',
+    // marginBottom: '0.5rem',
+  },
 }));
 
 const WeaterIcon: React.FC = () => {
@@ -23,7 +28,7 @@ const WeaterIcon: React.FC = () => {
     return `wi wi-owm-${period}-${weather[0].id} ${classes.icon}`;
   };
 
-  return <i className={iconClass()}></i>;
+  return <i className={iconClass()} />;
 };
 
 export default WeaterIcon;
