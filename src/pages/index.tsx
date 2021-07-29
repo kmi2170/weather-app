@@ -7,8 +7,9 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { GetServerSideProps } from 'next';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
-import OpenWeatherCurrent from '../components/OpenWeather/OpenWeatherCurrent';
+// import OpenWeatherCurrent from '../components/OpenWeather/OpenWeatherCurrent';
 import OpenWeatherOnecall_Current from '../components/OpenWeather/OpenWeatherOnecall_Current';
+import OpenWeatherOnecall_Daily from '../components/OpenWeather/OpenWeatherOnecall_Daily';
 import SEO from '../components/SEO';
 import Buttons from '../components/Buttons';
 import Footer from '../components/Footer';
@@ -84,11 +85,13 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
           <Grid item xs={12}>
             {state.weatherCurrent && <OpenWeatherCurrent />}
           </Grid>
-            {state.weatherOnecall && <OpenWeatherOnecall_Current />}
         */}
 
           <Grid item xs={12}>
             {state.weatherOnecall && <OpenWeatherOnecall_Current />}
+          </Grid>
+          <Grid item xs={12}>
+            {state.weatherOnecall && <OpenWeatherOnecall_Daily />}
           </Grid>
         </Grid>
         <Footer />
