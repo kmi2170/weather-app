@@ -11,6 +11,7 @@ const initialState = {
   lang: 'en',
   weatherCurrent: null,
   weatherOnecall: null,
+  selectedPageId: 1,
 };
 
 type StateType = {
@@ -26,6 +27,7 @@ type StateType = {
   // lang: 'en' | 'ja';
   weatherCurrent: any;
   weatherOnecall: any;
+  selectedPageId: number;
 };
 
 type ActionMap<M extends { [index: string]: any }> = {
@@ -40,6 +42,7 @@ export enum actionTypes {
   SET_UNITS = 'SET_UNITS',
   SET_WEATHER_CURRENT = 'SET_WEATHER_CURRENT',
   SET_WEATHER_ONECALL = 'SET_WEATHER_ONECALL',
+  SET_SELECTED_PAGE_ID = 'SET_SELECTED_PAGE_ID',
 }
 
 type PayloadType = {
@@ -53,6 +56,7 @@ type PayloadType = {
   [actionTypes.SET_UNITS]: string;
   [actionTypes.SET_WEATHER_CURRENT]: {};
   [actionTypes.SET_WEATHER_ONECALL]: {};
+  [actionTypes.SET_SELECTED_PAGE_ID]: number;
 };
 
 export type ActionsType = ActionMap<PayloadType>[keyof ActionMap<PayloadType>];
@@ -74,6 +78,8 @@ export const reducer = (state: StateType, action: ActionsType) => {
       return { ...state, weatherCurrent: action.payload };
     case actionTypes.SET_WEATHER_ONECALL:
       return { ...state, weatherOnecall: action.payload };
+    case actionTypes.SET_SELECTED_PAGE_ID:
+      return { ...state, selectedPageId: action.payload };
     default:
       return state;
   }

@@ -63,7 +63,9 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
   } = data;
 
   const fallWithUnit = (fall: string) =>
-    state.units === 'imperial' ? `${+fall / 25.4} in` : `${fall} mm`;
+    state.units === 'imperial'
+      ? `${formatDigits(+fall / 25.4, 1)} in`
+      : `${fall} mm`;
 
   const timeLocalwithTZ = (dt: string, tzone: string) =>
     moment(new Date(+dt * 1000).toUTCString())
@@ -133,12 +135,26 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
         <Container maxWidth="xs">
           <Grid container alignItems="center">
             <Grid item xs={12}>
-              <Typography variant="subtitle2">
-                Cloud Cover {clouds} %
-              </Typography>
+              {rain && (
+                <Typography variant="subtitle2">
+                  Rain {fallWithUnit(rain)}
+                </Typography>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              {snow && (
+                <Typography variant="subtitle2">
+                  Snow {fallWithUnit(snow)}
+                </Typography>
+              )}
             </Grid>
 
             <Grid item xs={12} container>
+              <Grid item xs={6}>
+                <Typography variant="subtitle2">
+                  Cloud Cover {clouds} %
+                </Typography>
+              </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle2">
                   Humidity {humidity} %
@@ -151,27 +167,7 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
               </Grid>
 
               <Grid item xs={6}>
-                <Typography variant="subtitle2">
-                  Visibility {visibilityWithUnit(visibility)}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
                 <Typography variant="subtitle2">UV index {uvi}</Typography>
-              </Grid>
-
-              <Grid item xs={12}>
-                {rain && rain['1h'] && (
-                  <Typography variant="subtitle2">
-                    Rain (Last 1 hour), {fallWithUnit(rain['1h'])}
-                  </Typography>
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                {snow && snow['1h'] && (
-                  <Typography variant="subtitle2">
-                    Snow (Last 1 hour), {fallWithUnit(snow['1h'])}
-                  </Typography>
-                )}
               </Grid>
 
               <Grid item xs={6}>

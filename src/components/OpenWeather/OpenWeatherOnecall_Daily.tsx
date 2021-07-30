@@ -131,8 +131,10 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
                   <Typography variant="subtitle2" className={classes.text}>
                     {el.weather[0].main}
                   </Typography>
-
                   <WeatherIcon weather={el.weather} current={false} />
+                  <Typography variant="subtitle2" className={classes.text}>
+                    {el.weather[0].description}
+                  </Typography>
 
                   <Typography variant="h6" align="center">
                     {temp(el.temp.max)}/{temp(el.temp.min)}
@@ -156,7 +158,6 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
           </Grid>
         ))}
       </Grid>
-      <Preview data={daily} />
     </>
   );
 };

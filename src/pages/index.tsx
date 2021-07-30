@@ -1,19 +1,24 @@
 import { useState, useEffect, useContext } from 'react';
 import router, { useRouter } from 'next/router';
+import Link from 'next/link';
 
-import { Container, Grid, Typography } from '@material-ui/core';
+import {
+  Container,
+  Grid,
+  Typography,
+  AppBar,
+  List,
+  ListItem,
+} from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { GetServerSideProps } from 'next';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
 // import OpenWeatherCurrent from '../components/OpenWeather/OpenWeatherCurrent';
-import OpenWeatherOnecall_Current from '../components/OpenWeather/OpenWeatherOnecall_Current';
-import OpenWeatherOnecall_Daily from '../components/OpenWeather/OpenWeatherOnecall_Daily';
-import SEO from '../components/SEO';
+import Layout from '../components/Layout';
+import Weather from '../components/Weather';
 import Buttons from '../components/Buttons';
-import Footer from '../components/Footer';
-import Preview from '../components/Preview';
 
 import ipLookup from '../lib/ipLookup';
 import {
@@ -25,14 +30,7 @@ import {
 import { LocationType } from '../api/type_settings';
 import { QueryType } from '../api/type_settings';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundImage:
-      'linear-gradient(to bottom, rgb(102,255,255,0.15), rgba(218,165,32,0.25))',
-    height: '100vh',
-  },
-}));
+const useStyles = makeStyles((theme: Theme) => ({}));
 
 const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   const classes = useStyles();
@@ -73,30 +71,10 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   }, [dataOnecall, dispatch]);
 
   return (
-    <div className={classes.root}>
-      <SEO />
-      <Container>
-        <Typography variant="h3" component="h1">
-          Weather App
-        </Typography>
-        <Buttons />
-        <Grid container spacing={0}>
-          {/* 
-          <Grid item xs={12}>
-            {state.weatherCurrent && <OpenWeatherCurrent />}
-          </Grid>
-        */}
-
-          <Grid item xs={12}>
-            {state.weatherOnecall && <OpenWeatherOnecall_Current />}
-          </Grid>
-          <Grid item xs={12}>
-            {state.weatherOnecall && <OpenWeatherOnecall_Daily />}
-          </Grid>
-        </Grid>
-        <Footer />
-      </Container>
-    </div>
+    <Layout>
+      <Buttons />
+      <Weather />
+    </Layout>
   );
 };
 

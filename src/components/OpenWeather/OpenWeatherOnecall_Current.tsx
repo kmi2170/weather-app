@@ -103,7 +103,9 @@ const OpenWeatherOnecall_Current: React.FC = () => {
     );
 
   const fallWithUnit = (fall: string) =>
-    state.units === 'imperial' ? `${+fall / 25.4} in` : `${fall} mm`;
+    state.units === 'imperial'
+      ? `${formatDigits(+fall / 25.4, 1)} in`
+      : `${fall} mm`;
 
   const pressureWithUnit = (p: string) =>
     state.units === 'imperial'
