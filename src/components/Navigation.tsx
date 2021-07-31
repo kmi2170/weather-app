@@ -1,14 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import router, { useRouter } from 'next/router';
 
-import {
-  AppBar,
-  Toolbar,
-  Grid,
-  Typography,
-  List,
-  ListItem,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Typography, List, ListItem } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, red } from '@material-ui/core/colors';
 
@@ -60,11 +53,20 @@ const list = [
   { id: 4, name: 'map' },
 ];
 
-const Navigation: React.FC<any> = ({ itemRefs, handleItemRefs }) => {
+// interface NavigationProps {
+//   itemRefs: HTMLElement[];
+// }
+
+const Navigation = ({ itemRefs }) => {
   const classes = useStyles();
 
   const { query } = useRouter();
   const { state, dispatch } = useContext(WeatherContext);
+
+  const handleItemRefs = (id: number) => {
+    console.log(itemRefs?.current[+id - 1]);
+    window.scroll(0, itemRefs?.current[+id - 1].offsetTop - 50);
+  };
 
   return (
     <AppBar position="sticky" className={classes.appBar}>
@@ -91,7 +93,7 @@ const Navigation: React.FC<any> = ({ itemRefs, handleItemRefs }) => {
               disableGutters
               alignItems="center"
               className={classes.listItem}
-              onClick={() => handleClick(5)}
+              onClick={() => handleItemRefs(5)}
             >
               <Typography
                 variant="h6"
@@ -116,4 +118,5 @@ const Navigation: React.FC<any> = ({ itemRefs, handleItemRefs }) => {
   );
 };
 
-export default Navigation;
+// Navigation.displayName = 'Navigation';
+export default React.forwardRef(Navigation);

@@ -6,9 +6,9 @@ import {
   Container,
   Grid,
   Typography,
-  AppBar,
-  List,
-  ListItem,
+  // AppBar,
+  // List,
+  // ListItem,
 } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, lime, lightGreen } from '@material-ui/core/colors';
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   const classes = useStyles();
-  const itemRefs = useRef([]);
+  const itemRefs = useRef<HTMLElement[]>([]);
 
   const { state, dispatch } = useContext(WeatherContext);
   const { query } = useRouter();
@@ -82,20 +82,20 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
     dispatch({ type: actionTypes.SET_WEATHER_ONECALL, payload: dataOnecall });
   }, [dataOnecall, dispatch]);
 
-  const handleItemRefs = (id: number) => {
-    console.log(itemRefs?.current[+id - 1]);
-    window.scroll(0, itemRefs?.current[+id - 1].offsetTop - 50);
-  };
+  // const handleItemRefs = (id: number) => {
+  //   console.log(itemRefs?.current[+id - 1]);
+  //   window.scroll(0, itemRefs?.current[+id - 1].offsetTop - 50);
+  // };
 
-  const saveItemRefs = (ref) => {
+  const saveItemRefs = (ref: HTMLElement) => {
     itemRefs.current.push(ref);
-    console.log('ref', itemRefs[0]?.current);
+    // console.log('ref', itemRefs[0]?.current);
   };
 
   return (
     <div className={classes.root}>
       <SEO />
-      <Navigation itemRefs={itemRefs} handleItemRefs={handleItemRefs} />
+      <Navigation itemRefs={itemRefs} />
       <Container>
         <Typography variant="h3" component="h1" align="center">
           My Weather Station
@@ -109,6 +109,8 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
             <div ref={(ref) => saveItemRefs(ref)} />
             {state.weatherOnecall && <OpenWeatherOnecall_Daily />}
           </Grid>
+          <div ref={(ref) => saveItemRefs(ref)} />
+          <div ref={(ref) => saveItemRefs(ref)} />
           <Grid item xs={12}>
             <div ref={(ref) => saveItemRefs(ref)} />
             {state.weatherOnecall && state.weatherOnecall.alerts && <Alerts />}
