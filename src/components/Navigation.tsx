@@ -1,81 +1,118 @@
 import { useState, useEffect, useContext } from 'react';
 import router, { useRouter } from 'next/router';
-import Link from 'next/link';
 
-import { Grid, Typography, List, ListItem } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  Grid,
+  Typography,
+  List,
+  ListItem,
+} from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, red } from '@material-ui/core/colors';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  text: { color: '#000' },
-  textSelected: {
-    color: purple[500],
+  appBar: {
+    background: purple[50],
+  },
+  toolBar: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  text: {
+    textTransform: 'capitalize',
+    color: '#000',
+    '&:hover': {
+      color: purple[500],
+    },
+  },
+  textAlerts: {
+    textTransform: 'capitalize',
+    color: red[500],
+    '&:hover': {
+      color: purple[500],
+    },
   },
   list: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
-  listItem: {},
-  listItemSelected: { borderBottom: `3px solid ${purple[500]}` },
+  listItem: {
+    padding: '0 1rem',
+    [theme.breakpoints.down('sm')]: {
+      padding: '0 0.5rem',
+    },
+    borderBottom: `3px solid transparent`,
+    '&:hover': {
+      borderBottom: `3px solid ${purple[500]}`,
+    },
+  },
 }));
 
 const list = [
-  { id: 1, pathname: '/', name: 'Weather' },
-  { id: 2, pathname: '/map', name: 'Map' },
-  { id: 3, pathname: '/alerts', name: 'Alerts' },
+  { id: 1, name: 'current' },
+  { id: 2, name: 'houly' },
+  { id: 3, name: 'daily' },
+  { id: 4, name: 'map' },
 ];
 
-const Navigation: React.FC = () => {
+const Navigation: React.FC<any> = ({ itemRefs, handleItemRefs }) => {
   const classes = useStyles();
 
   const { query } = useRouter();
   const { state, dispatch } = useContext(WeatherContext);
 
-  const handleClick = (id: number) => {
-    console.log('id', id);
-
-    dispatch({ type: actionTypes.SET_SELECTED_PAGE_ID, payload: id });
-  };
-
   return (
-    <nav>
-      <List dense className={classes.list}>
-        <Grid container justifyContent="space-around">
-          {list.map(({ id, pathname, name }) => (
-            <Grid key={id} item>
-              <ListItem
-                onClick={() => handleClick(id)}
-                alignItems="center"
-                className={
-                  state.selectedPageId === id
-                    ? `${classes.listItemSelected}`
-                    : `${classes.listItem}`
-                }
-              >
-                <Link href={{ pathname, query }} replace shallow>
-                  <a>
-                    <Typography
-                      variant="h6"
-                      align="center"
-                      className={
-                        state.selectedPageId === id
-                          ? `${classes.textSelected}`
-                          : `${classes.text}`
-                      }
-                    >
-                      {name}
-                    </Typography>
-                  </a>
-                </Link>
-              </ListItem>
-            </Grid>
+    <AppBar position="sticky" className={classes.appBar}>
+      <Toolbar variant="dense" className={classes.toolBar}>
+        <List dense disablePadding className={classes.list}>
+          {list.map(({ id, name }) => (
+            <ListItem
+              key={id}
+              dense
+              disableGutters
+              className={classes.listItem}
+              onClick={() => handleItemRefs(id)}
+            >
+              <Typography variant="h6" align="center" className={classes.text}>
+                {name}
+              </Typography>
+            </ListItem>
           ))}
-        </Grid>
-      </List>
-    </nav>
+
+          {state.weatherOnecall && state.weatherOnecall.alerts && (
+            <ListItem
+              key={5}
+              dense
+              disableGutters
+              alignItems="center"
+              className={classes.listItem}
+              onClick={() => handleClick(5)}
+            >
+              <Typography
+                variant="h6"
+                align="center"
+                className={classes.textAlerts}
+              >
+                Alerts
+              </Typography>
+            </ListItem>
+          )}
+          {/* 
+          <Grid container justifyContent="center">
+              <Grid key={id} item>
+              </Grid>
+          </Grid>
+              <Grid key="5" item>
+              </Grid>
+            */}
+        </List>
+      </Toolbar>
+    </AppBar>
   );
 };
 

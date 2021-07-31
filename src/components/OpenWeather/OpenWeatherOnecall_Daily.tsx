@@ -117,22 +117,35 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
                   }}
                 >
                   <div>
-                    <Typography variant="subtitle2" className={classes.text}>
+                    <Typography
+                      variant="subtitle2"
+                      align="center"
+                      className={classes.text}
+                    >
                       {dayLocalwithTZ(el.dt, timezone)}
                     </Typography>
                     <Typography
                       variant="subtitle2"
                       color="textSecondary"
+                      align="center"
                       className={classes.text}
                     >
                       {dateLocalwithTZ(el.dt, timezone)}
                     </Typography>
                   </div>
-                  <Typography variant="subtitle2" className={classes.text}>
+                  <Typography
+                    variant="subtitle2"
+                    align="center"
+                    className={classes.text}
+                  >
                     {el.weather[0].main}
                   </Typography>
                   <WeatherIcon weather={el.weather} current={false} />
-                  <Typography variant="subtitle2" className={classes.text}>
+                  <Typography
+                    variant="subtitle2"
+                    align="center"
+                    className={classes.text}
+                  >
                     {el.weather[0].description}
                   </Typography>
 
@@ -148,7 +161,11 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
                     current={false}
                   />
 
-                  <Typography variant="subtitle2" className={classes.text}>
+                  <Typography
+                    variant="subtitle2"
+                    align="center"
+                    className={classes.text}
+                  >
                     <i className={`wi wi-umbrella ${classes.iconPop}`} />{' '}
                     {el.pop}%
                   </Typography>

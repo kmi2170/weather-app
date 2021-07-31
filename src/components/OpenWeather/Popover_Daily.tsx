@@ -131,6 +131,7 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
+        transitionDuration={{ enter: 3000 }}
       >
         <Container maxWidth="xs">
           <Grid container alignItems="center">

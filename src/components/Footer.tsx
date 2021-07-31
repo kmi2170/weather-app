@@ -9,17 +9,15 @@ const Footer = () => {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="body2">
-            Copyrihgt &copy; kmi {year}. All rights reserved. | Powered by
-            {
-              <a
-                href="https://www.openweathermap.org/"
-                title="Open Weather"
-                rel="noreferrer"
-                target="_blank"
-              >
-                OpenWeather.com
-              </a>
-            }
+            Copyrihgt &copy; kmi {year}. All rights reserved. | Powered by&nbsp;
+            <a
+              href="https://www.openweathermap.org/"
+              title="Open Weather"
+              rel="noreferrer"
+              target="_blank"
+            >
+              OpenWeather.com
+            </a>
             .
           </Typography>
           {/* 

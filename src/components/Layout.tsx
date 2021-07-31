@@ -3,9 +3,8 @@ import router, { useRouter } from 'next/router';
 
 import { Container, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { purple, lime } from '@material-ui/core/colors';
+import { purple, lime, lightGreen } from '@material-ui/core/colors';
 
-import SEO from './SEO';
 import Navigation from './Navigation';
 import Footer from './Footer';
 import Preview from './Preview';
@@ -15,7 +14,7 @@ import { WeatherContext, actionTypes } from '../reducer/reducer';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
-    background: lime[50],
+    background: purple[50],
     // backgroundImage:
     //   'linear-gradient(to bottom, rgb(102,255,255,0.15), rgba(218,165,32,0.25))',
   },
@@ -40,7 +39,9 @@ const Layout: React.FC<React.ReactNode> = ({ children }) => {
         <Typography variant="h3" component="h1">
           My Weather Station
         </Typography>
+        {/*
         <Navigation />
+         */}
         <main>{children}</main>
       </Container>
       <Preview data={state.weatherOnecall} />

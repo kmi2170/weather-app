@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import router, { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -11,29 +11,41 @@ import {
   ListItem,
 } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { purple, lime, lightGreen } from '@material-ui/core/colors';
 
 import { GetServerSideProps } from 'next';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
-// import OpenWeatherCurrent from '../components/OpenWeather/OpenWeatherCurrent';
-import Layout from '../components/Layout';
-import Weather from '../components/Weather';
+import { LocationType } from '../api/type_settings';
+import { QueryType } from '../api/type_settings';
+
+import SEO from '../components/SEO';
 import Buttons from '../components/Buttons';
+import Navigation from '../components/Navigation';
+import OpenWeatherOnecall_Current from '../components/OpenWeather/OpenWeatherOnecall_Current';
+import OpenWeatherOnecall_Daily from '../components/OpenWeather/OpenWeatherOnecall_Daily';
+import Alerts from '../components/Alerts';
+import Footer from '../components/Footer';
+import Preview from '../components/Preview';
 
 import ipLookup from '../lib/ipLookup';
 import {
-  fetchOpenWeatherCurrentByCoordinates,
+  // fetchOpenWeatherCurrentByCoordinates,
   fetchOpenWeatherCurrentByCityName,
   fetchOpenWeatherOnecall,
 } from '../lib/fetchOpenWeather';
 
-import { LocationType } from '../api/type_settings';
-import { QueryType } from '../api/type_settings';
-
-const useStyles = makeStyles((theme: Theme) => ({}));
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    flexGrow: 1,
+    background: purple[50],
+  },
+}));
 
 const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   const classes = useStyles();
+  const itemRefs = useRef([]);
+
   const { state, dispatch } = useContext(WeatherContext);
   const { query } = useRouter();
 
@@ -70,11 +82,42 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
     dispatch({ type: actionTypes.SET_WEATHER_ONECALL, payload: dataOnecall });
   }, [dataOnecall, dispatch]);
 
+  const handleItemRefs = (id: number) => {
+    console.log(itemRefs?.current[+id - 1]);
+    window.scroll(0, itemRefs?.current[+id - 1].offsetTop - 50);
+  };
+
+  const saveItemRefs = (ref) => {
+    itemRefs.current.push(ref);
+    console.log('ref', itemRefs[0]?.current);
+  };
+
   return (
-    <Layout>
-      <Buttons />
-      <Weather />
-    </Layout>
+    <div className={classes.root}>
+      <SEO />
+      <Navigation itemRefs={itemRefs} handleItemRefs={handleItemRefs} />
+      <Container>
+        <Typography variant="h3" component="h1" align="center">
+          My Weather Station
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <div ref={(ref) => saveItemRefs(ref)} />
+            {state.weatherOnecall && <OpenWeatherOnecall_Current />}
+          </Grid>
+          <Grid item xs={12}>
+            <div ref={(ref) => saveItemRefs(ref)} />
+            {state.weatherOnecall && <OpenWeatherOnecall_Daily />}
+          </Grid>
+          <Grid item xs={12}>
+            <div ref={(ref) => saveItemRefs(ref)} />
+            {state.weatherOnecall && state.weatherOnecall.alerts && <Alerts />}
+          </Grid>
+        </Grid>
+        <Footer />
+      </Container>
+      <Preview data={state.weatherOnecall} />
+    </div>
   );
 };
 
