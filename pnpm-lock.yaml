@@ -1,6 +1,7 @@
 dependencies:
   '@material-ui/core': 4.12.2_28c0df05a9559c3217649c6005b51123
   '@material-ui/icons': 4.11.2_46c39387f2dfee435486736a3e4022f5
+  '@material-ui/lab': 4.0.0-alpha.60_46c39387f2dfee435486736a3e4022f5
   axios: 0.21.1
   chart.js: 3.5.0
   moment: 2.29.1
@@ -61,6 +62,14 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
+  /@babel/runtime/7.14.8:
+    dependencies:
+      regenerator-runtime: 0.13.9
+    dev: false
+    engines:
+      node: '>=6.9.0'
+    resolution:
+      integrity: sha512-twj3L8Og5SaCRCErB4x4ajbvBIVV77CGeFglHpeg5WC5FF8TZzBWXtTJ4MqaD9QszLYTtr+IsaAL2rEUevb+eg==
   /@babel/types/7.14.5:
     dependencies:
       '@babel/helper-validator-identifier': 7.14.5
@@ -164,6 +173,30 @@ packages:
         optional: true
     resolution:
       integrity: sha512-fQNsKX2TxBmqIGJCSi3tGTO/gZ+eJgWmMJkgDiOfyNaunNaxcklJQFaFogYcFl0qFuaEz1qaXYXboa/bUXVSOQ==
+  /@material-ui/lab/4.0.0-alpha.60_46c39387f2dfee435486736a3e4022f5:
+    dependencies:
+      '@babel/runtime': 7.14.8
+      '@material-ui/core': 4.12.2_28c0df05a9559c3217649c6005b51123
+      '@material-ui/utils': 4.11.2_react-dom@17.0.2+react@17.0.2
+      '@types/react': 17.0.14
+      clsx: 1.1.1
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-is: 17.0.2
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    peerDependencies:
+      '@material-ui/core': ^4.12.1
+      '@types/react': ^16.8.6 || ^17.0.0
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    resolution:
+      integrity: sha512-fadlYsPJF+0fx2lRuyqAuJj7hAS1tLDdIEEdov5jlrpb5pp4b+mRDUqQTUxi4inRZHS1bEXpU8QWUhO6xX88aA==
   /@material-ui/styles/4.11.4_28c0df05a9559c3217649c6005b51123:
     dependencies:
       '@babel/runtime': 7.14.6
@@ -231,7 +264,7 @@ packages:
       integrity: sha512-7cqRjrY50b8QzRSYyhSpx4WRw2YuO0KKIGQEVk5J8uoz2BanawykgZGoWEqKm7pVIbzFDN0SpPcVV4IhOFkl8A==
   /@material-ui/utils/4.11.2_react-dom@17.0.2+react@17.0.2:
     dependencies:
-      '@babel/runtime': 7.14.6
+      '@babel/runtime': 7.14.8
       prop-types: 15.7.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -3212,6 +3245,10 @@ packages:
   /regenerator-runtime/0.13.7:
     resolution:
       integrity: sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
+  /regenerator-runtime/0.13.9:
+    dev: false
+    resolution:
+      integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
   /regexp.prototype.flags/1.3.1:
     dependencies:
       call-bind: 1.0.2
@@ -3942,6 +3979,7 @@ packages:
 specifiers:
   '@material-ui/core': ^4.12.2
   '@material-ui/icons': ^4.11.2
+  '@material-ui/lab': ^4.0.0-alpha.60
   '@types/node': ^15.12.4
   '@types/react': ^17.0.11
   axios: ^0.21.1

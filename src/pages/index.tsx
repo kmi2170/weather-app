@@ -10,6 +10,7 @@ import {
   // List,
   // ListItem,
 } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, lime, lightGreen } from '@material-ui/core/colors';
 
@@ -105,14 +106,37 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <div ref={(ref) => saveItemRefs(ref)} />
-            {state.weatherOnecall && <OpenWeatherOnecall_Current />}
+            {state.weatherOnecall ? (
+              <OpenWeatherOnecall_Current />
+            ) : (
+              <Skeleton variant="rect" height={200} />
+            )}
           </Grid>
           <Grid item xs={12}>
             <div ref={(ref) => saveItemRefs(ref)} />
-            {state.weatherOnecall && <OpenWeatherOnecall_Minutely />}
+            {state.weatherOnecall ? (
+              <OpenWeatherOnecall_Minutely />
+            ) : (
+              <Skeleton variant="rect" height={150} />
+            )}
           </Grid>
           <Grid item xs={12}>
-            {state.weatherOnecall && <OpenWeatherOnecall_Daily />}
+            {state.weatherOnecall ? (
+              <OpenWeatherOnecall_Daily />
+            ) : (
+              <Grid
+                container
+                justifyContent="flex-start"
+                alignItems="stretch"
+                spacing={1}
+              >
+                {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
+                  <Grid key={i} item xs={4} sm={3} md={2}>
+                    <Skeleton variant="rect" height={200} />
+                  </Grid>
+                ))}
+              </Grid>
+            )}
           </Grid>
           <div ref={(ref) => saveItemRefs(ref)} />
           <Grid item xs={12}>

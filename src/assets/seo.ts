@@ -5,7 +5,7 @@ export const config = {
   //   name: 'Kmi',
   //   summary: 'Web developer/programmer',
   // },
-  description: 'Weather News App',
+  description: 'Weather Information App',
   keywords: 'Weather News, React.js, Next.js, Material-UI',
   social: {
     twitter: '',
