@@ -24,6 +24,7 @@ import Buttons from '../components/Buttons';
 import Navigation from '../components/Navigation';
 import OpenWeatherOnecall_Current from '../components/OpenWeather/OpenWeatherOnecall_Current';
 import OpenWeatherOnecall_Daily from '../components/OpenWeather/OpenWeatherOnecall_Daily';
+import OpenWeatherOnecall_Minutely from '../components/OpenWeather/OpenWeatherOnecall_Minutely';
 import Alerts from '../components/Alerts';
 import Footer from '../components/Footer';
 import Preview from '../components/Preview';
@@ -95,11 +96,12 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   return (
     <div className={classes.root}>
       <SEO />
-      <Navigation itemRefs={itemRefs} />
+      <Navigation ref={itemRefs} />
       <Container>
         <Typography variant="h3" component="h1" align="center">
           My Weather Station
         </Typography>
+        <Buttons />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <div ref={(ref) => saveItemRefs(ref)} />
@@ -107,9 +109,11 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
           </Grid>
           <Grid item xs={12}>
             <div ref={(ref) => saveItemRefs(ref)} />
+            {state.weatherOnecall && <OpenWeatherOnecall_Minutely />}
+          </Grid>
+          <Grid item xs={12}>
             {state.weatherOnecall && <OpenWeatherOnecall_Daily />}
           </Grid>
-          <div ref={(ref) => saveItemRefs(ref)} />
           <div ref={(ref) => saveItemRefs(ref)} />
           <Grid item xs={12}>
             <div ref={(ref) => saveItemRefs(ref)} />

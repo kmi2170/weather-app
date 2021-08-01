@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, forwardRef } from 'react';
 import router, { useRouter } from 'next/router';
 
 import { AppBar, Toolbar, Typography, List, ListItem } from '@material-ui/core';
@@ -57,15 +57,16 @@ const list = [
 //   itemRefs: HTMLElement[];
 // }
 
-const Navigation = ({ itemRefs }) => {
+const Navigation = (props, ref) => {
   const classes = useStyles();
+  // const { itemRefs } = props;
 
   const { query } = useRouter();
   const { state, dispatch } = useContext(WeatherContext);
 
   const handleItemRefs = (id: number) => {
-    console.log(itemRefs?.current[+id - 1]);
-    window.scroll(0, itemRefs?.current[+id - 1].offsetTop - 50);
+    console.log(ref?.current[+id - 1]);
+    window.scroll(0, ref?.current[+id - 1].offsetTop - 50);
   };
 
   return (
@@ -119,4 +120,4 @@ const Navigation = ({ itemRefs }) => {
 };
 
 // Navigation.displayName = 'Navigation';
-export default React.forwardRef(Navigation);
+export default forwardRef(Navigation);

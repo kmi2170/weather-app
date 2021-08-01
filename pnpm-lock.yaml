@@ -2,11 +2,13 @@ dependencies:
   '@material-ui/core': 4.12.2_28c0df05a9559c3217649c6005b51123
   '@material-ui/icons': 4.11.2_46c39387f2dfee435486736a3e4022f5
   axios: 0.21.1
+  chart.js: 3.5.0
   moment: 2.29.1
   moment-timezone: 0.5.33
   next: 11.0.0_f31b35bdaa3b7c2fce82404f09d2dac4
   package.json: 2.0.1
   react: 17.0.2
+  react-chartjs-2: 3.0.4_chart.js@3.5.0+react@17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-tabs: 3.2.2_react@17.0.2
 devDependencies:
@@ -795,6 +797,10 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==
+  /chart.js/3.5.0:
+    dev: false
+    resolution:
+      integrity: sha512-J1a4EAb1Gi/KbhwDRmoovHTRuqT8qdF0kZ4XgwxpGethJHUdDrkqyPYwke0a+BuvSeUxPf8Cos6AX2AB8H8GLA==
   /chokidar/3.5.1:
     dependencies:
       anymatch: 3.1.2
@@ -3077,6 +3083,17 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
+  /react-chartjs-2/3.0.4_chart.js@3.5.0+react@17.0.2:
+    dependencies:
+      chart.js: 3.5.0
+      lodash: 4.17.21
+      react: 17.0.2
+    dev: false
+    peerDependencies:
+      chart.js: ^3.1.0
+      react: ^16.8.0 || ^17.0.0
+    resolution:
+      integrity: sha512-pcbFNpkPMTkGXXJ7k7hnukbRD0ZV01qB6JQY1ontITc2IYvhGlK6BBDy28VeydYs1Dl/c5ZpRgRVEtT5GUnxcQ==
   /react-dom/17.0.2_react@17.0.2:
     dependencies:
       loose-envify: 1.4.0
@@ -3929,6 +3946,7 @@ specifiers:
   '@types/react': ^17.0.11
   axios: ^0.21.1
   babel-plugin-transform-imports: ^2.0.0
+  chart.js: ^3.5.0
   eslint: 7.29.0
   eslint-config-next: 11.0.0
   moment: ^2.29.1
@@ -3936,6 +3954,7 @@ specifiers:
   next: 11.0.0
   package.json: ^2.0.1
   react: 17.0.2
+  react-chartjs-2: ^3.0.4
   react-dom: 17.0.2
   react-tabs: ^3.2.2
   typescript: ^4.3.4
