@@ -6,6 +6,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, red } from '@material-ui/core/colors';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
+import Buttons from './Buttons';
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -50,14 +51,14 @@ const list = [
   { id: 1, name: 'current' },
   { id: 2, name: 'houly' },
   { id: 3, name: 'daily' },
-  { id: 4, name: 'map' },
+  // { id: 4, name: 'map' },
 ];
 
 // interface NavigationProps {
 //   itemRefs: HTMLElement[];
 // }
 
-const Navigation = (props, ref) => {
+const Navigation = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const classes = useStyles();
   // const { itemRefs } = props;
 
@@ -114,6 +115,7 @@ const Navigation = (props, ref) => {
               </Grid>
             */}
         </List>
+        <Buttons />
       </Toolbar>
     </AppBar>
   );

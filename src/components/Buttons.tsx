@@ -65,11 +65,13 @@ const Component: React.FC = () => {
           {buttonUnits()}
         </Button>
       </Tooltip>
+      {/* 
       <Tooltip title={buttonLangTooltip()}>
         <Button variant="outlined" size="small" onClick={handleClickLang}>
           {buttonLang()}
         </Button>
       </Tooltip>
+      */}
     </>
   );
 };

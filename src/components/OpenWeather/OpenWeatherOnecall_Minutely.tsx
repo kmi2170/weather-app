@@ -37,9 +37,11 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
   const fall = (fall: number) =>
     state.units === 'imperial' ? +fall / 25.4 : fall;
 
-  const data_precipitation = minutely.map(({ precipiation }) =>
-    fall(precipiation)
-  );
+  let isFall = false;
+  const data_precipitation = minutely.map(({ precipiation }) => {
+    if (precipiation > 0) isFall = true;
+    return fall(precipiation);
+  });
 
   // const data_precipitation = minutely.map((_) => fall(Math.random()));
 
@@ -49,10 +51,15 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
     scales: {
       x: {
         grid: {
-          display: false,
+          display: true,
         },
         ticks: {
-          display: false,
+          display: true,
+          maxTicksLimit: 10,
+          callback: function (val, index) {
+            // Hide the label of every N dataset
+            return index % 1 === 0 ? this.getLabelForValue(val) : '';
+          },
         },
       },
       y: {
@@ -64,10 +71,11 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
     plugins: {
       title: {
         display: true,
-        text:
-          state.units === 'imperial'
-            ? 'Precipitation forecast for 1 hour [in]'
-            : 'Precipitation forecast for 1 hour [mm]',
+        text: isFall
+          ? state.units === 'imperial'
+            ? 'Precipitation for 1 Hour [in]'
+            : 'Precipitation for 1 Hour [mm]'
+          : 'No Precipitation for 1 Hour',
         fontSiz: 20,
       },
       legend: {

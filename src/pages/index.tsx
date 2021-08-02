@@ -21,11 +21,11 @@ import { LocationType } from '../api/type_settings';
 import { QueryType } from '../api/type_settings';
 
 import SEO from '../components/SEO';
-import Buttons from '../components/Buttons';
 import Navigation from '../components/Navigation';
 import OpenWeatherOnecall_Current from '../components/OpenWeather/OpenWeatherOnecall_Current';
 import OpenWeatherOnecall_Daily from '../components/OpenWeather/OpenWeatherOnecall_Daily';
 import OpenWeatherOnecall_Minutely from '../components/OpenWeather/OpenWeatherOnecall_Minutely';
+import OpenWeatherOnecall_Hourly from '../components/OpenWeather/OpenWeatherOnecall_Hourly';
 import Alerts from '../components/Alerts';
 import Footer from '../components/Footer';
 import Preview from '../components/Preview';
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   const classes = useStyles();
-  const itemRefs = useRef<HTMLElement[]>([]);
+  const itemRefs = useRef<HTMLDivElement[]>([]);
 
   const { state, dispatch } = useContext(WeatherContext);
   const { query } = useRouter();
@@ -89,7 +89,7 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
   //   window.scroll(0, itemRefs?.current[+id - 1].offsetTop - 50);
   // };
 
-  const saveItemRefs = (ref: HTMLElement) => {
+  const saveItemRefs = (ref: HTMLDivElement) => {
     itemRefs.current.push(ref);
     // console.log('ref', itemRefs[0]?.current);
   };
@@ -102,7 +102,6 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
         <Typography variant="h3" component="h1" align="center">
           My Weather Station
         </Typography>
-        <Buttons />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <div ref={(ref) => saveItemRefs(ref)} />
@@ -113,7 +112,6 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref)} />
             {state.weatherOnecall ? (
               <OpenWeatherOnecall_Minutely />
             ) : (
@@ -121,6 +119,15 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
             )}
           </Grid>
           <Grid item xs={12}>
+            <div ref={(ref) => saveItemRefs(ref)} />
+            {state.weatherOnecall ? (
+              <OpenWeatherOnecall_Hourly />
+            ) : (
+              <Skeleton variant="rect" height={150} />
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            <div ref={(ref) => saveItemRefs(ref)} />
             {state.weatherOnecall ? (
               <OpenWeatherOnecall_Daily />
             ) : (
@@ -138,10 +145,13 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
               </Grid>
             )}
           </Grid>
-          <div ref={(ref) => saveItemRefs(ref)} />
           <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref)} />
-            {state.weatherOnecall && state.weatherOnecall.alerts && <Alerts />}
+            {state.weatherOnecall && state.weatherOnecall.alerts && (
+              <>
+                <div ref={(ref) => saveItemRefs(ref)} />
+                <Alerts />
+              </>
+            )}
           </Grid>
         </Grid>
         <Footer />
