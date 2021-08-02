@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 import moment from 'moment-timezone';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { lightBlue, lime, blueGrey } from '@material-ui/core/colors';
+import { lightBlue, lime, blueGrey, purple } from '@material-ui/core/colors';
 
 import { WeatherContext } from '../../../reducer/reducer';
 
@@ -20,8 +20,9 @@ const timeLocalwithTZ = (dt: number, tzone: string) =>
 const ChartHumidity: React.FC = () => {
   const classes = useStyles();
 
-  const { state } = useContext(WeatherContext);
+  const [data, setData] = useState({});
 
+  const { state } = useContext(WeatherContext);
   const { timezone, hourly } = state.weatherOnecall;
 
   const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
@@ -64,6 +65,7 @@ const ChartHumidity: React.FC = () => {
         position: 'left',
         grid: {
           display: true,
+          color: purple[200],
         },
         max: 100,
         min: 0,
@@ -76,38 +78,36 @@ const ChartHumidity: React.FC = () => {
     },
   };
 
-  const data = {
-    labels: data_time,
-    datasets: [
-      {
-        label: 'Humidity [%]',
-        borderColor: lime[500],
-        backgroundColor: lime[500],
-        data: data_humidity,
-        yAxisID: 'y',
-      },
-      {
-        label: 'Chance of Precipitation [%]',
-        borderColor: lightBlue[500],
-        backgroundColor: lightBlue[500],
-        data: data_pop,
-        yAxisID: 'y',
-      },
-      {
-        label: 'Cloud Cover [%]',
-        borderColor: blueGrey[500],
-        backgroundColor: blueGrey[500],
-        data: data_clouds,
-        yAxisID: 'y',
-      },
-    ],
-  };
+  useEffect(() => {
+    setData({
+      labels: data_time,
+      datasets: [
+        {
+          label: 'Humidity [%]',
+          borderColor: lime[500],
+          backgroundColor: lime[500],
+          data: data_humidity,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Chance of Precipitation [%]',
+          borderColor: lightBlue[500],
+          backgroundColor: lightBlue[500],
+          data: data_pop,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Cloud Cover [%]',
+          borderColor: blueGrey[500],
+          backgroundColor: blueGrey[500],
+          data: data_clouds,
+          yAxisID: 'y',
+        },
+      ],
+    });
+  }, [hourly]);
 
-  return (
-    <>
-      <Line options={options} data={data} style={{ height: 150 }} />
-    </>
-  );
+  return <Line options={options} data={data} style={{ height: 100 }} />;
 };
 
 export default ChartHumidity;

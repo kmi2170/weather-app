@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 import moment from 'moment-timezone';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { pink, deepOrange } from '@material-ui/core/colors';
+import { pink, deepOrange, purple, grey } from '@material-ui/core/colors';
 
 import { WeatherContext } from '../../../reducer/reducer';
 
@@ -15,13 +15,23 @@ const useStyles = makeStyles((theme: Theme) => ({
 const timeLocalwithTZ = (dt: number, tzone: string) =>
   moment(new Date(+dt * 1000).toUTCString())
     .tz(tzone)
-    .format('MM/DD h a');
+    .format('DD ddd h a');
+//.format('MM/DD h a');
+
+const formatDigits = (x: string | number, d: number) =>
+  x !== undefined && x !== null
+    ? (+x).toLocaleString('en-US', {
+        maximumFractionDigits: d,
+        minimumFractionDigits: d,
+      })
+    : 'N/A';
 
 const ChartTemps: React.FC = () => {
   const classes = useStyles();
 
-  const { state } = useContext(WeatherContext);
+  const [data, setData] = useState({});
 
+  const { state } = useContext(WeatherContext);
   const { timezone, hourly } = state.weatherOnecall;
 
   const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
@@ -52,7 +62,7 @@ const ChartTemps: React.FC = () => {
           display: false,
         },
         ticks: {
-          display: false,
+          display: true,
           maxTicksLimit: 10,
           // callback: function (val, index) {
           //   // Hide the label of every N dataset
@@ -66,6 +76,7 @@ const ChartTemps: React.FC = () => {
         position: 'left',
         grid: {
           display: true,
+          color: purple[200],
         },
         // max: maxT,
         // min: minT,
@@ -83,31 +94,29 @@ const ChartTemps: React.FC = () => {
     },
   };
 
-  const data = {
-    labels: data_time,
-    datasets: [
-      {
-        label: state.units === 'imperial' ? 'Temp [℉]' : 'Temp [℃]',
-        borderColor: pink[500],
-        backgroundColor: pink[500],
-        data: data_temp,
-        yAxisID: 'y',
-      },
-      {
-        label: state.units === 'imperial' ? 'Dew Point [℉]' : 'Dew Point [℃]',
-        borderColor: deepOrange[900],
-        backgroundColor: deepOrange[900],
-        data: data_dew_point,
-        yAxisID: 'y',
-      },
-    ],
-  };
+  useEffect(() => {
+    setData({
+      labels: data_time,
+      datasets: [
+        {
+          label: state.units === 'imperial' ? 'Temp [℉]' : 'Temp [℃]',
+          borderColor: pink[500],
+          backgroundColor: pink[500],
+          data: data_temp,
+          yAxisID: 'y',
+        },
+        {
+          label: state.units === 'imperial' ? 'Dew Point [℉]' : 'Dew Point [℃]',
+          borderColor: deepOrange[900],
+          backgroundColor: deepOrange[900],
+          data: data_dew_point,
+          yAxisID: 'y',
+        },
+      ],
+    });
+  }, [hourly]);
 
-  return (
-    <>
-      <Line options={options} data={data} style={{ height: 125 }} />
-    </>
-  );
+  return <Line options={options} data={data} style={{ height: 175 }} />;
 };
 
 export default ChartTemps;

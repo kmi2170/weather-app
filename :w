@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 import moment from 'moment-timezone';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { green, brown, purple } from '@material-ui/core/colors';
+import { pink, deepOrange, purple, grey } from '@material-ui/core/colors';
 
 import { WeatherContext } from '../../../reducer/reducer';
 
@@ -17,7 +17,15 @@ const timeLocalwithTZ = (dt: number, tzone: string) =>
     .tz(tzone)
     .format('MM/DD h a');
 
-const ChartWind: React.FC = () => {
+const formatDigits = (x: string | number, d: number) =>
+  x !== undefined && x !== null
+    ? (+x).toLocaleString('en-US', {
+        maximumFractionDigits: d,
+        minimumFractionDigits: d,
+      })
+    : 'N/A';
+
+const ChartTemps: React.FC = () => {
   const classes = useStyles();
 
   const [data, setData] = useState({});
@@ -27,16 +35,11 @@ const ChartWind: React.FC = () => {
 
   const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
 
-  const fall = (fall: number) =>
-    state.units === 'imperial' ? +fall / 25.4 : fall;
+  const data_temp = hourly.map(({ temp }) => temp);
+  const data_dew_point = hourly.map(({ dew_point }) => dew_point);
 
-  const pressureConvert = (p: number) =>
-    state.units === 'imperial' ? (+p / 1013.25) * 29.921 : p;
-
-  const pressurehUnit = () => (state.units === 'imperial' ? 'inHg' : 'hPa');
-
-  const data_wind_speed = hourly.map(({ wind_speed }) => wind_speed);
-  const data_pressure = hourly.map(({ pressure }) => pressureConvert(pressure));
+  const maxT = Math.round(Math.max(...data_temp) / 5) * 5 + 5;
+  const minT = Math.round(Math.min(...data_dew_point) / 5) * 5 - 5;
 
   const options = {
     // layout: { padding: 0 },
@@ -58,7 +61,7 @@ const ChartWind: React.FC = () => {
           display: false,
         },
         ticks: {
-          display: false,
+          display: true,
           maxTicksLimit: 10,
           // callback: function (val, index) {
           //   // Hide the label of every N dataset
@@ -74,15 +77,8 @@ const ChartWind: React.FC = () => {
           display: true,
           color: purple[200],
         },
-        min: 0,
-      },
-      y1: {
-        type: 'linear',
-        display: true,
-        position: 'right',
-        grid: {
-          display: true,
-        },
+        // max: maxT,
+        // min: minT,
       },
     },
     plugins: {
@@ -102,26 +98,24 @@ const ChartWind: React.FC = () => {
       labels: data_time,
       datasets: [
         {
-          label:
-            state.units === 'imperial' ? 'Wind Speed [mi]' : 'Wind Speed [m/s]',
-          borderColor: green[500],
-          backgroundColor: green[500],
-          data: data_wind_speed,
+          label: state.units === 'imperial' ? 'Temp [℉]' : 'Temp [℃]',
+          borderColor: pink[500],
+          backgroundColor: pink[500],
+          data: data_temp,
           yAxisID: 'y',
         },
         {
-          label:
-            state.units === 'imperial' ? 'Pressure [inHg]' : 'Pressure [hPa]',
-          borderColor: brown[500],
-          backgroundColor: brown[500],
-          data: data_pressure,
-          yAxisID: 'y1',
+          label: state.units === 'imperial' ? 'Dew Point [℉]' : 'Dew Point [℃]',
+          borderColor: deepOrange[900],
+          backgroundColor: deepOrange[900],
+          data: data_dew_point,
+          yAxisID: 'y',
         },
       ],
     });
   }, [hourly]);
 
-  return <Line options={options} data={data} style={{ height: 100 }} />;
+  return <Line options={options} data={data} style={{ height: 150 }} />;
 };
 
-export default ChartWind;
+export default ChartTemps;

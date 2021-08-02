@@ -49,8 +49,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const list = [
   { id: 1, name: 'current' },
-  { id: 2, name: 'houly' },
-  { id: 3, name: 'daily' },
+  { id: 2, name: 'minutely' },
+  { id: 3, name: 'houly' },
+  { id: 4, name: 'daily' },
   // { id: 4, name: 'map' },
 ];
 
@@ -106,16 +107,7 @@ const Navigation = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
               </Typography>
             </ListItem>
           )}
-          {/* 
-          <Grid container justifyContent="center">
-              <Grid key={id} item>
-              </Grid>
-          </Grid>
-              <Grid key="5" item>
-              </Grid>
-            */}
         </List>
-        <Buttons />
       </Toolbar>
     </AppBar>
   );

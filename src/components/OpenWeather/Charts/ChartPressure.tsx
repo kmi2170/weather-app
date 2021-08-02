@@ -17,7 +17,7 @@ const timeLocalwithTZ = (dt: number, tzone: string) =>
     .tz(tzone)
     .format('MM/DD h a');
 
-const ChartWind: React.FC = () => {
+const ChartPressure: React.FC = () => {
   const classes = useStyles();
 
   const [data, setData] = useState({});
@@ -27,15 +27,11 @@ const ChartWind: React.FC = () => {
 
   const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
 
-  const fall = (fall: number) =>
-    state.units === 'imperial' ? +fall / 25.4 : fall;
-
   const pressureConvert = (p: number) =>
     state.units === 'imperial' ? (+p / 1013.25) * 29.921 : p;
 
   const pressurehUnit = () => (state.units === 'imperial' ? 'inHg' : 'hPa');
 
-  const data_wind_speed = hourly.map(({ wind_speed }) => wind_speed);
   const data_pressure = hourly.map(({ pressure }) => pressureConvert(pressure));
 
   const options = {
@@ -74,15 +70,6 @@ const ChartWind: React.FC = () => {
           display: true,
           color: purple[200],
         },
-        min: 0,
-      },
-      y1: {
-        type: 'linear',
-        display: true,
-        position: 'right',
-        grid: {
-          display: true,
-        },
       },
     },
     plugins: {
@@ -103,19 +90,11 @@ const ChartWind: React.FC = () => {
       datasets: [
         {
           label:
-            state.units === 'imperial' ? 'Wind Speed [mi]' : 'Wind Speed [m/s]',
-          borderColor: green[500],
-          backgroundColor: green[500],
-          data: data_wind_speed,
-          yAxisID: 'y',
-        },
-        {
-          label:
             state.units === 'imperial' ? 'Pressure [inHg]' : 'Pressure [hPa]',
           borderColor: brown[500],
           backgroundColor: brown[500],
           data: data_pressure,
-          yAxisID: 'y1',
+          yAxisID: 'y',
         },
       ],
     });
@@ -124,4 +103,4 @@ const ChartWind: React.FC = () => {
   return <Line options={options} data={data} style={{ height: 100 }} />;
 };
 
-export default ChartWind;
+export default ChartPressure;

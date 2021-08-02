@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 import moment from 'moment-timezone';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { blue, grey } from '@material-ui/core/colors';
+import { blue, grey, purple } from '@material-ui/core/colors';
 
 import { WeatherContext } from '../../../reducer/reducer';
 
@@ -15,13 +15,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 const timeLocalwithTZ = (dt: number, tzone: string) =>
   moment(new Date(+dt * 1000).toUTCString())
     .tz(tzone)
-    .format('MM/DD h a');
+    .format('DD ddd h a');
+//.format('MM/DD h a');
 
 const ChartTemps: React.FC = () => {
   const classes = useStyles();
 
-  const { state } = useContext(WeatherContext);
+  const [data, setData] = useState({});
 
+  const { state } = useContext(WeatherContext);
   const { timezone, hourly } = state.weatherOnecall;
 
   const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
@@ -52,7 +54,7 @@ const ChartTemps: React.FC = () => {
           display: false,
         },
         ticks: {
-          display: false,
+          display: true,
           maxTicksLimit: 10,
           // callback: function (val, index) {
           //   // Hide the label of every N dataset
@@ -66,6 +68,7 @@ const ChartTemps: React.FC = () => {
         position: 'left',
         grid: {
           display: true,
+          color: purple[200],
         },
         min: 0,
       },
@@ -82,31 +85,29 @@ const ChartTemps: React.FC = () => {
     },
   };
 
-  const data = {
-    labels: data_time,
-    datasets: [
-      {
-        label: state.units === 'imperial' ? 'Rain [in]' : 'Rain [mm]',
-        borderColor: blue[500],
-        backgroundColor: blue[500],
-        data: data_rain,
-        yAxisID: 'y',
-      },
-      {
-        label: state.units === 'imperial' ? 'Snow [in]' : 'Snow [mm]',
-        borderColor: grey[500],
-        backgroundColor: grey[500],
-        data: data_snow,
-        yAxisID: 'y',
-      },
-    ],
-  };
+  useEffect(() => {
+    setData({
+      labels: data_time,
+      datasets: [
+        {
+          label: state.units === 'imperial' ? 'Rain [in]' : 'Rain [mm]',
+          borderColor: blue[500],
+          backgroundColor: blue[500],
+          data: data_rain,
+          yAxisID: 'y',
+        },
+        {
+          label: state.units === 'imperial' ? 'Snow [in]' : 'Snow [mm]',
+          borderColor: grey[500],
+          backgroundColor: grey[500],
+          data: data_snow,
+          yAxisID: 'y',
+        },
+      ],
+    });
+  }, [hourly]);
 
-  return (
-    <>
-      <Line options={options} data={data} style={{ height: 100 }} />
-    </>
-  );
+  return <Line options={options} data={data} style={{ height: 175 }} />;
 };
 
 export default ChartTemps;

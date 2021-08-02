@@ -3,11 +3,40 @@ import router, { useRouter } from 'next/router';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
 
-import { Typography, Button, Tooltip } from '@material-ui/core';
+import { Typography, Button, ButtonGroup, Tooltip } from '@material-ui/core';
+import { purple } from '@material-ui/core/colors';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  buttonSelected: {
+    color: 'white',
+    background: purple[500],
+    borderColor: purple[500],
+    '&:hover': {
+      color: 'white',
+      background: purple[500],
+      borderColor: purple[500],
+    },
+  },
+  buttonUnSelected: {
+    color: purple[500],
+    background: 'transparent',
+    borderColor: purple[500],
+    '&:hover': {
+      color: 'white',
+      background: purple[800],
+      borderColor: purple[800],
+    },
+  },
 }));
 
 const Component: React.FC = () => {
@@ -27,7 +56,8 @@ const Component: React.FC = () => {
     });
   };
 
-  const handleClickUnits = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     const units = state.units === 'imperial' ? 'metric' : 'imperial';
 
     router.push({ pathname: '/', query: { ...query, units } });
@@ -38,32 +68,60 @@ const Component: React.FC = () => {
     });
   };
 
-  const buttonLang = () =>
-    state.lang === 'en' ? <span>Japanese</span> : <span>English</span>;
+  // const buttonLang = () =>
+  //   state.lang === 'en' ? <span>Japanese</span> : <span>English</span>;
 
-  const buttonUnits = () =>
-    state.units === 'imperial' ? <span>&#8457;</span> : <span>&#8451;</span>;
+  // const buttonUnits = () =>
+  //   state.units === 'imperial' ? <span>&#8457;</span> : <span>&#8451;</span>;
 
-  const buttonUnitsTooltip = () =>
-    state.units !== 'imperial' ? (
-      <span>Switch to &#8457;</span>
-    ) : (
-      <span>Switch to &#8451;</span>
-    );
+  // const buttonUnitsTooltip = () =>
+  //   state.units !== 'imperial' ? (
+  //     <span>Switch to &#8457;</span>
+  //   ) : (
+  //     <span>Switch to &#8451;</span>
+  //   );
 
-  const buttonLangTooltip = () =>
-    state.lang !== 'en' ? (
-      <span>Switch to Japanese</span>
-    ) : (
-      <span>Switch to English</span>
-    );
+  // const buttonLangTooltip = () =>
+  //   state.lang !== 'en' ? (
+  //     <span>Switch to Japanese</span>
+  //   ) : (
+  //     <span>Switch to English</span>
+  //   );
 
   return (
     <>
-      <Tooltip title={buttonUnitsTooltip()}>
-        <Button variant="outlined" size="small" onClick={handleClickUnits}>
-          {buttonUnits()}
-        </Button>
+      <Tooltip title="Switch Unit">
+        <div className={classes.root}>
+          <ButtonGroup
+            color="primary"
+            aria-label="outlined primary button group"
+          >
+            <Button
+              variant={state.units === 'imperial' ? 'contained' : 'outlined'}
+              size="small"
+              onClick={(e) => handleClick(e)}
+              className={
+                state.units === 'imperial'
+                  ? classes.buttonSelected
+                  : classes.buttonUnSelected
+              }
+            >
+              ℉
+            </Button>
+            <Button
+              variant={state.units !== 'imperial' ? 'contained' : 'outlined'}
+              size="small"
+              onClick={(e) => handleClick(e)}
+              className={
+                state.units !== 'imperial'
+                  ? classes.buttonSelected
+                  : classes.buttonUnSelected
+              }
+            >
+              ℃
+            </Button>
+          </ButtonGroup>
+        </div>
       </Tooltip>
       {/* 
       <Tooltip title={buttonLangTooltip()}>
