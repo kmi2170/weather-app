@@ -22,6 +22,7 @@ import { QueryType } from '../api/type_settings';
 
 import SEO from '../components/SEO';
 import Navigation from '../components/Navigation';
+import Searchbar from '../components/Searchbar';
 // import Buttons from '../components/Buttons';
 import OpenWeatherOnecall_Current from '../components/OpenWeather/OpenWeatherOnecall_Current';
 import OpenWeatherOnecall_Daily from '../components/OpenWeather/OpenWeatherOnecall_Daily';
@@ -100,10 +101,18 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
       <SEO />
       <Navigation ref={itemRefs} />
       <Container>
-        <Typography variant="h3" component="h1" align="center">
-          My Weather Station
-        </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} justifyContent="center">
+          <Grid item xs={12}>
+            <Typography variant="h3" component="h1" align="center">
+              My Weather Station
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <div style={{ flex: 'display', justifyContent: 'center' }}>
+              <Searchbar />
+            </div>
+          </Grid>
+
           <Grid item xs={12}>
             <div ref={(ref) => saveItemRefs(ref)} />
             {state.weatherOnecall ? (
