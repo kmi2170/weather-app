@@ -10,22 +10,22 @@ const ipLookup = async () => {
       city,
       region,
       country_name,
-      country_code_iso3,
-      timezone,
       latitude,
       longitude,
-      postal,
+      // country_code_iso3,
+      // timezone,
+      // postal,
     } = data;
 
     return {
       city,
       region,
-      country_name,
-      country_code: country_code_iso3,
-      timezone,
       lat: latitude,
       lon: longitude,
-      postal,
+      country: country_name,
+      // country_code: country_code_iso3,
+      // timezone,
+      // postal,
     };
   } catch (error) {
     console.log(error);

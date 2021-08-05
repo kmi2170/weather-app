@@ -17,8 +17,8 @@ export const fetchOpenWeatherOnecall = async (
       params: {
         lat,
         lon,
-        units: q.units,
-        lang: q.lang,
+        units: q.units || 'imperial',
+        lang: q.lang || 'en',
         appid: api_key,
       },
     });
@@ -53,18 +53,37 @@ export const fetchOpenWeatherCurrentByCoordinates = async (
   }
 };
 
-export const fetchOpenWeatherCurrentByCityName = async (q: QueryType) => {
+export const fetchOpenWeatherCurrentByCityName = async (
+  city: string,
+  state: string,
+  country: string,
+  units: string,
+  lang: string
+) => {
   const url = 'https://api.openweathermap.org/data/2.5/weather';
 
   try {
     const { data } = await axios.get(url, {
       params: {
-        q: `${q.city},${q.state}`,
-        units: q.units,
-        lang: q.lang,
+        q: state ? `${city},${state},${country}` : `${city},${country}`,
+        units,
+        lang,
         appid: api_key,
       },
     });
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchOpenGeocodingByLocationName = async (q: string) => {
+  const url = 'https://api.openweathermap.org/geo/1.0/direct';
+
+  try {
+    const { data } = await axios.get(url, { params: { q, appid: api_key } });
+    console.log('geolocation', data);
 
     return data;
   } catch (error) {

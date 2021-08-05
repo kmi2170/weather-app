@@ -2,17 +2,18 @@ import axios from 'axios';
 // const url =
 //   'https://api.weatherapi.com/v1/current.json?key=fe70157311594d36b81212236212107&q=98597';
 //
-const baseUrl = 'https://api.weatherapi.com/v1/';
-const weatherapi_key = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-const url = `https://api.weatherapi.com/v1/ip.json?key=${weatherapi_key}&q=auto:ip`;
+const key = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
-const fetcher = async (url: string) => {
+export const fetchWeatherAPILocation = async (lat: number, lon: number) => {
+  const url = 'https://api.weatherapi.com/v1/current.json';
+
   try {
-    const { data } = await axios(url);
-    // console.log(data);
-    return { data, error: null };
+    const { data } = await axios.get(url, {
+      params: { q: `${lat},${lon}`, key },
+    });
+
+    return data;
   } catch (error) {
     console.error();
-    return { data: null, error };
   }
 };

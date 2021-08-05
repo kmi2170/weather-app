@@ -1,11 +1,19 @@
 import { createContext, useReducer, useMemo } from 'react';
 
 const initialState = {
+  ipLocation: {
+    city: '',
+    state: '',
+    country: '',
+    lat: null,
+    lon: null,
+  },
   location: {
     city: '',
     state: '',
-    country_name: '',
-    timezone: '',
+    country: '',
+    lat: null,
+    lon: null,
   },
   units: 'imperial',
   lang: 'en',
@@ -15,11 +23,19 @@ const initialState = {
 };
 
 type StateType = {
+  ipLocation: {
+    city?: string;
+    state?: string;
+    country?: string;
+    lat?: number;
+    lon?: number;
+  };
   location: {
-    city: string;
-    state: string;
-    country_name: string;
-    timezone: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    lat?: number;
+    lon?: number;
   };
   units: string;
   lang: string;
@@ -37,6 +53,7 @@ type ActionMap<M extends { [index: string]: any }> = {
 };
 
 export enum actionTypes {
+  SET_IP_LOCATION = 'SET_IP_LOCATION',
   SET_LOCATION = 'SET_LOCATION',
   SET_LANG = 'SET_LANG',
   SET_UNITS = 'SET_UNITS',
@@ -46,11 +63,19 @@ export enum actionTypes {
 }
 
 type PayloadType = {
+  [actionTypes.SET_IP_LOCATION]: {
+    city?: string;
+    state?: string;
+    country?: string;
+    lat?: number;
+    lon?: number;
+  };
   [actionTypes.SET_LOCATION]: {
-    city: string;
-    state: string;
-    country_name: string;
-    timezone: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    lat?: number;
+    lon?: number;
   };
   [actionTypes.SET_LANG]: string;
   [actionTypes.SET_UNITS]: string;
@@ -68,6 +93,8 @@ export const WeatherContext = createContext<{
 
 export const reducer = (state: StateType, action: ActionsType) => {
   switch (action.type) {
+    case actionTypes.SET_IP_LOCATION:
+      return { ...state, ipLocation: action.payload };
     case actionTypes.SET_LOCATION:
       return { ...state, location: action.payload };
     case actionTypes.SET_UNITS:

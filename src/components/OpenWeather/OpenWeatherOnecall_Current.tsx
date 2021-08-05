@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  countryName: {
+  country: {
     [theme.breakpoints.up('sm')]: {
       marginLeft: '1rem',
     },
@@ -79,7 +79,7 @@ const OpenWeatherOnecall_Current: React.FC = () => {
   } = current;
   const { moonrise, moonset, moon_phase } = daily[0];
 
-  const { city, state: state_name, country_name } = state.location;
+  const { city, state: state_name, country } = state.location;
 
   const formatDigits = (x: string | number, d: number) =>
     x !== undefined && x !== null
@@ -104,7 +104,7 @@ const OpenWeatherOnecall_Current: React.FC = () => {
 
   const fallWithUnit = (fall: string) =>
     state.units === 'imperial'
-      ? `${formatDigits(+fall / 25.4, 1)} in`
+      ? `${formatDigits(+fall / 25.4, 2)} in`
       : `${fall} mm`;
 
   const pressureWithUnit = (p: string) =>
@@ -157,10 +157,10 @@ const OpenWeatherOnecall_Current: React.FC = () => {
               <Typography
                 variant="h6"
                 color="textSecondary"
-                className={classes.countryName}
+                className={classes.country}
                 style={{ fontStyle: 'italic' }}
               >
-                {country_name}
+                {country}
               </Typography>
             </div>
           </Grid>

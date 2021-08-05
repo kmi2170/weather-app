@@ -64,7 +64,7 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
 
   const fallWithUnit = (fall: string) =>
     state.units === 'imperial'
-      ? `${formatDigits(+fall / 25.4, 1)} in`
+      ? `${formatDigits(+fall / 25.4, 2)} in`
       : `${fall} mm`;
 
   const timeLocalwithTZ = (dt: string, tzone: string) =>

@@ -55,7 +55,7 @@ const OpenWeatherCurrent: React.FC = () => {
     timezone: timezoneOffset,
   } = state.weatherCurrent;
 
-  const { city, state: state_name, country_name, timezone } = state.location;
+  const { city, state: state_name, country, timezone } = state.location;
 
   const tempUnits = () =>
     state.units === 'imperial' ? <span>&#8457;</span> : <span>&#8451;</span>;

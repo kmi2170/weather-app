@@ -2,6 +2,8 @@ import { useState, useEffect, useContext, useRef } from 'react';
 import router, { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import { useCookies } from 'react-cookie';
+
 import {
   Container,
   Grid,
@@ -33,63 +35,170 @@ import Footer from '../components/Footer';
 import Preview from '../components/Preview';
 
 import ipLookup from '../lib/ipLookup';
+import { fetchWeatherAPILocation } from '../lib/fetchWeatherApi';
 import {
   // fetchOpenWeatherCurrentByCoordinates,
   fetchOpenWeatherCurrentByCityName,
   fetchOpenWeatherOnecall,
+  fetchOpenGeocodingByLocationName,
 } from '../lib/fetchOpenWeather';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
     background: purple[50],
+    minHeight: '100vh',
+  },
+  noLocation: {
+    margin: '5rem 0',
+  },
+  title: {
+    marginTop: '1rem',
   },
 }));
 
-const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
+const cookiesOptions = {
+  path: '/',
+  maxAge: 2600000,
+  sameSite: true,
+};
+
+const Home: React.FC<any> = ({
+  dataLocationName,
+  dataSearchLocation,
+  isNotFoundLocation,
+  dataCurrent,
+  dataOnecall,
+}) => {
   const classes = useStyles();
   const itemRefs = useRef<HTMLDivElement[]>([]);
 
   const { state, dispatch } = useContext(WeatherContext);
   const { query } = useRouter();
 
-  useEffect(() => {
-    const getLocation = async () => {
-      const res = await ipLookup();
+  const [cookies, setCookie] = useCookies(['user']);
 
-      const { city, region, country_name, timezone } = res;
+  const setCookieFunc = (name: string, value: string) =>
+    setCookie(name, value, cookiesOptions);
+
+  useEffect(() => {
+    if (cookies.coordinates) {
+      console.log(cookies.coordinates);
+      console.log(cookies.coordinates[0], cookies.coordinates[1]);
+      // const coordinates = JSON.parse(cookies.coordinates);
+      // const lat = +coordinates[0].lat;
+      // const lon = +coordinates[1].lon;
+      const lat = +cookies.coordinates[0].lat;
+      const lon = +cookies.coordinates[1].lon;
 
       dispatch({
         type: actionTypes.SET_LOCATION,
-        payload: {
-          city: city as string,
-          state: region as string,
-          country_name: country_name as string,
-          timezone: timezone as string,
-        },
+        payload: { lat, lon },
+      });
+
+      let units: string;
+      if (cookies.units) {
+        units = cookies.units;
+
+        return dispatch({
+          type: actionTypes.SET_UNITS,
+          payload: units,
+        });
+      }
+
+      router.push({
+        pathname: '/',
+        query: { lat, lon, units, lang: state.lang },
+      });
+    } else {
+      const getLocation = async () => {
+        const res = await ipLookup();
+
+        const { city, region, country } = res;
+
+        dispatch({
+          type: actionTypes.SET_IP_LOCATION,
+          payload: {
+            city: city as string,
+            state: (region as string) || '',
+            country: country as string,
+            // lat: lat as number,
+            // lon: lon as number,
+            // timezone: timezone as string,
+          },
+        });
+
+        router.push({
+          pathname: '/',
+          query: {
+            ipCity: city,
+            ipState: region,
+            ipCountry: country,
+            units: state.units,
+            lang: state.lang,
+          },
+        });
+      };
+
+      getLocation();
+    }
+  }, []);
+
+  useEffect(() => {
+    dispatch({
+      type: actionTypes.SET_LOCATION,
+      payload: {
+        city: dataLocationName?.location.name as string,
+        state: dataLocationName?.location.region as string,
+        country: dataLocationName?.location.country as string,
+      },
+    });
+  }, [dataLocationName, dispatch]);
+
+  useEffect(() => {
+    // dispatch({ type: actionTypes.SET_WEATHER_CURRENT, payload: dataCurrent });
+    if (dataCurrent) {
+      const lat = +dataCurrent.coord.lat;
+      const lon = +dataCurrent.coord.lon;
+
+      dispatch({
+        type: actionTypes.SET_LOCATION,
+        payload: { lat, lon },
       });
 
       router.push({
         pathname: '/',
-        query: { city, state: region, units: state.units, lang: state.lang },
+        query: { lat, lon, units: state.units, lang: state.lang },
       });
-    };
-
-    getLocation();
-  }, []);
-
-  useEffect(() => {
-    dispatch({ type: actionTypes.SET_WEATHER_CURRENT, payload: dataCurrent });
+    }
   }, [dataCurrent, dispatch]);
 
   useEffect(() => {
-    dispatch({ type: actionTypes.SET_WEATHER_ONECALL, payload: dataOnecall });
-  }, [dataOnecall, dispatch]);
+    if (dataSearchLocation && dataSearchLocation.length !== 0) {
+      const lat = +dataSearchLocation[0].lat;
+      const lon = +dataSearchLocation[0].lon;
 
-  // const handleItemRefs = (id: number) => {
-  //   console.log(itemRefs?.current[+id - 1]);
-  //   window.scroll(0, itemRefs?.current[+id - 1].offsetTop - 50);
-  // };
+      dispatch({
+        type: actionTypes.SET_LOCATION,
+        payload: { lat, lon },
+      });
+
+      router.push({
+        pathname: '/',
+        query: { lat, lon, units: state.units, lang: state.lang },
+      });
+
+      setCookieFunc('coordinates', JSON.stringify([lat, lon]));
+    }
+  }, [dataSearchLocation, dispatch]);
+
+  useEffect(() => {
+    dispatch({ type: actionTypes.SET_WEATHER_ONECALL, payload: dataOnecall });
+  }, [dataOnecall, dataSearchLocation, dispatch]);
+
+  useEffect(() => {
+    setCookieFunc('units', state.units);
+  }, [state.units]);
 
   const saveItemRefs = (ref: HTMLDivElement) => {
     itemRefs.current.push(ref);
@@ -103,7 +212,12 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
       <Container>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>
-            <Typography variant="h3" component="h1" align="center">
+            <Typography
+              variant="h3"
+              component="h1"
+              align="center"
+              className={classes.title}
+            >
               My Weather Station
             </Typography>
           </Grid>
@@ -113,57 +227,69 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
             </div>
           </Grid>
 
-          <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref)} />
-            {state.weatherOnecall ? (
-              <OpenWeatherOnecall_Current />
-            ) : (
-              <Skeleton variant="rect" height={200} />
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref)} />
-            {state.weatherOnecall ? (
-              <OpenWeatherOnecall_Minutely />
-            ) : (
-              <Skeleton variant="rect" height={150} />
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref)} />
-            {state.weatherOnecall ? (
-              <OpenWeatherOnecall_Daily />
-            ) : (
-              <Grid
-                container
-                justifyContent="flex-start"
-                alignItems="stretch"
-                spacing={1}
-              >
-                {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
-                  <Grid key={i} item xs={4} sm={3} md={2}>
-                    <Skeleton variant="rect" height={200} />
-                  </Grid>
-                ))}
-              </Grid>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref)} />
-            {state.weatherOnecall ? (
-              <OpenWeatherOnecall_Hourly />
-            ) : (
-              <Skeleton variant="rect" height={150} />
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            {state.weatherOnecall && state.weatherOnecall.alerts && (
-              <>
+          {isNotFoundLocation ? (
+            <Typography
+              variant="h4"
+              align="center"
+              className={classes.noLocation}
+            >
+              No Location Found
+            </Typography>
+          ) : (
+            <>
+              <Grid item xs={12}>
                 <div ref={(ref) => saveItemRefs(ref)} />
-                <Alerts />
-              </>
-            )}
-          </Grid>
+                {state.weatherOnecall ? (
+                  <OpenWeatherOnecall_Current />
+                ) : (
+                  <Skeleton variant="rect" height={200} />
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <div ref={(ref) => saveItemRefs(ref)} />
+                {state.weatherOnecall ? (
+                  <OpenWeatherOnecall_Minutely />
+                ) : (
+                  <Skeleton variant="rect" height={150} />
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <div ref={(ref) => saveItemRefs(ref)} />
+                {state.weatherOnecall ? (
+                  <OpenWeatherOnecall_Daily />
+                ) : (
+                  <Grid
+                    container
+                    justifyContent="flex-start"
+                    alignItems="stretch"
+                    spacing={1}
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
+                      <Grid key={i} item xs={4} sm={3} md={2}>
+                        <Skeleton variant="rect" height={200} />
+                      </Grid>
+                    ))}
+                  </Grid>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <div ref={(ref) => saveItemRefs(ref)} />
+                {state.weatherOnecall ? (
+                  <OpenWeatherOnecall_Hourly />
+                ) : (
+                  <Skeleton variant="rect" height={150} />
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                {state.weatherOnecall && state.weatherOnecall.alerts && (
+                  <>
+                    <div ref={(ref) => saveItemRefs(ref)} />
+                    <Alerts />
+                  </>
+                )}
+              </Grid>
+            </>
+          )}
         </Grid>
         <Footer />
       </Container>
@@ -175,25 +301,79 @@ const Home: React.FC<any> = ({ dataCurrent, dataOnecall }) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { city } = query;
+  const {
+    ipCity,
+    ipState,
+    ipCountry,
+    lang,
+    units,
+    lat,
+    lon,
+    searchLocation,
+  } = query;
 
-  const dataCurrent = city
-    ? await fetchOpenWeatherCurrentByCityName(query as QueryType)
+  // const dataCurrent = null;
+  const dataCurrent = ipCity
+    ? await fetchOpenWeatherCurrentByCityName(
+        ipCity as string,
+        ipState as string,
+        ipCountry as string,
+        units as string,
+        lang as string
+      )
     : null;
+
+  const dataSearchLocation = searchLocation
+    ? await fetchOpenGeocodingByLocationName(searchLocation as string)
+    : null;
+
+  const isNotFoundLocation = dataSearchLocation
+    ? dataSearchLocation.length != 0
+      ? false
+      : true
+    : false;
+
+  // let [latitude, longitude] =
+  //   dataCurrent?.coord?.lat && dataCurrent?.coord?.lon
+  //     ? [dataCurrent.coord.lat, dataCurrent?.coord.lon]
+  //     : [null, null];
+
+  // [latitude, longitude] =
+  //   dataSearchLocation && dataSearchLocation.length !== 0
+  //     ? [dataSearchLocation[0].lat, dataSearchLocation[0].lon]
+  //     : [latitude, longitude];
 
   // const dataOnecall = null;
   const dataOnecall =
-    dataCurrent?.coord?.lat && dataCurrent?.coord?.lon
-      ? await fetchOpenWeatherOnecall(
-          +dataCurrent.coord.lat,
-          +dataCurrent.coord.lon,
-          query as QueryType
-        )
+    lat && lon
+      ? await fetchOpenWeatherOnecall(+lat, +lon, query as QueryType)
       : null;
 
-  console.log('query', query);
-  console.log('coord', dataCurrent?.coord?.lat, dataCurrent?.coord?.lon);
-  // console.log(dataOnecall);
+  // const dataLocationName = null;
+  const dataLocationName =
+    lat && lon ? await fetchWeatherAPILocation(+lat, +lon) : null;
 
-  return { props: { dataCurrent, dataOnecall } };
+  // let dataLocation = city
+  //   ? await fetchOpenGeocodingByLocationName(`${city},${state}` as string)
+  //   : null;
+  //
+  console.log('query', query);
+  console.log('dataCurrent.coord', dataCurrent?.coord);
+  console.log(
+    'searchLocation',
+    dataSearchLocation && dataSearchLocation[0] && dataSearchLocation[0].name
+  );
+  console.log('isNotFoundLocation', isNotFoundLocation);
+  // console.log(dataOnecall);
+  console.log(dataLocationName && dataLocationName.location);
+
+  return {
+    props: {
+      dataLocationName,
+      dataCurrent,
+      dataSearchLocation,
+      isNotFoundLocation,
+      dataOnecall,
+    },
+  };
 };

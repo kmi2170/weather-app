@@ -2,6 +2,8 @@ import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
+import { CookiesProvider } from 'react-cookie';
+
 // import { QueryClientProvider } from 'react-query';
 // import { Hydrate } from 'react-query/hydration';
 // import queryClient from '../utils/reactQuery';
@@ -28,25 +30,27 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      {/* <QueryClientProvider client={queryClient}>
+    <CookiesProvider>
+      <ThemeProvider theme={theme}>
+        {/* <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}> */}
-      <Head>
-        <title>Advice Appli</title>
-        <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width"
-        />
-      </Head>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-      <CssBaseline />
-      <WeatherContextProvider>
-        <Component {...pageProps} />
-      </WeatherContextProvider>
-      {/* <ReactQueryDevtools />
+        <Head>
+          <title>Advice Appli</title>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width"
+          />
+        </Head>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <WeatherContextProvider>
+          <Component {...pageProps} />
+        </WeatherContextProvider>
+        {/* <ReactQueryDevtools />
         </Hydrate>
       </QueryClientProvider> */}
-    </ThemeProvider>
+      </ThemeProvider>
+    </CookiesProvider>
   );
 };
 

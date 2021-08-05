@@ -10,8 +10,8 @@ export type LocationType = {
 };
 
 export type QueryType = {
-  city: string;
-  state?: string;
+  // city: string;
+  // state?: string;
   units?: 'imperial|metric';
   lang?: 'en|ja';
 };

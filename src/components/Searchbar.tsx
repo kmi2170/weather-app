@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   searchContainer: {
     backgroundColor: '#fff',
     borderRadius: 30,
-    // maxWidth: '70vw',
-    // [theme.breakpoints.down('sm')]: {
-    //   maxWidth: '80vw',
-    // },
+    margin: '0 5vw',
+    [theme.breakpoints.up('sm')]: {
+      margin: '0 10vw',
+    },
   },
   searchSubContainer: {
     display: 'flex',
@@ -35,23 +35,23 @@ const Searchbar: React.FC = () => {
   const { query } = useRouter();
   const { state, dispatch } = useContext(WeatherContext);
 
-  const [searchInput, setSearchInput] = useState<string>('');
+  const [searchLocation, setSearchLocation] = useState<string>('');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setSearchInput(e.target.value);
+    setSearchLocation(e.target.value);
 
   const handleClear = () => {
-    setSearchInput('');
+    setSearchLocation('');
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('submit', searchInput);
+    // console.log('submit', searchLocation);
 
-    // router.push({
-    //   pathname: '/',
-    //   query: { ...query, q: searchInput },
-    // });
+    router.push({
+      pathname: '/',
+      query: { searchLocation },
+    });
   };
 
   return (
@@ -64,7 +64,7 @@ const Searchbar: React.FC = () => {
           <InputBase
             fullWidth
             type="text"
-            value={searchInput}
+            value={searchLocation}
             onChange={handleInput}
             placeholder="Search Location"
           />
