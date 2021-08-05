@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { WeatherContext, actionTypes } from '../reducer/reducer';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { IconButton, InputBase } from '@material-ui/core';
+import { Typography, IconButton, InputBase } from '@material-ui/core';
 
 import icon_search from '../../public/icon_search.png';
 import icon_cancel from '../../public/icon-cancel.png';
@@ -66,7 +66,7 @@ const Searchbar: React.FC = () => {
             type="text"
             value={searchLocation}
             onChange={handleInput}
-            placeholder="Search Location"
+            placeholder="Search Location; City,State,Country"
           />
           <IconButton onClick={handleClear}>
             <Image src={icon_cancel} alt="clear icon" width={25} height={25} />

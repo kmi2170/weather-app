@@ -35,12 +35,12 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
   const data_time = minutely?.map(({ dt }) => timeLocalwithTZ(dt, timezone));
 
   const fall = (fall: number) =>
-    state.units === 'imperial' ? +fall / 25.4 : fall;
+    state.units === 'imperial' ? fall / 25.4 : fall;
 
   let isFall = false;
-  const data_precipitation = minutely?.map(({ precipiation }) => {
-    if (precipiation > 0) isFall = true;
-    return fall(precipiation);
+  const data_precipitation = minutely?.map(({ precipitation }) => {
+    if (precipitation > 0) isFall = true;
+    return fall(+precipitation);
   });
 
   // const data_precipitation = minutely.map((_) => fall(Math.random()));

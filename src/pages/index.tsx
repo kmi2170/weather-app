@@ -83,13 +83,9 @@ const Home: React.FC<any> = ({
 
   useEffect(() => {
     if (cookies.coordinates) {
-      console.log(cookies.coordinates);
-      console.log(cookies.coordinates[0], cookies.coordinates[1]);
-      // const coordinates = JSON.parse(cookies.coordinates);
-      // const lat = +coordinates[0].lat;
-      // const lon = +coordinates[1].lon;
-      const lat = +cookies.coordinates[0].lat;
-      const lon = +cookies.coordinates[1].lon;
+      // console.log(cookies.coordinates);
+      const lat = +cookies.coordinates[0];
+      const lon = +cookies.coordinates[1];
 
       dispatch({
         type: actionTypes.SET_LOCATION,
@@ -100,7 +96,7 @@ const Home: React.FC<any> = ({
       if (cookies.units) {
         units = cookies.units;
 
-        return dispatch({
+        dispatch({
           type: actionTypes.SET_UNITS,
           payload: units,
         });
