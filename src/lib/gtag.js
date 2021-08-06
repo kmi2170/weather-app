@@ -1,5 +1,5 @@
-export const GA_TRACKING_ID = process.env.GA_TRACKING_ID; // This is your GA Tracking ID
-
+// export const GA_TRACKING_ID = process.env.GA_TRACKING_ID; // This is your GA Tracking ID
+export const GA_TRACKING_ID = 'G-58RWJSVYFV';
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url) => {
   window.gtag('config', GA_TRACKING_ID, {
