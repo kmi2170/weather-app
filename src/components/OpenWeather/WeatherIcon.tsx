@@ -1,6 +1,3 @@
-// import { useContext } from 'react';
-// import { WeatherContext } from '../../reducer/reducer';
-
 import { purple } from '@material-ui/core/colors';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
@@ -25,9 +22,6 @@ const WeaterIcon: React.FC<WeaterIconProps> = ({
   current,
 }) => {
   const classes = useStyles();
-
-  // const { state } = useContext(WeatherContext);
-  // const { sunset, sunrise, weather } = state.weatherOnecall.current;
 
   const iconClass = () => {
     if (current) {

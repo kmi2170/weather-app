@@ -29,7 +29,6 @@ const WindIcon: React.FC<WindIconProps> = ({
   const classes = useStyles();
 
   const { state } = useContext(WeatherContext);
-  // const { wind_speed, wind_gust, wind_deg } = state.weatherOnecall.current;
 
   const speedUnit = () => (state.units === 'imperial' ? 'mi/h' : 'm/s');
 

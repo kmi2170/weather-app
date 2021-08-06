@@ -1,6 +1,3 @@
-// import { useState, useEffect, useContext } from 'react';
-// import router, { useRouter } from 'next/router';
-
 import { Typography, Paper } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
@@ -19,9 +16,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const OpenWeatherOnecall_Hourly: React.FC = () => {
   const classes = useStyles();
-
-  // const { query } = useRouter();
-  // const { state, dispatch } = useContext(WeatherContext);
 
   return (
     <>

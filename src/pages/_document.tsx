@@ -9,7 +9,11 @@ import Document, {
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../theme/theme';
 
+import { GA_TRACKING_ID } from '../lib/gtag';
+
 export default class MyDocument extends Document {
+  isProduction = process.env.NODE_ENV === 'production';
+
   render() {
     return (
       <Html lang="en">
@@ -26,6 +30,11 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <link
+            href="https://fonts.googleapis.com/css2?family=Overlock&display=swap"
+            rel="stylesheet"
+          />
+          {/* 
+          <link
             href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
             rel="stylesheet"
           />
@@ -37,10 +46,31 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap"
             rel="stylesheet"
           />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Overlock&display=swap"
-            rel="stylesheet"
-          />
+          */}
+
+          {/* We only want to add the scripts if in production */}
+          {this.isProduction && (
+            <>
+              {/* Global Site Tag (gtag.js) - Google Analytics */}
+              <script
+                async
+                src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+              />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', '${GA_TRACKING_ID}', {
+                      page_path: window.location.pathname,
+                    });
+                  `,
+                }}
+              />
+            </>
+          )}
         </Head>
         <body>
           <Main />

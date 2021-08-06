@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import router, { useRouter } from 'next/router';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
 
-import { Typography, Button, ButtonGroup, Tooltip } from '@material-ui/core';
+import { Button, ButtonGroup, Tooltip } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 

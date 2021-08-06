@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
@@ -18,6 +20,8 @@ import '../styles/globals.css';
 import '../styles/css/weather-icons.min.css';
 import '../styles/css/weather-icons-wind.min.css';
 
+import * as gtag from '../lib/gtag';
+
 // const queryClient = new QueryClient();
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
@@ -28,6 +32,20 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
+
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      gtag.pageview(url);
+      console.log('ga: url', url);
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <CookiesProvider>

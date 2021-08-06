@@ -51,7 +51,6 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
     clouds,
     humidity,
     pressure,
-    visibility,
     uvi,
     rain,
     snow,
@@ -85,10 +84,10 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
       ? `${formatDigits((+p / 1013.25) * 29.921, 1)} inHg`
       : `${p} hPa`;
 
-  const visibilityWithUnit = (v: string) =>
-    state.units === 'imperial'
-      ? `${formatDigits(+v / 10000 / 1.609344, 1)} mi`
-      : `${formatDigits(+v / 1000, 1)} km`;
+  // const visibilityWithUnit = (v: string) =>
+  //   state.units === 'imperial'
+  //     ? `${formatDigits(+v / 10000 / 1.609344, 1)} mi`
+  //     : `${formatDigits(+v / 1000, 1)} km`;
 
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLElement, MouseEvent>

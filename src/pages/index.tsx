@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import router, { useRouter } from 'next/router';
-import Link from 'next/link';
 
 import { useCookies } from 'react-cookie';
 
@@ -19,7 +18,7 @@ import { purple, lime, lightGreen } from '@material-ui/core/colors';
 import { GetServerSideProps } from 'next';
 
 import { WeatherContext, actionTypes } from '../reducer/reducer';
-import { LocationType } from '../api/type_settings';
+// import { LocationType } from '../api/type_settings';
 import { QueryType } from '../api/type_settings';
 
 import SEO from '../components/SEO';
@@ -32,7 +31,7 @@ import OpenWeatherOnecall_Minutely from '../components/OpenWeather/OpenWeatherOn
 import OpenWeatherOnecall_Hourly from '../components/OpenWeather/OpenWeatherOnecall_Hourly';
 import Alerts from '../components/Alerts';
 import Footer from '../components/Footer';
-import Preview from '../components/Preview';
+// import Preview from '../components/Preview';
 
 import ipLookup from '../lib/ipLookup';
 import { fetchWeatherAPILocation } from '../lib/fetchWeatherApi';
@@ -289,7 +288,9 @@ const Home: React.FC<any> = ({
         </Grid>
         <Footer />
       </Container>
+      {/* 
       <Preview data={state.weatherOnecall} />
+      */}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 import moment from 'moment-timezone';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { green, brown, purple } from '@material-ui/core/colors';
+import { brown, purple } from '@material-ui/core/colors';
 
 import { WeatherContext } from '../../../reducer/reducer';
 

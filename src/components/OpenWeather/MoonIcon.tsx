@@ -1,6 +1,3 @@
-// import { useContext } from 'react';
-// import { WeatherContext } from '../../reducer/reducer';
-
 import { Typography } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import { makeStyles, Theme } from '@material-ui/core/styles';

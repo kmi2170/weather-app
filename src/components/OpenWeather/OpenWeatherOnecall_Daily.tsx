@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 //import Image from 'next/image';
 
-import { Typography, Paper, Grid, Divider } from '@material-ui/core';
+import { Typography, Paper, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 
@@ -12,7 +12,6 @@ import { WeatherContext } from '../../reducer/reducer';
 import WeatherIcon from './WeatherIcon';
 import WindIcon from './WindIcon';
 import PopoverDaily from './Popover_Daily';
-import Preview from '../Preview';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},

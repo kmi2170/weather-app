@@ -18,24 +18,17 @@ const Footer = () => {
             >
               OpenWeather.com
             </a>
+            and
+            <a
+              href="https://www.weatherapi.com/"
+              title="Free Weather API"
+              rel="noreferrer"
+              target="_blank"
+            >
+              WeatherAPI.com
+            </a>
             .
           </Typography>
-          {/* 
-          <Typography variant="body2">
-            Copyrihgt &copy; kmi {year}. All rights reserved. | Powered by
-            {
-              <a
-                href="https://www.weatherapi.com/"
-                title="Free Weather API"
-                rel="noreferrer"
-                target="_blank"
-              >
-                WeatherAPI.com
-              </a>
-            }
-            .
-          </Typography>
-          */}
         </Grid>
       </Grid>
     </footer>

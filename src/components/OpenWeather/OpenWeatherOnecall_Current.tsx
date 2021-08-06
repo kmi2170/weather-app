@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 //import Image from 'next/image';
 
-import { Typography, Paper, Grid, Divider } from '@material-ui/core';
+import { Typography, Paper, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 

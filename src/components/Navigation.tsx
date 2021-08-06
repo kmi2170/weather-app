@@ -1,12 +1,11 @@
-import { useState, useEffect, useContext, forwardRef } from 'react';
-import router, { useRouter } from 'next/router';
+import { useContext, forwardRef } from 'react';
+import { useRouter } from 'next/router';
 
 import { AppBar, Toolbar, Typography, List, ListItem } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, red } from '@material-ui/core/colors';
 
-import { WeatherContext, actionTypes } from '../reducer/reducer';
-import Buttons from './Buttons';
+import { WeatherContext } from '../reducer/reducer';
 import MenuComponent from './Menu';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -64,8 +63,7 @@ const Navigation = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const classes = useStyles();
   // const { itemRefs } = props;
 
-  const { query } = useRouter();
-  const { state, dispatch } = useContext(WeatherContext);
+  const { state } = useContext(WeatherContext);
 
   const handleItemRefs = (id: number) => {
     console.log(ref?.current[+id - 1]);
