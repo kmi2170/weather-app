@@ -66,8 +66,8 @@ const Navigation = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const { state } = useContext(WeatherContext);
 
   const handleItemRefs = (id: number) => {
+    window.scroll(0, ref?.current[+id - 1].offsetTop - 70);
     console.log(ref?.current[+id - 1]);
-    window.scroll(0, ref?.current[+id - 1].offsetTop - 50);
   };
 
   return (

@@ -70,7 +70,8 @@ const Home: React.FC<any> = ({
   dataOnecall,
 }) => {
   const classes = useStyles();
-  const itemRefs = useRef<HTMLDivElement[]>([]);
+  //const itemRefs = useRef<HTMLDivElement[]>([]);
+  const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
 
   const { state, dispatch } = useContext(WeatherContext);
   const { query } = useRouter();
@@ -195,9 +196,10 @@ const Home: React.FC<any> = ({
     setCookieFunc('units', state.units);
   }, [state.units]);
 
-  const saveItemRefs = (ref: HTMLDivElement) => {
-    itemRefs.current.push(ref);
-    // console.log('ref', itemRefs[0]?.current);
+  const saveItemRefs = (ref: HTMLDivElement, index: number) => {
+    // itemRefs.current.push(ref);
+    itemRefs.current[index] = ref;
+    // console.log('ref', itemRefs.current);
   };
 
   return (
@@ -233,7 +235,7 @@ const Home: React.FC<any> = ({
           ) : (
             <>
               <Grid item xs={12}>
-                <div ref={(ref) => saveItemRefs(ref)} />
+                <div ref={(ref) => saveItemRefs(ref, 0)} />
                 {state.weatherOnecall ? (
                   <OpenWeatherOnecall_Current />
                 ) : (
@@ -241,7 +243,7 @@ const Home: React.FC<any> = ({
                 )}
               </Grid>
               <Grid item xs={12}>
-                <div ref={(ref) => saveItemRefs(ref)} />
+                <div ref={(ref) => saveItemRefs(ref, 1)} />
                 {state.weatherOnecall ? (
                   <OpenWeatherOnecall_Minutely />
                 ) : (
@@ -249,7 +251,7 @@ const Home: React.FC<any> = ({
                 )}
               </Grid>
               <Grid item xs={12}>
-                <div ref={(ref) => saveItemRefs(ref)} />
+                <div ref={(ref) => saveItemRefs(ref, 2)} />
                 {state.weatherOnecall ? (
                   <OpenWeatherOnecall_Daily />
                 ) : (
@@ -268,7 +270,7 @@ const Home: React.FC<any> = ({
                 )}
               </Grid>
               <Grid item xs={12}>
-                <div ref={(ref) => saveItemRefs(ref)} />
+                <div ref={(ref) => saveItemRefs(ref, 3)} />
                 {state.weatherOnecall ? (
                   <OpenWeatherOnecall_Hourly />
                 ) : (

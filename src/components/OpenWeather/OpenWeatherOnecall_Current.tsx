@@ -138,7 +138,11 @@ const OpenWeatherOnecall_Current: React.FC = () => {
             className={classes.text}
             style={{ marginLeft: '1rem' }}
           >
-            {moment.utc(new Date(dt * 1000).toUTCString()).fromNow()}
+            {/* {moment.utc(new Date(dt * 1000)).fromNow()} */}
+            {moment
+              .utc(new Date(dt * 1000))
+              .local()
+              .format('ddd M/DD h:mm A')}
           </Typography>
         </div>
 
