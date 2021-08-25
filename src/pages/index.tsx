@@ -76,16 +76,18 @@ const Home: React.FC<any> = ({
   const { state, dispatch } = useContext(WeatherContext);
   const { query } = useRouter();
 
-  const [cookies, setCookie] = useCookies(['user']);
+  const [cookies, setCookie] = useCookies([
+    'myweather_coordinates',
+    'myweather_units',
+  ]);
 
   const setCookieFunc = (name: string, value: string) =>
     setCookie(name, value, cookiesOptions);
 
   useEffect(() => {
-    if (cookies.coordinates) {
-      // console.log(cookies.coordinates);
-      const lat = +cookies.coordinates[0];
-      const lon = +cookies.coordinates[1];
+    if (cookies.myweather_coordinates) {
+      const lat = +cookies.myweather_coordinates[0];
+      const lon = +cookies.myweather_coordinates[1];
 
       dispatch({
         type: actionTypes.SET_LOCATION,
@@ -93,8 +95,8 @@ const Home: React.FC<any> = ({
       });
 
       let units: string;
-      if (cookies.units) {
-        units = cookies.units;
+      if (cookies.myweather_units) {
+        units = cookies.myweather_units;
 
         dispatch({
           type: actionTypes.SET_UNITS,
@@ -184,7 +186,7 @@ const Home: React.FC<any> = ({
         query: { lat, lon, units: state.units, lang: state.lang },
       });
 
-      setCookieFunc('coordinates', JSON.stringify([lat, lon]));
+      setCookieFunc('myweather_coordinates', JSON.stringify([lat, lon]));
     }
   }, [dataSearchLocation, dispatch]);
 
@@ -193,7 +195,7 @@ const Home: React.FC<any> = ({
   }, [dataOnecall, dataSearchLocation, dispatch]);
 
   useEffect(() => {
-    setCookieFunc('units', state.units);
+    setCookieFunc('myweather_units', state.units);
   }, [state.units]);
 
   const saveItemRefs = (ref: HTMLDivElement, index: number) => {
@@ -280,7 +282,7 @@ const Home: React.FC<any> = ({
               <Grid item xs={12}>
                 {state.weatherOnecall && state.weatherOnecall.alerts && (
                   <>
-                    <div ref={(ref) => saveItemRefs(ref)} />
+                    <div ref={(ref) => saveItemRefs(ref, 4)} />
                     <Alerts />
                   </>
                 )}
