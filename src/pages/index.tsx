@@ -82,7 +82,7 @@ const Home: React.FC<any> = ({
   ]);
 
   const setCookieFunc = (
-    name: 'myweather_coordinates|myweather_units',
+    name: 'myweather_coordinates' | 'myweather_units',
     value: string
   ) => setCookie(name, value, cookiesOptions);
 
