@@ -27,6 +27,7 @@
     "@types/gtag.js": "^0.0.7",
     "@types/node": "^15.12.4",
     "@types/react": "^17.0.11",
+    "@types/react-cookie": "git+ssh://git@github.com:S64/types-react-cookie.git#v2.1.2-2",
     "babel-plugin-transform-imports": "^2.0.0",
     "eslint": "7.29.0",
     "eslint-config-next": "11.0.0",
