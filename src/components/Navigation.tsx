@@ -1,11 +1,10 @@
 import { useContext, forwardRef } from 'react';
-import { useRouter } from 'next/router';
 
 import { AppBar, Toolbar, Typography, List, ListItem } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, red } from '@material-ui/core/colors';
 
-import { WeatherContext } from '../reducer/reducer';
+import { WeatherContext } from '../context';
 import MenuComponent from './Menu';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -61,7 +60,6 @@ const list = [
 
 const Navigation = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const classes = useStyles();
-  // const { itemRefs } = props;
 
   const { state } = useContext(WeatherContext);
 

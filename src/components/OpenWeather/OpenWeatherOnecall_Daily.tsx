@@ -8,7 +8,7 @@ import { purple } from '@material-ui/core/colors';
 // import moment from 'moment';
 import moment from 'moment-timezone';
 
-import { WeatherContext } from '../../reducer/reducer';
+import { WeatherContext } from '../../context';
 import WeatherIcon from './WeatherIcon';
 import WindIcon from './WindIcon';
 import PopoverDaily from './Popover_Daily';

@@ -7,7 +7,7 @@ import { Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 
-import { WeatherContext, actionTypes } from '../reducer/reducer';
+import { WeatherContext } from '../context';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},

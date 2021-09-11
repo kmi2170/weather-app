@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { WeatherContext } from '../../reducer/reducer';
+import { WeatherContext } from '../../context';
 
 import { Grid, Typography } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';

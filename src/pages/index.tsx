@@ -3,21 +3,16 @@ import router, { useRouter } from 'next/router';
 
 import { useCookies } from 'react-cookie';
 
-import {
-  Container,
-  Grid,
-  Typography,
-  // AppBar,
-  // List,
-  // ListItem,
-} from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, lime, lightGreen } from '@material-ui/core/colors';
 
 import { GetServerSideProps } from 'next';
 
-import { WeatherContext, actionTypes } from '../reducer/reducer';
+import { WeatherContext } from '../context';
+import { actionTypes } from '../context/actionTypes';
+
 // import { LocationType } from '../api/type_settings';
 import { QueryType } from '../api/type_settings';
 
@@ -70,7 +65,6 @@ const Home: React.FC<any> = ({
   dataOnecall,
 }) => {
   const classes = useStyles();
-  //const itemRefs = useRef<HTMLDivElement[]>([]);
   const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
 
   const { state, dispatch } = useContext(WeatherContext);

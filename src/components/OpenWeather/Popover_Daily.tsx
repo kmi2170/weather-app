@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { WeatherContext } from '../../reducer/reducer';
+import { WeatherContext } from '../../context';
 
 import moment from 'moment-timezone';
 

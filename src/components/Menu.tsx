@@ -1,8 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-// import router, { useRouter } from 'next/router';
-
-// import { WeatherContext, actionTypes } from '../reducer/reducer';
 
 import { Typography, Menu, MenuItem, IconButton } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -16,9 +13,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const MenuComponent: React.FC = () => {
   const classes = useStyles();
-
-  // const { query } = useRouter();
-  // const { state, dispatch } = useContext(WeatherContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

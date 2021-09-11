@@ -8,7 +8,7 @@ import { Typography, Paper } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
 
-import { WeatherContext, actionTypes } from '../../reducer/reducer';
+import { WeatherContext } from '../../context';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},

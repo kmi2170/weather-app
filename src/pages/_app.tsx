@@ -11,7 +11,8 @@ import { CookiesProvider } from 'react-cookie';
 // import queryClient from '../utils/reactQuery';
 // import { ReactQueryDevtools } from 'react-query/devtools';
 
-import WeatherContextProvider from '../reducer/reducer';
+//import WeatherContextProvider from '../reducer/reducer';
+import WeatherContextProvider from '../context/index';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme/theme';

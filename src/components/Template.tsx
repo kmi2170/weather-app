@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import router, { useRouter } from 'next/router';
 
-import { WeatherContext, actionTypes } from '../reducer/reducer';
+import { WeatherContext } from '../context';
+import { actionTypes } from '../context/actionTypes';
 
 import { Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';

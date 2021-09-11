@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import router, { useRouter } from 'next/router';
 
-import { WeatherContext, actionTypes } from '../reducer/reducer';
+import { WeatherContext } from '../context';
+import { actionTypes } from '../context/actionTypes';
 
 import { Button, ButtonGroup, Tooltip } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';

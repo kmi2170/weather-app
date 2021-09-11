@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import router, { useRouter } from 'next/router';
 import Image from 'next/image';
 
-import { WeatherContext, actionTypes } from '../reducer/reducer';
+import { WeatherContext } from '../context';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Typography, IconButton, InputBase } from '@material-ui/core';
+import { IconButton, InputBase } from '@material-ui/core';
 
 import icon_search from '../../public/icon_search.png';
 import icon_cancel from '../../public/icon-cancel.png';

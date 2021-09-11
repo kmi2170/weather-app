@@ -5,7 +5,7 @@ import ChartTemps from './Charts/ChartTemps';
 import ChartHumidity from './Charts/ChartHumidity';
 import ChartPrecipitation from './Charts/ChartPrecipitation';
 import ChartWind from './Charts/ChartWind';
-import ChartPressure from './Charts/ChartPressure';
+// import ChartPressure from './Charts/ChartPressure';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
