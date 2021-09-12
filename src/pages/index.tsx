@@ -106,10 +106,9 @@ const Home: React.FC<any> = ({
         query: { lat, lon, units, lang: state.lang },
       });
     } else {
-      const getLocation = async () => {
-        const res = await ipLookup();
-
-        const { city, region, country } = res;
+      //const res = await ipLookup();
+      ipLookup().then(({ city, region, country }) => {
+        // const { city, region, country } = res;
 
         dispatch({
           type: actionTypes.SET_IP_LOCATION,
@@ -133,13 +132,14 @@ const Home: React.FC<any> = ({
             lang: state.lang,
           },
         });
-      };
-
-      getLocation();
+      });
+      // const getLocation = async () => {};
+      // getLocation();
     }
   }, []);
 
   useEffect(() => {
+    // dispatch(findLocation(dataLocationName));
     dispatch({
       type: actionTypes.SET_LOCATION,
       payload: {
