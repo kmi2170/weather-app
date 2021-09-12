@@ -51,7 +51,6 @@ const list = [
   { id: 2, name: 'minutely' },
   { id: 3, name: 'daily' },
   { id: 4, name: 'hourly' },
-  // { id: 4, name: 'map' },
 ];
 
 // interface NavigationProps {
@@ -65,7 +64,7 @@ const Navigation = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
 
   const handleItemRefs = (id: number) => {
     window.scroll(0, ref?.current[+id - 1].offsetTop - 70);
-    console.log(ref?.current[+id - 1]);
+    // console.log(ref?.current[+id - 1]);
   };
 
   return (

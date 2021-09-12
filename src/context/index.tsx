@@ -1,5 +1,7 @@
-import { createContext, useReducer, useMemo } from 'react';
+import { createContext, useMemo } from 'react';
+import { useReducer } from 'react';
 import { initState, StateType } from './initState';
+import useAsyncReducer from '../hooks/useAsyncReducer';
 import { ActionsType } from './actionTypes';
 import reducer from './reducer';
 
@@ -12,6 +14,7 @@ const WeatherContextContextProvider: React.FC<React.ReactNode> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(reducer, initState);
+  // const [state, dispatch] = useAsyncReducer(reducer, initState);
 
   const contextValue = useMemo(() => {
     return { state, dispatch };

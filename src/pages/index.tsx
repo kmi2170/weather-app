@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
     background: purple[50],
+    // background: lime[100],
     minHeight: '100vh',
   },
   noLocation: {
@@ -195,9 +196,7 @@ const Home: React.FC<any> = ({
   }, [state.units]);
 
   const saveItemRefs = (ref: HTMLDivElement, index: number) => {
-    // itemRefs.current.push(ref);
     itemRefs.current[index] = ref;
-    // console.log('ref', itemRefs.current);
   };
 
   return (

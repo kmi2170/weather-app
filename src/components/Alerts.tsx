@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
-import router, { useRouter } from 'next/router';
+import { useContext } from 'react';
 
 import moment from 'moment-timezone';
 
@@ -23,8 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Alerts: React.FC = () => {
   const classes = useStyles();
 
-  const { query } = useRouter();
-  const { state, dispatch } = useContext(WeatherContext);
+  const { state } = useContext(WeatherContext);
 
   const { alerts, timezone } = state.weatherOnecall;
 

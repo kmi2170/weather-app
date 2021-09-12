@@ -9,7 +9,6 @@ import { purple } from '@material-ui/core/colors';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  text: {},
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -46,18 +45,7 @@ const Component: React.FC = () => {
   const { query } = useRouter();
   const { state, dispatch } = useContext(WeatherContext);
 
-  const handleClickLang = () => {
-    const lang = state.lang === 'en' ? 'ja' : 'en';
-
-    router.push({ pathname: '/', query: { ...query, lang } });
-
-    return dispatch({
-      type: actionTypes.SET_LANG,
-      payload: lang,
-    });
-  };
-
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const units = state.units === 'imperial' ? 'metric' : 'imperial';
 
@@ -69,25 +57,10 @@ const Component: React.FC = () => {
     });
   };
 
-  // const buttonLang = () =>
-  //   state.lang === 'en' ? <span>Japanese</span> : <span>English</span>;
-
-  // const buttonUnits = () =>
-  //   state.units === 'imperial' ? <span>&#8457;</span> : <span>&#8451;</span>;
-
-  // const buttonUnitsTooltip = () =>
-  //   state.units !== 'imperial' ? (
-  //     <span>Switch to &#8457;</span>
-  //   ) : (
-  //     <span>Switch to &#8451;</span>
-  //   );
-
-  // const buttonLangTooltip = () =>
-  //   state.lang !== 'en' ? (
-  //     <span>Switch to Japanese</span>
-  //   ) : (
-  //     <span>Switch to English</span>
-  //   );
+  const buttonProps = [
+    { units: 'imperial', symbol: '℉' },
+    { units: 'metric', symbol: '℃' },
+  ];
 
   return (
     <>
@@ -97,6 +70,23 @@ const Component: React.FC = () => {
             color="primary"
             aria-label="outlined primary button group"
           >
+            {buttonProps.map(({ units, symbol }) => (
+              <Button
+                key={units}
+                variant={state.units === units ? 'contained' : 'outlined'}
+                size="small"
+                onClick={(e) => handleClick(e)}
+                className={
+                  state.units === units
+                    ? classes.buttonSelected
+                    : classes.buttonUnSelected
+                }
+              >
+                {symbol}
+              </Button>
+            ))}
+
+            {/* 
             <Button
               variant={state.units === 'imperial' ? 'contained' : 'outlined'}
               size="small"
@@ -121,16 +111,10 @@ const Component: React.FC = () => {
             >
               ℃
             </Button>
+  */}
           </ButtonGroup>
         </div>
       </Tooltip>
-      {/* 
-      <Tooltip title={buttonLangTooltip()}>
-        <Button variant="outlined" size="small" onClick={handleClickLang}>
-          {buttonLang()}
-        </Button>
-      </Tooltip>
-      */}
     </>
   );
 };
