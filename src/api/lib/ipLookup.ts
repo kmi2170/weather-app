@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ipLookup = async () => {
+export const ipLookup = async () => {
   const url = 'https://ipapi.co/json';
 
   try {
@@ -31,5 +31,3 @@ const ipLookup = async () => {
     console.log(error);
   }
 };
-
-export default ipLookup;

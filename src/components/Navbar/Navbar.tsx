@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Typography, List, ListItem } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, red } from '@material-ui/core/colors';
 
-import { WeatherContext } from '../context';
+import { WeatherContext } from '../../context';
 import MenuComponent from './Menu';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -53,11 +53,11 @@ const list = [
   { id: 4, name: 'hourly' },
 ];
 
-// interface NavigationProps {
+// interface NavbarProps {
 //   itemRefs: HTMLElement[];
 // }
 
-const Navigation = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
+const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const classes = useStyles();
 
   const { state } = useContext(WeatherContext);
@@ -110,5 +110,4 @@ const Navigation = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   );
 };
 
-// Navigation.displayName = 'Navigation';
-export default forwardRef(Navigation);
+export default forwardRef(Navbar);

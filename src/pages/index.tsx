@@ -13,29 +13,29 @@ import { GetServerSideProps } from 'next';
 import { WeatherContext } from '../context';
 import { actionTypes } from '../context/actionTypes';
 
-// import { LocationType } from '../api/type_settings';
-import { QueryType } from '../api/type_settings';
+import { QueryType, CookieNameType } from '../api/type_settings';
 
 import SEO from '../components/SEO';
-import Navigation from '../components/Navigation';
+import Navbar from '../components/Navbar/Navbar';
 import Searchbar from '../components/Searchbar';
-// import Buttons from '../components/Buttons';
-import OpenWeatherOnecall_Current from '../components/OpenWeather/OpenWeatherOnecall_Current';
-import OpenWeatherOnecall_Daily from '../components/OpenWeather/OpenWeatherOnecall_Daily';
-import OpenWeatherOnecall_Minutely from '../components/OpenWeather/OpenWeatherOnecall_Minutely';
-import OpenWeatherOnecall_Hourly from '../components/OpenWeather/OpenWeatherOnecall_Hourly';
 import Alerts from '../components/Alerts';
 import Footer from '../components/Footer';
 // import Preview from '../components/Preview';
-
-import ipLookup from '../lib/ipLookup';
-import { fetchWeatherAPILocation } from '../lib/fetchWeatherApi';
 import {
+  OpenWeatherOnecall_Current,
+  OpenWeatherOnecall_Daily,
+  OpenWeatherOnecall_Minutely,
+  OpenWeatherOnecall_Hourly,
+} from '../components/OpenWeather';
+
+import {
+  ipLookup,
+  fetchWeatherAPILocation,
   // fetchOpenWeatherCurrentByCoordinates,
   fetchOpenWeatherCurrentByCityName,
   fetchOpenWeatherOnecall,
   fetchOpenGeocodingByLocationName,
-} from '../lib/fetchOpenWeather';
+} from '../api/lib';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -74,17 +74,11 @@ const Home: React.FC<any> = ({
   const [cookies, setCookie] = useCookies([
     'myweather_coordinates',
     'myweather_units',
-  ]);
-
-  const setCookieFunc = (
-    name: 'myweather_coordinates' | 'myweather_units',
-    value: string
-  ) => setCookie(name, value, cookiesOptions);
+  ] as CookieNameType[]);
 
   useEffect(() => {
     if (cookies.myweather_coordinates) {
-      const lat = +cookies.myweather_coordinates[0];
-      const lon = +cookies.myweather_coordinates[1];
+      const [lat, lon] = cookies.myweather_coordinates;
 
       dispatch({
         type: actionTypes.SET_LOCATION,
@@ -116,9 +110,6 @@ const Home: React.FC<any> = ({
             city: city as string,
             state: (region as string) || '',
             country: country as string,
-            // lat: lat as number,
-            // lon: lon as number,
-            // timezone: timezone as string,
           },
         });
 
@@ -153,8 +144,7 @@ const Home: React.FC<any> = ({
   useEffect(() => {
     // dispatch({ type: actionTypes.SET_WEATHER_CURRENT, payload: dataCurrent });
     if (dataCurrent) {
-      const lat = +dataCurrent.coord.lat;
-      const lon = +dataCurrent.coord.lon;
+      const { lat, lon } = dataCurrent.coord;
 
       dispatch({
         type: actionTypes.SET_LOCATION,
@@ -170,8 +160,7 @@ const Home: React.FC<any> = ({
 
   useEffect(() => {
     if (dataSearchLocation && dataSearchLocation.length !== 0) {
-      const lat = +dataSearchLocation[0].lat;
-      const lon = +dataSearchLocation[0].lon;
+      const { lat, lon } = dataSearchLocation[0];
 
       dispatch({
         type: actionTypes.SET_LOCATION,
@@ -183,7 +172,11 @@ const Home: React.FC<any> = ({
         query: { lat, lon, units: state.units, lang: state.lang },
       });
 
-      setCookieFunc('myweather_coordinates', JSON.stringify([lat, lon]));
+      setCookie(
+        'myweather_coordinates' as CookieNameType,
+        JSON.stringify([lat, lon]),
+        cookiesOptions
+      );
     }
   }, [dataSearchLocation, dispatch]);
 
@@ -192,7 +185,7 @@ const Home: React.FC<any> = ({
   }, [dataOnecall, dataSearchLocation, dispatch]);
 
   useEffect(() => {
-    setCookieFunc('myweather_units', state.units);
+    setCookie('myweather_units' as CookieNameType, state.units, cookiesOptions);
   }, [state.units]);
 
   const saveItemRefs = (ref: HTMLDivElement, index: number) => {
@@ -202,7 +195,7 @@ const Home: React.FC<any> = ({
   return (
     <div className={classes.root}>
       <SEO />
-      <Navigation ref={itemRefs} />
+      <Navbar ref={itemRefs} />
       <Container>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>

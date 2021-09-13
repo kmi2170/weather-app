@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import router, { useRouter } from 'next/router';
 
-import { WeatherContext } from '../context';
-import { actionTypes } from '../context/actionTypes';
+import { WeatherContext } from '../../context';
+import { actionTypes } from '../../context/actionTypes';
 
 import { Button, ButtonGroup, Tooltip } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
@@ -45,8 +45,9 @@ const Component: React.FC = () => {
   const { query } = useRouter();
   const { state, dispatch } = useContext(WeatherContext);
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
+  //const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleClick = () => {
+    // e.preventDefault();
     const units = state.units === 'imperial' ? 'metric' : 'imperial';
 
     router.push({ pathname: '/', query: { ...query, units } });
@@ -64,12 +65,9 @@ const Component: React.FC = () => {
 
   return (
     <>
-      <Tooltip title="Switch Unit">
+      <Tooltip title="Switch Units">
         <div className={classes.root}>
-          <ButtonGroup
-            color="primary"
-            aria-label="outlined primary button group"
-          >
+          <ButtonGroup color="primary" aria-label="units switch">
             {buttonProps.map(({ units, symbol }) => (
               <Button
                 key={units}
@@ -85,33 +83,6 @@ const Component: React.FC = () => {
                 {symbol}
               </Button>
             ))}
-
-            {/* 
-            <Button
-              variant={state.units === 'imperial' ? 'contained' : 'outlined'}
-              size="small"
-              onClick={(e) => handleClick(e)}
-              className={
-                state.units === 'imperial'
-                  ? classes.buttonSelected
-                  : classes.buttonUnSelected
-              }
-            >
-              ℉
-            </Button>
-            <Button
-              variant={state.units !== 'imperial' ? 'contained' : 'outlined'}
-              size="small"
-              onClick={(e) => handleClick(e)}
-              className={
-                state.units !== 'imperial'
-                  ? classes.buttonSelected
-                  : classes.buttonUnSelected
-              }
-            >
-              ℃
-            </Button>
-  */}
           </ButtonGroup>
         </div>
       </Tooltip>

@@ -5,7 +5,7 @@ import { Typography, Menu, MenuItem, IconButton } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Buttons from './Buttons';
-import icon_setting from '../../public/icon_setting.png';
+import icon_setting from '../../../public/icon_setting.png';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
