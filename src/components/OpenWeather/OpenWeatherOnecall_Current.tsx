@@ -1,64 +1,66 @@
-import { useContext } from 'react';
 //import Image from 'next/image';
 
-import { Typography, Paper, Grid } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
+import { Typography, Paper, Grid } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { purple } from "@material-ui/core/colors";
 
 // import moment from 'moment';
-import moment from 'moment-timezone';
+import moment from "moment-timezone";
 
-import { WeatherContext } from '../../context';
-import WeatherIcon from './WeatherIcon';
-import WindIcon from './WindIcon';
-import MoonIcon from './MoonIcon';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice";
+
+import WeatherIcon from "./WeatherIcon";
+import WindIcon from "./WindIcon";
+import MoonIcon from "./MoonIcon";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   locationContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+      justifyContent: "center",
     },
-    alignItems: 'center',
+    alignItems: "center",
   },
   locationSubContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   weatherContainer: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
   country: {
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: '1rem',
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: "1rem",
     },
   },
   iconSun: {
-    fontSize: '1rem',
+    fontSize: "1rem",
     color: purple[500],
-    marginRight: '0.5rem',
+    marginRight: "0.5rem",
   },
   iconMoon: {
-    fontSize: '1rem',
+    fontSize: "1rem",
     color: purple[500],
-    marginRight: '0.5rem',
-    marginLeft: '0.25rem',
+    marginRight: "0.5rem",
+    marginLeft: "0.25rem",
   },
 }));
 
 const OpenWeatherOnecall_Current: React.FC = () => {
   const classes = useStyles();
 
-  const { state } = useContext(WeatherContext);
+  const { location, units, weatherOnecall } = useAppSelector(selectWeather);
 
-  const { timezone, current, daily } = state.weatherOnecall;
+  const { timezone, current, daily } = weatherOnecall;
+
   const {
     dt,
     sunrise,
@@ -79,18 +81,18 @@ const OpenWeatherOnecall_Current: React.FC = () => {
   } = current;
   const { moonrise, moonset, moon_phase } = daily[0];
 
-  const { city, state: state_name, country } = state.location;
+  const { city, state: state_name, country } = location;
 
   const formatDigits = (x: string | number, d: number) =>
     x !== undefined && x !== null
-      ? (+x).toLocaleString('en-US', {
+      ? (+x).toLocaleString("en-US", {
           maximumFractionDigits: d,
           minimumFractionDigits: d,
         })
-      : 'N/A';
+      : "N/A";
 
   const tempWithUnit = (t: string) =>
-    state.units === 'imperial' ? (
+    units === "imperial" ? (
       <span>
         {formatDigits(t, 0)}
         <small>&#8457;</small>
@@ -103,17 +105,15 @@ const OpenWeatherOnecall_Current: React.FC = () => {
     );
 
   const fallWithUnit = (fall: string) =>
-    state.units === 'imperial'
-      ? `${formatDigits(+fall / 25.4, 2)} in`
-      : `${fall} mm`;
+    units === "imperial" ? `${formatDigits(+fall / 25.4, 2)} in` : `${fall} mm`;
 
   const pressureWithUnit = (p: string) =>
-    state.units === 'imperial'
+    units === "imperial"
       ? `${formatDigits((+p / 1013.25) * 29.921, 1)} inHg`
       : `${p} hPa`;
 
   const visibilityWithUnit = (v: string) =>
-    state.units === 'imperial'
+    units === "imperial"
       ? `${formatDigits(+v / 10000 / 1.609344, 1)} mi`
       : `${formatDigits(+v / 1000, 1)} km`;
 
@@ -123,26 +123,26 @@ const OpenWeatherOnecall_Current: React.FC = () => {
   const timeLocalwithTZ = (dt: string, tzone: string) =>
     moment(new Date(+dt * 1000).toUTCString())
       .tz(tzone)
-      .format('h:mm a');
+      .format("h:mm a");
 
   return (
     <>
       <Typography variant="h6" className={classes.text}>
         Current
       </Typography>
-      <Paper style={{ padding: '1rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Paper style={{ padding: "1rem" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Typography
             variant="subtitle2"
             color="textSecondary"
             className={classes.text}
-            style={{ marginLeft: '1rem' }}
+            style={{ marginLeft: "1rem" }}
           >
             {/* {moment.utc(new Date(dt * 1000)).fromNow()} */}
             {moment
               .utc(new Date(dt * 1000))
               .local()
-              .format('ddd M/DD h:mm A')}
+              .format("ddd M/DD h:mm A")}
           </Typography>
         </div>
 
@@ -162,7 +162,7 @@ const OpenWeatherOnecall_Current: React.FC = () => {
                 variant="h6"
                 color="textSecondary"
                 className={classes.country}
-                style={{ fontStyle: 'italic' }}
+                style={{ fontStyle: "italic" }}
               >
                 {country}
               </Typography>
@@ -175,7 +175,7 @@ const OpenWeatherOnecall_Current: React.FC = () => {
                 <Typography variant="h6" align="center">
                   {weather[0].main}
                 </Typography>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   {/* 
                   <Image src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
                     alt={weather[0].icon} width={50} height={50} layout="fixed" />
@@ -245,16 +245,16 @@ const OpenWeatherOnecall_Current: React.FC = () => {
             </Grid>
 
             <Grid item xs={12}>
-              {rain && rain['1h'] && (
+              {rain && rain["1h"] && (
                 <Typography variant="subtitle2">
-                  Rain (Last 1 hour), {fallWithUnit(rain['1h'])}
+                  Rain (Last 1 hour), {fallWithUnit(rain["1h"])}
                 </Typography>
               )}
             </Grid>
             <Grid item xs={12}>
-              {snow && snow['1h'] && (
+              {snow && snow["1h"] && (
                 <Typography variant="subtitle2">
-                  Snow (Last 1 hour), {fallWithUnit(snow['1h'])}
+                  Snow (Last 1 hour), {fallWithUnit(snow["1h"])}
                 </Typography>
               )}
             </Grid>

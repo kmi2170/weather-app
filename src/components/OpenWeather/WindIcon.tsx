@@ -1,11 +1,11 @@
-import { useContext } from 'react';
-import { WeatherContext } from '../../context';
+import { Grid, Typography } from "@material-ui/core";
+import { purple } from "@material-ui/core/colors";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 
-import { Grid, Typography } from '@material-ui/core';
-import { purple } from '@material-ui/core/colors';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice";
 
-import { arr_wind_deg } from '../../utils/wind';
+import { arr_wind_deg } from "../../utils/wind";
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -28,9 +28,9 @@ const WindIcon: React.FC<WindIconProps> = ({
 }) => {
   const classes = useStyles();
 
-  const { state } = useContext(WeatherContext);
+  const { units } = useAppSelector(selectWeather);
 
-  const speedUnit = () => (state.units === 'imperial' ? 'mi/h' : 'm/s');
+  const speedUnit = () => (units === "imperial" ? "mi/h" : "m/s");
 
   const windDirection = () => {
     const n_direction = Math.floor((wind_deg + 11.25) / 22.5);
@@ -52,11 +52,11 @@ const WindIcon: React.FC<WindIconProps> = ({
 
   const formatDigits = (x: number) =>
     x !== undefined && x !== null
-      ? (+x).toLocaleString('en-US', {
+      ? (+x).toLocaleString("en-US", {
           maximumFractionDigits: 1,
           minimumFractionDigits: 1,
         })
-      : 'N/A';
+      : "N/A";
 
   return (
     <Grid container justifyContent="center" alignItems="center">
@@ -71,10 +71,10 @@ const WindIcon: React.FC<WindIconProps> = ({
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <i
             className={iconClass()}
-            style={{ fontSize: current ? '3rem' : '1.75rem' }}
+            style={{ fontSize: current ? "3rem" : "1.75rem" }}
           />
         </div>
       </Grid>

@@ -1,41 +1,41 @@
-import { useState, useEffect, useContext } from 'react';
-import router, { useRouter } from 'next/router';
+import { useState, useEffect, useContext } from "react";
+import router, { useRouter } from "next/router";
 
-import { Bar } from 'react-chartjs-2';
-import moment from 'moment-timezone';
+import { Bar } from "react-chartjs-2";
+import moment from "moment-timezone";
 
-import { Typography, Paper } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { blue } from '@material-ui/core/colors';
+import { Typography, Paper } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
 
-import { WeatherContext } from '../../context';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   paper: {
-    padding: '1rem',
+    padding: "1rem",
   },
 }));
 
 const timeLocalwithTZ = (dt: number, tzone: string) =>
   moment(new Date(+dt * 1000).toUTCString())
     .tz(tzone)
-    .format('h:mm a');
+    .format("h:mm a");
 
 const OpenWeatherOnecall_Minutely: React.FC = () => {
   const classes = useStyles();
-
   const { query } = useRouter();
-  const { state, dispatch } = useContext(WeatherContext);
 
   const [data, setData] = useState({});
 
-  const { timezone, minutely } = state.weatherOnecall;
+  const { units, weatherOnecall } = useAppSelector(selectWeather);
+
+  const { timezone, minutely } = weatherOnecall;
 
   const data_time = minutely?.map(({ dt }) => timeLocalwithTZ(dt, timezone));
 
-  const fall = (fall: number) =>
-    state.units === 'imperial' ? fall / 25.4 : fall;
+  const fall = (fall: number) => (units === "imperial" ? fall / 25.4 : fall);
 
   let isFall = false;
   const data_precipitation = minutely?.map(({ precipitation }) => {
@@ -58,7 +58,7 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
           maxTicksLimit: 10,
           callback: function (val, index) {
             // Hide the label of every N dataset
-            return index % 1 === 0 ? this.getLabelForValue(val) : '';
+            return index % 1 === 0 ? this.getLabelForValue(val) : "";
           },
         },
       },
@@ -72,10 +72,10 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
       title: {
         display: true,
         text: isFall
-          ? state.units === 'imperial'
-            ? 'Precipitation for 1 Hour [in]'
-            : 'Precipitation for 1 Hour [mm]'
-          : 'No Precipitation for 1 Hour',
+          ? units === "imperial"
+            ? "Precipitation for 1 Hour [in]"
+            : "Precipitation for 1 Hour [mm]"
+          : "No Precipitation for 1 Hour",
         fontSiz: 20,
       },
       legend: {
@@ -95,7 +95,7 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
         },
       ],
     });
-  }, [state.units]);
+  }, [units]);
 
   return (
     <>

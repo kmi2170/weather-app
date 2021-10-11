@@ -1,28 +1,26 @@
-import { useState, useContext } from 'react';
-import router, { useRouter } from 'next/router';
-import Image from 'next/image';
+import { useState } from "react";
+import router, { useRouter } from "next/router";
+import Image from "next/image";
 
-import { WeatherContext } from '../context';
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { IconButton, InputBase } from "@material-ui/core";
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { IconButton, InputBase } from '@material-ui/core';
-
-import icon_search from '../../public/icon_search.png';
-import icon_cancel from '../../public/icon-cancel.png';
+import icon_search from "../../public/icon_search.png";
+import icon_cancel from "../../public/icon-cancel.png";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   searchContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 30,
-    margin: '0 5vw',
-    [theme.breakpoints.up('sm')]: {
-      margin: '0 10vw',
+    margin: "0 5vw",
+    [theme.breakpoints.up("sm")]: {
+      margin: "0 10vw",
     },
   },
   searchSubContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
   },
   inputBase: {
     // maxWidth: '60vw',
@@ -33,15 +31,14 @@ const Searchbar: React.FC = () => {
   const classes = useStyles();
 
   const { query } = useRouter();
-  const { state, dispatch } = useContext(WeatherContext);
 
-  const [searchLocation, setSearchLocation] = useState<string>('');
+  const [searchLocation, setSearchLocation] = useState<string>("");
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchLocation(e.target.value);
 
   const handleClear = () => {
-    setSearchLocation('');
+    setSearchLocation("");
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,7 +46,7 @@ const Searchbar: React.FC = () => {
     // console.log('submit', searchLocation);
 
     router.push({
-      pathname: '/',
+      pathname: "/",
       query: { searchLocation },
     });
   };

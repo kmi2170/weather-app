@@ -1,38 +1,39 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from "react";
 
-import { Line } from 'react-chartjs-2';
-import moment from 'moment-timezone';
+import { Line } from "react-chartjs-2";
+import moment from "moment-timezone";
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { pink, deepOrange, purple } from '@material-ui/core/colors';
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { pink, deepOrange, purple } from "@material-ui/core/colors";
 
-import { WeatherContext } from '../../../context';
+import { useAppSelector } from "../../../app/hooks";
+import { selectWeather } from "../../../features/weatherSlice";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((heme: Theme) => ({
   text: {},
 }));
 
 const timeLocalwithTZ = (dt: number, tzone: string) =>
   moment(new Date(+dt * 1000).toUTCString())
     .tz(tzone)
-    .format('DD ddd h a');
+    .format("DD ddd h a");
 //.format('MM/DD h a');
 
 const formatDigits = (x: string | number, d: number) =>
   x !== undefined && x !== null
-    ? (+x).toLocaleString('en-US', {
+    ? (+x).toLocaleString("en-US", {
         maximumFractionDigits: d,
         minimumFractionDigits: d,
       })
-    : 'N/A';
+    : "N/A";
 
 const ChartTemps: React.FC = () => {
   const classes = useStyles();
 
   const [data, setData] = useState({});
 
-  const { state } = useContext(WeatherContext);
-  const { timezone, hourly } = state.weatherOnecall;
+  const { units, weatherOnecall } = useAppSelector(selectWeather);
+  const { timezone, hourly } = weatherOnecall;
 
   const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
 
@@ -71,9 +72,9 @@ const ChartTemps: React.FC = () => {
         },
       },
       y: {
-        type: 'linear',
+        type: "linear",
         display: true,
-        position: 'left',
+        position: "left",
         grid: {
           display: true,
           color: purple[200],
@@ -99,18 +100,18 @@ const ChartTemps: React.FC = () => {
       labels: data_time,
       datasets: [
         {
-          label: state.units === 'imperial' ? 'Temp [℉]' : 'Temp [℃]',
+          label: units === "imperial" ? "Temp [℉]" : "Temp [℃]",
           borderColor: pink[500],
           backgroundColor: pink[500],
           data: data_temp,
-          yAxisID: 'y',
+          yAxisID: "y",
         },
         {
-          label: state.units === 'imperial' ? 'Dew Point [℉]' : 'Dew Point [℃]',
+          label: units === "imperial" ? "Dew Point [℉]" : "Dew Point [℃]",
           borderColor: deepOrange[900],
           backgroundColor: deepOrange[900],
           data: data_dew_point,
-          yAxisID: 'y',
+          yAxisID: "y",
         },
       ],
     });

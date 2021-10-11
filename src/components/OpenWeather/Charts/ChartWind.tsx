@@ -1,12 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from "react";
 
-import { Line } from 'react-chartjs-2';
-import moment from 'moment-timezone';
+import { Line } from "react-chartjs-2";
+import moment from "moment-timezone";
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { green, brown, purple } from '@material-ui/core/colors';
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { green, brown, purple } from "@material-ui/core/colors";
 
-import { WeatherContext } from '../../../context';
+import { useAppSelector } from "../../../app/hooks";
+import { selectWeather } from "../../../features/weatherSlice";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -15,25 +16,24 @@ const useStyles = makeStyles((theme: Theme) => ({
 const timeLocalwithTZ = (dt: number, tzone: string) =>
   moment(new Date(+dt * 1000).toUTCString())
     .tz(tzone)
-    .format('MM/DD h a');
+    .format("MM/DD h a");
 
 const ChartWind: React.FC = () => {
   const classes = useStyles();
 
   const [data, setData] = useState({});
 
-  const { state } = useContext(WeatherContext);
-  const { timezone, hourly } = state.weatherOnecall;
+  const { units, weatherOnecall } = useAppSelector(selectWeather);
+  const { timezone, hourly } = weatherOnecall;
 
   const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
 
-  const fall = (fall: number) =>
-    state.units === 'imperial' ? +fall / 25.4 : fall;
+  const fall = (fall: number) => (units === "imperial" ? +fall / 25.4 : fall);
 
   const pressureConvert = (p: number) =>
-    state.units === 'imperial' ? (+p / 1013.25) * 29.921 : p;
+    units === "imperial" ? (+p / 1013.25) * 29.921 : p;
 
-  const pressurehUnit = () => (state.units === 'imperial' ? 'inHg' : 'hPa');
+  const pressurehUnit = () => (units === "imperial" ? "inHg" : "hPa");
 
   const data_wind_speed = hourly.map(({ wind_speed }) => wind_speed);
   const data_pressure = hourly.map(({ pressure }) => pressureConvert(pressure));
@@ -67,9 +67,9 @@ const ChartWind: React.FC = () => {
         },
       },
       y: {
-        type: 'linear',
+        type: "linear",
         display: true,
-        position: 'left',
+        position: "left",
         grid: {
           display: true,
           color: purple[200],
@@ -77,9 +77,9 @@ const ChartWind: React.FC = () => {
         min: 0,
       },
       y1: {
-        type: 'linear',
+        type: "linear",
         display: true,
-        position: 'right',
+        position: "right",
         grid: {
           display: true,
         },
@@ -102,20 +102,18 @@ const ChartWind: React.FC = () => {
       labels: data_time,
       datasets: [
         {
-          label:
-            state.units === 'imperial' ? 'Wind Speed [mi]' : 'Wind Speed [m/s]',
+          label: units === "imperial" ? "Wind Speed [mi]" : "Wind Speed [m/s]",
           borderColor: green[500],
           backgroundColor: green[500],
           data: data_wind_speed,
-          yAxisID: 'y',
+          yAxisID: "y",
         },
         {
-          label:
-            state.units === 'imperial' ? 'Pressure [inHg]' : 'Pressure [hPa]',
+          label: units === "imperial" ? "Pressure [inHg]" : "Pressure [hPa]",
           borderColor: brown[500],
           backgroundColor: brown[500],
           data: data_pressure,
-          yAxisID: 'y1',
+          yAxisID: "y1",
         },
       ],
     });

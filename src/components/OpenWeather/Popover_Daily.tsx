@@ -1,36 +1,38 @@
-import { useState, useContext } from 'react';
-import { WeatherContext } from '../../context';
+import { useState } from "react";
 
-import moment from 'moment-timezone';
+import { Container, Grid, Popover, Typography } from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { purple } from "@material-ui/core/colors";
 
-import { Container, Grid, Popover, Typography } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
+import moment from "moment-timezone";
 
-import MoonIcon from './MoonIcon';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice";
+
+import MoonIcon from "./MoonIcon";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     popover: {
-      pointerEvents: 'none',
+      pointerEvents: "none",
     },
     paper: {
       padding: theme.spacing(1),
-      minWidth: '30vw',
+      minWidth: "30vw",
     },
     iconSun: {
-      fontSize: '1rem',
+      fontSize: "1rem",
       color: purple[500],
-      marginRight: '0.5rem',
+      marginRight: "0.5rem",
     },
     iconMoon: {
-      fontSize: '1rem',
+      fontSize: "1rem",
       color: purple[500],
-      marginRight: '0.5rem',
-      marginLeft: '0.25rem',
+      marginRight: "0.5rem",
+      marginLeft: "0.25rem",
     },
     children: {
-      '&:hover': { border: `1px solid ${purple[500]}` },
+      "&:hover": { border: `1px solid ${purple[500]}` },
     },
   })
 );
@@ -44,8 +46,8 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const { state } = useContext(WeatherContext);
-  const { timezone } = state.weatherOnecall;
+  const { units, weatherOnecall } = useAppSelector(selectWeather);
+  const { timezone } = weatherOnecall;
 
   const {
     clouds,
@@ -62,30 +64,28 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
   } = data;
 
   const fallWithUnit = (fall: string) =>
-    state.units === 'imperial'
-      ? `${formatDigits(+fall / 25.4, 2)} in`
-      : `${fall} mm`;
+    units === "imperial" ? `${formatDigits(+fall / 25.4, 2)} in` : `${fall} mm`;
 
   const timeLocalwithTZ = (dt: string, tzone: string) =>
     moment(new Date(+dt * 1000).toUTCString())
       .tz(tzone)
-      .format('h:mm a');
+      .format("h:mm a");
 
   const formatDigits = (x: string | number, d: number) =>
     x !== undefined && x !== null
-      ? (+x).toLocaleString('en-US', {
+      ? (+x).toLocaleString("en-US", {
           maximumFractionDigits: d,
           minimumFractionDigits: d,
         })
-      : 'N/A';
+      : "N/A";
 
   const pressureWithUnit = (p: string) =>
-    state.units === 'imperial'
+    units === "imperial"
       ? `${formatDigits((+p / 1013.25) * 29.921, 1)} inHg`
       : `${p} hPa`;
 
   // const visibilityWithUnit = (v: string) =>
-  //   state.units === 'imperial'
+  //   units === 'imperial'
   //     ? `${formatDigits(+v / 10000 / 1.609344, 1)} mi`
   //     : `${formatDigits(+v / 1000, 1)} km`;
 
@@ -104,7 +104,7 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
   return (
     <>
       <div
-        aria-owns={open ? 'mouse-over-popover' : undefined}
+        aria-owns={open ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
@@ -121,12 +121,12 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "left",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
+          vertical: "top",
+          horizontal: "left",
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus

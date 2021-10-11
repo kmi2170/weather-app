@@ -1,12 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from "react";
 
-import { Line } from 'react-chartjs-2';
-import moment from 'moment-timezone';
+import { Line } from "react-chartjs-2";
+import moment from "moment-timezone";
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { lightBlue, lime, blueGrey, purple } from '@material-ui/core/colors';
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { lightBlue, lime, blueGrey, purple } from "@material-ui/core/colors";
 
-import { WeatherContext } from '../../../context';
+import { useAppSelector } from "../../../app/hooks";
+import { selectWeather } from "../../../features/weatherSlice";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -15,15 +16,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 const timeLocalwithTZ = (dt: number, tzone: string) =>
   moment(new Date(+dt * 1000).toUTCString())
     .tz(tzone)
-    .format('MM/DD h a');
+    .format("MM/DD h a");
 
 const ChartHumidity: React.FC = () => {
   const classes = useStyles();
 
   const [data, setData] = useState({});
 
-  const { state } = useContext(WeatherContext);
-  const { timezone, hourly } = state.weatherOnecall;
+  const { weatherOnecall } = useAppSelector(selectWeather);
+  const { timezone, hourly } = weatherOnecall;
 
   const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
 
@@ -60,9 +61,9 @@ const ChartHumidity: React.FC = () => {
         },
       },
       y: {
-        type: 'linear',
+        type: "linear",
         display: true,
-        position: 'left',
+        position: "left",
         grid: {
           display: true,
           color: purple[200],
@@ -83,25 +84,25 @@ const ChartHumidity: React.FC = () => {
       labels: data_time,
       datasets: [
         {
-          label: 'Humidity [%]',
+          label: "Humidity [%]",
           borderColor: lime[500],
           backgroundColor: lime[500],
           data: data_humidity,
-          yAxisID: 'y',
+          yAxisID: "y",
         },
         {
-          label: 'Chance of Precipitation [%]',
+          label: "Chance of Precipitation [%]",
           borderColor: lightBlue[500],
           backgroundColor: lightBlue[500],
           data: data_pop,
-          yAxisID: 'y',
+          yAxisID: "y",
         },
         {
-          label: 'Cloud Cover [%]',
+          label: "Cloud Cover [%]",
           borderColor: blueGrey[500],
           backgroundColor: blueGrey[500],
           data: data_clouds,
-          yAxisID: 'y',
+          yAxisID: "y",
         },
       ],
     });

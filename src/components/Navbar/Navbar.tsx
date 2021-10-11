@@ -1,56 +1,58 @@
-import { useContext, forwardRef } from 'react';
+import { forwardRef } from "react";
 
-import { AppBar, Toolbar, Typography, List, ListItem } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { purple, red } from '@material-ui/core/colors';
+import { AppBar, Toolbar, Typography, List, ListItem } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { purple, red } from "@material-ui/core/colors";
 
-import { WeatherContext } from '../../context';
-import MenuComponent from './Menu';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice.ts";
+
+import MenuComponent from "./Menu";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     background: purple[50],
   },
   toolBar: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
   },
   text: {
-    textTransform: 'capitalize',
-    color: '#000',
-    '&:hover': {
+    textTransform: "capitalize",
+    color: "#000",
+    "&:hover": {
       color: purple[500],
     },
   },
   textAlerts: {
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
     color: red[500],
-    '&:hover': {
+    "&:hover": {
       color: purple[500],
     },
   },
   list: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
   },
   listItem: {
-    padding: '0 1rem',
-    [theme.breakpoints.down('sm')]: {
-      padding: '0 0.5rem',
+    padding: "0 1rem",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 0.5rem",
     },
     borderBottom: `3px solid transparent`,
-    '&:hover': {
+    "&:hover": {
       borderBottom: `3px solid ${purple[500]}`,
     },
   },
 }));
 
 const list = [
-  { id: 1, name: 'current' },
-  { id: 2, name: 'minutely' },
-  { id: 3, name: 'daily' },
-  { id: 4, name: 'hourly' },
+  { id: 1, name: "current" },
+  { id: 2, name: "minutely" },
+  { id: 3, name: "daily" },
+  { id: 4, name: "hourly" },
 ];
 
 // interface NavbarProps {
@@ -60,7 +62,9 @@ const list = [
 const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const classes = useStyles();
 
-  const { state } = useContext(WeatherContext);
+  const { weatherOnecall } = useAppSelector(selectWeather);
+  // const { alerts } = weatherOnecall ;
+  const alerts = weatherOnecall?.alerts ? weatherOnecall.alerts : null;
 
   const handleItemRefs = (id: number) => {
     window.scroll(0, ref?.current[+id - 1].offsetTop - 70);
@@ -85,7 +89,7 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
             </ListItem>
           ))}
 
-          {state.weatherOnecall && state.weatherOnecall.alerts && (
+          {alerts && (
             <ListItem
               key={5}
               dense
