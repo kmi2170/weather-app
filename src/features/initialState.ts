@@ -2,16 +2,16 @@ export type IpLocation = {
   city?: string;
   state?: string;
   country?: string;
-  lat?: number;
-  lon?: number;
+  lat?: string;
+  lon?: string;
 };
 
 export type Location = {
   city?: string;
   state?: string;
   country?: string;
-  lat?: number;
-  lon?: number;
+  lat?: string;
+  lon?: string;
 };
 
 export type Units = "imperial" | "metric";
@@ -40,6 +40,8 @@ export const initialState: StateType = {
   weatherCurrent: null,
   weatherOnecall: null,
   selectedPageId: 1,
+  isLoading: false,
+  isError: false,
 };
 
 export type StateType = {
@@ -50,4 +52,6 @@ export type StateType = {
   weatherCurrent: WeatherCurrent;
   weatherOnecall: WeatherCurrent;
   selectedPageId: number;
+  isLoading: boolean;
+  isError: boolean;
 };

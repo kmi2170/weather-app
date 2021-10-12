@@ -12,12 +12,14 @@ import { GetServerSideProps } from "next";
 
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
-  setIpLocation,
+  // setIpLocation,
   setLocation,
   setUnits,
   setWeatherOnecall,
   selectWeather,
 } from "../features/weatherSlice";
+import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";
+import { useGetWeatherOnecallQuery } from "../services/weatherOnecallApi";
 import { Units } from "../features/initialState";
 
 import { QueryType, CookieNameType } from "../api/type_settings";
@@ -36,7 +38,7 @@ import {
 } from "../components/OpenWeather";
 
 import {
-  ipLookup,
+  // ipLookup,
   fetchWeatherAPILocation,
   // fetchOpenWeatherCurrentByCoordinates,
   fetchOpenWeatherCurrentByCityName,
@@ -69,15 +71,25 @@ const Home: React.FC<any> = ({
   dataLocationName,
   dataSearchLocation,
   isNotFoundLocation,
-  dataCurrent,
-  dataOnecall,
+  // dataCurrent,
+  // dataOnecall,
 }) => {
   const classes = useStyles();
   const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
   // const { query } = useRouter();
 
-  const { units, lang, weatherOnecall } = useAppSelector(selectWeather);
+  const { units, lang, weatherOnecall, location } =
+    useAppSelector(selectWeather);
   const dispatch = useAppDispatch();
+
+  const { data: dataOnecall } = useGetWeatherOnecallQuery({
+    lat: location.lat,
+    lon: location.lon,
+    units,
+    lang,
+  });
+
+  console.log(dataOnecall);
 
   const [cookies, setCookie] = useCookies([
     "myweather_coordinates",
@@ -102,26 +114,29 @@ const Home: React.FC<any> = ({
         query: { lat, lon, units: units_cookie, lang },
       });
     } else {
-      ipLookup().then(({ city, region, country }) => {
-        dispatch(
-          setIpLocation({
-            city: city,
-            state: region || "",
-            country: country,
-          })
-        );
+      dispatch(asyncThunkIpLookupLocation());
+      // dispatch(asyncThunkWeatherOnecall());
+      // console.log(weatherOnecall);
+      // ipLookup().then(({ city, region, country }) => {
+      //   dispatch(
+      //     setIpLocation({
+      //       city: city,
+      //       state: region || "",
+      //       country: country,
+      //     })
+      //   );
 
-        router.push({
-          pathname: "/",
-          query: {
-            ipCity: city,
-            ipState: region,
-            ipCountry: country,
-            units,
-            lang,
-          },
-        });
-      });
+      // router.push({
+      //   pathname: "/",
+      //   query: {
+      //     ipCity: city,
+      //     ipState: region,
+      //     ipCountry: country,
+      //     units,
+      //     lang,
+      //   },
+      // });
+      // });
     }
   }, []);
 
@@ -135,18 +150,18 @@ const Home: React.FC<any> = ({
     );
   }, [dataLocationName, dispatch]);
 
-  useEffect(() => {
-    if (dataCurrent) {
-      const { lat, lon } = dataCurrent.coord;
+  // useEffect(() => {
+  //   if (dataCurrent) {
+  //     const { lat, lon } = dataCurrent.coord;
 
-      dispatch(setLocation({ lat, lon }));
+  //     dispatch(setLocation({ lat, lon }));
 
-      router.push({
-        pathname: "/",
-        query: { lat, lon, units, lang },
-      });
-    }
-  }, [dataCurrent]);
+  //     router.push({
+  //       pathname: "/",
+  //       query: { lat, lon, units, lang },
+  //     });
+  //   }
+  // }, [dataCurrent]);
 
   useEffect(() => {
     if (dataSearchLocation && dataSearchLocation.length !== 0) {
@@ -312,15 +327,15 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   //     ? [dataSearchLocation[0].lat, dataSearchLocation[0].lon]
   //     : [latitude, longitude];
 
-  // const dataOnecall = null;
-  const dataOnecall =
-    lat && lon
-      ? await fetchOpenWeatherOnecall(+lat, +lon, query as QueryType)
-      : null;
+  const dataOnecall = null;
+  // const dataOnecall =
+  //   lat && lon
+  //     ? await fetchOpenWeatherOnecall(+lat, +lon, query as QueryType)
+  //     : null;
 
-  // const dataLocationName = null;
-  const dataLocationName =
-    lat && lon ? await fetchWeatherAPILocation(+lat, +lon) : null;
+  const dataLocationName = null;
+  // const dataLocationName =
+  //   lat && lon ? await fetchWeatherAPILocation(+lat, +lon) : null;
 
   // let dataLocation = city
   //   ? await fetchOpenGeocodingByLocationName(`${city},${state}` as string)
@@ -339,10 +354,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
       dataLocationName,
-      dataCurrent,
+      // dataCurrent,
       dataSearchLocation,
       isNotFoundLocation,
-      dataOnecall,
+      // dataOnecall,
     },
   };
 };

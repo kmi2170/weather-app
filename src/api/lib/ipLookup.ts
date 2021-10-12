@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const ipLookup = async () => {
-  const url = 'https://ipapi.co/json';
+  const url = "https://ipapi.co/json";
 
   try {
     const { data } = await axios(url);

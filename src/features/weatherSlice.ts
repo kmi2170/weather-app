@@ -7,6 +7,10 @@ import {
   Units,
   Lang,
 } from "./initialState";
+import {
+  asyncThunkIpLookupLocation,
+  asyncThunkWeatherOnecall,
+} from "../features/weatherAsyncThunk";
 
 export const weatherSlice = createSlice({
   name: "weather",
@@ -34,21 +38,33 @@ export const weatherSlice = createSlice({
       state.selectedPageId = action.payload;
     },
   },
-  /* extraReducers: (builder) => {
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchAdviceQuote.pending, (state) => {
+      .addCase(asyncThunkIpLookupLocation.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchAdviceQuote.fulfilled, (state) => {
+      .addCase(asyncThunkIpLookupLocation.fulfilled, (state) => {
         console.log("fullfilled");
         state.isLoading = false;
       })
-      .addCase(fetchAdviceQuote.rejected, (state, error) => {
+      .addCase(asyncThunkIpLookupLocation.rejected, (state, error) => {
+        state.isLoading = false;
+        state.isError = true;
+        console.log(error);
+      })
+      .addCase(asyncThunkWeatherOnecall.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(asyncThunkWeatherOnecall.fulfilled, (state) => {
+        console.log("fullfilled");
+        state.isLoading = false;
+      })
+      .addCase(asyncThunkWeatherOnecall.rejected, (state, error) => {
         state.isLoading = false;
         state.isError = true;
         console.log(error);
       });
-  }, */
+  },
 });
 
 export const selectWeather = (state: RootState) => state.weather;

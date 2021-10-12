@@ -1,9 +1,17 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+
 import weatherSlice from "../features/weatherSlice";
+import { weatherOnecallApi } from "../services/weatherOnecallApi";
 
 export const store = configureStore({
-  reducer: { weather: weatherSlice },
+  reducer: {
+    weather: weatherSlice,
+    [weatherOnecallApi.reducerPath]: weatherOnecallApi.reducer,
+  },
 });
+
+setupListeners(store.dispatch);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
