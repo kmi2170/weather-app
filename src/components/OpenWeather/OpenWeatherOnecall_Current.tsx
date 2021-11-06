@@ -9,6 +9,7 @@ import moment from "moment-timezone";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
+import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
 import WeatherIcon from "./WeatherIcon";
 import WindIcon from "./WindIcon";
@@ -57,8 +58,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 const OpenWeatherOnecall_Current: React.FC = () => {
   const classes = useStyles();
 
-  const { location, units, weatherOnecall } = useAppSelector(selectWeather);
+  const { units, lang, location } = useAppSelector(selectWeather);
 
+  const { data: weatherOnecall } = useGetWeatherOnecallQuery({
+    lat: location.lat,
+    lon: location.lon,
+    units,
+    lang,
+  });
   const { timezone, current, daily } = weatherOnecall;
 
   const {

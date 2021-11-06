@@ -5,7 +5,8 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import { purple, red } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../app/hooks";
-import { selectWeather } from "../../features/weatherSlice.ts";
+import { selectWeather } from "../../features/weatherSlice";
+import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
 import MenuComponent from "./Menu";
 
@@ -62,9 +63,17 @@ const list = [
 const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const classes = useStyles();
 
-  const { weatherOnecall } = useAppSelector(selectWeather);
-  // const { alerts } = weatherOnecall ;
-  const alerts = weatherOnecall?.alerts ? weatherOnecall.alerts : null;
+  const { units, lang, location } = useAppSelector(selectWeather);
+
+  const { data: dataOnecall } = useGetWeatherOnecallQuery({
+    lat: location.lat,
+    lon: location.lon,
+    units,
+    lang,
+  });
+
+  // const { alerts } = weatherOnecall;
+  const alerts = dataOnecall?.alerts ? dataOnecall.alerts : null;
 
   const handleItemRefs = (id: number) => {
     window.scroll(0, ref?.current[+id - 1].offsetTop - 70);

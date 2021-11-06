@@ -8,6 +8,7 @@ import moment from "moment-timezone";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
+import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
 import MoonIcon from "./MoonIcon";
 
@@ -46,7 +47,14 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const { units, weatherOnecall } = useAppSelector(selectWeather);
+  const { units, lang, location } = useAppSelector(selectWeather);
+
+  const { data: weatherOnecall } = useGetWeatherOnecallQuery({
+    lat: location.lat,
+    lon: location.lon,
+    units,
+    lang,
+  });
   const { timezone } = weatherOnecall;
 
   const {

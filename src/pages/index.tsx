@@ -15,7 +15,7 @@ import {
   // setIpLocation,
   setLocation,
   setUnits,
-  setWeatherOnecall,
+  // setWeatherOnecall,
   selectWeather,
 } from "../features/weatherSlice";
 import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";
@@ -71,15 +71,12 @@ const Home: React.FC<any> = ({
   dataLocationName,
   dataSearchLocation,
   isNotFoundLocation,
-  // dataCurrent,
-  // dataOnecall,
 }) => {
   const classes = useStyles();
   const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
   // const { query } = useRouter();
 
-  const { units, lang, weatherOnecall, location } =
-    useAppSelector(selectWeather);
+  const { units, lang, location } = useAppSelector(selectWeather);
   const dispatch = useAppDispatch();
 
   const { data: dataOnecall } = useGetWeatherOnecallQuery({
@@ -99,13 +96,11 @@ const Home: React.FC<any> = ({
   useEffect(() => {
     if (cookies.myweather_coordinates) {
       const [lat, lon] = cookies.myweather_coordinates;
-
       dispatch(setLocation({ lat, lon }));
 
       let units_cookie: Units;
       if (cookies.myweather_units) {
         units_cookie = cookies.myweather_units;
-
         dispatch(setUnits(units_cookie));
       }
 
@@ -115,28 +110,6 @@ const Home: React.FC<any> = ({
       });
     } else {
       dispatch(asyncThunkIpLookupLocation());
-      // dispatch(asyncThunkWeatherOnecall());
-      // console.log(weatherOnecall);
-      // ipLookup().then(({ city, region, country }) => {
-      //   dispatch(
-      //     setIpLocation({
-      //       city: city,
-      //       state: region || "",
-      //       country: country,
-      //     })
-      //   );
-
-      // router.push({
-      //   pathname: "/",
-      //   query: {
-      //     ipCity: city,
-      //     ipState: region,
-      //     ipCountry: country,
-      //     units,
-      //     lang,
-      //   },
-      // });
-      // });
     }
   }, []);
 
@@ -149,19 +122,6 @@ const Home: React.FC<any> = ({
       })
     );
   }, [dataLocationName, dispatch]);
-
-  // useEffect(() => {
-  //   if (dataCurrent) {
-  //     const { lat, lon } = dataCurrent.coord;
-
-  //     dispatch(setLocation({ lat, lon }));
-
-  //     router.push({
-  //       pathname: "/",
-  //       query: { lat, lon, units, lang },
-  //     });
-  //   }
-  // }, [dataCurrent]);
 
   useEffect(() => {
     if (dataSearchLocation && dataSearchLocation.length !== 0) {
@@ -182,10 +142,9 @@ const Home: React.FC<any> = ({
     }
   }, [dataSearchLocation, dispatch]);
 
-  useEffect(() => {
-    dispatch(setWeatherOnecall(dataOnecall));
-    // dispatch({ type: actionTypes.SET_WEATHER_ONECALL, payload: dataOnecall });
-  }, [dataOnecall, dataSearchLocation]);
+  // useEffect(() => {
+  //   dispatch(setWeatherOnecall(weatherOnecall));
+  // }, [weatherOnecall, dataSearchLocation]);
 
   useEffect(() => {
     setCookie("myweather_units" as CookieNameType, units, cookiesOptions);
@@ -229,7 +188,7 @@ const Home: React.FC<any> = ({
             <>
               <Grid item xs={12}>
                 <div ref={(ref) => saveItemRefs(ref, 0)} />
-                {weatherOnecall ? (
+                {dataOnecall ? (
                   <OpenWeatherOnecall_Current />
                 ) : (
                   <Skeleton variant="rect" height={200} />
@@ -237,7 +196,7 @@ const Home: React.FC<any> = ({
               </Grid>
               <Grid item xs={12}>
                 <div ref={(ref) => saveItemRefs(ref, 1)} />
-                {weatherOnecall ? (
+                {dataOnecall ? (
                   <OpenWeatherOnecall_Minutely />
                 ) : (
                   <Skeleton variant="rect" height={150} />
@@ -245,7 +204,7 @@ const Home: React.FC<any> = ({
               </Grid>
               <Grid item xs={12}>
                 <div ref={(ref) => saveItemRefs(ref, 2)} />
-                {weatherOnecall ? (
+                {dataOnecall ? (
                   <OpenWeatherOnecall_Daily />
                 ) : (
                   <Grid
@@ -264,14 +223,14 @@ const Home: React.FC<any> = ({
               </Grid>
               <Grid item xs={12}>
                 <div ref={(ref) => saveItemRefs(ref, 3)} />
-                {weatherOnecall ? (
+                {dataOnecall ? (
                   <OpenWeatherOnecall_Hourly />
                 ) : (
                   <Skeleton variant="rect" height={150} />
                 )}
               </Grid>
               <Grid item xs={12}>
-                {weatherOnecall && weatherOnecall["alerts"] && (
+                {dataOnecall && dataOnecall["alerts"] && (
                   <>
                     <div ref={(ref) => saveItemRefs(ref, 4)} />
                     <Alerts />
@@ -317,22 +276,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       : true
     : false;
 
-  // let [latitude, longitude] =
-  //   dataCurrent?.coord?.lat && dataCurrent?.coord?.lon
-  //     ? [dataCurrent.coord.lat, dataCurrent?.coord.lon]
-  //     : [null, null];
-
-  // [latitude, longitude] =
-  //   dataSearchLocation && dataSearchLocation.length !== 0
-  //     ? [dataSearchLocation[0].lat, dataSearchLocation[0].lon]
-  //     : [latitude, longitude];
-
-  const dataOnecall = null;
-  // const dataOnecall =
-  //   lat && lon
-  //     ? await fetchOpenWeatherOnecall(+lat, +lon, query as QueryType)
-  //     : null;
-
   const dataLocationName = null;
   // const dataLocationName =
   //   lat && lon ? await fetchWeatherAPILocation(+lat, +lon) : null;
@@ -354,10 +297,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
       dataLocationName,
-      // dataCurrent,
       dataSearchLocation,
       isNotFoundLocation,
-      // dataOnecall,
     },
   };
 };

@@ -31,9 +31,9 @@ export const weatherSlice = createSlice({
     setWeatherCurrent: (state, action: PayloadAction<[]>) => {
       state.weatherCurrent = action.payload;
     },
-    setWeatherOnecall: (state, action: PayloadAction<[]>) => {
+    /* setWeatherOnecall: (state, action: PayloadAction<[]>) => {
       state.weatherOnecall = action.payload;
-    },
+    }, */
     setSelectedPageId: (state, action: PayloadAction<number>) => {
       state.selectedPageId = action.payload;
     },
@@ -51,8 +51,8 @@ export const weatherSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         console.log(error);
-      })
-      .addCase(asyncThunkWeatherOnecall.pending, (state) => {
+      });
+    /* .addCase(asyncThunkWeatherOnecall.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(asyncThunkWeatherOnecall.fulfilled, (state) => {
@@ -63,7 +63,7 @@ export const weatherSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         console.log(error);
-      });
+      }); */
   },
 });
 
@@ -73,7 +73,7 @@ export const {
   setIpLocation,
   setLocation,
   setWeatherCurrent,
-  setWeatherOnecall,
+  // setWeatherOnecall,
   setUnits,
   setLang,
 } = weatherSlice.actions;

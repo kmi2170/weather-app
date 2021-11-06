@@ -6,6 +6,7 @@ import { red } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../app/hooks";
 import { selectWeather } from "../features/weatherSlice";
+import { useGetWeatherOnecallQuery } from "../services/weatherOnecallApi";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -21,11 +22,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Alerts: React.FC = () => {
   const classes = useStyles();
 
-  const { weatherOnecall } = useAppSelector(selectWeather);
+  const { units, lang, location } = useAppSelector(selectWeather);
 
-  // const { alerts, timezone } = weatherOnecall;
-  const { timezone } = weatherOnecall;
-  const alerts = null;
+  const { data: dataOnecall } = useGetWeatherOnecallQuery({
+    lat: location.lat,
+    lon: location.lon,
+    units,
+    lang,
+  });
+
+  const { alerts, timezone } = dataOnecall;
 
   const dateTimeLocalwithTZ = (dt: string, tzone: string) =>
     moment(new Date(+dt * 1000).toUTCString())
