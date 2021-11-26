@@ -1,32 +1,20 @@
 import axios from "axios";
 
-export const ipLookup = async () => {
-  const url = "https://ipapi.co/json";
+const url = "https://ipapi.co/json";
 
+export const ipLookup = async () => {
   try {
     const { data } = await axios(url);
 
     const {
       city,
-      region,
-      country_name,
-      latitude,
-      longitude,
-      // country_code_iso3,
-      // timezone,
-      // postal,
+      region: state,
+      country_name: country,
+      latitude: lat,
+      longitude: lon,
     } = data;
 
-    return {
-      city,
-      region,
-      lat: latitude,
-      lon: longitude,
-      country: country_name,
-      // country_code: country_code_iso3,
-      // timezone,
-      // postal,
-    };
+    return { city, state: state || "", country, lat, lon };
   } catch (error) {
     console.log(error);
   }

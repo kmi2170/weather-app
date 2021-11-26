@@ -41,8 +41,8 @@ import {
   // ipLookup,
   fetchWeatherAPILocation,
   // fetchOpenWeatherCurrentByCoordinates,
-  fetchOpenWeatherCurrentByCityName,
-  fetchOpenWeatherOnecall,
+  // fetchOpenWeatherCurrentByCityName,
+  // fetchOpenWeatherOnecall,
   fetchOpenGeocodingByLocationName,
 } from "../api/lib";
 
@@ -76,12 +76,18 @@ const Home: React.FC<any> = ({
   const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
   // const { query } = useRouter();
 
-  const { units, lang, location } = useAppSelector(selectWeather);
+  const {
+    units,
+    lang,
+    location: { city, state, country, lat, lon },
+  } = useAppSelector(selectWeather);
   const dispatch = useAppDispatch();
 
   const { data: dataOnecall } = useGetWeatherOnecallQuery({
-    lat: location.lat,
-    lon: location.lon,
+    // lat: location.lat,
+    // lon: location.lon,
+    lat,
+    lon,
     units,
     lang,
   });
@@ -89,25 +95,25 @@ const Home: React.FC<any> = ({
   console.log(dataOnecall);
 
   const [cookies, setCookie] = useCookies([
-    "myweather_coordinates",
+    "myweather_location",
     "myweather_units",
   ] as CookieNameType[]);
 
   useEffect(() => {
-    if (cookies.myweather_coordinates) {
-      const [lat, lon] = cookies.myweather_coordinates;
-      dispatch(setLocation({ lat, lon }));
+    if (cookies.myweather_location) {
+      const [city, state, country, lat, lon] = cookies.myweather_location;
+      dispatch(setLocation({ city, state, country, lat, lon }));
 
-      let units_cookie: Units;
+      // let units_cookie: Units;
       if (cookies.myweather_units) {
-        units_cookie = cookies.myweather_units;
+        const units_cookie = cookies.myweather_units;
         dispatch(setUnits(units_cookie));
       }
 
-      router.push({
-        pathname: "/",
-        query: { lat, lon, units: units_cookie, lang },
-      });
+      // router.push({
+      //   pathname: "/",
+      //   query: { lat, lon, units: units_cookie, lang },
+      // });
     } else {
       dispatch(asyncThunkIpLookupLocation());
     }
@@ -135,8 +141,8 @@ const Home: React.FC<any> = ({
       });
 
       setCookie(
-        "myweather_coordinates" as CookieNameType,
-        JSON.stringify([lat, lon]),
+        "myweather_location" as CookieNameType,
+        JSON.stringify([city, state, country, lat, lon]),
         cookiesOptions
       );
     }
@@ -256,15 +262,15 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     query;
 
   // const dataCurrent = null;
-  const dataCurrent = ipCity
-    ? await fetchOpenWeatherCurrentByCityName(
-        ipCity as string,
-        ipState as string,
-        ipCountry as string,
-        units as string,
-        lang as string
-      )
-    : null;
+  // const dataCurrent = ipCity
+  //   ? await fetchOpenWeatherCurrentByCityName(
+  //       ipCity as string,
+  //       ipState as string,
+  //       ipCountry as string,
+  //       units as string,
+  //       lang as string
+  //     )
+  //   : null;
 
   const dataSearchLocation = searchLocation
     ? await fetchOpenGeocodingByLocationName(searchLocation as string)
@@ -285,7 +291,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   //   : null;
   //
   console.log("query", query);
-  console.log("dataCurrent.coord", dataCurrent?.coord);
+  // console.log("dataCurrent.coord", dataCurrent?.coord);
   console.log(
     "searchLocation",
     dataSearchLocation && dataSearchLocation[0] && dataSearchLocation[0].name

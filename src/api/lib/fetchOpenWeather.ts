@@ -3,7 +3,7 @@ import { QueryType } from "../../api/type_settings";
 
 // const baseUrl = 'https://api.openweathermap.org/data/2.5';
 
-const api_key = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
+const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
 
 export const fetchOpenWeatherOnecall = async (
   lat: string,
@@ -16,16 +16,9 @@ export const fetchOpenWeatherOnecall = async (
 
   try {
     const { data } = await axios.get(url, {
-      params: {
-        lat,
-        lon,
-        units,
-        lang /* units: q.units || 'imperial', lang: q.lang || 'en', */,
-        appid: api_key,
-      },
+      params: { lat, lon, units, lang, appid },
     });
 
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -46,7 +39,7 @@ export const fetchOpenWeatherCurrentByCoordinates = async (
         lon,
         units: q.units,
         lang: q.lang,
-        appid: api_key,
+        appid,
       },
     });
 
@@ -71,7 +64,7 @@ export const fetchOpenWeatherCurrentByCityName = async (
         q: state ? `${city},${state},${country}` : `${city},${country}`,
         units,
         lang,
-        appid: api_key,
+        appid,
       },
     });
 
@@ -85,7 +78,7 @@ export const fetchOpenGeocodingByLocationName = async (q: string) => {
   const url = "https://api.openweathermap.org/geo/1.0/direct";
 
   try {
-    const { data } = await axios.get(url, { params: { q, appid: api_key } });
+    const { data } = await axios.get(url, { params: { q, appid } });
     console.log("geolocation", data);
 
     return data;

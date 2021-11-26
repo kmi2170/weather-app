@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Searchbar: React.FC = () => {
   const classes = useStyles();
 
-  const { query } = useRouter();
+  // const { query } = useRouter();
 
   const [searchLocation, setSearchLocation] = useState<string>("");
 
@@ -43,12 +43,11 @@ const Searchbar: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log('submit', searchLocation);
 
-    router.push({
-      pathname: "/",
-      query: { searchLocation },
-    });
+    // router.push({
+    //   pathname: "/",
+    //   query: { searchLocation },
+    // });
   };
 
   return (
