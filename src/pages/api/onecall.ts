@@ -8,21 +8,14 @@ export default async function onecall(
   try {
     const { lat, lon, units, lang } = req.query;
 
-    if (
-      (lat !== null || lat !== undefined || lat !== "") &&
-      (lon !== null || lon !== undefined || lon !== "")
-    ) {
-      const data = await fetchOpenWeatherOnecall(
-        lat as string,
-        lon as string,
-        units as string,
-        lang as string
-      );
+    const data = await fetchOpenWeatherOnecall(
+      lat as string,
+      lon as string,
+      units as string,
+      lang as string
+    );
 
-      res.status(200).json(data);
-    } else {
-      res.status(200).json(null);
-    }
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json(error);
   }

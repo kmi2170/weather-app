@@ -5,6 +5,9 @@ import Image from "next/image";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { IconButton, InputBase } from "@material-ui/core";
 
+import { useAppDispatch } from "../app/hooks";
+import { asyncThunkSearchLocation } from "../features/weatherAsyncThunk";
+
 import icon_search from "../../public/icon_search.png";
 import icon_cancel from "../../public/icon-cancel.png";
 
@@ -30,6 +33,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Searchbar: React.FC = () => {
   const classes = useStyles();
 
+  const dispatch = useAppDispatch();
+
   // const { query } = useRouter();
 
   const [searchLocation, setSearchLocation] = useState<string>("");
@@ -43,6 +48,8 @@ const Searchbar: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    dispatch(asyncThunkSearchLocation(searchLocation));
 
     // router.push({
     //   pathname: "/",

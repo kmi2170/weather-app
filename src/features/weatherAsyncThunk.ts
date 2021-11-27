@@ -3,8 +3,9 @@ import { RootState } from "../app/store";
 import {
   setIpLocation,
   setLocation,
-  setWeatherOnecall,
+  // setWeatherOnecall,
 } from "../features/weatherSlice";
+import axios from "axios";
 
 import {
   ipLookup,
@@ -34,18 +35,11 @@ export const asyncThunkIpLookupLocation = createAsyncThunk(
 
 export const asyncThunkSearchLocation = createAsyncThunk(
   "weather/asyncThunkSearchLocation",
-  async (_, { dispatch, getState, rejectWithValue }) => {
+  async (q, { rejectWithValue }) => {
     try {
-      const { city, state, country, lat, lon } = await ipLookup();
+      const { data } = await axios.get(`/api/geolocation?q=${q}`);
 
-      dispatch(setLocation({ city, state, country, lat, lon }));
-
-      /* const { weather: { units, lang } } = getState() as RootState;
-
-      const dataCurrent = await fetchOpenWeatherCurrentByCityName(
-        city, state, country, units, lang
-      );
-      const { lat, lon } = dataCurrent?.coord; */
+      return data;
     } catch (error) {
       return rejectWithValue(error);
     }

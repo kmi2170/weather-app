@@ -6,9 +6,11 @@ import {
   Location,
   Units,
   Lang,
+  StateType,
 } from "./initialState";
 import {
   asyncThunkIpLookupLocation,
+  asyncThunkSearchLocation,
   asyncThunkWeatherOnecall,
 } from "../features/weatherAsyncThunk";
 
@@ -51,6 +53,18 @@ export const weatherSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         console.log(error);
+      })
+      .addCase(asyncThunkSearchLocation.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(asyncThunkSearchLocation.fulfilled, (state) => {
+        console.log("fullfilled");
+        state.isLoading = false;
+      })
+      .addCase(asyncThunkSearchLocation.rejected, (state, error) => {
+        state.isLoading = false;
+        state.isError = true;
+        console.log(error);
       });
     /* .addCase(asyncThunkWeatherOnecall.pending, (state) => {
         state.isLoading = true;
@@ -63,7 +77,7 @@ export const weatherSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         console.log(error);
-      }); */
+      }) */
   },
 });
 

@@ -1,8 +1,6 @@
 import axios from "axios";
 import { QueryType } from "../../api/type_settings";
 
-// const baseUrl = 'https://api.openweathermap.org/data/2.5';
-
 const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
 
 export const fetchOpenWeatherOnecall = async (
@@ -10,18 +8,21 @@ export const fetchOpenWeatherOnecall = async (
   lon: string,
   units: string,
   lang: string
-  // q: QueryType
 ) => {
   const url = `https://api.openweathermap.org/data/2.5/onecall`;
 
-  try {
-    const { data } = await axios.get(url, {
-      params: { lat, lon, units, lang, appid },
-    });
+  if ((+lat || +lat === 0.0) && (+lon || +lon === 0.0)) {
+    try {
+      const { data } = await axios.get(url, {
+        params: { lat, lon, units, lang, appid },
+      });
 
-    return data;
-  } catch (error) {
-    console.log(error);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    return null;
   }
 };
 
@@ -79,7 +80,7 @@ export const fetchOpenGeocodingByLocationName = async (q: string) => {
 
   try {
     const { data } = await axios.get(url, { params: { q, appid } });
-    console.log("geolocation", data);
+    console.log(data);
 
     return data;
   } catch (error) {

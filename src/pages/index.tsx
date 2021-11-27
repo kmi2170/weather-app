@@ -72,6 +72,7 @@ const Home: React.FC<any> = ({
   dataSearchLocation,
   isNotFoundLocation,
 }) => {
+  // const Home: React.FC = (}) => {
   const classes = useStyles();
   const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
   // const { query } = useRouter();
@@ -92,7 +93,7 @@ const Home: React.FC<any> = ({
     lang,
   });
 
-  console.log(dataOnecall);
+  // console.log(dataOnecall);
 
   const [cookies, setCookie] = useCookies([
     "myweather_location",
@@ -290,15 +291,15 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   //   ? await fetchOpenGeocodingByLocationName(`${city},${state}` as string)
   //   : null;
   //
-  console.log("query", query);
-  // console.log("dataCurrent.coord", dataCurrent?.coord);
-  console.log(
-    "searchLocation",
-    dataSearchLocation && dataSearchLocation[0] && dataSearchLocation[0].name
-  );
-  console.log("isNotFoundLocation", isNotFoundLocation);
+  // console.log("query", query);
+  // // console.log("dataCurrent.coord", dataCurrent?.coord);
+  // console.log(
+  //   "searchLocation",
+  //   dataSearchLocation && dataSearchLocation[0] && dataSearchLocation[0].name
+  // );
+  // console.log("isNotFoundLocation", isNotFoundLocation);
   // console.log(dataOnecall);
-  console.log(dataLocationName && dataLocationName.location);
+  // console.log(dataLocationName && dataLocationName.location);
 
   return {
     props: {
