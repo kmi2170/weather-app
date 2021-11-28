@@ -3,10 +3,12 @@ import router, { useRouter } from "next/router";
 import Image from "next/image";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { IconButton, InputBase } from "@material-ui/core";
+import { IconButton, InputBase, Typography } from "@material-ui/core";
+import { purple } from "@material-ui/core/colors";
 
-import { useAppDispatch } from "../app/hooks";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { asyncThunkSearchLocation } from "../features/weatherAsyncThunk";
+import { selectWeather, setIsNotFound } from "../features/weatherSlice";
 
 import icon_search from "../../public/icon_search.png";
 import icon_cancel from "../../public/icon-cancel.png";
@@ -28,11 +30,24 @@ const useStyles = makeStyles((theme: Theme) => ({
   inputBase: {
     // maxWidth: '60vw',
   },
+  messageContainer: {
+    // background: "white",
+    color: purple[800],
+    marginTop: "1rem",
+    marginTop: ".5rem",
+  },
+  examQueries: {
+    fontStyle: "italic",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
 }));
 
 const Searchbar: React.FC = () => {
   const classes = useStyles();
 
+  const { isNotFound } = useAppSelector(selectWeather);
   const dispatch = useAppDispatch();
 
   // const { query } = useRouter();
@@ -44,12 +59,15 @@ const Searchbar: React.FC = () => {
 
   const handleClear = () => {
     setSearchLocation("");
+    dispatch(setIsNotFound(false));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(asyncThunkSearchLocation(searchLocation));
+    if (searchLocation) {
+      dispatch(asyncThunkSearchLocation(searchLocation));
+    }
 
     // router.push({
     //   pathname: "/",
@@ -58,25 +76,62 @@ const Searchbar: React.FC = () => {
   };
 
   return (
-    <div className={classes.searchContainer}>
-      <form onSubmit={handleSubmit}>
-        <div className={classes.searchSubContainer}>
-          <IconButton type="submit">
-            <Image src={icon_search} alt="search icon" width={25} height={25} />
-          </IconButton>
-          <InputBase
-            fullWidth
-            type="text"
-            value={searchLocation}
-            onChange={handleInput}
-            placeholder="Search Location; City,State,Country"
-          />
-          <IconButton onClick={handleClear}>
-            <Image src={icon_cancel} alt="clear icon" width={25} height={25} />
-          </IconButton>
+    <>
+      <div className={classes.searchContainer}>
+        <form onSubmit={handleSubmit}>
+          <div className={classes.searchSubContainer}>
+            <IconButton type="submit">
+              <Image
+                src={icon_search}
+                alt="search icon"
+                width={25}
+                height={25}
+              />
+            </IconButton>
+            <InputBase
+              fullWidth
+              type="text"
+              value={searchLocation}
+              onChange={handleInput}
+              placeholder="Search Location; City,State,Country"
+            />
+            <IconButton onClick={handleClear}>
+              <Image
+                src={icon_cancel}
+                alt="clear icon"
+                width={25}
+                height={25}
+              />
+            </IconButton>
+          </div>
+        </form>
+      </div>
+      {isNotFound && (
+        <div className={classes.messageContainer}>
+          <Typography variant="h5" align="center">
+            No Place Found
+          </Typography>
+          <Typography
+            variant="h6"
+            align="center"
+            style={{ fontStyle: "italic" }}
+          >
+            Examples (case insensitive)
+          </Typography>
+          <div className={classes.examQueries}>
+            <Typography variant="h6" align="center">
+              London
+            </Typography>
+            <Typography variant="h6" align="center">
+              Seattle,WA,USA
+            </Typography>
+            <Typography variant="h6" align="center">
+              Tokyo,Japan
+            </Typography>
+          </div>
         </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
 

@@ -42,6 +42,7 @@ export const initialState: StateType = {
   selectedPageId: 1,
   isLoading: false,
   isError: false,
+  isNotFound: false,
 };
 
 export type StateType = {
@@ -54,4 +55,5 @@ export type StateType = {
   selectedPageId: number;
   isLoading: boolean;
   isError: boolean;
+  isNotFound: Boolean;
 };

@@ -6,7 +6,6 @@ import {
   Location,
   Units,
   Lang,
-  StateType,
 } from "./initialState";
 import {
   asyncThunkIpLookupLocation,
@@ -39,6 +38,9 @@ export const weatherSlice = createSlice({
     setSelectedPageId: (state, action: PayloadAction<number>) => {
       state.selectedPageId = action.payload;
     },
+    setIsNotFound: (state, action: PayloadAction<boolean>) => {
+      state.isNotFound = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -46,7 +48,6 @@ export const weatherSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(asyncThunkIpLookupLocation.fulfilled, (state) => {
-        console.log("fullfilled");
         state.isLoading = false;
       })
       .addCase(asyncThunkIpLookupLocation.rejected, (state, error) => {
@@ -58,7 +59,6 @@ export const weatherSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(asyncThunkSearchLocation.fulfilled, (state) => {
-        console.log("fullfilled");
         state.isLoading = false;
       })
       .addCase(asyncThunkSearchLocation.rejected, (state, error) => {
@@ -90,6 +90,7 @@ export const {
   // setWeatherOnecall,
   setUnits,
   setLang,
+  setIsNotFound,
 } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

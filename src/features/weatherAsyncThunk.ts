@@ -1,32 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
-import {
-  setIpLocation,
-  setLocation,
-  // setWeatherOnecall,
-} from "../features/weatherSlice";
+import { setLocation, setIsNotFound } from "../features/weatherSlice";
 import axios from "axios";
 
-import {
-  ipLookup,
-  fetchOpenWeatherCurrentByCityName,
-  fetchOpenWeatherOnecall,
-} from "../api/lib";
+import { ipLookup } from "../api/lib";
 
 export const asyncThunkIpLookupLocation = createAsyncThunk(
   "weather/asyncThunkIpLookupLocation",
-  async (_, { dispatch, getState, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const { city, state, country, lat, lon } = await ipLookup();
 
       dispatch(setLocation({ city, state, country, lat, lon }));
-
-      /* const { weather: { units, lang } } = getState() as RootState;
-
-      const dataCurrent = await fetchOpenWeatherCurrentByCityName(
-        city, state, country, units, lang
-      );
-      const { lat, lon } = dataCurrent?.coord; */
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -35,11 +19,19 @@ export const asyncThunkIpLookupLocation = createAsyncThunk(
 
 export const asyncThunkSearchLocation = createAsyncThunk(
   "weather/asyncThunkSearchLocation",
-  async (q, { rejectWithValue }) => {
+  async (q, { dispatch, rejectWithValue }) => {
+    dispatch(setIsNotFound(false));
+
     try {
       const { data } = await axios.get(`/api/geolocation?q=${q}`);
 
-      return data;
+      if (data.length !== 0) {
+        const { name: city, state, country, lat, lon } = data[0];
+
+        dispatch(setLocation({ city, state, country, lat, lon }));
+      } else {
+        dispatch(setIsNotFound(true));
+      }
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -61,7 +53,6 @@ export const asyncThunkSearchLocation = createAsyncThunk(
       const data = await fetchOpenWeatherOnecall(+lat, +lon, units, lang);
 
       dispatch(setWeatherOnecall(data));
-      console.log(data);
     } catch (error) {
       return rejectWithValue(error);
     }
