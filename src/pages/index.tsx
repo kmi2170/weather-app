@@ -131,23 +131,29 @@ const Home: React.FC<any> = ({
   }, [dataLocationName, dispatch]);
 
   useEffect(() => {
-    if (dataSearchLocation && dataSearchLocation.length !== 0) {
-      const { lat, lon } = dataSearchLocation[0];
+    // if (dataSearchLocation && dataSearchLocation.length !== 0) {
+    //   const { lat, lon } = dataSearchLocation[0];
 
-      dispatch(setLocation({ lat, lon }));
+    //   dispatch(setLocation({ lat, lon }));
 
-      router.push({
-        pathname: "/",
-        query: { lat, lon, units, lang },
-      });
+    //   router.push({
+    //     pathname: "/",
+    //     query: { lat, lon, units, lang },
+    //   });
 
-      setCookie(
-        "myweather_location" as CookieNameType,
-        JSON.stringify([city, state, country, lat, lon]),
-        cookiesOptions
-      );
-    }
-  }, [dataSearchLocation, dispatch]);
+    //   setCookie(
+    //     "myweather_location" as CookieNameType,
+    //     JSON.stringify([city, state, country, lat, lon]),
+    //     cookiesOptions
+    //   );
+    // }
+    // }, [dataSearchLocation, dispatch]);
+    setCookie(
+      "myweather_location" as CookieNameType,
+      JSON.stringify([city, state, country, lat, lon]),
+      cookiesOptions
+    );
+  }, [lat, lon]);
 
   // useEffect(() => {
   //   dispatch(setWeatherOnecall(weatherOnecall));
