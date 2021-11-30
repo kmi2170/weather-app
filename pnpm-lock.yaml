@@ -12,6 +12,7 @@ specifiers:
   axios: ^0.21.1
   babel-plugin-transform-imports: ^2.0.0
   chart.js: ^3.5.0
+  country-region-data: ^1.11.0
   eslint: 7.29.0
   eslint-config-next: 11.0.0
   moment: ^2.29.1
@@ -32,6 +33,7 @@ dependencies:
   '@reduxjs/toolkit': 1.6.2_react-redux@7.2.5+react@17.0.2
   axios: 0.21.1
   chart.js: 3.5.0
+  country-region-data: 1.11.0
   moment: 2.29.1
   moment-timezone: 0.5.33
   next: 11.0.0_f31b35bdaa3b7c2fce82404f09d2dac4
@@ -963,6 +965,10 @@ packages:
 
   /core-util-is/1.0.2:
     resolution: {integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=}
+    dev: false
+
+  /country-region-data/1.11.0:
+    resolution: {integrity: sha512-DmhrMor9U7e0RE5sOtNvjWdhzYeg+uYcREWFYwpfDvxV8kJvz04nNY/ONn+tnZ0PNtallocWArlymwuzAZc5Pw==}
     dev: false
 
   /create-ecdh/4.0.4:

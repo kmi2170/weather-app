@@ -11,6 +11,8 @@ import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
+import data from "country-region-data";
+
 import WeatherIcon from "./WeatherIcon";
 import WindIcon from "./WindIcon";
 import MoonIcon from "./MoonIcon";
@@ -88,7 +90,17 @@ const OpenWeatherOnecall_Current: React.FC = () => {
   } = current;
   const { moonrise, moonset, moon_phase } = daily[0];
 
-  const { city, state: state_name, country } = location;
+  const { city, state, country } = location;
+
+  const countryData = data.filter((el) => el.countryShortCode === country);
+  const countryName = countryData.length ? countryData[0].countryName : country;
+  const regionData = countryData[0].regions.filter(
+    (el) => el.shortCode === state
+  );
+  const regionName = regionData.length ? regionData[0].name : state;
+  // console.log(data);
+  // console.log(countryData[0].countryName);
+  // console.log(regionData[0].name);
 
   const formatDigits = (x: string | number, d: number) =>
     x !== undefined && x !== null
@@ -158,10 +170,11 @@ const OpenWeatherOnecall_Current: React.FC = () => {
             <div className={classes.locationContainer}>
               <div className={classes.locationSubContainer}>
                 <Typography variant="h5" className={classes.text}>
-                  {city},&nbsp;
+                  {city}
+                  {regionName && <span>,&nbsp;</span>}
                 </Typography>
                 <Typography variant="h6" className={classes.text}>
-                  {state_name}
+                  {regionName}
                 </Typography>
               </div>
 
@@ -171,7 +184,7 @@ const OpenWeatherOnecall_Current: React.FC = () => {
                 className={classes.country}
                 style={{ fontStyle: "italic" }}
               >
-                {country}
+                {countryName}
               </Typography>
             </div>
           </Grid>

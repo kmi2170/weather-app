@@ -102,6 +102,7 @@ const Home: React.FC<any> = ({
 
   useEffect(() => {
     if (cookies.myweather_location) {
+      console.log(cookies.myweather_location);
       const [city, state, country, lat, lon] = cookies.myweather_location;
       dispatch(setLocation({ city, state, country, lat, lon }));
 
@@ -120,15 +121,15 @@ const Home: React.FC<any> = ({
     }
   }, []);
 
-  useEffect(() => {
-    dispatch(
-      setLocation({
-        city: dataLocationName?.location.name,
-        state: dataLocationName?.location.region,
-        country: dataLocationName?.location.country,
-      })
-    );
-  }, [dataLocationName, dispatch]);
+  // useEffect(() => {
+  //   dispatch(
+  //     setLocation({
+  //       city: dataLocationName?.location.name,
+  //       state: dataLocationName?.location.region,
+  //       country: dataLocationName?.location.country,
+  //     })
+  //   );
+  // }, [dataLocationName, dispatch]);
 
   useEffect(() => {
     // if (dataSearchLocation && dataSearchLocation.length !== 0) {
@@ -148,11 +149,13 @@ const Home: React.FC<any> = ({
     //   );
     // }
     // }, [dataSearchLocation, dispatch]);
-    setCookie(
-      "myweather_location" as CookieNameType,
-      JSON.stringify([city, state, country, lat, lon]),
-      cookiesOptions
-    );
+    if (city && state && country && lat && lon) {
+      setCookie(
+        "myweather_location" as CookieNameType,
+        JSON.stringify([city, state, country, lat, lon]),
+        cookiesOptions
+      );
+    }
   }, [lat, lon]);
 
   // useEffect(() => {
