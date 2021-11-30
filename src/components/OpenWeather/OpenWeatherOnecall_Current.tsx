@@ -2,16 +2,15 @@
 
 import { Typography, Paper, Grid } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { purple } from "@material-ui/core/colors";
+import { purple, yellow, orange } from "@material-ui/core/colors";
 
 // import moment from 'moment';
 import moment from "moment-timezone";
+import data from "country-region-data";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
-
-import data from "country-region-data";
 
 import WeatherIcon from "./WeatherIcon";
 import WindIcon from "./WindIcon";
@@ -54,6 +53,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: purple[500],
     marginRight: "0.5rem",
     marginLeft: "0.25rem",
+  },
+  sunDecoration: {
+    borderBottom: `2px solid ${orange[500]}`,
+  },
+  moonDecoration: {
+    borderBottom: `2px solid ${yellow[500]}`,
   },
 }));
 
@@ -281,7 +286,8 @@ const OpenWeatherOnecall_Current: React.FC = () => {
 
             <Grid item xs={6}>
               <Typography variant="subtitle2">
-                Sun &nbsp;&nbsp;&nbsp;&nbsp;
+                <span className={classes.sunDecoration}>Sun</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <i className={`wi wi-sunrise ${classes.iconSun}`} />
                 {timeLocalwithTZ(sunrise, timezone)}
               </Typography>
@@ -295,7 +301,8 @@ const OpenWeatherOnecall_Current: React.FC = () => {
 
             <Grid item xs={6}>
               <Typography variant="subtitle2">
-                Moon &nbsp;
+                <span className={classes.moonDecoration}>Moon</span>
+                &nbsp;
                 <i className={`wi wi-moonrise ${classes.iconMoon}`} />
                 {timeLocalwithTZ(moonrise, timezone)}
               </Typography>

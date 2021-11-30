@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Container, Grid, Popover, Typography } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { purple } from "@material-ui/core/colors";
+import { purple, orange, yellow } from "@material-ui/core/colors";
 
 import moment from "moment-timezone";
 
@@ -34,6 +34,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     children: {
       "&:hover": { border: `1px solid ${purple[500]}` },
+    },
+    sunDecoration: {
+      borderBottom: `2px solid ${orange[500]}`,
+    },
+    moonDecoration: {
+      borderBottom: `2px solid ${yellow[500]}`,
     },
   })
 );
@@ -180,7 +186,8 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
 
               <Grid item xs={6}>
                 <Typography variant="subtitle2">
-                  Sun &nbsp;&nbsp;&nbsp;&nbsp;
+                  <span className={classes.sunDecoration}>Sun</span>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
                   <i className={`wi wi-sunrise ${classes.iconSun}`} />
                   {timeLocalwithTZ(sunrise, timezone)}
                 </Typography>
@@ -194,7 +201,8 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
 
               <Grid item xs={6}>
                 <Typography variant="subtitle2">
-                  Moon &nbsp;
+                  <span className={classes.moonDecoration}>Moon</span>
+                  &nbsp;
                   <i className={`wi wi-moonrise ${classes.iconMoon}`} />
                   {timeLocalwithTZ(moonrise, timezone)}
                 </Typography>

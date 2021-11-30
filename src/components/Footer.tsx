@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from "@material-ui/core";
 
 const Footer = () => {
   const dt = new Date();
@@ -17,15 +17,6 @@ const Footer = () => {
               target="_blank"
             >
               OpenWeather.com
-            </a>
-            and
-            <a
-              href="https://www.weatherapi.com/"
-              title="Free Weather API"
-              rel="noreferrer"
-              target="_blank"
-            >
-              WeatherAPI.com
             </a>
             .
           </Typography>
