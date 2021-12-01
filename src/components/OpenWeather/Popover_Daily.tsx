@@ -4,12 +4,15 @@ import { Container, Grid, Popover, Typography } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { purple, orange, yellow } from "@material-ui/core/colors";
 
-import moment from "moment-timezone";
-
 import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
+import {
+  fallWithUnit,
+  pressureWithUnit,
+  timeLocalwithTZ,
+} from "../../utils/units";
 import MoonIcon from "./MoonIcon";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -77,32 +80,6 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
     moon_phase,
   } = data;
 
-  const fallWithUnit = (fall: string) =>
-    units === "imperial" ? `${formatDigits(+fall / 25.4, 2)} in` : `${fall} mm`;
-
-  const timeLocalwithTZ = (dt: string, tzone: string) =>
-    moment(new Date(+dt * 1000).toUTCString())
-      .tz(tzone)
-      .format("h:mm a");
-
-  const formatDigits = (x: string | number, d: number) =>
-    x !== undefined && x !== null
-      ? (+x).toLocaleString("en-US", {
-          maximumFractionDigits: d,
-          minimumFractionDigits: d,
-        })
-      : "N/A";
-
-  const pressureWithUnit = (p: string) =>
-    units === "imperial"
-      ? `${formatDigits((+p / 1013.25) * 29.921, 1)} inHg`
-      : `${p} hPa`;
-
-  // const visibilityWithUnit = (v: string) =>
-  //   units === 'imperial'
-  //     ? `${formatDigits(+v / 10000 / 1.609344, 1)} mi`
-  //     : `${formatDigits(+v / 1000, 1)} km`;
-
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
@@ -151,14 +128,14 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
             <Grid item xs={12}>
               {rain && (
                 <Typography variant="subtitle2">
-                  Rain {fallWithUnit(rain)}
+                  Rain {fallWithUnit(rain, units)}
                 </Typography>
               )}
             </Grid>
             <Grid item xs={12}>
               {snow && (
                 <Typography variant="subtitle2">
-                  Snow {fallWithUnit(snow)}
+                  Snow {fallWithUnit(snow, units)}
                 </Typography>
               )}
             </Grid>
@@ -176,7 +153,7 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle2">
-                  Pressure {pressureWithUnit(pressure)}
+                  Pressure {pressureWithUnit(pressure, units)}
                 </Typography>
               </Grid>
 

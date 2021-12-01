@@ -4,7 +4,6 @@ import { Typography, Paper, Grid } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { purple, yellow, orange } from "@material-ui/core/colors";
 
-// import moment from 'moment';
 import moment from "moment-timezone";
 import data from "country-region-data";
 
@@ -12,6 +11,13 @@ import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
+import {
+  tempWithUnit,
+  fallWithUnit,
+  pressureWithUnit,
+  visibilityWithUnit,
+  timeLocalwithTZ,
+} from "../../utils/units";
 import WeatherIcon from "./WeatherIcon";
 import WindIcon from "./WindIcon";
 import MoonIcon from "./MoonIcon";
@@ -103,51 +109,8 @@ const OpenWeatherOnecall_Current: React.FC = () => {
     (el) => el.shortCode === state
   );
   const regionName = regionData.length ? regionData[0].name : state;
-  // console.log(data);
   // console.log(countryData[0].countryName);
   // console.log(regionData[0].name);
-
-  const formatDigits = (x: string | number, d: number) =>
-    x !== undefined && x !== null
-      ? (+x).toLocaleString("en-US", {
-          maximumFractionDigits: d,
-          minimumFractionDigits: d,
-        })
-      : "N/A";
-
-  const tempWithUnit = (t: string) =>
-    units === "imperial" ? (
-      <span>
-        {formatDigits(t, 0)}
-        <small>&#8457;</small>
-      </span>
-    ) : (
-      <span>
-        {formatDigits(t, 0)}
-        <small>&#8451;</small>
-      </span>
-    );
-
-  const fallWithUnit = (fall: string) =>
-    units === "imperial" ? `${formatDigits(+fall / 25.4, 2)} in` : `${fall} mm`;
-
-  const pressureWithUnit = (p: string) =>
-    units === "imperial"
-      ? `${formatDigits((+p / 1013.25) * 29.921, 1)} inHg`
-      : `${p} hPa`;
-
-  const visibilityWithUnit = (v: string) =>
-    units === "imperial"
-      ? `${formatDigits(+v / 10000 / 1.609344, 1)} mi`
-      : `${formatDigits(+v / 1000, 1)} km`;
-
-  // const timeLocalwithTZOffset = (dt: string, t_offset: string) =>
-  //   moment(new Date(+dt * 1000 + +t_offset).toUTCString()).format('H:MM a');
-
-  const timeLocalwithTZ = (dt: string, tzone: string) =>
-    moment(new Date(+dt * 1000).toUTCString())
-      .tz(tzone)
-      .format("h:mm a");
 
   return (
     <>
@@ -220,14 +183,14 @@ const OpenWeatherOnecall_Current: React.FC = () => {
             <Grid item xs={4}>
               <div>
                 <Typography variant="h4" align="center">
-                  {tempWithUnit(temp)}
+                  {tempWithUnit(temp, units)}
                 </Typography>
                 <Typography
                   variant="subtitle2"
                   color="textSecondary"
                   align="center"
                 >
-                  Feels like {tempWithUnit(feels_like)}
+                  Feels like {tempWithUnit(feels_like, units)}
                 </Typography>
               </div>
             </Grid>
@@ -256,13 +219,13 @@ const OpenWeatherOnecall_Current: React.FC = () => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="subtitle2">
-                Pressure {pressureWithUnit(pressure)}
+                Pressure {pressureWithUnit(pressure, units)}
               </Typography>
             </Grid>
 
             <Grid item xs={6}>
               <Typography variant="subtitle2">
-                Visibility {visibilityWithUnit(visibility)}
+                Visibility {visibilityWithUnit(visibility, units)}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -272,14 +235,14 @@ const OpenWeatherOnecall_Current: React.FC = () => {
             <Grid item xs={12}>
               {rain && rain["1h"] && (
                 <Typography variant="subtitle2">
-                  Rain (Last 1 hour), {fallWithUnit(rain["1h"])}
+                  Rain (Last 1 hour), {fallWithUnit(rain["1h"], units)}
                 </Typography>
               )}
             </Grid>
             <Grid item xs={12}>
               {snow && snow["1h"] && (
                 <Typography variant="subtitle2">
-                  Snow (Last 1 hour), {fallWithUnit(snow["1h"])}
+                  Snow (Last 1 hour), {fallWithUnit(snow["1h"], units)}
                 </Typography>
               )}
             </Grid>

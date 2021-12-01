@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 import { Line } from "react-chartjs-2";
-import moment from "moment-timezone";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { blue, grey, purple } from "@material-ui/core/colors";
@@ -10,15 +9,11 @@ import { useAppSelector } from "../../../app/hooks";
 import { selectWeather } from "../../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../../services/weatherOnecallApi";
 
+import { timeLocalwithTZforChart } from "../../../utils/units";
+
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
 }));
-
-const timeLocalwithTZ = (dt: number, tzone: string) =>
-  moment(new Date(+dt * 1000).toUTCString())
-    .tz(tzone)
-    .format("DD ddd h a");
-//.format('MM/DD h a');
 
 const ChartTemps: React.FC = () => {
   const classes = useStyles();
@@ -36,7 +31,9 @@ const ChartTemps: React.FC = () => {
 
   const { timezone, hourly } = weatherOnecall;
 
-  const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
+  const data_time = hourly.map(({ dt }) =>
+    timeLocalwithTZforChart(dt, timezone)
+  );
 
   const fall = (fall: number) => (units === "imperial" ? +fall / 25.4 : fall);
 

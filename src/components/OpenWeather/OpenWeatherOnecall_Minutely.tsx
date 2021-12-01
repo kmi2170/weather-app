@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import router, { useRouter } from "next/router";
 
 import { Bar } from "react-chartjs-2";
-import moment from "moment-timezone";
 
 import { Typography, Paper } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -12,17 +11,14 @@ import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
+import { timeLocalwithTZ } from "../../utils/units";
+
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   paper: {
     padding: "1rem",
   },
 }));
-
-const timeLocalwithTZ = (dt: number, tzone: string) =>
-  moment(new Date(+dt * 1000).toUTCString())
-    .tz(tzone)
-    .format("h:mm a");
 
 const OpenWeatherOnecall_Minutely: React.FC = () => {
   const classes = useStyles();

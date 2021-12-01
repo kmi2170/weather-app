@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 
 import { Line } from "react-chartjs-2";
-import moment from "moment-timezone";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { pink, deepOrange, purple } from "@material-ui/core/colors";
@@ -10,23 +9,11 @@ import { useAppSelector } from "../../../app/hooks";
 import { selectWeather } from "../../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../../services/weatherOnecallApi";
 
+import { timeLocalwithTZforChart } from "../../../utils/units";
+
 const useStyles = makeStyles((heme: Theme) => ({
   text: {},
 }));
-
-const timeLocalwithTZ = (dt: number, tzone: string) =>
-  moment(new Date(+dt * 1000).toUTCString())
-    .tz(tzone)
-    .format("DD ddd h a");
-//.format('MM/DD h a');
-
-const formatDigits = (x: string | number, d: number) =>
-  x !== undefined && x !== null
-    ? (+x).toLocaleString("en-US", {
-        maximumFractionDigits: d,
-        minimumFractionDigits: d,
-      })
-    : "N/A";
 
 const ChartTemps: React.FC = () => {
   const classes = useStyles();
@@ -44,7 +31,9 @@ const ChartTemps: React.FC = () => {
 
   const { timezone, hourly } = weatherOnecall;
 
-  const data_time = hourly.map(({ dt }) => timeLocalwithTZ(dt, timezone));
+  const data_time = hourly.map(({ dt }) =>
+    timeLocalwithTZforChart(dt, timezone)
+  );
 
   const data_temp = hourly.map(({ temp }) => temp);
   const data_dew_point = hourly.map(({ dew_point }) => dew_point);

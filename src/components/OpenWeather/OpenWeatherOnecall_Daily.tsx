@@ -11,6 +11,7 @@ import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
+import { formatDigits } from "../../utils/units";
 import WeatherIcon from "./WeatherIcon";
 import WindIcon from "./WindIcon";
 import PopoverDaily from "./Popover_Daily";
@@ -71,14 +72,6 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
   });
 
   const { timezone, daily } = weatherOnecall;
-
-  const formatDigits = (x: string | number, d: number) =>
-    x !== undefined && x !== null
-      ? (+x).toLocaleString("en-US", {
-          maximumFractionDigits: d,
-          minimumFractionDigits: d,
-        })
-      : "N/A";
 
   const tempUnit = () =>
     units === "imperial" ? <small>&#8457;</small> : <small>&#8451;</small>;
