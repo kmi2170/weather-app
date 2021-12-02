@@ -12,8 +12,6 @@ import { setLocation, setUnits, selectWeather } from "../features/weatherSlice";
 import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";
 import { useGetWeatherOnecallQuery } from "../services/weatherOnecallApi";
 
-import { CookieNameType } from "../api/type_settings";
-
 import SEO from "../components/SEO";
 import Navbar from "../components/Navbar/Navbar";
 import Searchbar from "../components/Searchbar";
@@ -70,7 +68,7 @@ const Home: React.FC = ({}) => {
   const [cookies, setCookie] = useCookies([
     "myweather_location",
     "myweather_units",
-  ] as CookieNameType[]);
+  ]);
 
   useEffect(() => {
     if (cookies.myweather_location) {
@@ -91,7 +89,7 @@ const Home: React.FC = ({}) => {
   useEffect(() => {
     if (city && state && country && lat && lon) {
       setCookie(
-        "myweather_location" as CookieNameType,
+        "myweather_location",
         JSON.stringify([city, state, country, lat, lon]),
         cookiesOptions
       );
@@ -99,7 +97,7 @@ const Home: React.FC = ({}) => {
   }, [lat, lon]);
 
   useEffect(() => {
-    setCookie("myweather_units" as CookieNameType, units, cookiesOptions);
+    setCookie("myweather_units", units, cookiesOptions);
   }, [units]);
 
   const saveItemRefs = (ref: HTMLDivElement, index: number) => {

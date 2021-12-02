@@ -16,12 +16,12 @@ export const weatherSlice = createSlice({
     setUnits: (state, action: PayloadAction<Units>) => {
       state.units = action.payload;
     },
-    setLang: (state, action: PayloadAction<Lang>) => {
+    /* setLang: (state, action: PayloadAction<Lang>) => {
       state.lang = action.payload;
-    },
-    setWeatherCurrent: (state, action: PayloadAction<[]>) => {
+    }, */
+    /* setWeatherCurrent: (state, action: PayloadAction<[]>) => {
       state.weatherCurrent = action.payload;
-    },
+    }, */
     setSelectedPageId: (state, action: PayloadAction<number>) => {
       state.selectedPageId = action.payload;
     },
@@ -58,12 +58,6 @@ export const weatherSlice = createSlice({
 
 export const selectWeather = (state: RootState) => state.weather;
 
-export const {
-  setLocation,
-  setWeatherCurrent,
-  setUnits,
-  setLang,
-  setIsNotFound,
-} = weatherSlice.actions;
+export const { setLocation, setUnits, setIsNotFound } = weatherSlice.actions;
 
 export default weatherSlice.reducer;
