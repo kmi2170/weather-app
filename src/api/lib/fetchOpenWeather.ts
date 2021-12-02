@@ -1,5 +1,4 @@
 import axios from "axios";
-import { QueryType } from "../../api/type_settings";
 
 const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
 
@@ -26,7 +25,20 @@ export const fetchOpenWeatherOnecall = async (
   }
 };
 
-export const fetchOpenWeatherCurrentByCoordinates = async (
+export const fetchOpenGeocodingByLocationName = async (q: string) => {
+  const url = "https://api.openweathermap.org/geo/1.0/direct";
+
+  try {
+    const { data } = await axios.get(url, { params: { q, appid } });
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/* export const fetchOpenWeatherCurrentByCoordinates = async (
   lat: string,
   lon: string,
   q: QueryType
@@ -48,9 +60,9 @@ export const fetchOpenWeatherCurrentByCoordinates = async (
   } catch (error) {
     console.log(error);
   }
-};
+}; */
 
-export const fetchOpenWeatherCurrentByCityName = async (
+/* export const fetchOpenWeatherCurrentByCityName = async (
   city: string,
   state: string,
   country: string,
@@ -73,17 +85,4 @@ export const fetchOpenWeatherCurrentByCityName = async (
   } catch (error) {
     console.log(error);
   }
-};
-
-export const fetchOpenGeocodingByLocationName = async (q: string) => {
-  const url = "https://api.openweathermap.org/geo/1.0/direct";
-
-  try {
-    const { data } = await axios.get(url, { params: { q, appid } });
-    console.log(data);
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+}; */

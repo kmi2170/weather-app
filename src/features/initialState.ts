@@ -1,11 +1,3 @@
-export type IpLocation = {
-  city?: string;
-  state?: string;
-  country?: string;
-  lat?: string;
-  lon?: string;
-};
-
 export type Location = {
   city?: string;
   state?: string;
@@ -21,13 +13,6 @@ export type WeatherCurrent = null | any;
 export type WeatherOneCall = null | any;
 
 export const initialState: StateType = {
-  ipLocation: {
-    city: "",
-    state: "",
-    country: "",
-    lat: null,
-    lon: null,
-  },
   location: {
     city: "",
     state: "",
@@ -46,7 +31,6 @@ export const initialState: StateType = {
 };
 
 export type StateType = {
-  ipLocation: IpLocation;
   location: Location;
   units: Units;
   lang: Lang;

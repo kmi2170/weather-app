@@ -1,10 +1,8 @@
-export { ipLookup } from './ipLookup';
-
-export { fetchWeatherAPILocation } from './fetchWeatherApi';
+export { ipLookup } from "./ipLookup";
 
 export {
   fetchOpenWeatherCurrentByCoordinates,
   fetchOpenWeatherCurrentByCityName,
   fetchOpenWeatherOnecall,
   fetchOpenGeocodingByLocationName,
-} from './fetchOpenWeather';
+} from "./fetchOpenWeather";

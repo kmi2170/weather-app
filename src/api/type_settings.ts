@@ -4,5 +4,3 @@ export type QueryType = {
   units?: "imperial|metric";
   lang?: "en|ja";
 };
-
-export type CookieNameType = "myweather_coordinates" | "myweather_units";
