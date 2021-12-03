@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 
 import { Line } from "react-chartjs-2";
+import { ChartOptions } from "chart.js";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { lightBlue, lime, blueGrey, purple } from "@material-ui/core/colors";
+import { lightBlue, lime, blueGrey } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../../app/hooks";
 import { selectWeather } from "../../../features/weatherSlice";
@@ -38,18 +39,16 @@ const ChartHumidity: React.FC = () => {
   const data_clouds = hourly.map(({ clouds }) => clouds);
   const data_pop = hourly.map(({ pop }) => pop);
 
-  const options = {
-    // layout: { padding: 0 },
+  const options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    stacked: false,
     elements: {
       point: {
         radius: 0,
-        pointHitRadius: 10,
+        hitRadius: 10,
       },
       line: {
-        borderWidth: 2,
+        borderWidth: 4,
       },
     },
     scales: {
@@ -64,7 +63,6 @@ const ChartHumidity: React.FC = () => {
       y: {
         grid: {
           display: true,
-          color: purple[200],
         },
         max: 100,
         min: 0,
