@@ -40,8 +40,8 @@ const ChartHumidity: React.FC = () => {
   const data_pop = hourly.map(({ pop }) => pop);
 
   const options: ChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
+    // responsive: true,
+    // maintainAspectRatio: false,
     elements: {
       point: {
         radius: 0,
@@ -52,27 +52,27 @@ const ChartHumidity: React.FC = () => {
       },
     },
     scales: {
-      x: {
-        grid: {
-          display: true,
-        },
-        ticks: {
-          display: true,
-        },
-      },
+      // x: {
+      //   grid: {
+      //     display: true,
+      //   },
+      //   ticks: {
+      //     display: true,
+      //   },
+      // },
       y: {
-        grid: {
-          display: true,
-        },
+        // grid: {
+        //   display: true,
+        // },
         max: 100,
         min: 0,
       },
     },
-    plugins: {
-      legend: {
-        display: true,
-      },
-    },
+    // plugins: {
+    //   legend: {
+    //     display: true,
+    //   },
+    // },
   };
 
   useEffect(() => {
