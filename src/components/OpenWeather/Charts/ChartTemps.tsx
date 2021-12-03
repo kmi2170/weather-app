@@ -112,6 +112,7 @@ const ChartTemps: React.FC = () => {
     });
   }, [hourly]);
 
+  // eslint-disable-next-line react/display-name
   return <Line options={options} data={data} style={{ height: 175 }} />;
 };
 
