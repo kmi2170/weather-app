@@ -54,29 +54,32 @@ const ChartTemps: React.FC = () => {
         borderWidth: 2,
       },
     },
-    scales: {
-      x: {
-        grid: {
-          display: false,
+    options: {
+
+      scales: {
+        x: {
+          grid: {
+            display: false,
+          },
+          ticks: {
+            display: true,
+            maxTicksLimit: 10,
+            // callback: function (val, index) {
+            //   // Hide the label of every N dataset
+            //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
+            // },
+          },
         },
-        ticks: {
+        y: {
+          type: "linear",
           display: true,
-          maxTicksLimit: 10,
-          // callback: function (val, index) {
-          //   // Hide the label of every N dataset
-          //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
-          // },
+          position: "left",
+          grid: {
+            display: true,
+            color: purple[200],
+          },
+          min: 0,
         },
-      },
-      y: {
-        type: "linear",
-        display: true,
-        position: "left",
-        grid: {
-          display: true,
-          color: purple[200],
-        },
-        min: 0,
       },
     },
     plugins: {

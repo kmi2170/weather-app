@@ -58,36 +58,38 @@ const ChartWind: React.FC = () => {
         borderWidth: 2,
       },
     },
-    scales: {
-      x: {
-        grid: {
-          display: false,
+    options: {
+      scales: {
+        x: {
+          grid: {
+            display: false,
+          },
+          ticks: {
+            display: false,
+            maxTicksLimit: 10,
+            // callback: function (val, index) {
+            //   // Hide the label of every N dataset
+            //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
+            // },
+          },
         },
-        ticks: {
-          display: false,
-          maxTicksLimit: 10,
-          // callback: function (val, index) {
-          //   // Hide the label of every N dataset
-          //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
-          // },
-        },
-      },
-      y: {
-        type: "linear",
-        display: true,
-        position: "left",
-        grid: {
+        y: {
+          type: "linear",
           display: true,
-          color: purple[200],
+          position: "left",
+          grid: {
+            display: true,
+            color: purple[200],
+          },
+          min: 0,
         },
-        min: 0,
-      },
-      y1: {
-        type: "linear",
-        display: true,
-        position: "right",
-        grid: {
+        y1: {
+          type: "linear",
           display: true,
+          position: "right",
+          grid: {
+            display: true,
+          },
         },
       },
     },
