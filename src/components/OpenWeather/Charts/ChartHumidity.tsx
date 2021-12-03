@@ -104,10 +104,7 @@ const ChartHumidity: React.FC = () => {
     });
   }, [hourly]);
 
-  return (
-    // eslint-disable-next-line react/display-name
-    <Line options={options} data={data} style={{ height: 100 }} />
-  );
+  return <Line data={data} />;
 };
 
 export default ChartHumidity;
