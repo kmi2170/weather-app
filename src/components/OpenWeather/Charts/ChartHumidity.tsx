@@ -39,8 +39,7 @@ const ChartHumidity: React.FC = () => {
   const data_clouds = hourly.map(({ clouds }) => clouds);
   const data_pop = hourly.map(({ pop }) => pop);
 
-  // const options: ChartOptions = {
-  const options: any = {
+  const options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     elements: {
@@ -105,7 +104,13 @@ const ChartHumidity: React.FC = () => {
     });
   }, [hourly]);
 
-  return <Line options={options} data={data} style={{ height: 100 }} />;
+  return (
+    <Line
+      options={options as ChartOptions}
+      data={data}
+      style={{ height: 100 }}
+    />
+  );
 };
 
 export default ChartHumidity;
