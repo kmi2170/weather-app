@@ -19,9 +19,6 @@ export const weatherSlice = createSlice({
     /* setLang: (state, action: PayloadAction<Lang>) => {
       state.lang = action.payload;
     }, */
-    /* setWeatherCurrent: (state, action: PayloadAction<[]>) => {
-      state.weatherCurrent = action.payload;
-    }, */
     setSelectedPageId: (state, action: PayloadAction<number>) => {
       state.selectedPageId = action.payload;
     },

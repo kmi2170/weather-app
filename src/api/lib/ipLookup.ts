@@ -11,13 +11,13 @@ export const ipLookup = async () => {
       city,
       latitude: lat,
       longitude: lon,
-      region_code: state,
+      region_code: region,
       country_code: country,
-      /* region: state,
+      /* region: region,
       country_name: country, */
     } = data;
 
-    return { city, state: state || "", country, lat, lon };
+    return { city, region: region || "", country, lat, lon };
   } catch (error) {
     console.log(error);
   }

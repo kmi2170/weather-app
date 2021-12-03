@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   messageContainer: {
     // background: "white",
     color: purple[800],
-    marginTop: "1rem",
     marginTop: ".5rem",
   },
   examQueries: {

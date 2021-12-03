@@ -52,7 +52,7 @@ const Home: React.FC = ({}) => {
   const {
     units,
     lang,
-    location: { city, state, country, lat, lon },
+    location: { city, region, country, lat, lon },
   } = useAppSelector(selectWeather);
   const dispatch = useAppDispatch();
 
@@ -73,8 +73,8 @@ const Home: React.FC = ({}) => {
   useEffect(() => {
     if (cookies.myweather_location) {
       console.log(cookies.myweather_location);
-      const [city, state, country, lat, lon] = cookies.myweather_location;
-      dispatch(setLocation({ city, state, country, lat, lon }));
+      const [city, region, country, lat, lon] = cookies.myweather_location;
+      dispatch(setLocation({ city, region, country, lat, lon }));
 
       // let units_cookie: Units;
       if (cookies.myweather_units) {
@@ -87,10 +87,10 @@ const Home: React.FC = ({}) => {
   }, []);
 
   useEffect(() => {
-    if (city && state && country && lat && lon) {
+    if (city && region && country && lat && lon) {
       setCookie(
         "myweather_location",
-        JSON.stringify([city, state, country, lat, lon]),
+        JSON.stringify([city, region, country, lat, lon]),
         cookiesOptions
       );
     }
@@ -179,9 +179,6 @@ const Home: React.FC = ({}) => {
         </Grid>
         <Footer />
       </Container>
-      {/* 
-      <Preview data={state.weatherOnecall} />
-      */}
     </div>
   );
 };

@@ -1,9 +1,9 @@
 export type Location = {
-  city?: string;
-  state?: string;
-  country?: string;
-  lat?: string;
-  lon?: string;
+  city: string;
+  region: string;
+  country: string;
+  lat: string;
+  lon: string;
 };
 
 export type Units = "imperial" | "metric";
@@ -15,7 +15,7 @@ export type WeatherOneCall = null | any;
 export const initialState: StateType = {
   location: {
     city: "",
-    state: "",
+    region: "",
     country: "",
     lat: null,
     lon: null,

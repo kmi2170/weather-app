@@ -101,14 +101,14 @@ const OpenWeatherOnecall_Current: React.FC = () => {
   } = current;
   const { moonrise, moonset, moon_phase } = daily[0];
 
-  const { city, state, country } = location;
+  const { city, region, country } = location;
 
   const countryData = data.filter((el) => el.countryShortCode === country);
   const countryName = countryData.length ? countryData[0].countryName : country;
   const regionData = countryData[0].regions.filter(
-    (el) => el.shortCode === state
+    (el) => el.shortCode === region
   );
-  const regionName = regionData.length ? regionData[0].name : state;
+  const regionName = regionData.length ? regionData[0].name : region;
   // console.log(countryData[0].countryName);
   // console.log(regionData[0].name);
 
