@@ -52,32 +52,22 @@ const ChartHumidity: React.FC = () => {
         borderWidth: 2,
       },
     },
-    options: {
-      scales: {
-        x: {
-          grid: {
-            display: false,
-          },
-          ticks: {
-            display: false,
-            maxTicksLimit: 10,
-            // callback: function (val, index) {
-            //   // Hide the label of every N dataset
-            //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
-            // },
-          },
-        },
-        y: {
-          type: "linear",
+    scales: {
+      x: {
+        grid: {
           display: true,
-          position: "left",
-          grid: {
-            display: true,
-            color: purple[200],
-          },
-          max: 100,
-          min: 0,
         },
+        ticks: {
+          display: true,
+        },
+      },
+      y: {
+        grid: {
+          display: true,
+          color: purple[200],
+        },
+        max: 100,
+        min: 0,
       },
     },
     plugins: {

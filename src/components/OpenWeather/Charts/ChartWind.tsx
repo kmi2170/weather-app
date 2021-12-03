@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { green, brown, purple } from "@material-ui/core/colors";
+import { green, lightGreen, purple } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../../app/hooks";
 import { selectWeather } from "../../../features/weatherSlice";
@@ -39,10 +39,8 @@ const ChartWind: React.FC = () => {
   const pressureConvert = (p: number) =>
     units === "imperial" ? (+p / 1013.25) * 29.921 : p;
 
-  const pressurehUnit = () => (units === "imperial" ? "inHg" : "hPa");
-
   const data_wind_speed = hourly.map(({ wind_speed }) => wind_speed);
-  const data_pressure = hourly.map(({ pressure }) => pressureConvert(pressure));
+  const data_wind_gust = hourly.map(({ wind_gust }) => wind_gust);
 
   const options = {
     // layout: { padding: 0 },
@@ -67,10 +65,6 @@ const ChartWind: React.FC = () => {
           ticks: {
             display: false,
             maxTicksLimit: 10,
-            // callback: function (val, index) {
-            //   // Hide the label of every N dataset
-            //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
-            // },
           },
         },
         y: {
@@ -83,24 +77,11 @@ const ChartWind: React.FC = () => {
           },
           min: 0,
         },
-        y1: {
-          type: "linear",
-          display: true,
-          position: "right",
-          grid: {
-            display: true,
-          },
-        },
       },
-    },
-    plugins: {
-      // title: {
-      //   display: true,
-      //   text: 'Hourly Forecast for 48 Hours',
-      //   fontSize: 20,
-      // },
-      legend: {
-        display: true,
+      plugins: {
+        legend: {
+          display: true,
+        },
       },
     },
   };
@@ -117,11 +98,11 @@ const ChartWind: React.FC = () => {
           yAxisID: "y",
         },
         {
-          label: units === "imperial" ? "Pressure [inHg]" : "Pressure [hPa]",
-          borderColor: brown[500],
-          backgroundColor: brown[500],
-          data: data_pressure,
-          yAxisID: "y1",
+          label: units === "imperial" ? "Gust [mi]" : "Gust [m/s]",
+          borderColor: lightGreen[500],
+          backgroundColor: lightGreen[500],
+          data: data_wind_gust,
+          yAxisID: "y",
         },
       ],
     });

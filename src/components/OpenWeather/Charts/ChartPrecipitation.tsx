@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   text: {},
 }));
 
-const ChartTemps: React.FC = () => {
+const ChartPrecipitation: React.FC = () => {
   const classes = useStyles();
 
   const [data, setData] = useState({});
@@ -55,19 +55,14 @@ const ChartTemps: React.FC = () => {
       },
     },
     options: {
-
       scales: {
         x: {
-          grid: {
-            display: false,
-          },
+          // grid: {
+          //   display: false,
+          // },
           ticks: {
             display: true,
             maxTicksLimit: 10,
-            // callback: function (val, index) {
-            //   // Hide the label of every N dataset
-            //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
-            // },
           },
         },
         y: {
@@ -78,18 +73,13 @@ const ChartTemps: React.FC = () => {
             display: true,
             color: purple[200],
           },
-          min: 0,
+          min: -5,
         },
       },
-    },
-    plugins: {
-      // title: {
-      //   display: true,
-      //   text: 'Hourly Forecast for 48 Hours',
-      //   fontSize: 20,
-      // },
-      legend: {
-        display: true,
+      plugins: {
+        legend: {
+          display: true,
+        },
       },
     },
   };
@@ -119,4 +109,4 @@ const ChartTemps: React.FC = () => {
   return <Line options={options} data={data} style={{ height: 175 }} />;
 };
 
-export default ChartTemps;
+export default ChartPrecipitation;

@@ -1,16 +1,22 @@
-import { Typography, Paper } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Typography, Paper } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 
-import ChartTemps from './Charts/ChartTemps';
-import ChartHumidity from './Charts/ChartHumidity';
-import ChartPrecipitation from './Charts/ChartPrecipitation';
-import ChartWind from './Charts/ChartWind';
-// import ChartPressure from './Charts/ChartPressure';
+import ChartTemps from "./Charts/ChartTemps";
+import ChartHumidity from "./Charts/ChartHumidity";
+import ChartPrecipitation from "./Charts/ChartPrecipitation";
+import ChartWind from "./Charts/ChartWind";
+import ChartPressure from "./Charts/ChartPressure";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   paper: {
-    padding: '1rem',
+    padding: "1rem",
+  },
+  charts: {
+    height: "200px",
+  },
+  chartsHumid: {
+    height: "250px",
   },
 }));
 
@@ -26,23 +32,21 @@ const OpenWeatherOnecall_Hourly: React.FC = () => {
         <Typography variant="subtitle1" align="center" className={classes.text}>
           Hourly Fourcast for 48 Hours
         </Typography>
-        <div>
+        <div className={classes.charts}>
           <ChartTemps />
         </div>
-        <div>
+        <div className={classes.chartsHumid}>
           <ChartHumidity />
         </div>
-        <div>
+        <div className={classes.charts}>
           <ChartPrecipitation />
         </div>
-        <div>
+        <div className={classes.charts}>
           <ChartWind />
         </div>
-        {/* 
-        <div>
+        <div className={classes.charts}>
           <ChartPressure />
         </div>
-        */}
       </Paper>
     </>
   );

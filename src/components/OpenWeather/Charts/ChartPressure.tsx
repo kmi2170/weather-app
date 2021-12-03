@@ -80,15 +80,10 @@ const ChartPressure: React.FC = () => {
           },
         },
       },
-    },
-    plugins: {
-      // title: {
-      //   display: true,
-      //   text: 'Hourly Forecast for 48 Hours',
-      //   fontSize: 20,
-      // },
-      legend: {
-        display: true,
+      plugins: {
+        legend: {
+          display: true,
+        },
       },
     },
   };
