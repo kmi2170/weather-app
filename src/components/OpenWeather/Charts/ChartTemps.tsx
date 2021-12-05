@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 
 import { Line } from "react-chartjs-2";
+import { ChartOptions } from "chart.js";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { pink, deepOrange, purple } from "@material-ui/core/colors";
@@ -41,53 +42,27 @@ const ChartTemps: React.FC = () => {
   const maxT = Math.round(Math.max(...data_temp) / 5) * 5 + 5;
   const minT = Math.round(Math.min(...data_dew_point) / 5) * 5 - 5;
 
-  const options = {
-    // layout: { padding: 0 },
+  const options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    stacked: false,
     elements: {
       point: {
         radius: 0,
-        pointHitRadius: 10,
+        hitRadius: 10,
       },
       line: {
         borderWidth: 2,
       },
     },
-    options: {
-      scales: {
-        x: {
-          grid: {
-            display: false,
-          },
-          ticks: {
-            display: true,
-            maxTicksLimit: 10,
-            // callback: function (val, index) {
-            //   // Hide the label of every N dataset
-            //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
-            // },
-          },
-        },
-        y: {
-          type: "linear",
-          display: true,
-          position: "left",
-          grid: {
-            display: true,
-            color: purple[200],
-          },
-          // max: maxT,
-          // min: minT,
-        },
-      },
-      plugins: {
-        legend: {
-          display: true,
-        },
-      },
-    },
+    // scales: {
+    //   x: {},
+    //   y: {},
+    // },
+    // plugins: {
+    //   legend: {
+    //     display: true,
+    //   },
+    // },
   };
 
   useEffect(() => {
@@ -112,8 +87,7 @@ const ChartTemps: React.FC = () => {
     });
   }, [hourly]);
 
-  // eslint-disable-next-line react/display-name
-  return <Line options={options} data={data} style={{ height: 175 }} />;
+  return <Line options={options} data={data as any} />;
 };
 
 export default ChartTemps;

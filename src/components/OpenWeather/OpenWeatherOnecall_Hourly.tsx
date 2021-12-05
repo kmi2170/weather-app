@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const OpenWeatherOnecall_Hourly: React.FC = () => {
   const classes = useStyles();
+  console.log("hourly");
 
   return (
     <>

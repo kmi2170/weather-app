@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const ChartHumidity: React.FC = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [data, setData] = useState({});
 
@@ -40,8 +40,8 @@ const ChartHumidity: React.FC = () => {
   const data_pop = hourly.map(({ pop }) => pop);
 
   const options: ChartOptions = {
-    // responsive: true,
-    // maintainAspectRatio: false,
+    responsive: true,
+    maintainAspectRatio: false,
     elements: {
       point: {
         radius: 0,
@@ -52,18 +52,7 @@ const ChartHumidity: React.FC = () => {
       },
     },
     scales: {
-      // x: {
-      //   grid: {
-      //     display: true,
-      //   },
-      //   ticks: {
-      //     display: true,
-      //   },
-      // },
       y: {
-        // grid: {
-        //   display: true,
-        // },
         max: 100,
         min: 0,
       },
@@ -104,7 +93,7 @@ const ChartHumidity: React.FC = () => {
     });
   }, [hourly]);
 
-  return <Line data={data} />;
+  return <Line options={options} data={data as any} />;
 };
 
 export default ChartHumidity;

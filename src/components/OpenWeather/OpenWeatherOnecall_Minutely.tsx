@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import router, { useRouter } from "next/router";
 
 import { Bar } from "react-chartjs-2";
+import { ChartOptions } from "chart.js";
 
 import { Typography, Paper } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -37,41 +38,23 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
 
   const { timezone, minutely } = weatherOnecall;
 
-  const data_time = minutely?.map(({ dt }) => timeLocalwithTZ(dt, timezone));
+  const data_time: string[] = minutely?.map(({ dt }) =>
+    timeLocalwithTZ(dt, timezone)
+  );
 
   const fall = (fall: number) => (units === "imperial" ? fall / 25.4 : fall);
 
   let isFall = false;
-  const data_precipitation = minutely?.map(({ precipitation }) => {
+  const data_precipitation: number[] = minutely?.map(({ precipitation }) => {
     if (precipitation > 0) isFall = true;
     return fall(+precipitation);
   });
 
   // const data_precipitation = minutely.map((_) => fall(Math.random()));
 
-  const options = {
+  const options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    scales: {
-      x: {
-        grid: {
-          display: true,
-        },
-        ticks: {
-          display: true,
-          maxTicksLimit: 10,
-          callback: function (val, index) {
-            // Hide the label of every N dataset
-            return index % 1 === 0 ? this.getLabelForValue(val) : "";
-          },
-        },
-      },
-      y: {
-        grid: {
-          display: false,
-        },
-      },
-    },
     plugins: {
       title: {
         display: true,
@@ -80,11 +63,10 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
             ? "Precipitation for 1 Hour [in]"
             : "Precipitation for 1 Hour [mm]"
           : "No Precipitation for 1 Hour",
-        fontSiz: 20,
       },
-      legend: {
-        display: false,
-      },
+      // legend: {
+      //   display: false,
+      // },
     },
   };
 
@@ -99,15 +81,15 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
         },
       ],
     });
-  }, [units]);
+  }, [minutely]);
 
   return (
     <>
       <Typography variant="h6" className={classes.text}>
         Minutely
       </Typography>
-      <Paper className={classes.paper}>
-        <Bar options={options} data={data} style={{ height: 100 }} />
+      <Paper className={classes.paper} style={{ height: 150 }}>
+        <Bar options={options} data={data as any} />
       </Paper>
     </>
   );

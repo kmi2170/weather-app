@@ -11,7 +11,7 @@ specifiers:
   '@types/react-redux': ^7.1.19
   axios: ^0.21.1
   babel-plugin-transform-imports: ^2.0.0
-  chart.js: ^3.5.0
+  chart.js: 3.5.1
   country-region-data: ^1.11.0
   eslint: 7.29.0
   eslint-config-next: 11.0.0
@@ -19,8 +19,8 @@ specifiers:
   moment-timezone: ^0.5.33
   next: 11.0.0
   package.json: ^2.0.1
-  react: 17.0.2
-  react-chartjs-2: ^3.0.4
+  react: ^17.0.2
+  react-chartjs-2: 3.0.5
   react-cookie: ^4.0.3
   react-dom: 17.0.2
   react-redux: ^7.2.5
@@ -32,14 +32,14 @@ dependencies:
   '@material-ui/lab': 4.0.0-alpha.60_46c39387f2dfee435486736a3e4022f5
   '@reduxjs/toolkit': 1.6.2_react-redux@7.2.5+react@17.0.2
   axios: 0.21.1
-  chart.js: 3.5.0
+  chart.js: 3.5.1
   country-region-data: 1.11.0
   moment: 2.29.1
   moment-timezone: 0.5.33
   next: 11.0.0_f31b35bdaa3b7c2fce82404f09d2dac4
   package.json: 2.0.1
   react: 17.0.2
-  react-chartjs-2: 3.0.4_chart.js@3.5.0+react@17.0.2
+  react-chartjs-2: 3.0.5_chart.js@3.5.1+react@17.0.2
   react-cookie: 4.0.3_react@17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-redux: 7.2.5_react-dom@17.0.2+react@17.0.2
@@ -875,8 +875,8 @@ packages:
       supports-color: 7.2.0
     dev: true
 
-  /chart.js/3.5.0:
-    resolution: {integrity: sha512-J1a4EAb1Gi/KbhwDRmoovHTRuqT8qdF0kZ4XgwxpGethJHUdDrkqyPYwke0a+BuvSeUxPf8Cos6AX2AB8H8GLA==}
+  /chart.js/3.5.1:
+    resolution: {integrity: sha512-m5kzt72I1WQ9LILwQC4syla/LD/N413RYv2Dx2nnTkRS9iv/ey1xLTt0DnPc/eWV4zI+BgEgDYBIzbQhZHc/PQ==}
     dev: false
 
   /chokidar/3.5.1:
@@ -3023,13 +3023,13 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
-  /react-chartjs-2/3.0.4_chart.js@3.5.0+react@17.0.2:
-    resolution: {integrity: sha512-pcbFNpkPMTkGXXJ7k7hnukbRD0ZV01qB6JQY1ontITc2IYvhGlK6BBDy28VeydYs1Dl/c5ZpRgRVEtT5GUnxcQ==}
+  /react-chartjs-2/3.0.5_chart.js@3.5.1+react@17.0.2:
+    resolution: {integrity: sha512-fYr4E82agaZi9IFMe5GtOZ6WE/HWdxy/KywLNOzXsqgPkD2oo1IlrQLKMLUki/2UXko3p95TR2L8Q2rEss/opQ==}
     peerDependencies:
-      chart.js: ^3.1.0
+      chart.js: ^3.5.0
       react: ^16.8.0 || ^17.0.0
     dependencies:
-      chart.js: 3.5.0
+      chart.js: 3.5.1
       lodash: 4.17.21
       react: 17.0.2
     dev: false

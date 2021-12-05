@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { Line } from "react-chartjs-2";
+import { ChartOptions } from "chart.js";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { green, lightGreen, purple } from "@material-ui/core/colors";
@@ -42,48 +43,29 @@ const ChartWind: React.FC = () => {
   const data_wind_speed = hourly.map(({ wind_speed }) => wind_speed);
   const data_wind_gust = hourly.map(({ wind_gust }) => wind_gust);
 
-  const options = {
-    // layout: { padding: 0 },
+  const options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    stacked: false,
     elements: {
       point: {
         radius: 0,
-        pointHitRadius: 10,
+        hitRadius: 10,
       },
       line: {
         borderWidth: 2,
       },
     },
-    options: {
-      scales: {
-        x: {
-          grid: {
-            display: false,
-          },
-          ticks: {
-            display: false,
-            maxTicksLimit: 10,
-          },
-        },
-        y: {
-          type: "linear",
-          display: true,
-          position: "left",
-          grid: {
-            display: true,
-            color: purple[200],
-          },
-          min: 0,
-        },
-      },
-      plugins: {
-        legend: {
-          display: true,
-        },
-      },
-    },
+    // scales: {
+    //   x: {},
+    //   y: {
+    //     min: 0,
+    //   },
+    // },
+    // plugins: {
+    //   legend: {
+    //     display: true,
+    //   },
+    // },
   };
 
   useEffect(() => {
@@ -108,7 +90,7 @@ const ChartWind: React.FC = () => {
     });
   }, [hourly]);
 
-  return <Line options={options} data={data} style={{ height: 100 }} />;
+  return <Line options={options} data={data as any} />;
 };
 
 export default ChartWind;

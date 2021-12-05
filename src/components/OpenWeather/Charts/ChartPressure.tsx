@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { Line } from "react-chartjs-2";
+import { ChartOptions } from "chart.js";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { brown, purple } from "@material-ui/core/colors";
@@ -41,51 +42,27 @@ const ChartPressure: React.FC = () => {
 
   const data_pressure = hourly.map(({ pressure }) => pressureConvert(pressure));
 
-  const options = {
-    // layout: { padding: 0 },
+  const options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    stacked: false,
     elements: {
       point: {
         radius: 0,
-        pointHitRadius: 10,
+        hitRadius: 10,
       },
       line: {
         borderWidth: 2,
       },
     },
-    options: {
-      scales: {
-        x: {
-          grid: {
-            display: false,
-          },
-          ticks: {
-            display: false,
-            maxTicksLimit: 10,
-            // callback: function (val, index) {
-            //   // Hide the label of every N dataset
-            //   return index % 1 === 0 ? this.getLabelForValue(val) : '';
-            // },
-          },
-        },
-        y: {
-          type: "linear",
-          display: true,
-          position: "left",
-          grid: {
-            display: true,
-            color: purple[200],
-          },
-        },
-      },
-      plugins: {
-        legend: {
-          display: true,
-        },
-      },
-    },
+    // scales: {
+    //   x: {},
+    //   y: {},
+    // },
+    // plugins: {
+    //   legend: {
+    //     display: true,
+    //   },
+    // },
   };
 
   useEffect(() => {
@@ -103,7 +80,7 @@ const ChartPressure: React.FC = () => {
     });
   }, [hourly]);
 
-  return <Line options={options} data={data} style={{ height: 100 }} />;
+  return <Line options={options} data={data as any} />;
 };
 
 export default ChartPressure;

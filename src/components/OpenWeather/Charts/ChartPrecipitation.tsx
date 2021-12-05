@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { Line } from "react-chartjs-2";
+import { ChartOptions } from "chart.js";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { blue, grey, purple } from "@material-ui/core/colors";
@@ -40,48 +41,27 @@ const ChartPrecipitation: React.FC = () => {
   const data_rain = hourly.map((el) => (el.rain ? fall(el.rain["1h"]) : 0.0));
   const data_snow = hourly.map((el) => (el.snow ? fall(el.snow["1h"]) : 0.0));
 
-  const options = {
-    // layout: { padding: 0 },
+  const options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    stacked: false,
     elements: {
       point: {
         radius: 0,
-        pointHitRadius: 10,
+        hitRadius: 10,
       },
       line: {
         borderWidth: 2,
       },
     },
-    options: {
-      scales: {
-        x: {
-          // grid: {
-          //   display: false,
-          // },
-          ticks: {
-            display: true,
-            maxTicksLimit: 10,
-          },
-        },
-        y: {
-          type: "linear",
-          display: true,
-          position: "left",
-          grid: {
-            display: true,
-            color: purple[200],
-          },
-          min: -5,
-        },
-      },
-      plugins: {
-        legend: {
-          display: true,
-        },
-      },
-    },
+    // scales: {
+    //   x: {},
+    //   y: {},
+    // },
+    // plugins: {
+    //   legend: {
+    //     display: true,
+    //   },
+    // },
   };
 
   useEffect(() => {
@@ -106,7 +86,7 @@ const ChartPrecipitation: React.FC = () => {
     });
   }, [hourly]);
 
-  return <Line options={options} data={data} style={{ height: 175 }} />;
+  return <Line options={options} data={data as any} />;
 };
 
 export default ChartPrecipitation;
