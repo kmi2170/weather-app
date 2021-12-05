@@ -1,5 +1,3 @@
-import router, { useRouter } from "next/router";
-
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setUnits, selectWeather } from "../../features/weatherSlice";
 import { Units } from "../../features/initialState";
@@ -41,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Component: React.FC = () => {
   const classes = useStyles();
-  const { query } = useRouter();
 
   const { units } = useAppSelector(selectWeather);
   const dispatch = useAppDispatch();
@@ -49,8 +46,6 @@ const Component: React.FC = () => {
   //const handleClick = (e: React.MouseEvent<HTMLElement>) => {
   const handleClick = (t_units: Units) => {
     if (t_units !== units) {
-      router.push({ pathname: "/", query: { ...query, units: t_units } });
-
       return dispatch(setUnits(t_units));
     }
   };

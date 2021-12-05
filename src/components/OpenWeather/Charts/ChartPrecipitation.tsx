@@ -50,7 +50,7 @@ const ChartPrecipitation: React.FC = () => {
         hitRadius: 10,
       },
       line: {
-        borderWidth: 2,
+        borderWidth: 3,
       },
     },
     // scales: {

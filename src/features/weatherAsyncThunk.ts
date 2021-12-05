@@ -26,7 +26,7 @@ export const asyncThunkSearchLocation = createAsyncThunk(
       const { data } = await axios.get(`/api/geolocation?q=${q}`);
 
       if (data.length !== 0) {
-        const { name: city, region, country, lat, lon } = data[0];
+        const { name: city, state: region, country, lat, lon } = data[0];
 
         dispatch(setLocation({ city, region, country, lat, lon }));
       } else {

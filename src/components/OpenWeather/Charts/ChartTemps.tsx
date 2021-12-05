@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
@@ -51,7 +51,7 @@ const ChartTemps: React.FC = () => {
         hitRadius: 10,
       },
       line: {
-        borderWidth: 2,
+        borderWidth: 3,
       },
     },
     // scales: {

@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext } from "react";
-import router, { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 
 import { Bar } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const OpenWeatherOnecall_Minutely: React.FC = () => {
   const classes = useStyles();
-  const { query } = useRouter();
 
   const [data, setData] = useState({});
 

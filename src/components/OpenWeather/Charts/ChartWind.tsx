@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const ChartWind: React.FC = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [data, setData] = useState({});
 
@@ -52,7 +52,7 @@ const ChartWind: React.FC = () => {
         hitRadius: 10,
       },
       line: {
-        borderWidth: 2,
+        borderWidth: 3,
       },
     },
     // scales: {

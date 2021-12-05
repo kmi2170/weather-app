@@ -48,7 +48,7 @@ const ChartHumidity: React.FC = () => {
         hitRadius: 10,
       },
       line: {
-        borderWidth: 4,
+        borderWidth: 3,
       },
     },
     scales: {

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import router, { useRouter } from "next/router";
 import Image from "next/image";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -49,8 +48,6 @@ const Searchbar: React.FC = () => {
   const { isNotFound } = useAppSelector(selectWeather);
   const dispatch = useAppDispatch();
 
-  // const { query } = useRouter();
-
   const [searchLocation, setSearchLocation] = useState<string>("");
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -67,11 +64,6 @@ const Searchbar: React.FC = () => {
     if (searchLocation) {
       dispatch(asyncThunkSearchLocation(searchLocation));
     }
-
-    // router.push({
-    //   pathname: "/",
-    //   query: { searchLocation },
-    // });
   };
 
   return (
