@@ -9,6 +9,7 @@ export const store = configureStore({
     weather: weatherSlice,
     [weatherOnecallApi.reducerPath]: weatherOnecallApi.reducer,
   },
+  middleware: (gDM) => gDM().concat(weatherOnecallApi.middleware),
 });
 
 setupListeners(store.dispatch);
