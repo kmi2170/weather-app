@@ -1,13 +1,15 @@
 export const config = {
-  title: 'My Weather Station',
-  author: 'Kmi, Web developer/programmer',
-  // author: {
-  //   name: 'Kmi',
-  //   summary: 'Web developer/programmer',
-  // },
-  description: 'Weather Information App',
-  keywords: 'Weather News, React.js, Next.js, Material-UI',
-  social: {
+  title: "My Weather Station",
+  author: "Kemmei, Web developer/programmer",
+  /* author: {
+    name: "Kmi",
+    summary: "Web developer/programmer",
+  }, */
+  description:
+    "An app to display weather information fetched from OpenWeather API. This is a Next.js projext built with TypeScript, Material-UI, Redux-Toolkit(RTK), RTK Query",
+  keywords:
+    "Weather News, OpenWeather API, React.js, Next.js, TypeScript, Material-UI, Redux-Toolkit",
+  /* social: {
     twitter: '',
-  },
+  }, */
 };
