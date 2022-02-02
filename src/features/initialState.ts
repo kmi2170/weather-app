@@ -9,7 +9,7 @@ export type Location = {
 export type Units = "imperial" | "metric";
 export type Lang = "en" | "ja";
 
-export type WeatherCurrent = null | any;
+// export type WeatherCurrent = null | any;
 export type WeatherOneCall = null | any;
 
 export const initialState: StateType = {
@@ -22,7 +22,7 @@ export const initialState: StateType = {
   },
   units: "imperial",
   lang: "en",
-  weatherCurrent: null,
+  // weatherCurrent: null,
   weatherOnecall: null,
   selectedPageId: 1,
   isLoading: false,
@@ -34,8 +34,8 @@ export type StateType = {
   location: Location;
   units: Units;
   lang: Lang;
-  weatherCurrent: WeatherCurrent;
-  weatherOnecall: WeatherCurrent;
+  // weatherCurrent: WeatherCurrent;
+  weatherOnecall: WeatherOneCall;
   selectedPageId: number;
   isLoading: boolean;
   isError: boolean;

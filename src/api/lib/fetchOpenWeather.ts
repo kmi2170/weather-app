@@ -1,4 +1,5 @@
 import axios from "axios";
+import { WeatherOneCall } from "../../features/initialState";
 
 const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
 
@@ -7,7 +8,7 @@ export const fetchOpenWeatherOnecall = async (
   lon: string,
   units: string,
   lang: string
-) => {
+): Promise<WeatherOneCall> => {
   const url = `https://api.openweathermap.org/data/2.5/onecall`;
 
   if ((+lat || +lat === 0.0) && (+lon || +lon === 0.0)) {
@@ -18,14 +19,14 @@ export const fetchOpenWeatherOnecall = async (
 
       return data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   } else {
     return null;
   }
 };
 
-export const fetchOpenGeocodingByLocationName = async (q: string) => {
+export const fetchOpenGeocodingByLocationName = async (q: string): Promise<any> => {
   const url = "https://api.openweathermap.org/geo/1.0/direct";
 
   try {
@@ -34,6 +35,6 @@ export const fetchOpenGeocodingByLocationName = async (q: string) => {
 
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

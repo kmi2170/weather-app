@@ -1,8 +1,9 @@
 import axios from "axios";
+import { Location } from "../../features/initialState";
 
 const url = "https://ipapi.co/json";
 
-export const ipLookup = async () => {
+export const ipLookup = async (): Promise<Location> => {
   try {
     const { data } = await axios(url);
     console.log(data);
@@ -19,6 +20,6 @@ export const ipLookup = async () => {
 
     return { city, region: region || "", country, lat, lon };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
