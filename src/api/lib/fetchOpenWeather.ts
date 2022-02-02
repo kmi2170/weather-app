@@ -17,7 +17,7 @@ export const fetchOpenWeatherOnecall = async (
         params: { lat, lon, units, lang, appid },
       });
 
-      return data;
+      return data as WeatherOneCall;
     } catch (error) {
       console.error(error);
     }
