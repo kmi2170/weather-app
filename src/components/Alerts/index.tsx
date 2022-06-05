@@ -1,25 +1,27 @@
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
 
-import { Grid, Paper, Typography } from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import red from '@material-ui/core/colors/red';
 
-import { useAppSelector } from "../app/hooks";
-import { selectWeather } from "../features/weatherSlice";
-import { useGetWeatherOnecallQuery } from "../services/weatherOnecallApi";
+import { useAppSelector } from '../../app/hooks';
+import { selectWeather } from '../../features/weatherSlice';
+import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   text: {},
   paper: {
-    padding: "1rem",
+    padding: '1rem',
   },
   description: {
     color: red[900],
-    margin: "1rem 0",
+    margin: '1rem 0',
   },
 }));
 
-const Alerts: React.FC = () => {
+const Alerts = () => {
   const classes = useStyles();
 
   const { units, lang, location } = useAppSelector(selectWeather);
@@ -36,7 +38,7 @@ const Alerts: React.FC = () => {
   const dateTimeLocalwithTZ = (dt: string, tzone: string) =>
     moment(new Date(+dt * 1000).toUTCString())
       .tz(tzone)
-      .format("MM/DD ddd h:mm a");
+      .format('MM/DD ddd h:mm a');
   return (
     <>
       {alerts && (
