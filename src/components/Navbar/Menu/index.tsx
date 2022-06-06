@@ -1,19 +1,15 @@
-import { useState } from "react";
-import Image from "next/image";
+import { memo, useState } from 'react';
+import Image from 'next/image';
 
-import { Typography, Menu, MenuItem, IconButton } from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import Typography from '@material-ui/core/Typography';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
 
-import Buttons from "./Buttons";
-import icon_setting from "../../../public/icon_setting.png";
+import Buttons from './Buttons';
+import icon_setting from '../../../../public/icon_setting.png';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  text: {},
-}));
-
-const MenuComponent: React.FC = () => {
-  // const classes = useStyles();
-
+const MenuComponent = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,7 +21,7 @@ const MenuComponent: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <IconButton
         aria-controls="switch-units"
         aria-haspopup="true"
@@ -48,8 +44,8 @@ const MenuComponent: React.FC = () => {
           <Buttons />
         </MenuItem>
       </Menu>
-    </div>
+    </>
   );
 };
 
-export default MenuComponent;
+export default memo(MenuComponent);

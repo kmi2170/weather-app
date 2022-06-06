@@ -1,11 +1,10 @@
-import { forwardRef } from "react";
+import { forwardRef, memo } from "react";
 
 import { AppBar, Toolbar, Typography, List, ListItem } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { purple, red } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../app/hooks";
-import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
 
 import MenuComponent from "./Menu";
@@ -56,14 +55,13 @@ const list = [
   { id: 4, name: "hourly" },
 ];
 
-// interface NavbarProps {
-//   itemRefs: HTMLElement[];
-// }
-
 const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const classes = useStyles();
+  console.log('navbar')
 
-  const { units, lang, location } = useAppSelector(selectWeather);
+  const units = useAppSelector(state => state.weather.units);
+  const lang = useAppSelector(state => state.weather.lang);
+  const location = useAppSelector(state => state.weather.location);
 
   const { data: dataOnecall } = useGetWeatherOnecallQuery({
     lat: location.lat,
@@ -72,7 +70,6 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
     lang,
   });
 
-  // const { alerts } = weatherOnecall;
   const alerts = dataOnecall?.alerts ? dataOnecall.alerts : null;
 
   const handleItemRefs = (id: number) => {
@@ -123,4 +120,4 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   );
 };
 
-export default forwardRef(Navbar);
+export default memo(forwardRef(Navbar));

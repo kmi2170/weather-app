@@ -118,7 +118,7 @@ const Searchbar = () => {
           </Typography>
           <div className={classes.queryExamples}>
             {queryExamples.map(example => (
-              <Typography variant="h6" align="center">
+              <Typography key={example} variant="h6" align="center">
                 {example}
               </Typography>
             ))}

@@ -1,59 +1,51 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from 'react';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { makeStyles } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
 
-import { useCookies } from "react-cookie";
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { setLocation } from '../features/weatherSlice';
+import { asyncThunkIpLookupLocation } from '../features/weatherAsyncThunk';
+import { useGetWeatherOnecallQuery } from '../services/weatherOnecallApi';
+import { useCustomeCookies } from '../hooks/useCustomCookies';
 
-import { Container, Grid, Typography } from "@material-ui/core";
-import Skeleton from "@material-ui/lab/Skeleton";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { purple } from "@material-ui/core/colors";
-
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { setLocation, setUnits, selectWeather } from "../features/weatherSlice";
-import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";
-import { useGetWeatherOnecallQuery } from "../services/weatherOnecallApi";
-
-import SEO from "../components/SEO";
-import Navbar from "../components/Navbar/Navbar";
-import Searchbar from "../components/Searchbar";
-import Alerts from "../components/Alerts";
-import Footer from "../components/Footer";
+import Navbar from '../components/Navbar';
+import Searchbar from '../components/Searchbar';
+import Alerts from '../components/Alerts';
+import Footer from '../components/Footer';
 import {
   OpenWeatherOnecall_Current,
   OpenWeatherOnecall_Daily,
   OpenWeatherOnecall_Minutely,
   OpenWeatherOnecall_Hourly,
-} from "../components/OpenWeather";
+} from '../components/OpenWeather';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     background: purple[50],
-    // background: lime[100],
-    minHeight: "100vh",
+    minHeight: '100vh',
   },
   noLocation: {
-    margin: "5rem 0",
+    margin: '5rem 0',
   },
   title: {
-    marginTop: "1rem",
+    marginTop: '1rem',
   },
 }));
 
-const cookiesOptions = {
-  path: "/",
-  maxAge: 2600000,
-  sameSite: true,
-};
-
-const Home: React.FC = ({}) => {
+const Home = () => {
   const classes = useStyles();
   const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
 
-  const {
-    units,
-    lang,
-    location: { city, region, country, lat, lon },
-  } = useAppSelector(selectWeather);
+  const units = useAppSelector(state => state.weather.units);
+  const lang = useAppSelector(state => state.weather.lang);
+  const { city, region, country, lat, lon } = useAppSelector(
+    state => state.weather.location
+  );
   const dispatch = useAppDispatch();
 
   const { data: dataOnecall } = useGetWeatherOnecallQuery({
@@ -63,50 +55,38 @@ const Home: React.FC = ({}) => {
     lang,
   });
 
-  // console.log(dataOnecall);
-
-  const [cookies, setCookie] = useCookies([
-    "myweather_location",
-    "myweather_units",
-  ]);
+  const { cookies, setLocationCookie } = useCustomeCookies();
 
   useEffect(() => {
-    if (cookies.myweather_location) {
-      console.log(cookies.myweather_location);
-      const [city, region, country, lat, lon] = cookies.myweather_location;
-      dispatch(setLocation({ city, region, country, lat, lon }));
-
-      // let units_cookie: Units;
-      if (cookies.myweather_units) {
-        const units_cookie = cookies.myweather_units;
-        dispatch(setUnits(units_cookie));
+    if (cookies.weather_location) {
+      const { city, region, country, lat, lon } = cookies.weather_location;
+      if (city && region && country && lat && lon) {
+        dispatch(setLocation(cookies.weather_location));
       }
-    } else {
-      dispatch(asyncThunkIpLookupLocation());
+      return;
     }
+
+    dispatch(asyncThunkIpLookupLocation());
   }, []);
 
-  useEffect(() => {
-    if (city && region && country && lat && lon) {
-      setCookie(
-        "myweather_location",
-        JSON.stringify([city, region, country, lat, lon]),
-        cookiesOptions
-      );
-    }
-  }, [lat, lon]);
+  useEffect(
+    () => {
+      if (city && region && country && lat && lon) {
+        setLocationCookie({ city, region, country, lat, lon });
+      }
+    },
+    [lat, lon]
+  );
 
-  useEffect(() => {
-    setCookie("myweather_units", units, cookiesOptions);
-  }, [units]);
-
-  const saveItemRefs = (ref: HTMLDivElement, index: number) => {
+  // const saveItemRefs = (ref: HTMLDivElement, index: number) => {
+  //   itemRefs.current[index] = ref;
+  // };
+  const saveItemRefs = useCallback((ref: HTMLDivElement, index: number) => {
     itemRefs.current[index] = ref;
-  };
+  }, []);
 
   return (
     <div className={classes.root}>
-      <SEO />
       <Navbar ref={itemRefs} />
       <Container>
         <Grid container spacing={2} justifyContent="center">
@@ -121,12 +101,12 @@ const Home: React.FC = ({}) => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <div style={{ flex: "display", justifyContent: "center" }}>
+            <div style={{ flex: 'display', justifyContent: 'center' }}>
               <Searchbar />
             </div>
           </Grid>
           <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref, 0)} />
+            <div ref={ref => saveItemRefs(ref, 0)} />
             {dataOnecall ? (
               <OpenWeatherOnecall_Current />
             ) : (
@@ -134,7 +114,7 @@ const Home: React.FC = ({}) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref, 1)} />
+            <div ref={ref => saveItemRefs(ref, 1)} />
             {dataOnecall ? (
               <OpenWeatherOnecall_Minutely />
             ) : (
@@ -142,7 +122,7 @@ const Home: React.FC = ({}) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref, 2)} />
+            <div ref={ref => saveItemRefs(ref, 2)} />
             {dataOnecall ? (
               <OpenWeatherOnecall_Daily />
             ) : (
@@ -161,7 +141,7 @@ const Home: React.FC = ({}) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <div ref={(ref) => saveItemRefs(ref, 3)} />
+            <div ref={ref => saveItemRefs(ref, 3)} />
             {dataOnecall ? (
               <OpenWeatherOnecall_Hourly />
             ) : (
@@ -169,12 +149,13 @@ const Home: React.FC = ({}) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            {dataOnecall && dataOnecall["alerts"] && (
-              <>
-                <div ref={(ref) => saveItemRefs(ref, 4)} />
-                <Alerts />
-              </>
-            )}
+            {dataOnecall &&
+              dataOnecall['alerts'] && (
+                <>
+                  <div ref={ref => saveItemRefs(ref, 4)} />
+                  <Alerts />
+                </>
+              )}
           </Grid>
         </Grid>
         <Footer />
