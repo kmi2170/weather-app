@@ -9,6 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import purple from '@material-ui/core/colors/purple';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useCustomeCookies } from '../../../../hooks/useCustomCookies';
+import { isUnitsValid } from '../../../../utils/cookiesValidator';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -55,11 +56,7 @@ const Buttons = () => {
   const { cookies, setUnitsCookie } = useCustomeCookies();
 
   useEffect(() => {
-    if (
-      cookies.weather_units &&
-      (cookies.weather_units === 'imperial' ||
-        cookies.weather_units === 'metric')
-    ) {
+    if (isUnitsValid(cookies.weather_units)) {
       dispatch(setUnits(cookies.weather_units));
     }
   }, []);

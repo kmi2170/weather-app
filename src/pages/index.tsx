@@ -22,6 +22,7 @@ import {
   OpenWeatherOnecall_Minutely,
   OpenWeatherOnecall_Hourly,
 } from '../components/OpenWeather';
+import { isLocationValid } from '../utils/cookiesValidator';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -43,9 +44,8 @@ const Home = () => {
 
   const units = useAppSelector(state => state.weather.units);
   const lang = useAppSelector(state => state.weather.lang);
-  const { city, region, country, lat, lon } = useAppSelector(
-    state => state.weather.location
-  );
+  const location = useAppSelector(state => state.weather.location);
+  const { lat, lon } = location;
   const dispatch = useAppDispatch();
 
   const { data: dataOnecall } = useGetWeatherOnecallQuery({
@@ -58,11 +58,8 @@ const Home = () => {
   const { cookies, setLocationCookie } = useCustomeCookies();
 
   useEffect(() => {
-    if (cookies.weather_location) {
-      const { city, region, country, lat, lon } = cookies.weather_location;
-      if (city && region && country && lat && lon) {
-        dispatch(setLocation(cookies.weather_location));
-      }
+    if (isLocationValid(cookies.weather_location)) {
+      dispatch(setLocation(cookies.weather_location));
       return;
     }
 
@@ -71,11 +68,11 @@ const Home = () => {
 
   useEffect(
     () => {
-      if (city && region && country && lat && lon) {
-        setLocationCookie({ city, region, country, lat, lon });
+      if (isLocationValid(location)) {
+        setLocationCookie(location);
       }
     },
-    [lat, lon]
+    [location]
   );
 
   // const saveItemRefs = (ref: HTMLDivElement, index: number) => {
