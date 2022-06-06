@@ -1,42 +1,42 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Container, Grid, Popover, Typography } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { purple, orange, yellow } from "@material-ui/core/colors";
+import { Container, Grid, Popover, Typography } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { purple, orange, yellow } from '@material-ui/core/colors';
 
-import { useAppSelector } from "../../app/hooks";
-import { selectWeather } from "../../features/weatherSlice";
-import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
+import { useAppSelector } from '../../app/hooks';
+import { selectWeather } from '../../features/weatherSlice';
+import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
 
 import {
   fallWithUnit,
   pressureWithUnit,
   timeLocalwithTZ,
-} from "../../utils/units";
-import MoonIcon from "./MoonIcon";
+} from '../../utils/units';
+import MoonIcon from './common/MoonIcon';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     popover: {
-      pointerEvents: "none",
+      pointerEvents: 'none',
     },
     paper: {
       padding: theme.spacing(1),
-      minWidth: "30vw",
+      minWidth: '30vw',
     },
     iconSun: {
-      fontSize: "1rem",
+      fontSize: '1rem',
       color: purple[500],
-      marginRight: "0.5rem",
+      marginRight: '0.5rem',
     },
     iconMoon: {
-      fontSize: "1rem",
+      fontSize: '1rem',
       color: purple[500],
-      marginRight: "0.5rem",
-      marginLeft: "0.25rem",
+      marginRight: '0.5rem',
+      marginLeft: '0.25rem',
     },
     children: {
-      "&:hover": { border: `1px solid ${purple[500]}` },
+      '&:hover': { border: `1px solid ${purple[500]}` },
     },
     sunDecoration: {
       borderBottom: `2px solid ${orange[500]}`,
@@ -95,7 +95,7 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
   return (
     <>
       <div
-        aria-owns={open ? "mouse-over-popover" : undefined}
+        aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
@@ -112,12 +112,12 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
+          vertical: 'top',
+          horizontal: 'left',
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus

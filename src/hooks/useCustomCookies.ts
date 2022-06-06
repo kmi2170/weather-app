@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie';
-import { Units } from '../features/initialState';
+import { Location, Units } from '../features/initialState';
 
 const cookiesOptions = {
   path: '/',
@@ -13,7 +13,7 @@ export const useCustomeCookies = () => {
     'weather_units',
   ]);
 
-  const setLocationCookie = location =>
+  const setLocationCookie = (location: Location) =>
     setCookie('weather_location', location, cookiesOptions);
 
   const setUnitsCookie = (units: Units) =>

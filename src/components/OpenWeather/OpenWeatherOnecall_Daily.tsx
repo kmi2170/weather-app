@@ -1,58 +1,58 @@
 //import Image from 'next/image';
 
-import { Typography, Paper, Grid } from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { purple } from "@material-ui/core/colors";
+import { Typography, Paper, Grid } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { purple } from '@material-ui/core/colors';
 
 // import moment from 'moment';
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
 
-import { useAppSelector } from "../../app/hooks";
-import { selectWeather } from "../../features/weatherSlice";
-import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
+import { useAppSelector } from '../../app/hooks';
+import { selectWeather } from '../../features/weatherSlice';
+import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
 
-import { formatDigits } from "../../utils/units";
-import WeatherIcon from "./WeatherIcon";
-import WindIcon from "./WindIcon";
-import PopoverDaily from "./Popover_Daily";
+import { formatDigits } from '../../utils/units';
+import WeatherIcon from './common/WeatherIcon';
+import WindIcon from './common/WindIcon';
+import PopoverDaily from './Popover_Daily';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   locationContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    [theme.breakpoints.down("xs")]: {
-      flexDirection: "column",
-      justifyContent: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+      justifyContent: 'center',
     },
-    alignItems: "center",
+    alignItems: 'center',
   },
   locationSubContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   weatherContainer: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
   },
   countryName: {
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: "1rem",
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: '1rem',
     },
   },
   iconSun: {
-    fontSize: "1rem",
+    fontSize: '1rem',
     color: purple[500],
-    marginRight: "0.5rem",
+    marginRight: '0.5rem',
   },
   iconMoon: {
-    fontSize: "1rem",
+    fontSize: '1rem',
     color: purple[500],
-    marginRight: "0.5rem",
-    marginLeft: "0.25rem",
+    marginRight: '0.5rem',
+    marginLeft: '0.25rem',
   },
   iconPop: {
     color: purple[500],
@@ -74,20 +74,20 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
   const { timezone, daily } = weatherOnecall;
 
   const tempUnit = () =>
-    units === "imperial" ? <small>&#8457;</small> : <small>&#8451;</small>;
+    units === 'imperial' ? <small>&#8457;</small> : <small>&#8451;</small>;
 
   const temp = (t: string) =>
-    units === "imperial" ? formatDigits(t, 0) : formatDigits(t, 0);
+    units === 'imperial' ? formatDigits(t, 0) : formatDigits(t, 0);
 
   const dateLocalwithTZ = (dt: string, tzone: string) =>
     moment(new Date(+dt * 1000).toUTCString())
       .tz(tzone)
-      .format("M/D");
+      .format('M/D');
 
   const dayLocalwithTZ = (dt: string, tzone: string) =>
     moment(new Date(+dt * 1000).toUTCString())
       .tz(tzone)
-      .format("ddd");
+      .format('ddd');
 
   return (
     <>
@@ -104,13 +104,13 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
         {daily.map((el: any, i: number) => (
           <Grid key={i} item xs={4} sm={3} md={2}>
             <PopoverDaily data={el}>
-              <Paper style={{ padding: "0.5rem" }}>
+              <Paper style={{ padding: '0.5rem' }}>
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    alignItems: "center",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}
                 >
                   <div>
@@ -163,7 +163,7 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
                     align="center"
                     className={classes.text}
                   >
-                    <i className={`wi wi-umbrella ${classes.iconPop}`} />{" "}
+                    <i className={`wi wi-umbrella ${classes.iconPop}`} />{' '}
                     {el.pop}%
                   </Typography>
                 </div>

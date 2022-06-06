@@ -1,7 +1,8 @@
-import { purple } from '@material-ui/core/colors';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { memo } from 'react';
+import purple from '@material-ui/core/colors/purple';
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   icon: {
     color: purple[500],
     margin: '0.5rem 0',
@@ -15,15 +16,10 @@ interface WeaterIconProps {
   current: boolean;
 }
 
-const WeaterIcon: React.FC<WeaterIconProps> = ({
-  sunset,
-  sunrise,
-  weather,
-  current,
-}) => {
+const WeaterIcon = ({ sunset, sunrise, weather, current }: WeaterIconProps) => {
   const classes = useStyles();
 
-  const iconClass = () => {
+  const weatherIconClass = () => {
     if (current) {
       const dt = Math.floor(new Date().getTime() / 1000);
       const period = sunrise <= dt && dt <= sunset ? 'day' : 'night';
@@ -36,10 +32,10 @@ const WeaterIcon: React.FC<WeaterIconProps> = ({
 
   return (
     <i
-      className={iconClass()}
+      className={weatherIconClass()}
       style={{ fontSize: current ? '4rem' : '2rem' }}
     />
   );
 };
 
-export default WeaterIcon;
+export default memo(WeaterIcon);

@@ -1,4 +1,4 @@
-export const arr_wind_deg = [
+export const wind_directions = [
   'n',
   'nne',
   'ne',

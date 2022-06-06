@@ -1,4 +1,4 @@
-export const arr_moon_phases = [
+export const moon_phases = [
   'wi-moon-alt-new',
   'wi-moon-alt-waxing-crescent-1',
   'wi-moon-alt-waxing-crescent-2',
@@ -29,7 +29,7 @@ export const arr_moon_phases = [
   'wi-moon-alt-waning-crescent-6',
 ];
 
-export const arr_moon_phases_label = [
+export const moon_phases_label = [
   'new',
   'waxing crescent',
   'waxing crescent',

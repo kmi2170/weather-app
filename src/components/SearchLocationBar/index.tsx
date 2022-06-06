@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const queryExamples = ['London', 'Seattle,WA,USA', 'Tokyo,Japan'];
 
-const Searchbar = () => {
+const SearchLocationBar = () => {
   const classes = useStyles();
   console.log('search bar');
 
@@ -129,4 +129,4 @@ const Searchbar = () => {
   );
 };
 
-export default memo(Searchbar);
+export default memo(SearchLocationBar);

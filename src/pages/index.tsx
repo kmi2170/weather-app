@@ -13,7 +13,7 @@ import { useGetWeatherOnecallQuery } from '../services/weatherOnecallApi';
 import { useCustomeCookies } from '../hooks/useCustomCookies';
 
 import Navbar from '../components/Navbar';
-import Searchbar from '../components/Searchbar';
+import SearchLocationBar from '../components/SearchLocationBar';
 import Alerts from '../components/Alerts';
 import Footer from '../components/Footer';
 import {
@@ -42,11 +42,12 @@ const Home = () => {
   const classes = useStyles();
   const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
 
+  const dispatch = useAppDispatch();
   const units = useAppSelector(state => state.weather.units);
   const lang = useAppSelector(state => state.weather.lang);
   const location = useAppSelector(state => state.weather.location);
+
   const { lat, lon } = location;
-  const dispatch = useAppDispatch();
 
   const { data: dataOnecall } = useGetWeatherOnecallQuery({
     lat,
@@ -99,7 +100,7 @@ const Home = () => {
           </Grid>
           <Grid item xs={12}>
             <div style={{ flex: 'display', justifyContent: 'center' }}>
-              <Searchbar />
+              <SearchLocationBar />
             </div>
           </Grid>
           <Grid item xs={12}>
