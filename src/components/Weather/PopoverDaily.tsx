@@ -1,6 +1,8 @@
-import { useState } from 'react';
-
-import { Container, Grid, Popover, Typography } from '@material-ui/core';
+import { memo, useState } from 'react';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { purple, orange, yellow } from '@material-ui/core/colors';
 
@@ -8,12 +10,9 @@ import { useAppSelector } from '../../app/hooks';
 import { selectWeather } from '../../features/weatherSlice';
 import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
 
-import {
-  fallWithUnit,
-  pressureWithUnit,
-  timeLocalwithTZ,
-} from '../../utils/units';
+import { fallWithUnit, pressureWithUnit } from '../../utils/units';
 import MoonIcon from './common/MoonIcon';
+import { localTime } from '../../utils/time';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,7 +51,7 @@ interface PopoverDailyProps {
   data: any;
 }
 
-const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
+const PopoverDaily = ({ children, data }: PopoverDailyProps) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -166,13 +165,13 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
                   <span className={classes.sunDecoration}>Sun</span>
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <i className={`wi wi-sunrise ${classes.iconSun}`} />
-                  {timeLocalwithTZ(sunrise, timezone)}
+                  {localTime(sunrise, timezone)}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle2">
                   <i className={`wi wi-sunset ${classes.iconSun}`} />
-                  {timeLocalwithTZ(sunset, timezone)}
+                  {localTime(sunset, timezone)}
                 </Typography>
               </Grid>
 
@@ -181,13 +180,13 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
                   <span className={classes.moonDecoration}>Moon</span>
                   &nbsp;
                   <i className={`wi wi-moonrise ${classes.iconMoon}`} />
-                  {timeLocalwithTZ(moonrise, timezone)}
+                  {localTime(moonrise, timezone)}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle2">
                   <i className={`wi wi-moonset ${classes.iconMoon}`} />
-                  {timeLocalwithTZ(moonset, timezone)}
+                  {localTime(moonset, timezone)}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -201,4 +200,4 @@ const PopoverDaily: React.FC<PopoverDailyProps> = ({ children, data }) => {
   );
 };
 
-export default PopoverDaily;
+export default memo(PopoverDaily);

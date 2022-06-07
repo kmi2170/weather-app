@@ -3,24 +3,24 @@ import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
 
-import { Typography, Paper } from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 import { blue } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
+import { localTime } from "../../utils/time";
 
-import { timeLocalwithTZ } from "../../utils/units";
-
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   text: {},
   paper: {
     padding: "1rem",
   },
 }));
 
-const OpenWeatherOnecall_Minutely: React.FC = () => {
+const WeatherMinutely = () => {
   const classes = useStyles();
 
   const [data, setData] = useState({});
@@ -37,7 +37,7 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
   const { timezone, minutely } = weatherOnecall;
 
   const data_time: string[] = minutely?.map(({ dt }) =>
-    timeLocalwithTZ(dt, timezone)
+    localTime(dt, timezone)
   );
 
   const fall = (fall: number) => (units === "imperial" ? fall / 25.4 : fall);
@@ -93,4 +93,4 @@ const OpenWeatherOnecall_Minutely: React.FC = () => {
   );
 };
 
-export default OpenWeatherOnecall_Minutely;
+export default WeatherMinutely;

@@ -1,8 +1,8 @@
-//import Image from 'next/image';
-
-import { Typography, Paper, Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
+import purple from '@material-ui/core/colors/purple';
 
 // import moment from 'moment';
 import moment from 'moment-timezone';
@@ -11,10 +11,10 @@ import { useAppSelector } from '../../app/hooks';
 import { selectWeather } from '../../features/weatherSlice';
 import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
 
-import { formatDigits } from '../../utils/units';
+import { formatDigits } from '../../utils/formatDigits';
 import WeatherIcon from './common/WeatherIcon';
 import WindIcon from './common/WindIcon';
-import PopoverDaily from './Popover_Daily';
+import PopoverDaily from './PopoverDaily';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const OpenWeatherOnecall_Daily: React.FC = () => {
+const WeatherDaily = () => {
   const classes = useStyles();
 
   const { units, lang, location } = useAppSelector(selectWeather);
@@ -77,7 +77,7 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
     units === 'imperial' ? <small>&#8457;</small> : <small>&#8451;</small>;
 
   const temp = (t: string) =>
-    units === 'imperial' ? formatDigits(t, 0) : formatDigits(t, 0);
+    units === 'imperial' ? formatDigits(+t, 0) : formatDigits(+t, 0);
 
   const dateLocalwithTZ = (dt: string, tzone: string) =>
     moment(new Date(+dt * 1000).toUTCString())
@@ -176,4 +176,4 @@ const OpenWeatherOnecall_Daily: React.FC = () => {
   );
 };
 
-export default OpenWeatherOnecall_Daily;
+export default WeatherDaily;

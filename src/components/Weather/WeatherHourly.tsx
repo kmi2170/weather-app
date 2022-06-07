@@ -1,28 +1,29 @@
-import { Typography, Paper } from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 
-import ChartTemps from "./Charts/ChartTemps";
-import ChartHumidity from "./Charts/ChartHumidity";
-import ChartPrecipitation from "./Charts/ChartPrecipitation";
-import ChartWind from "./Charts/ChartWind";
-import ChartPressure from "./Charts/ChartPressure";
+import ChartTemps from './Charts/ChartTemps';
+import ChartHumidity from './Charts/ChartHumidity';
+import ChartPrecipitation from './Charts/ChartPrecipitation';
+import ChartWind from './Charts/ChartWind';
+import ChartPressure from './Charts/ChartPressure';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   text: {},
   paper: {
-    padding: "1rem",
+    padding: '1rem',
   },
   charts: {
-    height: "200px",
+    height: '200px',
   },
   chartsHumid: {
-    height: "250px",
+    height: '250px',
   },
 }));
 
-const OpenWeatherOnecall_Hourly: React.FC = () => {
+const WeatherHourly = () => {
   const classes = useStyles();
-  console.log("hourly");
+  console.log('hourly');
 
   return (
     <>
@@ -53,4 +54,4 @@ const OpenWeatherOnecall_Hourly: React.FC = () => {
   );
 };
 
-export default OpenWeatherOnecall_Hourly;
+export default WeatherHourly;

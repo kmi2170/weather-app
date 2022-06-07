@@ -1,14 +1,11 @@
-//import Image from 'next/image';
-
-import { Typography, Paper, Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, yellow, orange } from '@material-ui/core/colors';
 
-import moment from 'moment-timezone';
 import data from 'country-region-data';
-
 import { useAppSelector } from '../../app/hooks';
-import { selectWeather } from '../../features/weatherSlice';
 import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
 
 import {
@@ -16,11 +13,11 @@ import {
   fallWithUnit,
   pressureWithUnit,
   visibilityWithUnit,
-  timeLocalwithTZ,
 } from '../../utils/units';
 import WeatherIcon from './common/WeatherIcon';
 import WindIcon from './common/WindIcon';
 import MoonIcon from './common/MoonIcon';
+import { currentLocalTime, localTime } from '../../utils/time';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -68,10 +65,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const OpenWeatherOnecall_Current: React.FC = () => {
+const WeatherCurrent = () => {
   const classes = useStyles();
 
-  const { units, lang, location } = useAppSelector(selectWeather);
+  const units = useAppSelector(state => state.weather.units);
+  const lang = useAppSelector(state => state.weather.lang);
+  const location = useAppSelector(state => state.weather.location);
 
   const { data: weatherOnecall } = useGetWeatherOnecallQuery({
     lat: location.lat,
@@ -109,8 +108,6 @@ const OpenWeatherOnecall_Current: React.FC = () => {
     el => el.shortCode === region
   );
   const regionName = regionData.length ? regionData[0].name : region;
-  // console.log(countryData[0].countryName);
-  // console.log(regionData[0].name);
 
   return (
     <>
@@ -125,11 +122,7 @@ const OpenWeatherOnecall_Current: React.FC = () => {
             className={classes.text}
             style={{ marginLeft: '1rem' }}
           >
-            {/* {moment.utc(new Date(dt * 1000)).fromNow()} */}
-            {moment
-              .utc(new Date(dt * 1000))
-              .local()
-              .format('ddd M/DD h:mm A')}
+            {currentLocalTime()}
           </Typography>
         </div>
 
@@ -164,10 +157,6 @@ const OpenWeatherOnecall_Current: React.FC = () => {
                   {weather[0].main}
                 </Typography>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  {/* 
-                  <Image src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
-                    alt={weather[0].icon} width={50} height={50} layout="fixed" />
-                */}
                   <WeatherIcon
                     sunrise={sunrise}
                     sunset={sunset}
@@ -254,13 +243,13 @@ const OpenWeatherOnecall_Current: React.FC = () => {
                 <span className={classes.sunDecoration}>Sun</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <i className={`wi wi-sunrise ${classes.iconSun}`} />
-                {timeLocalwithTZ(sunrise, timezone)}
+                {localTime(sunrise, timezone)}
               </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="subtitle2">
                 <i className={`wi wi-sunset ${classes.iconSun}`} />
-                {timeLocalwithTZ(sunset, timezone)}
+                {localTime(sunset, timezone)}
               </Typography>
             </Grid>
 
@@ -269,13 +258,13 @@ const OpenWeatherOnecall_Current: React.FC = () => {
                 <span className={classes.moonDecoration}>Moon</span>
                 &nbsp;
                 <i className={`wi wi-moonrise ${classes.iconMoon}`} />
-                {timeLocalwithTZ(moonrise, timezone)}
+                {localTime(moonrise, timezone)}
               </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="subtitle2">
                 <i className={`wi wi-moonset ${classes.iconMoon}`} />
-                {timeLocalwithTZ(moonset, timezone)}
+                {localTime(moonset, timezone)}
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -288,4 +277,4 @@ const OpenWeatherOnecall_Current: React.FC = () => {
   );
 };
 
-export default OpenWeatherOnecall_Current;
+export default WeatherCurrent;

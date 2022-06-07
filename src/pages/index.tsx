@@ -17,11 +17,11 @@ import SearchLocationBar from '../components/SearchLocationBar';
 import Alerts from '../components/Alerts';
 import Footer from '../components/Footer';
 import {
-  OpenWeatherOnecall_Current,
-  OpenWeatherOnecall_Daily,
-  OpenWeatherOnecall_Minutely,
-  OpenWeatherOnecall_Hourly,
-} from '../components/OpenWeather';
+  WeatherCurrent,
+  WeatherDaily,
+  WeatherHourly,
+  WeatherMinutely,
+} from '../components/Weather';
 import { isLocationValid } from '../utils/cookiesValidator';
 
 const useStyles = makeStyles(() => ({
@@ -98,31 +98,33 @@ const Home = () => {
               My Weather Station
             </Typography>
           </Grid>
+
           <Grid item xs={12}>
-            <div style={{ flex: 'display', justifyContent: 'center' }}>
-              <SearchLocationBar />
-            </div>
+            <SearchLocationBar />
           </Grid>
+
           <Grid item xs={12}>
             <div ref={ref => saveItemRefs(ref, 0)} />
             {dataOnecall ? (
-              <OpenWeatherOnecall_Current />
+              <WeatherCurrent />
             ) : (
               <Skeleton variant="rect" height={200} />
             )}
           </Grid>
+
           <Grid item xs={12}>
             <div ref={ref => saveItemRefs(ref, 1)} />
             {dataOnecall ? (
-              <OpenWeatherOnecall_Minutely />
+              <WeatherMinutely />
             ) : (
               <Skeleton variant="rect" height={150} />
             )}
           </Grid>
+
           <Grid item xs={12}>
             <div ref={ref => saveItemRefs(ref, 2)} />
             {dataOnecall ? (
-              <OpenWeatherOnecall_Daily />
+              <WeatherDaily />
             ) : (
               <Grid
                 container
@@ -138,14 +140,16 @@ const Home = () => {
               </Grid>
             )}
           </Grid>
+
           <Grid item xs={12}>
             <div ref={ref => saveItemRefs(ref, 3)} />
             {dataOnecall ? (
-              <OpenWeatherOnecall_Hourly />
+              <WeatherHourly />
             ) : (
               <Skeleton variant="rect" height={150} />
             )}
           </Grid>
+
           <Grid item xs={12}>
             {dataOnecall &&
               dataOnecall['alerts'] && (

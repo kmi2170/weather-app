@@ -1,6 +1,6 @@
-export const formatDigits = (value: number, max: number, min: number) => {
+export const formatDigits = (value: number, numDigits: number = 0) => {
   return value.toLocaleString('en-US', {
-    maximumFractionDigits: max,
-    minimumFractionDigits: min,
+    maximumFractionDigits: numDigits,
+    minimumFractionDigits: numDigits,
   });
 };

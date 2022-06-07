@@ -16,6 +16,7 @@
     "axios": "^0.21.1",
     "chart.js": "3.5.1",
     "country-region-data": "^1.11.0",
+    "dayjs": "^1.11.3",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "next": "11.0.0",

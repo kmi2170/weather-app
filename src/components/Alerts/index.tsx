@@ -1,5 +1,3 @@
-import moment from 'moment-timezone';
-
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +7,7 @@ import red from '@material-ui/core/colors/red';
 import { useAppSelector } from '../../app/hooks';
 import { selectWeather } from '../../features/weatherSlice';
 import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
+import { localFullDateTime } from '../../utils/time';
 
 const useStyles = makeStyles(() => ({
   text: {},
@@ -35,10 +34,6 @@ const Alerts = () => {
 
   const { alerts, timezone } = dataOnecall;
 
-  const dateTimeLocalwithTZ = (dt: string, tzone: string) =>
-    moment(new Date(+dt * 1000).toUTCString())
-      .tz(tzone)
-      .format('MM/DD ddd h:mm a');
   return (
     <>
       {alerts && (
@@ -65,10 +60,10 @@ const Alerts = () => {
                       ))}
                     </Typography>
                     <Typography variant="subtitle2" className={classes.text}>
-                      Start - {dateTimeLocalwithTZ(start, timezone)}
+                      Start - {localFullDateTime(start, timezone)}
                     </Typography>
                     <Typography variant="subtitle2" className={classes.text}>
-                      End - {dateTimeLocalwithTZ(end, timezone)}
+                      End - {localFullDateTime(end, timezone)}
                     </Typography>
                     <Typography variant="body1" className={classes.description}>
                       Description - {description}
