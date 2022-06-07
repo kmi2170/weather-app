@@ -2,27 +2,10 @@ import { useState, useEffect } from 'react';
 import { pink, deepOrange } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
+import { ChartProps } from '../../../api/types';
 
-import { useAppSelector } from '../../../app/hooks';
-import { selectWeather } from '../../../features/weatherSlice';
-import { useGetWeatherQuery } from '../../../services/weatherApi';
-import { localDateTime } from '../../../utils/time';
-
-const ChartTemps = () => {
+const ChartTemps = ({ hourly, dataTime, units }: ChartProps) => {
   const [data, setData] = useState({});
-
-  const { units, lang, location } = useAppSelector(selectWeather);
-
-  const { data: weatherOnecall } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
-    units,
-    lang,
-  });
-
-  const { timezone, hourly } = weatherOnecall;
-
-  const data_time = hourly.map(({ dt }) => localDateTime(dt, timezone));
 
   const data_temp = hourly.map(({ temp }) => temp);
   const data_dew_point = hourly.map(({ dew_point }) => dew_point);
@@ -56,7 +39,7 @@ const ChartTemps = () => {
   useEffect(
     () => {
       setData({
-        labels: data_time,
+        labels: dataTime,
         datasets: [
           {
             label: units === 'imperial' ? 'Temp [℉]' : 'Temp [℃]',

@@ -3,25 +3,10 @@ import { lightBlue, lime, blueGrey } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
 
-import { useAppSelector } from '../../../app/hooks';
-import { selectWeather } from '../../../features/weatherSlice';
-import { useGetWeatherQuery } from '../../../services/weatherApi';
-import { localDateTime } from '../../../utils/time';
+import { ChartProps } from '../../../api/types';
 
-const ChartHumidity = () => {
+const ChartHumidity = ({ hourly, dataTime }: ChartProps) => {
   const [data, setData] = useState({});
-
-  const { units, lang, location } = useAppSelector(selectWeather);
-
-  const { data: weatherOnecall } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
-    units,
-    lang,
-  });
-  const { timezone, hourly } = weatherOnecall;
-
-  const data_time = hourly.map(({ dt }) => localDateTime(dt, timezone));
 
   const data_humidity = hourly.map(({ humidity }) => humidity);
   const data_clouds = hourly.map(({ clouds }) => clouds);
@@ -55,7 +40,7 @@ const ChartHumidity = () => {
   useEffect(
     () => {
       setData({
-        labels: data_time,
+        labels: dataTime,
         datasets: [
           {
             label: 'Humidity [%]',

@@ -71,7 +71,7 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
     units,
     lang,
   });
-  const isAlerts = !(data?.alerts)
+  const isAlerts = !!(data?.alerts)
 
 
   const handleMenuItemRefs =

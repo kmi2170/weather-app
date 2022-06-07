@@ -2,11 +2,18 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ChartTemps from './Charts/ChartTemps';
-import ChartHumidity from './Charts/ChartHumidity';
-import ChartPrecipitation from './Charts/ChartPrecipitation';
-import ChartWind from './Charts/ChartWind';
-import ChartPressure from './Charts/ChartPressure';
+import { useAppSelector } from '../../app/hooks';
+import { selectWeather } from '../../features/weatherSlice';
+import { useGetWeatherQuery } from '../../services/weatherApi';
+import { localDateTime } from '../../utils/time';
+
+import {
+  ChartTemps,
+  ChartHumidity,
+  ChartPrecipitation,
+  ChartWind,
+  ChartPressure,
+} from './charts';
 
 const useStyles = makeStyles(() => ({
   text: {},
@@ -25,6 +32,17 @@ const WeatherHourly = () => {
   const classes = useStyles();
   console.log('hourly');
 
+  const { units, lang, location } = useAppSelector(selectWeather);
+
+  const { data: { hourly, timezone } } = useGetWeatherQuery({
+    lat: location.lat,
+    lon: location.lon,
+    units,
+    lang,
+  });
+
+  const dataTime = hourly.map(({ dt }) => localDateTime(dt, timezone));
+
   return (
     <>
       <Typography variant="h6" className={classes.text}>
@@ -35,19 +53,23 @@ const WeatherHourly = () => {
           Hourly Fourcast for 48 Hours
         </Typography>
         <div className={classes.charts}>
-          <ChartTemps />
+          <ChartTemps hourly={hourly} dataTime={dataTime} units={units} />
         </div>
         <div className={classes.chartsHumid}>
-          <ChartHumidity />
+          <ChartHumidity hourly={hourly} dataTime={dataTime} />
         </div>
         <div className={classes.charts}>
-          <ChartPrecipitation />
+          <ChartPrecipitation
+            hourly={hourly}
+            dataTime={dataTime}
+            units={units}
+          />
         </div>
         <div className={classes.charts}>
-          <ChartWind />
+          <ChartWind hourly={hourly} dataTime={dataTime} units={units} />
         </div>
         <div className={classes.charts}>
-          <ChartPressure />
+          <ChartPressure hourly={hourly} dataTime={dataTime} units={units} />
         </div>
       </Paper>
     </>

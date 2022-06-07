@@ -25,14 +25,12 @@ const Alerts = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: dataOnecall } = useGetWeatherQuery({
+  const { data: { alerts, timezone } } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,
     lang,
   });
-
-  const { alerts, timezone } = dataOnecall;
 
   return (
     <>

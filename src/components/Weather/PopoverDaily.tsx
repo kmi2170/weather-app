@@ -49,22 +49,14 @@ const useStyles = makeStyles((theme: Theme) =>
 interface PopoverDailyProps {
   children: React.ReactNode;
   data: any;
+  timezone: string;
 }
 
-const PopoverDaily = ({ children, data }: PopoverDailyProps) => {
+const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
   const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-
-  const { units, lang, location } = useAppSelector(selectWeather);
-
-  const { data: weatherOnecall } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
-    units,
-    lang,
-  });
-  const { timezone } = weatherOnecall;
-  console.log('popover');
+  const units = useAppSelector(state => state.weather.units);
 
   const {
     clouds,

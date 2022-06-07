@@ -61,15 +61,13 @@ const WeatherDaily = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: weatherOnecall } = useGetWeatherQuery({
+  const { data: { timezone, daily } } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,
     lang,
   });
   console.log('weatherdaily');
-
-  const { timezone, daily } = weatherOnecall;
 
   const tempUnit = () =>
     units === 'imperial' ? <small>&#8457;</small> : <small>&#8451;</small>;
@@ -89,9 +87,9 @@ const WeatherDaily = () => {
         alignItems="stretch"
         spacing={1}
       >
-        {daily.map((el: any, i: number) => (
+        {daily.map((data: any, i: number) => (
           <Grid key={i} item xs={4} sm={3} md={2}>
-            <PopoverDaily data={el}>
+            <PopoverDaily data={data} timezone={timezone}>
               <Paper style={{ padding: '0.5rem' }}>
                 <div
                   style={{
@@ -107,7 +105,7 @@ const WeatherDaily = () => {
                       align="center"
                       className={classes.text}
                     >
-                      {localDay(el.dt, timezone)}
+                      {localDay(data.dt, timezone)}
                     </Typography>
                     <Typography
                       variant="subtitle2"
@@ -115,7 +113,7 @@ const WeatherDaily = () => {
                       align="center"
                       className={classes.text}
                     >
-                      {localDate(el.dt, timezone)}
+                      {localDate(data.dt, timezone)}
                     </Typography>
                   </div>
                   <Typography
@@ -123,26 +121,26 @@ const WeatherDaily = () => {
                     align="center"
                     className={classes.text}
                   >
-                    {el.weather[0].main}
+                    {data.weather[0].main}
                   </Typography>
-                  <WeatherIcon weather={el.weather} current={false} />
+                  <WeatherIcon weather={data.weather} current={false} />
                   <Typography
                     variant="subtitle2"
                     align="center"
                     className={classes.text}
                   >
-                    {el.weather[0].description}
+                    {data.weather[0].description}
                   </Typography>
 
                   <Typography variant="h6" align="center">
-                    {temp(el.temp.max)}/{temp(el.temp.min)}
+                    {temp(data.temp.max)}/{temp(data.temp.min)}
                     {tempUnit()}
                   </Typography>
 
                   <WindIcon
-                    wind_speed={el.wind_speed}
-                    wind_deg={el.wind_deg}
-                    wind_gust={el.wind_gust}
+                    wind_speed={data.wind_speed}
+                    wind_deg={data.wind_deg}
+                    wind_gust={data.wind_gust}
                     current={false}
                   />
 
@@ -152,7 +150,7 @@ const WeatherDaily = () => {
                     className={classes.text}
                   >
                     <i className={`wi wi-umbrella ${classes.iconPop}`} />{' '}
-                    {el.pop}%
+                    {data.pop}%
                   </Typography>
                 </div>
               </Paper>

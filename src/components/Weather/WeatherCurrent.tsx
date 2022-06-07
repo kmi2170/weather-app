@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { purple, yellow, orange } from '@material-ui/core/colors';
 
-import data from 'country-region-data';
+import country_region_data from 'country-region-data';
 import { useAppSelector } from '../../app/hooks';
 import { useGetWeatherQuery } from '../../services/weatherApi';
 
@@ -73,16 +73,14 @@ const WeatherCurrent = () => {
   const lang = useAppSelector(state => state.weather.lang);
   const location = useAppSelector(state => state.weather.location);
 
-  const { data: weatherOnecall } = useGetWeatherQuery({
+  const { data: { timezone, current, daily } } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,
     lang,
   });
-  const { timezone, current, daily } = weatherOnecall;
 
   const {
-    dt,
     sunrise,
     sunset,
     temp,
@@ -103,7 +101,9 @@ const WeatherCurrent = () => {
 
   const { city, region, country } = location;
 
-  const countryData = data.filter(el => el.countryShortCode === country);
+  const countryData = country_region_data.filter(
+    el => el.countryShortCode === country
+  );
   const countryName = countryData.length ? countryData[0].countryName : country;
   const regionData = countryData[0].regions.filter(
     el => el.shortCode === region

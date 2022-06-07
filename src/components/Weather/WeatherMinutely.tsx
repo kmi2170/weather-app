@@ -23,18 +23,16 @@ const useStyles = makeStyles(() => ({
 const WeatherMinutely = () => {
   const classes = useStyles();
 
-  const [data, setData] = useState({});
+  const [minutelyData, setMinutelyData] = useState({});
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: weatherOnecall } = useGetWeatherQuery({
+  const { data: { timezone, minutely } } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,
     lang,
   });
-
-  const { timezone, minutely } = weatherOnecall;
 
   const data_time: string[] = minutely?.map(({ dt }) =>
     localTime(dt, timezone)
@@ -69,7 +67,7 @@ const WeatherMinutely = () => {
   };
 
   useEffect(() => {
-    setData({
+    setMinutelyData({
       labels: data_time,
       datasets: [
         {
@@ -87,7 +85,7 @@ const WeatherMinutely = () => {
         Minutely
       </Typography>
       <Paper className={classes.paper} style={{ height: 150 }}>
-        <Bar options={options} data={data as any} />
+        <Bar options={options} data={minutelyData as any} />
       </Paper>
     </>
   );

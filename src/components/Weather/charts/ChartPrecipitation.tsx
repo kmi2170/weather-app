@@ -2,27 +2,10 @@ import { useState, useEffect } from 'react';
 import { blue, grey } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
+import { ChartProps } from '../../../api/types';
 
-import { useAppSelector } from '../../../app/hooks';
-import { selectWeather } from '../../../features/weatherSlice';
-import { useGetWeatherQuery } from '../../../services/weatherApi';
-import { localDateTime } from '../../../utils/time';
-
-const ChartPrecipitation = () => {
+const ChartPrecipitation = ({ hourly, dataTime, units }: ChartProps) => {
   const [data, setData] = useState({});
-
-  const { units, lang, location } = useAppSelector(selectWeather);
-
-  const { data: weatherOnecall } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
-    units,
-    lang,
-  });
-
-  const { timezone, hourly } = weatherOnecall;
-
-  const data_time = hourly.map(({ dt }) => localDateTime(dt, timezone));
 
   const fall = (fall: number) => (units === 'imperial' ? +fall / 25.4 : fall);
 
@@ -55,7 +38,7 @@ const ChartPrecipitation = () => {
   useEffect(
     () => {
       setData({
-        labels: data_time,
+        labels: dataTime,
         datasets: [
           {
             label: units === 'imperial' ? 'Rain [in]' : 'Rain [mm]',

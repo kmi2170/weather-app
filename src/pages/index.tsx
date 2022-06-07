@@ -47,14 +47,13 @@ const Home = () => {
   const lang = useAppSelector(state => state.weather.lang);
   const location = useAppSelector(state => state.weather.location);
 
-  const { lat, lon } = location;
   const { data } = useGetWeatherQuery({
-    lat,
-    lon,
+    lat: location.lat,
+    lon: location.lon,
     units,
     lang,
   });
-  const isAlerts = !(data?.alerts)
+  const isAlerts = !!(data?.alerts)
 
   const { cookies, setLocationCookie } = useCustomeCookies();
 
