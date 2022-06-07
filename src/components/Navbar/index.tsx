@@ -1,13 +1,15 @@
-import { forwardRef, memo } from "react";
-
-import { AppBar, Toolbar, Typography, List, ListItem } from "@material-ui/core";
+import { forwardRef } from "react";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { purple, red } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-
-import MenuComponent from "./Menu";
+import Menu from "./Menu";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -114,10 +116,10 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
             </ListItem>
           )}
         </List>
-        <MenuComponent />
+        <Menu />
       </Toolbar>
     </AppBar>
   );
 };
 
-export default memo(forwardRef(Navbar));
+export default forwardRef(Navbar);

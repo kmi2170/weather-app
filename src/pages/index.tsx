@@ -11,7 +11,6 @@ import { setLocation } from '../features/weatherSlice';
 import { asyncThunkIpLookupLocation } from '../features/weatherAsyncThunk';
 import { useGetWeatherQuery } from '../services/weatherApi';
 import { useCustomeCookies } from '../hooks/useCustomCookies';
-
 import Navbar from '../components/Navbar';
 import SearchLocationBar from '../components/SearchLocationBar';
 import Alerts from '../components/Alerts';
@@ -41,6 +40,7 @@ const useStyles = makeStyles(() => ({
 const Home = () => {
   const classes = useStyles();
   const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
+  console.log('home');
 
   const dispatch = useAppDispatch();
   const units = useAppSelector(state => state.weather.units);
@@ -48,7 +48,6 @@ const Home = () => {
   const location = useAppSelector(state => state.weather.location);
 
   const { lat, lon } = location;
-
   const { data: dataOnecall } = useGetWeatherQuery({
     lat,
     lon,
@@ -105,27 +104,20 @@ const Home = () => {
 
           <Grid item xs={12}>
             <div ref={ref => saveItemRefs(ref, 0)} />
-            {dataOnecall ? (
-              <WeatherCurrent />
-            ) : (
-              <Skeleton variant="rect" height={200} />
-            )}
+            {dataOnecall && <WeatherCurrent />}
+            {!dataOnecall && <Skeleton variant="rect" height={200} />}
           </Grid>
 
           <Grid item xs={12}>
             <div ref={ref => saveItemRefs(ref, 1)} />
-            {dataOnecall ? (
-              <WeatherMinutely />
-            ) : (
-              <Skeleton variant="rect" height={150} />
-            )}
+            {dataOnecall && <WeatherMinutely />}
+            {!dataOnecall && <Skeleton variant="rect" height={150} />}
           </Grid>
 
           <Grid item xs={12}>
             <div ref={ref => saveItemRefs(ref, 2)} />
-            {dataOnecall ? (
-              <WeatherDaily />
-            ) : (
+            {dataOnecall && <WeatherDaily />}
+            {!dataOnecall && (
               <Grid
                 container
                 justifyContent="flex-start"
@@ -143,11 +135,8 @@ const Home = () => {
 
           <Grid item xs={12}>
             <div ref={ref => saveItemRefs(ref, 3)} />
-            {dataOnecall ? (
-              <WeatherHourly />
-            ) : (
-              <Skeleton variant="rect" height={150} />
-            )}
+            {dataOnecall && <WeatherHourly />}
+            {dataOnecall && <Skeleton variant="rect" height={150} />}
           </Grid>
 
           <Grid item xs={12}>

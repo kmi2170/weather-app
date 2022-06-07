@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Popover from '@material-ui/core/Popover';
@@ -64,6 +64,7 @@ const PopoverDaily = ({ children, data }: PopoverDailyProps) => {
     lang,
   });
   const { timezone } = weatherOnecall;
+  console.log('popover');
 
   const {
     clouds,
@@ -200,4 +201,4 @@ const PopoverDaily = ({ children, data }: PopoverDailyProps) => {
   );
 };
 
-export default memo(PopoverDaily);
+export default PopoverDaily;
