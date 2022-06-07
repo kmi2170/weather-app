@@ -47,7 +47,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <CookiesProvider>
       <ThemeProvider theme={theme}>
         <Head>
-          <title>Advice Appli</title>
+          <title>Weather App</title>
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"

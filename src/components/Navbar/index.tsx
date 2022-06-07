@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +9,7 @@ import { purple, red } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import Menu from "./Menu";
+import SwitchUnits from "./SwitchUnits";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -65,19 +65,19 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const lang = useAppSelector(state => state.weather.lang);
   const location = useAppSelector(state => state.weather.location);
 
-  const { data: dataOnecall } = useGetWeatherQuery({
+  const { data } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,
     lang,
   });
+  const isAlerts = !(data?.alerts)
 
-  const alerts = dataOnecall?.alerts ? dataOnecall.alerts : null;
 
-  const handleItemRefs = (id: number) => {
-    window.scroll(0, ref?.current[+id - 1].offsetTop - 70);
-    // console.log(ref?.current[+id - 1]);
-  };
+  const handleMenuItemRefs =
+    (id: number) => {
+      window.scroll(0, ref?.current[+id - 1].offsetTop - 70);
+    }
 
   return (
     <AppBar position="sticky" className={classes.appBar}>
@@ -89,7 +89,7 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
               dense
               disableGutters
               className={classes.listItem}
-              onClick={() => handleItemRefs(id)}
+              onClick={() => handleMenuItemRefs(id)}
             >
               <Typography variant="h6" align="center" className={classes.text}>
                 {name}
@@ -97,14 +97,14 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
             </ListItem>
           ))}
 
-          {alerts && (
+          {isAlerts && (
             <ListItem
               key={5}
               dense
               disableGutters
               alignItems="center"
               className={classes.listItem}
-              onClick={() => handleItemRefs(5)}
+              onClick={() => handleMenuItemRefs(5)}
             >
               <Typography
                 variant="h6"
@@ -116,7 +116,8 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
             </ListItem>
           )}
         </List>
-        <Menu />
+
+        <SwitchUnits />
       </Toolbar>
     </AppBar>
   );

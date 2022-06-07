@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Buttons from './Buttons';
 import icon_setting from '../../../../public/icon_setting.png';
 
-const MenuComponent = () => {
+const SwitchUnits = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,4 +48,4 @@ const MenuComponent = () => {
   );
 };
 
-export default memo(MenuComponent);
+export default memo(SwitchUnits);

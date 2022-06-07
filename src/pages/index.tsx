@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
 
 const Home = () => {
   const classes = useStyles();
-  const itemRefs = useRef<HTMLDivElement[]>(new Array(4));
+  const menuItemRefs = useRef<HTMLDivElement[]>(new Array(4));
   console.log('home');
 
   const dispatch = useAppDispatch();
@@ -48,12 +48,13 @@ const Home = () => {
   const location = useAppSelector(state => state.weather.location);
 
   const { lat, lon } = location;
-  const { data: dataOnecall } = useGetWeatherQuery({
+  const { data } = useGetWeatherQuery({
     lat,
     lon,
     units,
     lang,
   });
+  const isAlerts = !(data?.alerts)
 
   const { cookies, setLocationCookie } = useCustomeCookies();
 
@@ -75,16 +76,17 @@ const Home = () => {
     [location]
   );
 
-  // const saveItemRefs = (ref: HTMLDivElement, index: number) => {
-  //   itemRefs.current[index] = ref;
-  // };
-  const saveItemRefs = useCallback((ref: HTMLDivElement, index: number) => {
-    itemRefs.current[index] = ref;
-  }, []);
+  const saveMenuItemRefs = (ref: HTMLDivElement, index: number) => {
+    menuItemRefs.current[index] = ref;
+  };
+  // const saveMenuItemRefs = useCallback((ref: HTMLDivElement, index: number) => {
+  //   menuItemRefs.current[index] = ref;
+  // }, []);
+  console.log('home');
 
   return (
     <div className={classes.root}>
-      <Navbar ref={itemRefs} />
+      <Navbar ref={menuItemRefs} />
       <Container>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>
@@ -102,22 +104,19 @@ const Home = () => {
             <SearchLocationBar />
           </Grid>
 
-          <Grid item xs={12}>
-            <div ref={ref => saveItemRefs(ref, 0)} />
-            {dataOnecall && <WeatherCurrent />}
-            {!dataOnecall && <Skeleton variant="rect" height={200} />}
+          <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 0)}>
+            {data && <WeatherCurrent />}
+            {!data && <Skeleton variant="rect" height={200} />}
           </Grid>
 
-          <Grid item xs={12}>
-            <div ref={ref => saveItemRefs(ref, 1)} />
-            {dataOnecall && <WeatherMinutely />}
-            {!dataOnecall && <Skeleton variant="rect" height={150} />}
+          <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 1)}>
+            {data && <WeatherMinutely />}
+            {!data && <Skeleton variant="rect" height={150} />}
           </Grid>
 
-          <Grid item xs={12}>
-            <div ref={ref => saveItemRefs(ref, 2)} />
-            {dataOnecall && <WeatherDaily />}
-            {!dataOnecall && (
+          <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 2)}>
+            {data && <WeatherDaily />}
+            {!data && (
               <Grid
                 container
                 justifyContent="flex-start"
@@ -133,22 +132,18 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid item xs={12}>
-            <div ref={ref => saveItemRefs(ref, 3)} />
-            {dataOnecall && <WeatherHourly />}
-            {dataOnecall && <Skeleton variant="rect" height={150} />}
+          <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 3)}>
+            {data && <WeatherHourly />}
+            {data && <Skeleton variant="rect" height={150} />}
           </Grid>
 
-          <Grid item xs={12}>
-            {dataOnecall &&
-              dataOnecall['alerts'] && (
-                <>
-                  <div ref={ref => saveItemRefs(ref, 4)} />
-                  <Alerts />
-                </>
-              )}
-          </Grid>
+          {isAlerts && (
+            <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 4)}>
+              <Alerts />
+            </Grid>
+          )}
         </Grid>
+
         <Footer />
       </Container>
     </div>
