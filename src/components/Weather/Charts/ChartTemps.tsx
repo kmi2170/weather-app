@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import { pink, deepOrange } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
 
 import { useAppSelector } from '../../../app/hooks';
 import { selectWeather } from '../../../features/weatherSlice';
-import { useGetWeatherOnecallQuery } from '../../../services/weatherOnecallApi';
+import { useGetWeatherQuery } from '../../../services/weatherApi';
 import { localDateTime } from '../../../utils/time';
 
 const ChartTemps = () => {
@@ -14,7 +13,7 @@ const ChartTemps = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: weatherOnecall } = useGetWeatherOnecallQuery({
+  const { data: weatherOnecall } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,

@@ -6,24 +6,22 @@ export type Location = {
   lon: string;
 };
 
-export type Units = "imperial" | "metric";
-export type Lang = "en" | "ja";
+export type Units = 'imperial' | 'metric';
+export type Lang = 'en' | 'ja';
 
-// export type WeatherCurrent = null | any;
-export type WeatherOneCall = null | any;
+export type Weather = null | any;
 
 export const initialState: StateType = {
   location: {
-    city: "",
-    region: "",
-    country: "",
+    city: '',
+    region: '',
+    country: '',
     lat: null,
     lon: null,
   },
-  units: "imperial",
-  lang: "en",
-  // weatherCurrent: null,
-  weatherOnecall: null,
+  units: 'imperial',
+  lang: 'en',
+  weather: null,
   selectedPageId: 1,
   isLoading: false,
   isError: false,
@@ -34,8 +32,7 @@ export type StateType = {
   location: Location;
   units: Units;
   lang: Lang;
-  // weatherCurrent: WeatherCurrent;
-  weatherOnecall: WeatherOneCall;
+  weather: Weather;
   selectedPageId: number;
   isLoading: boolean;
   isError: boolean;

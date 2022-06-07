@@ -9,7 +9,7 @@ import purple from '@material-ui/core/colors/purple';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { setLocation } from '../features/weatherSlice';
 import { asyncThunkIpLookupLocation } from '../features/weatherAsyncThunk';
-import { useGetWeatherOnecallQuery } from '../services/weatherOnecallApi';
+import { useGetWeatherQuery } from '../services/weatherApi';
 import { useCustomeCookies } from '../hooks/useCustomCookies';
 
 import Navbar from '../components/Navbar';
@@ -49,7 +49,7 @@ const Home = () => {
 
   const { lat, lon } = location;
 
-  const { data: dataOnecall } = useGetWeatherOnecallQuery({
+  const { data: dataOnecall } = useGetWeatherQuery({
     lat,
     lon,
     units,

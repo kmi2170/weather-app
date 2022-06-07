@@ -5,7 +5,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import { purple, red } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../app/hooks";
-import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
+import { useGetWeatherQuery } from "../../services/weatherApi";
 
 import MenuComponent from "./Menu";
 
@@ -63,7 +63,7 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const lang = useAppSelector(state => state.weather.lang);
   const location = useAppSelector(state => state.weather.location);
 
-  const { data: dataOnecall } = useGetWeatherOnecallQuery({
+  const { data: dataOnecall } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,

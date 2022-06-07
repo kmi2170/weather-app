@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { fetchOpenGeocodingByLocationName } from "../../api/lib/fetchOpenWeather";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { fetchGeocodingByLocationName } from '../../api/lib/fetchWeather';
 
 export default async function onecall(
   req: NextApiRequest,
@@ -7,9 +7,7 @@ export default async function onecall(
 ) {
   try {
     const { q } = req.query;
-
-    const data = await fetchOpenGeocodingByLocationName(q as string);
-
+    const data = await fetchGeocodingByLocationName(q as string);
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json(error);

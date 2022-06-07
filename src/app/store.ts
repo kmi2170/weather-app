@@ -1,15 +1,15 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
-import weatherSlice from "../features/weatherSlice";
-import { weatherOnecallApi } from "../services/weatherOnecallApi";
+import weatherSlice from '../features/weatherSlice';
+import { weatherApi } from '../services/weatherApi';
 
 export const store = configureStore({
   reducer: {
     weather: weatherSlice,
-    [weatherOnecallApi.reducerPath]: weatherOnecallApi.reducer,
+    [weatherApi.reducerPath]: weatherApi.reducer,
   },
-  middleware: (gDM) => gDM().concat(weatherOnecallApi.middleware),
+  middleware: gDM => gDM().concat(weatherApi.middleware),
 });
 
 setupListeners(store.dispatch);

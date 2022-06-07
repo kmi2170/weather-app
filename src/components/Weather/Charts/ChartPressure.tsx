@@ -5,7 +5,7 @@ import { ChartOptions } from 'chart.js';
 
 import { useAppSelector } from '../../../app/hooks';
 import { selectWeather } from '../../../features/weatherSlice';
-import { useGetWeatherOnecallQuery } from '../../../services/weatherOnecallApi';
+import { useGetWeatherQuery } from '../../../services/weatherApi';
 import { localDateTime } from '../../../utils/time';
 
 const ChartPressure = () => {
@@ -13,7 +13,7 @@ const ChartPressure = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: weatherOnecall } = useGetWeatherOnecallQuery({
+  const { data: weatherOnecall } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,

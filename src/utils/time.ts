@@ -20,3 +20,11 @@ export const localDateTime = (time: number, timeZone: string) => {
 export const localFullDateTime = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format('MM/DD ddd h:mm a');
 };
+
+export const localDay = (time: number, timeZone: string) => {
+  return dayjs.tz(time * 1000, timeZone).format('MM/DD');
+};
+
+export const localDate = (time: number, timeZone: string) => {
+  return dayjs.tz(time * 1000, timeZone).format('ddd');
+};

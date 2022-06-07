@@ -6,7 +6,7 @@ import { purple, yellow, orange } from '@material-ui/core/colors';
 
 import data from 'country-region-data';
 import { useAppSelector } from '../../app/hooks';
-import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
+import { useGetWeatherQuery } from '../../services/weatherApi';
 
 import {
   tempWithUnit,
@@ -72,7 +72,7 @@ const WeatherCurrent = () => {
   const lang = useAppSelector(state => state.weather.lang);
   const location = useAppSelector(state => state.weather.location);
 
-  const { data: weatherOnecall } = useGetWeatherOnecallQuery({
+  const { data: weatherOnecall } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,

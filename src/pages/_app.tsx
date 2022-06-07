@@ -5,18 +5,17 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'react-redux';
-
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../theme/theme';
 
+import SEO from '../components/SEO';
+import { store } from '../app/store';
+import * as gtag from '../lib/gtag';
+
+import theme from '../theme/theme';
 import '../styles/globals.css';
 import '../styles/css/weather-icons.min.css';
 import '../styles/css/weather-icons-wind.min.css';
-
-import * as gtag from '../lib/gtag';
-import { store } from '../app/store';
-import SEO from '../components/SEO';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   React.useEffect(() => {

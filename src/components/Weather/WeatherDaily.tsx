@@ -1,20 +1,18 @@
+import { memo } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 
-// import moment from 'moment';
-import moment from 'moment-timezone';
-
 import { useAppSelector } from '../../app/hooks';
 import { selectWeather } from '../../features/weatherSlice';
-import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
-
+import { useGetWeatherQuery } from '../../services/weatherApi';
 import { formatDigits } from '../../utils/formatDigits';
 import WeatherIcon from './common/WeatherIcon';
 import WindIcon from './common/WindIcon';
 import PopoverDaily from './PopoverDaily';
+import { localDate, localDay } from '../../utils/time';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -64,12 +62,13 @@ const WeatherDaily = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: weatherOnecall } = useGetWeatherOnecallQuery({
+  const { data: weatherOnecall } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,
     lang,
   });
+  console.log('weatherdaily');
 
   const { timezone, daily } = weatherOnecall;
 
@@ -78,16 +77,6 @@ const WeatherDaily = () => {
 
   const temp = (t: string) =>
     units === 'imperial' ? formatDigits(+t, 0) : formatDigits(+t, 0);
-
-  const dateLocalwithTZ = (dt: string, tzone: string) =>
-    moment(new Date(+dt * 1000).toUTCString())
-      .tz(tzone)
-      .format('M/D');
-
-  const dayLocalwithTZ = (dt: string, tzone: string) =>
-    moment(new Date(+dt * 1000).toUTCString())
-      .tz(tzone)
-      .format('ddd');
 
   return (
     <>
@@ -119,7 +108,7 @@ const WeatherDaily = () => {
                       align="center"
                       className={classes.text}
                     >
-                      {dayLocalwithTZ(el.dt, timezone)}
+                      {localDay(el.dt, timezone)}
                     </Typography>
                     <Typography
                       variant="subtitle2"
@@ -127,7 +116,7 @@ const WeatherDaily = () => {
                       align="center"
                       className={classes.text}
                     >
-                      {dateLocalwithTZ(el.dt, timezone)}
+                      {localDate(el.dt, timezone)}
                     </Typography>
                   </div>
                   <Typography
@@ -176,4 +165,4 @@ const WeatherDaily = () => {
   );
 };
 
-export default WeatherDaily;
+export default memo(WeatherDaily);

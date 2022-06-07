@@ -1,6 +1,2 @@
-export { ipLookup } from "./ipLookup";
-
-export {
-  fetchOpenWeatherOnecall,
-  fetchOpenGeocodingByLocationName,
-} from "./fetchOpenWeather";
+export { ipLookup } from './ipLookup';
+export { fetchWeather, fetchGeocodingByLocationName } from './fetchWeather';

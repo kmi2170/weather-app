@@ -10,7 +10,7 @@ import { blue } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";
-import { useGetWeatherOnecallQuery } from "../../services/weatherOnecallApi";
+import { useGetWeatherQuery } from "../../services/weatherApi";
 import { localTime } from "../../utils/time";
 
 const useStyles = makeStyles(() => ({
@@ -27,7 +27,7 @@ const WeatherMinutely = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: weatherOnecall } = useGetWeatherOnecallQuery({
+  const { data: weatherOnecall } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,

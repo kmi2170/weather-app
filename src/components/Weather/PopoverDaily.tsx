@@ -8,7 +8,7 @@ import { purple, orange, yellow } from '@material-ui/core/colors';
 
 import { useAppSelector } from '../../app/hooks';
 import { selectWeather } from '../../features/weatherSlice';
-import { useGetWeatherOnecallQuery } from '../../services/weatherOnecallApi';
+import { useGetWeatherQuery } from '../../services/weatherApi';
 
 import { fallWithUnit, pressureWithUnit } from '../../utils/units';
 import MoonIcon from './common/MoonIcon';
@@ -57,7 +57,7 @@ const PopoverDaily = ({ children, data }: PopoverDailyProps) => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: weatherOnecall } = useGetWeatherOnecallQuery({
+  const { data: weatherOnecall } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,
