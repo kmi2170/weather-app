@@ -14,8 +14,8 @@ import * as gtag from '../lib/gtag';
 
 import theme from '../theme/theme';
 import '../styles/globals.css';
-import '../styles/css/weather-icons.min.css';
-import '../styles/css/weather-icons-wind.min.css';
+import '../styles/weathericons/css/weather-icons.min.css';
+import '../styles/weathericons/css/weather-icons-wind.min.css';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   React.useEffect(() => {
