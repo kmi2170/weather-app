@@ -43,7 +43,7 @@ const WeatherHourly = () => {
 
   const dataTime = useMemo(
     () => hourly.map(({ dt }) => localDateTime(dt, timezone)),
-    [hourly]
+    [hourly, timezone]
   );
 
   return (

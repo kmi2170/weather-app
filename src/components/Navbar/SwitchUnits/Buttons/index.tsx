@@ -55,6 +55,7 @@ const Buttons = () => {
 
   const { cookies, setUnitsCookie } = useCustomeCookies();
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (isUnitsValid(cookies.weather_units)) {
       dispatch(setUnits(cookies.weather_units));
@@ -62,6 +63,7 @@ const Buttons = () => {
   }, []);
 
   useEffect(() => setUnitsCookie(units), [units]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const handleClick = (
     // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,

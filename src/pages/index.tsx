@@ -56,6 +56,7 @@ const Home = () => {
 
   const { cookies, setLocationCookie } = useCustomeCookies();
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (isLocationValid(cookies.weather_location)) {
       dispatch(setLocation(cookies.weather_location));
@@ -73,6 +74,7 @@ const Home = () => {
     },
     [location]
   );
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const saveMenuItemRefs = (ref: HTMLDivElement, index: number) => {
     menuItemRefs.current[index] = ref;
