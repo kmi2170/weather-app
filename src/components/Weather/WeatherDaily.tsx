@@ -67,7 +67,6 @@ const WeatherDaily = () => {
     units,
     lang,
   });
-  console.log('weatherdaily');
 
   return (
     <>

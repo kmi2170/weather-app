@@ -59,7 +59,6 @@ const list = [
 
 const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   const classes = useStyles();
-  console.log('navbar')
 
   const units = useAppSelector(state => state.weather.units);
   const lang = useAppSelector(state => state.weather.lang);

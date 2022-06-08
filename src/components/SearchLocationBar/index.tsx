@@ -45,7 +45,6 @@ const queryExamples = ['London', 'Seattle,WA,USA', 'Tokyo,Japan'];
 
 const SearchLocationBar = () => {
   const classes = useStyles();
-  console.log('search bar');
 
   const isNotFound = useAppSelector(state => state.weather.isNotFound);
   const dispatch = useAppDispatch();

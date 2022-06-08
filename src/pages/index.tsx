@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -40,7 +40,6 @@ const useStyles = makeStyles(() => ({
 const Home = () => {
   const classes = useStyles();
   const menuItemRefs = useRef<HTMLDivElement[]>(new Array(4));
-  console.log('home');
 
   const dispatch = useAppDispatch();
   const units = useAppSelector(state => state.weather.units);
@@ -78,10 +77,6 @@ const Home = () => {
   const saveMenuItemRefs = (ref: HTMLDivElement, index: number) => {
     menuItemRefs.current[index] = ref;
   };
-  // const saveMenuItemRefs = useCallback((ref: HTMLDivElement, index: number) => {
-  //   menuItemRefs.current[index] = ref;
-  // }, []);
-  console.log('home');
 
   return (
     <div className={classes.root}>

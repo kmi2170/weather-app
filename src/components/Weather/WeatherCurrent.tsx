@@ -67,7 +67,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const WeatherCurrent = () => {
   const classes = useStyles();
-  console.log('current ');
 
   const units = useAppSelector(state => state.weather.units);
   const lang = useAppSelector(state => state.weather.lang);

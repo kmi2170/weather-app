@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 const WeatherMinutely = () => {
   const classes = useStyles();
 
-  const [minutelyData, setMinutelyData] = useState({});
+  const [data, setData] = useState({});
   const [isFall, setIsFall] = useState<boolean>(false)
 
   const { units, lang, location } = useAppSelector(selectWeather);
@@ -56,14 +56,11 @@ const WeatherMinutely = () => {
             : "Precipitation for 1 Hour [mm]"
           : "No Precipitation for 1 Hour",
       },
-      // legend: {
-      //   display: false,
-      // },
     },
   };
 
   useEffect(() => {
-    setMinutelyData({
+    setData({
       labels: data_time,
       datasets: [
         {
@@ -82,7 +79,7 @@ const WeatherMinutely = () => {
         Minutely
       </Typography>
       <Paper className={classes.paper} style={{ height: 150 }}>
-        <Bar options={options} data={minutelyData as any} />
+        <Bar options={options} data={data as any} />
       </Paper>
     </>
   );

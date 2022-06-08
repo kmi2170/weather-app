@@ -31,7 +31,6 @@ const useStyles = makeStyles(() => ({
 
 const WeatherHourly = () => {
   const classes = useStyles();
-  console.log('hourly');
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
