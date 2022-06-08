@@ -8,7 +8,7 @@ import { purple, orange, yellow } from '@material-ui/core/colors';
 
 import { useAppSelector } from '../../app/hooks';
 import { fallWithUnit, pressureWithUnit } from '../../utils/units';
-import MoonIcon from './common/MoonIcon';
+import MoonIcon from './icons/MoonIcon';
 import { localTime } from '../../utils/time';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-
 import { Bar } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
-
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";

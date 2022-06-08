@@ -8,8 +8,8 @@ import { useAppSelector } from '../../app/hooks';
 import { selectWeather } from '../../features/weatherSlice';
 import { useGetWeatherQuery } from '../../services/weatherApi';
 import { formatDigits } from '../../utils/formatDigits';
-import WeatherIcon from './common/WeatherIcon';
-import WindIcon from './common/WindIcon';
+import WeatherIcon from './icons/WeatherIcon';
+import WindIcon from './icons/WindIcon';
 import PopoverDaily from './PopoverDaily';
 import { localDate, localDay } from '../../utils/time';
 

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,7 +15,6 @@ import {
   ChartWind,
   ChartPressure,
 } from './charts';
-import { useMemo } from 'react';
 
 const useStyles = makeStyles(() => ({
   text: {},

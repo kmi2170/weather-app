@@ -14,9 +14,9 @@ import {
   pressureWithUnit,
   visibilityWithUnit,
 } from '../../utils/units';
-import WeatherIcon from './common/WeatherIcon';
-import WindIcon from './common/WindIcon';
-import MoonIcon from './common/MoonIcon';
+import WeatherIcon from './icons/WeatherIcon';
+import WindIcon from './icons/WindIcon';
+import MoonIcon from './icons/MoonIcon';
 import { currentLocalTime, localTime } from '../../utils/time';
 
 const useStyles = makeStyles((theme: Theme) => ({
