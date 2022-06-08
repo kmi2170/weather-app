@@ -30,11 +30,6 @@ const ChartHumidity = ({ hourly, dataTime }: ChartProps) => {
         min: 0,
       },
     },
-    // plugins: {
-    //   legend: {
-    //     display: true,
-    //   },
-    // },
   };
 
   useEffect(

@@ -23,17 +23,6 @@ const ChartWind = ({ hourly, dataTime, units }: ChartProps) => {
         borderWidth: 3,
       },
     },
-    // scales: {
-    //   x: {},
-    //   y: {
-    //     min: 0,
-    //   },
-    // },
-    // plugins: {
-    //   legend: {
-    //     display: true,
-    //   },
-    // },
   };
 
   useEffect(

@@ -9,8 +9,12 @@ const ChartPrecipitation = ({ hourly, dataTime, units }: ChartProps) => {
 
   const fall = (fall: number) => (units === 'imperial' ? +fall / 25.4 : fall);
 
-  const data_rain = hourly.map(el => (el.rain ? fall(el.rain['1h']) : 0.0));
-  const data_snow = hourly.map(el => (el.snow ? fall(el.snow['1h']) : 0.0));
+  const data_rain = hourly.map(
+    (el: any) => (el.rain ? fall(el.rain['1h']) : 0.0)
+  );
+  const data_snow = hourly.map(
+    (el: any) => (el.snow ? fall(el.snow['1h']) : 0.0)
+  );
 
   const options: ChartOptions = {
     responsive: true,
@@ -24,15 +28,6 @@ const ChartPrecipitation = ({ hourly, dataTime, units }: ChartProps) => {
         borderWidth: 3,
       },
     },
-    // scales: {
-    //   x: {},
-    //   y: {},
-    // },
-    // plugins: {
-    //   legend: {
-    //     display: true,
-    //   },
-    // },
   };
 
   useEffect(

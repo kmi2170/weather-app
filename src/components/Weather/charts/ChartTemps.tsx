@@ -25,15 +25,6 @@ const ChartTemps = ({ hourly, dataTime, units }: ChartProps) => {
         borderWidth: 3,
       },
     },
-    // scales: {
-    //   x: {},
-    //   y: {},
-    // },
-    // plugins: {
-    //   legend: {
-    //     display: true,
-    //   },
-    // },
   };
 
   useEffect(

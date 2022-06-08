@@ -8,12 +8,10 @@ import { ChartProps } from '../../../api/types';
 const ChartPressure = ({ hourly, dataTime, units }: ChartProps) => {
   const [data, setData] = useState({});
 
-  const pressureConvert = (p: number) =>
-    units === 'imperial' ? +p / 1013.25 * 29.921 : p;
-
-  const pressurehUnit = () => (units === 'imperial' ? 'inHg' : 'hPa');
-
-  const data_pressure = hourly.map(({ pressure }) => pressureConvert(pressure));
+  const data_pressure = hourly.map(
+    ({ pressure }) =>
+      units === 'imperial' ? pressure / 1013.25 * 29.921 : pressure
+  );
 
   const options: ChartOptions = {
     responsive: true,
@@ -27,15 +25,6 @@ const ChartPressure = ({ hourly, dataTime, units }: ChartProps) => {
         borderWidth: 3,
       },
     },
-    // scales: {
-    //   x: {},
-    //   y: {},
-    // },
-    // plugins: {
-    //   legend: {
-    //     display: true,
-    //   },
-    // },
   };
 
   useEffect(
