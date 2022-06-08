@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { green, lightGreen } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
@@ -7,11 +7,6 @@ import { ChartProps } from '../../../api/types';
 
 const ChartWind = ({ hourly, dataTime, units }: ChartProps) => {
   const [data, setData] = useState({});
-
-  const fall = (fall: number) => (units === 'imperial' ? +fall / 25.4 : fall);
-
-  const pressureConvert = (p: number) =>
-    units === 'imperial' ? +p / 1013.25 * 29.921 : p;
 
   const data_wind_speed = hourly.map(({ wind_speed }) => wind_speed);
   const data_wind_gust = hourly.map(({ wind_gust }) => wind_gust);
@@ -70,4 +65,4 @@ const ChartWind = ({ hourly, dataTime, units }: ChartProps) => {
   return <Line options={options} data={data as any} />;
 };
 
-export default ChartWind;
+export default memo(ChartWind);

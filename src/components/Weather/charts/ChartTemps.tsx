@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { pink, deepOrange } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
@@ -10,8 +10,8 @@ const ChartTemps = ({ hourly, dataTime, units }: ChartProps) => {
   const data_temp = hourly.map(({ temp }) => temp);
   const data_dew_point = hourly.map(({ dew_point }) => dew_point);
 
-  const maxT = Math.round(Math.max(...data_temp) / 5) * 5 + 5;
-  const minT = Math.round(Math.min(...data_dew_point) / 5) * 5 - 5;
+  // const maxT = Math.round(Math.max(...data_temp) / 5) * 5 + 5;
+  // const minT = Math.round(Math.min(...data_dew_point) / 5) * 5 - 5;
 
   const options: ChartOptions = {
     responsive: true,
@@ -64,4 +64,4 @@ const ChartTemps = ({ hourly, dataTime, units }: ChartProps) => {
   return <Line options={options} data={data as any} />;
 };
 
-export default ChartTemps;
+export default memo(ChartTemps);

@@ -7,9 +7,6 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { purple, orange, yellow } from '@material-ui/core/colors';
 
 import { useAppSelector } from '../../app/hooks';
-import { selectWeather } from '../../features/weatherSlice';
-import { useGetWeatherQuery } from '../../services/weatherApi';
-
 import { fallWithUnit, pressureWithUnit } from '../../utils/units';
 import MoonIcon from './common/MoonIcon';
 import { localTime } from '../../utils/time';

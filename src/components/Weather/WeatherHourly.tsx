@@ -14,6 +14,7 @@ import {
   ChartWind,
   ChartPressure,
 } from './charts';
+import { useMemo } from 'react';
 
 const useStyles = makeStyles(() => ({
   text: {},
@@ -41,7 +42,10 @@ const WeatherHourly = () => {
     lang,
   });
 
-  const dataTime = hourly.map(({ dt }) => localDateTime(dt, timezone));
+  const dataTime = useMemo(
+    () => hourly.map(({ dt }) => localDateTime(dt, timezone)),
+    [hourly]
+  );
 
   return (
     <>

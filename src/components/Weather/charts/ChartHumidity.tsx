@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { lightBlue, lime, blueGrey } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
@@ -72,4 +72,4 @@ const ChartHumidity = ({ hourly, dataTime }: ChartProps) => {
   return <Line options={options} data={data as any} />;
 };
 
-export default ChartHumidity;
+export default memo(ChartHumidity);

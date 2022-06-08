@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { brown } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
@@ -59,4 +59,4 @@ const ChartPressure = ({ hourly, dataTime, units }: ChartProps) => {
   return <Line options={options} data={data as any} />;
 };
 
-export default ChartPressure;
+export default memo(ChartPressure);

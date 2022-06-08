@@ -24,6 +24,7 @@ const WeatherMinutely = () => {
   const classes = useStyles();
 
   const [minutelyData, setMinutelyData] = useState({});
+  const [isFall, setIsFall] = useState<boolean>(false)
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
@@ -38,15 +39,10 @@ const WeatherMinutely = () => {
     localTime(dt, timezone)
   );
 
-  const fall = (fall: number) => (units === "imperial" ? fall / 25.4 : fall);
-
-  let isFall = false;
   const data_precipitation: number[] = minutely?.map(({ precipitation }) => {
-    if (precipitation > 0) isFall = true;
-    return fall(+precipitation);
+    if (precipitation > 0) setIsFall(true);
+    return units === "imperial" ? precipitation / 25.4 : precipitation
   });
-
-  // const data_precipitation = minutely.map((_) => fall(Math.random()));
 
   const options: ChartOptions = {
     responsive: true,
@@ -71,6 +67,7 @@ const WeatherMinutely = () => {
       labels: data_time,
       datasets: [
         {
+          label: 'Precipitation',
           backgroundColor: blue[500],
           borderColor: blue[900],
           data: data_precipitation,

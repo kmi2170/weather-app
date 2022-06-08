@@ -69,12 +69,6 @@ const WeatherDaily = () => {
   });
   console.log('weatherdaily');
 
-  const tempUnit = () =>
-    units === 'imperial' ? <small>&#8457;</small> : <small>&#8451;</small>;
-
-  const temp = (t: string) =>
-    units === 'imperial' ? formatDigits(+t, 0) : formatDigits(+t, 0);
-
   return (
     <>
       <Typography variant="subtitle1" className={classes.text}>
@@ -133,8 +127,12 @@ const WeatherDaily = () => {
                   </Typography>
 
                   <Typography variant="h6" align="center">
-                    {temp(data.temp.max)}/{temp(data.temp.min)}
-                    {tempUnit()}
+                    {formatDigits(data.temp.max)}/{formatDigits(data.temp.min)}
+                    {units === 'imperial' ? (
+                      <small>&#8457;</small>
+                    ) : (
+                      <small>&#8451;</small>
+                    )}
                   </Typography>
 
                   <WindIcon
