@@ -29,7 +29,6 @@ const WeatherMinutely = () => {
     units,
     lang,
   });
-  console.log(minutely);
 
   const dataTime = useMemo(
     () => minutely?.map(({ dt }) => localTime(dt, timezone)),
