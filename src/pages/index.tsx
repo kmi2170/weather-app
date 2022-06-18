@@ -42,9 +42,9 @@ const Home = () => {
   const menuItemRefs = useRef<HTMLDivElement[]>(new Array(4));
 
   const dispatch = useAppDispatch();
-  const units = useAppSelector(state => state.weather.units);
-  const lang = useAppSelector(state => state.weather.lang);
-  const location = useAppSelector(state => state.weather.location);
+  const units = useAppSelector((state) => state.weather.units);
+  const lang = useAppSelector((state) => state.weather.lang);
+  const location = useAppSelector((state) => state.weather.location);
 
   const { data } = useGetWeatherQuery({
     lat: location.lat,
@@ -52,7 +52,7 @@ const Home = () => {
     units,
     lang,
   });
-  const isAlerts = !!(data?.alerts)
+  const isAlerts = !!data?.alerts;
 
   const { cookies, setLocationCookie } = useCustomeCookies();
 
@@ -66,14 +66,11 @@ const Home = () => {
     dispatch(asyncThunkIpLookupLocation());
   }, []);
 
-  useEffect(
-    () => {
-      if (isLocationValid(location)) {
-        setLocationCookie(location);
-      }
-    },
-    [location]
-  );
+  useEffect(() => {
+    if (isLocationValid(location)) {
+      setLocationCookie(location);
+    }
+  }, [location]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   const saveMenuItemRefs = (ref: HTMLDivElement, index: number) => {
@@ -100,19 +97,26 @@ const Home = () => {
             <SearchLocationBar />
           </Grid>
 
-          <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 0)}>
-            {data && <WeatherCurrent />}
-            {!data && <Skeleton variant="rect" height={200} />}
+          <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 0)}>
+            {data ? (
+              <WeatherCurrent />
+            ) : (
+              <Skeleton variant="rect" height={200} />
+            )}
           </Grid>
 
-          <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 1)}>
-            {data && <WeatherMinutely />}
-            {!data && <Skeleton variant="rect" height={150} />}
+          <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 1)}>
+            {data ? (
+              <WeatherMinutely />
+            ) : (
+              <Skeleton variant="rect" height={150} />
+            )}
           </Grid>
 
-          <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 2)}>
-            {data && <WeatherDaily />}
-            {!data && (
+          <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 2)}>
+            {data ? (
+              <WeatherDaily />
+            ) : (
               <Grid
                 container
                 justifyContent="flex-start"
@@ -128,13 +132,16 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 3)}>
-            {data && <WeatherHourly />}
-            {data && <Skeleton variant="rect" height={150} />}
+          <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 3)}>
+            {data ? (
+              <WeatherHourly />
+            ) : (
+              <Skeleton variant="rect" height={150} />
+            )}
           </Grid>
 
           {isAlerts && (
-            <Grid item xs={12} ref={ref => saveMenuItemRefs(ref, 4)}>
+            <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 4)}>
               <Alerts />
             </Grid>
           )}

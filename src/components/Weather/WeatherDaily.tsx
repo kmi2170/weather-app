@@ -61,7 +61,9 @@ const WeatherDaily = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: { timezone, daily } } = useGetWeatherQuery({
+  const {
+    data: { timezone, daily },
+  } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,

@@ -5,12 +5,12 @@ import { ChartOptions } from 'chart.js';
 
 import { ChartProps } from '../../../api/types';
 
-const ChartHumidity = ({ hourly, dataTime }: ChartProps) => {
+const ChartHumidity = ({ chartData, dataTime }: ChartProps) => {
   const [data, setData] = useState({});
 
-  const data_humidity = hourly.map(({ humidity }) => humidity);
-  const data_clouds = hourly.map(({ clouds }) => clouds);
-  const data_pop = hourly.map(({ pop }) => pop);
+  const data_humidity = chartData.map(({ humidity }) => humidity);
+  const data_clouds = chartData.map(({ clouds }) => clouds);
+  const data_pop = chartData.map(({ pop }) => pop);
 
   const options: ChartOptions = {
     responsive: true,
@@ -32,37 +32,34 @@ const ChartHumidity = ({ hourly, dataTime }: ChartProps) => {
     },
   };
 
-  useEffect(
-    () => {
-      setData({
-        labels: dataTime,
-        datasets: [
-          {
-            label: 'Humidity [%]',
-            borderColor: lime[500],
-            backgroundColor: lime[500],
-            data: data_humidity,
-            yAxisID: 'y',
-          },
-          {
-            label: 'Chance of Precipitation [%]',
-            borderColor: lightBlue[500],
-            backgroundColor: lightBlue[500],
-            data: data_pop,
-            yAxisID: 'y',
-          },
-          {
-            label: 'Cloud Cover [%]',
-            borderColor: blueGrey[500],
-            backgroundColor: blueGrey[500],
-            data: data_clouds,
-            yAxisID: 'y',
-          },
-        ],
-      });
-    },
-    [hourly]
-  );
+  useEffect(() => {
+    setData({
+      labels: dataTime,
+      datasets: [
+        {
+          label: 'Humidity [%]',
+          borderColor: lime[500],
+          backgroundColor: lime[500],
+          data: data_humidity,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Chance of Precipitation [%]',
+          borderColor: lightBlue[500],
+          backgroundColor: lightBlue[500],
+          data: data_pop,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Cloud Cover [%]',
+          borderColor: blueGrey[500],
+          backgroundColor: blueGrey[500],
+          data: data_clouds,
+          yAxisID: 'y',
+        },
+      ],
+    });
+  }, [chartData]);
 
   return <Line options={options} data={data as any} />;
 };

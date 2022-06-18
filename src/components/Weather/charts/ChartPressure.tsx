@@ -5,12 +5,11 @@ import { ChartOptions } from 'chart.js';
 
 import { ChartProps } from '../../../api/types';
 
-const ChartPressure = ({ hourly, dataTime, units }: ChartProps) => {
+const ChartPressure = ({ chartData, dataTime, units }: ChartProps) => {
   const [data, setData] = useState({});
 
-  const data_pressure = hourly.map(
-    ({ pressure }) =>
-      units === 'imperial' ? pressure / 1013.25 * 29.921 : pressure
+  const data_pressure = chartData.map(({ pressure }) =>
+    units === 'imperial' ? (pressure / 1013.25) * 29.921 : pressure
   );
 
   const options: ChartOptions = {
@@ -27,23 +26,20 @@ const ChartPressure = ({ hourly, dataTime, units }: ChartProps) => {
     },
   };
 
-  useEffect(
-    () => {
-      setData({
-        labels: dataTime,
-        datasets: [
-          {
-            label: units === 'imperial' ? 'Pressure [inHg]' : 'Pressure [hPa]',
-            borderColor: brown[500],
-            backgroundColor: brown[500],
-            data: data_pressure,
-            yAxisID: 'y',
-          },
-        ],
-      });
-    },
-    [hourly]
-  );
+  useEffect(() => {
+    setData({
+      labels: dataTime,
+      datasets: [
+        {
+          label: units === 'imperial' ? 'Pressure [inHg]' : 'Pressure [hPa]',
+          borderColor: brown[500],
+          backgroundColor: brown[500],
+          data: data_pressure,
+          yAxisID: 'y',
+        },
+      ],
+    });
+  }, [chartData]);
 
   return <Line options={options} data={data as any} />;
 };

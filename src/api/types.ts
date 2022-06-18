@@ -1,7 +1,7 @@
 import { Units } from '../features/initialState';
 
 export interface ChartProps {
-  hourly: any;
+  chartData: any;
   dataTime: string[];
   units?: Units;
 }

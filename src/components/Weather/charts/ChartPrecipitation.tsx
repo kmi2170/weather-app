@@ -4,16 +4,16 @@ import { Line } from 'react-chartjs-2';
 import { ChartOptions } from 'chart.js';
 import { ChartProps } from '../../../api/types';
 
-const ChartPrecipitation = ({ hourly, dataTime, units }: ChartProps) => {
+const ChartPrecipitation = ({ chartData, dataTime, units }: ChartProps) => {
   const [data, setData] = useState({});
 
   const fall = (fall: number) => (units === 'imperial' ? +fall / 25.4 : fall);
 
-  const data_rain = hourly.map(
-    (el: any) => (el.rain ? fall(el.rain['1h']) : 0.0)
+  const data_rain = chartData.map((el: any) =>
+    el.rain ? fall(el.rain['1h']) : 0.0
   );
-  const data_snow = hourly.map(
-    (el: any) => (el.snow ? fall(el.snow['1h']) : 0.0)
+  const data_snow = chartData.map((el: any) =>
+    el.snow ? fall(el.snow['1h']) : 0.0
   );
 
   const options: ChartOptions = {
@@ -30,30 +30,27 @@ const ChartPrecipitation = ({ hourly, dataTime, units }: ChartProps) => {
     },
   };
 
-  useEffect(
-    () => {
-      setData({
-        labels: dataTime,
-        datasets: [
-          {
-            label: units === 'imperial' ? 'Rain [in]' : 'Rain [mm]',
-            borderColor: blue[500],
-            backgroundColor: blue[500],
-            data: data_rain,
-            yAxisID: 'y',
-          },
-          {
-            label: units === 'imperial' ? 'Snow [in]' : 'Snow [mm]',
-            borderColor: grey[500],
-            backgroundColor: grey[500],
-            data: data_snow,
-            yAxisID: 'y',
-          },
-        ],
-      });
-    },
-    [hourly]
-  );
+  useEffect(() => {
+    setData({
+      labels: dataTime,
+      datasets: [
+        {
+          label: units === 'imperial' ? 'Rain [in]' : 'Rain [mm]',
+          borderColor: blue[500],
+          backgroundColor: blue[500],
+          data: data_rain,
+          yAxisID: 'y',
+        },
+        {
+          label: units === 'imperial' ? 'Snow [in]' : 'Snow [mm]',
+          borderColor: grey[500],
+          backgroundColor: grey[500],
+          data: data_snow,
+          yAxisID: 'y',
+        },
+      ],
+    });
+  }, [chartData]);
 
   return <Line options={options} data={data as any} />;
 };

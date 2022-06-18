@@ -5,11 +5,11 @@ import { ChartOptions } from 'chart.js';
 
 import { ChartProps } from '../../../api/types';
 
-const ChartWind = ({ hourly, dataTime, units }: ChartProps) => {
+const ChartWind = ({ chartData, dataTime, units }: ChartProps) => {
   const [data, setData] = useState({});
 
-  const data_wind_speed = hourly.map(({ wind_speed }) => wind_speed);
-  const data_wind_gust = hourly.map(({ wind_gust }) => wind_gust);
+  const data_wind_speed = chartData.map(({ wind_speed }) => wind_speed);
+  const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust);
 
   const options: ChartOptions = {
     responsive: true,
@@ -25,31 +25,27 @@ const ChartWind = ({ hourly, dataTime, units }: ChartProps) => {
     },
   };
 
-  useEffect(
-    () => {
-      setData({
-        labels: dataTime,
-        datasets: [
-          {
-            label:
-              units === 'imperial' ? 'Wind Speed [mi]' : 'Wind Speed [m/s]',
-            borderColor: green[500],
-            backgroundColor: green[500],
-            data: data_wind_speed,
-            yAxisID: 'y',
-          },
-          {
-            label: units === 'imperial' ? 'Gust [mi]' : 'Gust [m/s]',
-            borderColor: lightGreen[500],
-            backgroundColor: lightGreen[500],
-            data: data_wind_gust,
-            yAxisID: 'y',
-          },
-        ],
-      });
-    },
-    [hourly]
-  );
+  useEffect(() => {
+    setData({
+      labels: dataTime,
+      datasets: [
+        {
+          label: units === 'imperial' ? 'Wind Speed [mi]' : 'Wind Speed [m/s]',
+          borderColor: green[500],
+          backgroundColor: green[500],
+          data: data_wind_speed,
+          yAxisID: 'y',
+        },
+        {
+          label: units === 'imperial' ? 'Gust [mi]' : 'Gust [m/s]',
+          borderColor: lightGreen[500],
+          backgroundColor: lightGreen[500],
+          data: data_wind_gust,
+          yAxisID: 'y',
+        },
+      ],
+    });
+  }, [chartData]);
 
   return <Line options={options} data={data as any} />;
 };

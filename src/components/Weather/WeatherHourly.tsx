@@ -34,7 +34,9 @@ const WeatherHourly = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data: { hourly, timezone } } = useGetWeatherQuery({
+  const {
+    data: { hourly, timezone },
+  } = useGetWeatherQuery({
     lat: location.lat,
     lon: location.lon,
     units,
@@ -56,23 +58,23 @@ const WeatherHourly = () => {
           Hourly Fourcast for 48 Hours
         </Typography>
         <div className={classes.charts}>
-          <ChartTemps hourly={hourly} dataTime={dataTime} units={units} />
+          <ChartTemps chartData={hourly} dataTime={dataTime} units={units} />
         </div>
         <div className={classes.chartsHumid}>
-          <ChartHumidity hourly={hourly} dataTime={dataTime} />
+          <ChartHumidity chartData={hourly} dataTime={dataTime} />
         </div>
         <div className={classes.charts}>
           <ChartPrecipitation
-            hourly={hourly}
+            chartData={hourly}
             dataTime={dataTime}
             units={units}
           />
         </div>
         <div className={classes.charts}>
-          <ChartWind hourly={hourly} dataTime={dataTime} units={units} />
+          <ChartWind chartData={hourly} dataTime={dataTime} units={units} />
         </div>
         <div className={classes.charts}>
-          <ChartPressure hourly={hourly} dataTime={dataTime} units={units} />
+          <ChartPressure chartData={hourly} dataTime={dataTime} units={units} />
         </div>
       </Paper>
     </>
