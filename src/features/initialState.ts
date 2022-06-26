@@ -1,15 +1,15 @@
+import { Weather } from '../api/types';
+
 export type Location = {
   city: string;
   region: string;
   country: string;
-  lat: string;
-  lon: string;
+  lat: number;
+  lon: number;
 };
 
 export type Units = 'imperial' | 'metric';
 export type Lang = 'en' | 'ja';
-
-export type Weather = null | any;
 
 export const initialState: StateType = {
   location: {
@@ -36,5 +36,5 @@ export type StateType = {
   selectedPageId: number;
   isLoading: boolean;
   isError: boolean;
-  isNotFound: Boolean;
+  isNotFound: boolean;
 };

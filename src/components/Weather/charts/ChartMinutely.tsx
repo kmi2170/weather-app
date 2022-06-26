@@ -1,11 +1,15 @@
-import { useState, useEffect, useMemo, memo } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, ChartData } from 'chart.js';
 import { blue } from '@material-ui/core/colors';
-import { ChartProps } from '../../../api/types';
+import { ChartProps, WeatherMinutely } from '../../../api/types';
 
-const ChartMinutely = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState({});
+interface ChartMinutelyProps extends Omit<ChartProps, 'chartData'> {
+  chartData: WeatherMinutely;
+}
+
+const ChartMinutely = ({ chartData, dataTime, units }: ChartMinutelyProps) => {
+  const [data, setData] = useState<ChartData | null>(null);
 
   let isFall = false;
   const data_precipitation: number[] = chartData?.map(({ precipitation }) => {
@@ -28,6 +32,7 @@ const ChartMinutely = ({ chartData, dataTime, units }: ChartProps) => {
     },
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setData({
       labels: dataTime,
@@ -41,8 +46,9 @@ const ChartMinutely = ({ chartData, dataTime, units }: ChartProps) => {
       ],
     });
   }, [chartData]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
-  return <Bar options={options} data={data as any} />;
+  return <Bar options={options} data={data} />;
 };
 
 export default memo(ChartMinutely);

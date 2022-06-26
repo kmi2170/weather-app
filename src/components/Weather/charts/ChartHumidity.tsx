@@ -1,12 +1,12 @@
 import { useState, useEffect, memo } from 'react';
 import { lightBlue, lime, blueGrey } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, ChartData } from 'chart.js';
 
 import { ChartProps } from '../../../api/types';
 
 const ChartHumidity = ({ chartData, dataTime }: ChartProps) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<ChartData | null>(null);
 
   const data_humidity = chartData.map(({ humidity }) => humidity);
   const data_clouds = chartData.map(({ clouds }) => clouds);
@@ -32,6 +32,7 @@ const ChartHumidity = ({ chartData, dataTime }: ChartProps) => {
     },
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setData({
       labels: dataTime,
@@ -60,8 +61,9 @@ const ChartHumidity = ({ chartData, dataTime }: ChartProps) => {
       ],
     });
   }, [chartData]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
-  return <Line options={options} data={data as any} />;
+  return <Line options={options} data={data} />;
 };
 
 export default memo(ChartHumidity);

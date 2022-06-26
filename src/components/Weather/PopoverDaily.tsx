@@ -10,6 +10,7 @@ import { useAppSelector } from '../../app/hooks';
 import { fallWithUnit, pressureWithUnit } from '../../utils/units';
 import MoonIcon from './icons/MoonIcon';
 import { localTime } from '../../utils/time';
+import { WeatherDaily } from '../../api/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,8 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface PopoverDailyProps {
-  children: React.ReactNode;
-  data: any;
+  children: React.ReactChild;
+  data: WeatherDaily;
   timezone: string;
 }
 
@@ -53,7 +54,7 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const units = useAppSelector(state => state.weather.units);
+  const units = useAppSelector((state) => state.weather.units);
 
   const {
     clouds,

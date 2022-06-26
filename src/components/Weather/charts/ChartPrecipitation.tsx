@@ -1,20 +1,16 @@
 import { useState, useEffect, memo } from 'react';
 import { blue, grey } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, ChartData } from 'chart.js';
 import { ChartProps } from '../../../api/types';
 
 const ChartPrecipitation = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<ChartData | null>(null);
 
   const fall = (fall: number) => (units === 'imperial' ? +fall / 25.4 : fall);
 
-  const data_rain = chartData.map((el: any) =>
-    el.rain ? fall(el.rain['1h']) : 0.0
-  );
-  const data_snow = chartData.map((el: any) =>
-    el.snow ? fall(el.snow['1h']) : 0.0
-  );
+  const data_rain = chartData.map((el) => (el.rain ? fall(el.rain['1h']) : 0));
+  const data_snow = chartData.map((el) => (el.snow ? fall(el.snow['1h']) : 0));
 
   const options: ChartOptions = {
     responsive: true,
@@ -30,6 +26,7 @@ const ChartPrecipitation = ({ chartData, dataTime, units }: ChartProps) => {
     },
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setData({
       labels: dataTime,
@@ -51,8 +48,9 @@ const ChartPrecipitation = ({ chartData, dataTime, units }: ChartProps) => {
       ],
     });
   }, [chartData]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
-  return <Line options={options} data={data as any} />;
+  return <Line options={options} data={data} />;
 };
 
 export default memo(ChartPrecipitation);

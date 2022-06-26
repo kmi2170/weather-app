@@ -1,10 +1,19 @@
 import axios from 'axios';
 import { Location } from '../../features/initialState';
 
+type IpType = {
+  city: string;
+  latitude: number;
+  longitude: number;
+  region_code: string;
+  country_code: string;
+};
+
 const url = 'https://ipapi.co/json';
 export const ipLookup = async (): Promise<Location> => {
   try {
-    const { data } = await axios(url);
+    const { data } = await axios.get<IpType>(url);
+    console.log(data);
     const {
       city,
       latitude: lat,

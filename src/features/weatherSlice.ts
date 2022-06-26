@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { initialState, Location, Units, Lang } from './initialState';
+import { initialState, Location, Units } from './initialState';
 import {
   asyncThunkIpLookupLocation,
   asyncThunkSearchLocation,
@@ -26,12 +26,12 @@ export const weatherSlice = createSlice({
       state.lang = action.payload;
     }, */
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(asyncThunkIpLookupLocation.pending, state => {
+      .addCase(asyncThunkIpLookupLocation.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(asyncThunkIpLookupLocation.fulfilled, state => {
+      .addCase(asyncThunkIpLookupLocation.fulfilled, (state) => {
         state.isLoading = false;
       })
       .addCase(asyncThunkIpLookupLocation.rejected, (state, error) => {
@@ -39,10 +39,10 @@ export const weatherSlice = createSlice({
         state.isError = true;
         console.log(error);
       })
-      .addCase(asyncThunkSearchLocation.pending, state => {
+      .addCase(asyncThunkSearchLocation.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(asyncThunkSearchLocation.fulfilled, state => {
+      .addCase(asyncThunkSearchLocation.fulfilled, (state) => {
         state.isLoading = false;
       })
       .addCase(asyncThunkSearchLocation.rejected, (state, error) => {

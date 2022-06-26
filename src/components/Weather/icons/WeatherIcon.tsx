@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import purple from '@material-ui/core/colors/purple';
 import { makeStyles } from '@material-ui/core/styles';
+import { WeatherSummary } from '../../../api/types';
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles(() => ({
 interface WeaterIconProps {
   sunset?: number;
   sunrise?: number;
-  weather: any[];
+  weather: WeatherSummary[];
   current: boolean;
 }
 

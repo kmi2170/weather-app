@@ -46,27 +46,29 @@ const queryExamples = ['London', 'Seattle,WA,USA', 'Tokyo,Japan'];
 const SearchLocationBar = () => {
   const classes = useStyles();
 
-  const isNotFound = useAppSelector(state => state.weather.isNotFound);
+  const isNotFound = useAppSelector((state) => state.weather.isNotFound);
   const dispatch = useAppDispatch();
 
   const [searchLocation, setSearchLocation] = useState<string>('');
 
-  const handleInput: (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => void = e => {
+  const handleInput = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
     setSearchLocation(e.target.value);
   };
 
-  const handleClear: React.MouseEventHandler<HTMLButtonElement> = () => {
+  // const handleClear: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const handleClear = () => {
     setSearchLocation('');
     dispatch(setIsNotFound(false));
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = e => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (searchLocation) {
-      dispatch(asyncThunkSearchLocation(searchLocation));
+      dispatch(asyncThunkSearchLocation(searchLocation)).catch((error) =>
+        console.error(error)
+      );
     }
   };
 
@@ -116,7 +118,7 @@ const SearchLocationBar = () => {
             Examples (case insensitive)
           </Typography>
           <div className={classes.queryExamples}>
-            {queryExamples.map(example => (
+            {queryExamples.map((example) => (
               <Typography key={example} variant="h6" align="center">
                 {example}
               </Typography>

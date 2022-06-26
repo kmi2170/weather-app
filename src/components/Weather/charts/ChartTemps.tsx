@@ -1,11 +1,11 @@
 import { useState, useEffect, memo } from 'react';
 import { pink, deepOrange } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, ChartData } from 'chart.js';
 import { ChartProps } from '../../../api/types';
 
 const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<ChartData | null>(null);
 
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
@@ -27,6 +27,7 @@ const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
     },
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setData({
       labels: dataTime,
@@ -48,8 +49,9 @@ const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
       ],
     });
   }, [chartData]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
-  return <Line options={options} data={data as any} />;
+  return <Line options={options} data={data} />;
 };
 
 export default memo(ChartTemps);

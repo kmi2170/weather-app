@@ -1,4 +1,4 @@
-import { memo, useMemo, useCallback } from 'react';
+import { memo } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
@@ -29,7 +29,7 @@ const WindIcon = ({
 }: WindIconProps) => {
   const classes = useStyles();
 
-  const units = useAppSelector(states => states.weather.units);
+  const units = useAppSelector((states) => states.weather.units);
 
   const speedUnit = () => (units === 'imperial' ? 'mi/h' : 'm/s');
 

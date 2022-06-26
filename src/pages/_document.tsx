@@ -108,7 +108,9 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
 
   // Render app and page and get the context of the page with collected side effects.
   const sheets = new ServerStyleSheets();
+  /* eslint-disable testing-library/render-result-naming-convention */
   const originalRenderPage = ctx.renderPage;
+  /* eslint-enable testing-library/render-result-naming-convention */
 
   ctx.renderPage = () =>
     originalRenderPage({

@@ -37,8 +37,8 @@ const WeatherHourly = () => {
   const {
     data: { hourly, timezone },
   } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
+    lat: String(location.lat),
+    lon: String(location.lon),
     units,
     lang,
   });

@@ -22,6 +22,7 @@ import {
   WeatherMinutely,
 } from '../components/Weather';
 import { isLocationValid } from '../utils/cookiesValidator';
+import { Location } from '../features/initialState';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles(() => ({
 
 const Home = () => {
   const classes = useStyles();
-  const menuItemRefs = useRef<HTMLDivElement[]>(new Array(4));
+  const menuItemRefs = useRef(new Array(4) as HTMLDivElement[]);
 
   const dispatch = useAppDispatch();
   const units = useAppSelector((state) => state.weather.units);
@@ -47,8 +48,8 @@ const Home = () => {
   const location = useAppSelector((state) => state.weather.location);
 
   const { data } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
+    lat: String(location.lat),
+    lon: String(location.lon),
     units,
     lang,
   });
@@ -58,12 +59,14 @@ const Home = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (isLocationValid(cookies.weather_location)) {
-      dispatch(setLocation(cookies.weather_location));
+    if (isLocationValid(cookies.weather_location as Location)) {
+      dispatch(setLocation(cookies.weather_location as Location));
       return;
     }
 
-    dispatch(asyncThunkIpLookupLocation());
+    dispatch(asyncThunkIpLookupLocation()).catch((error) =>
+      console.error(error)
+    );
   }, []);
 
   useEffect(() => {

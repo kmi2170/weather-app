@@ -64,8 +64,8 @@ const WeatherDaily = () => {
   const {
     data: { timezone, daily },
   } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
+    lat: String(location.lat),
+    lon: String(location.lon),
     units,
     lang,
   });
@@ -82,7 +82,7 @@ const WeatherDaily = () => {
         alignItems="stretch"
         spacing={1}
       >
-        {daily.map((data: any, i: number) => (
+        {daily.map((data, i: number) => (
           <Grid key={i} item xs={4} sm={3} md={2}>
             <PopoverDaily data={data} timezone={timezone}>
               <Paper style={{ padding: '0.5rem' }}>

@@ -50,25 +50,22 @@ const buttonProps = [
 const Buttons = () => {
   const classes = useStyles();
 
-  const units = useAppSelector(state => state.weather.units);
+  const units = useAppSelector((state) => state.weather.units);
   const dispatch = useAppDispatch();
 
   const { cookies, setUnitsCookie } = useCustomeCookies();
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (isUnitsValid(cookies.weather_units)) {
-      dispatch(setUnits(cookies.weather_units));
+    if (isUnitsValid(cookies.weather_units as Units)) {
+      dispatch(setUnits(cookies.weather_units as Units));
     }
   }, []);
 
   useEffect(() => setUnitsCookie(units), [units]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  const handleClick = (
-    // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    b_units: Units
-  ) => {
+  const handleClick = (b_units: Units) => {
     if (b_units !== units) {
       dispatch(setUnits(b_units));
     }

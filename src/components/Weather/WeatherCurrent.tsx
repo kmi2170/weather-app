@@ -68,13 +68,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 const WeatherCurrent = () => {
   const classes = useStyles();
 
-  const units = useAppSelector(state => state.weather.units);
-  const lang = useAppSelector(state => state.weather.lang);
-  const location = useAppSelector(state => state.weather.location);
+  const units = useAppSelector((state) => state.weather.units);
+  const lang = useAppSelector((state) => state.weather.lang);
+  const location = useAppSelector((state) => state.weather.location);
 
-  const { data: { timezone, current, daily } } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
+  const {
+    data: { timezone, current, daily },
+  } = useGetWeatherQuery({
+    lat: String(location.lat),
+    lon: String(location.lon),
     units,
     lang,
   });
@@ -101,11 +103,11 @@ const WeatherCurrent = () => {
   const { city, region, country } = location;
 
   const countryData = country_region_data.filter(
-    el => el.countryShortCode === country
+    (el) => el.countryShortCode === country
   );
   const countryName = countryData.length ? countryData[0].countryName : country;
   const regionData = countryData[0].regions.filter(
-    el => el.shortCode === region
+    (el) => el.shortCode === region
   );
   const regionName = regionData.length ? regionData[0].name : region;
 
@@ -222,20 +224,18 @@ const WeatherCurrent = () => {
             </Grid>
 
             <Grid item xs={12}>
-              {rain &&
-                rain['1h'] && (
-                  <Typography variant="subtitle2">
-                    Rain (Last 1 hour), {fallWithUnit(rain['1h'], units)}
-                  </Typography>
-                )}
+              {rain && rain['1h'] && (
+                <Typography variant="subtitle2">
+                  Rain (Last 1 hour), {fallWithUnit(rain['1h'], units)}
+                </Typography>
+              )}
             </Grid>
             <Grid item xs={12}>
-              {snow &&
-                snow['1h'] && (
-                  <Typography variant="subtitle2">
-                    Snow (Last 1 hour), {fallWithUnit(snow['1h'], units)}
-                  </Typography>
-                )}
+              {snow && snow['1h'] && (
+                <Typography variant="subtitle2">
+                  Snow (Last 1 hour), {fallWithUnit(snow['1h'], units)}
+                </Typography>
+              )}
             </Grid>
 
             <Grid item xs={6}>

@@ -1,12 +1,12 @@
 import { useState, useEffect, memo } from 'react';
 import { brown } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, ChartData } from 'chart.js';
 
 import { ChartProps } from '../../../api/types';
 
 const ChartPressure = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<ChartData | null>(null);
 
   const data_pressure = chartData.map(({ pressure }) =>
     units === 'imperial' ? (pressure / 1013.25) * 29.921 : pressure
@@ -26,6 +26,7 @@ const ChartPressure = ({ chartData, dataTime, units }: ChartProps) => {
     },
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setData({
       labels: dataTime,
@@ -40,8 +41,9 @@ const ChartPressure = ({ chartData, dataTime, units }: ChartProps) => {
       ],
     });
   }, [chartData]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
-  return <Line options={options} data={data as any} />;
+  return <Line options={options} data={data} />;
 };
 
 export default memo(ChartPressure);

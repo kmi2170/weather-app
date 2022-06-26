@@ -1,12 +1,12 @@
 import { useState, useEffect, memo } from 'react';
 import { green, lightGreen } from '@material-ui/core/colors';
 import { Line } from 'react-chartjs-2';
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, ChartData } from 'chart.js';
 
 import { ChartProps } from '../../../api/types';
 
 const ChartWind = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<ChartData | null>(null);
 
   const data_wind_speed = chartData.map(({ wind_speed }) => wind_speed);
   const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust);
@@ -25,6 +25,7 @@ const ChartWind = ({ chartData, dataTime, units }: ChartProps) => {
     },
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setData({
       labels: dataTime,
@@ -46,8 +47,9 @@ const ChartWind = ({ chartData, dataTime, units }: ChartProps) => {
       ],
     });
   }, [chartData]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
-  return <Line options={options} data={data as any} />;
+  return <Line options={options} data={data} />;
 };
 
 export default memo(ChartWind);
