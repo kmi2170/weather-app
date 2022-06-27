@@ -11,6 +11,7 @@ import { fallWithUnit, pressureWithUnit } from '../../utils/units';
 import MoonIcon from './icons/MoonIcon';
 import { localTime } from '../../utils/time';
 import { WeatherDaily } from '../../api/types';
+import { formatDigits } from '../../utils/formatDigits';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,6 +42,16 @@ const useStyles = makeStyles((theme: Theme) =>
     moonDecoration: {
       borderBottom: `2px solid ${yellow[500]}`,
     },
+    tempChange: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alighIterator: 'center',
+      marginBottom: '0.5rem',
+    },
+    tempChangeName: {
+      textTransform: 'capitalize',
+    },
   })
 );
 
@@ -68,6 +79,7 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
     moonrise,
     moonset,
     moon_phase,
+    temp,
   } = data;
 
   const handlePopoverOpen = (
@@ -115,6 +127,22 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
       >
         <Container maxWidth="xs">
           <Grid container alignItems="center">
+            <Grid item container xs={12} spacing={4}>
+              {['morn', 'day', 'eve', 'night'].map((item) => (
+                <Grid item className={classes.tempChange}>
+                  <div className={classes.tempChangeName}>{item}</div>
+                  <div>
+                    {formatDigits(temp[item])}
+                    {units === 'imperial' ? (
+                      <small>&#8457;</small>
+                    ) : (
+                      <small>&#8451;</small>
+                    )}
+                  </div>
+                </Grid>
+              ))}
+            </Grid>
+
             <Grid item xs={12}>
               {rain && (
                 <Typography variant="subtitle2">
