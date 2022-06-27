@@ -24,8 +24,8 @@ const WeatherMinutely = () => {
   const {
     data: { timezone, minutely },
   } = useGetWeatherQuery({
-    lat: location.lat,
-    lon: location.lon,
+    lat: String(location.lat),
+    lon: String(location.lon),
     units,
     lang,
   });
