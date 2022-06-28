@@ -9,7 +9,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import SEO from '../components/SEO';
-import { setupStore } from '../app/store';
+import { store } from '../app/store';
 import * as gtag from '../lib/gtag';
 
 import theme from '../theme/theme';
@@ -53,7 +53,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         </Head>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Provider store={setupStore()}>
+        <Provider store={store}>
           <Component {...pageProps} />
         </Provider>
       </ThemeProvider>

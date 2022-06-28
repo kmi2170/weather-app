@@ -129,10 +129,10 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
           <Grid container alignItems="center">
             <Grid item container xs={12} spacing={4}>
               {['morn', 'day', 'eve', 'night'].map((item) => (
-                <Grid item className={classes.tempChange}>
+                <Grid item key={item} className={classes.tempChange}>
                   <div className={classes.tempChangeName}>{item}</div>
                   <div>
-                    {formatDigits(temp[item])}
+                    {formatDigits(temp[item] as number)}
                     {units === 'imperial' ? (
                       <small>&#8457;</small>
                     ) : (

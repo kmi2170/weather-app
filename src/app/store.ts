@@ -23,22 +23,23 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   });
 };
 
-setupListeners(setupStore().dispatch);
+export const store = setupStore();
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
+
+// export const store = configureStore({
+//   reducer: rootReducer,
+//   middleware: (gDM) => gDM().concat(weatherApi.middleware),
+// });
+// export type RootState = ReturnType<typeof store.getState>;
+// export type AppDispatch = typeof store.dispatch;
+
+setupListeners(store.dispatch);
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
   Action<string>
 >;
-
-// export const store = configureStore({
-//   reducer: rootReducer,
-//   middleware: (gDM) => gDM().concat(weatherApi.middleware),
-// });
-// setupListeners(store.dispatch);
-// export type RootState = ReturnType<typeof store.getState>;
-// export type AppDispatch = typeof store.dispatch;
