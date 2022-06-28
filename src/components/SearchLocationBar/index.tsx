@@ -11,9 +11,6 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { asyncThunkSearchLocation } from '../../features/weatherAsyncThunk';
 import { setIsNotFound } from '../../features/weatherSlice';
 
-import icon_search from '../../../public/icon_search.png';
-import icon_cancel from '../../../public/icon-cancel.png';
-
 const useStyles = makeStyles((theme: Theme) => ({
   searchContainer: {
     backgroundColor: '#fff',
@@ -78,8 +75,8 @@ const SearchLocationBar = () => {
         <div className={classes.searchContainer}>
           <IconButton type="submit">
             <Image
-              src={icon_search}
-              alt="search butoon"
+              src="/icon-search.png"
+              alt="search button"
               width={20}
               height={20}
             />
@@ -97,7 +94,7 @@ const SearchLocationBar = () => {
           </div>
           <IconButton onClick={handleClear}>
             <Image
-              src={icon_cancel}
+              src="/icon_cancel.png"
               alt="clear button"
               width={20}
               height={20}
