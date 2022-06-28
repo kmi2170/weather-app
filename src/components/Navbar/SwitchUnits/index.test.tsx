@@ -10,7 +10,7 @@ const user = userEvent.setup();
 const setup = () =>
   render(
     <Provider store={store}>
-      <SwitchUnits />)
+      <SwitchUnits />
     </Provider>
   );
 
