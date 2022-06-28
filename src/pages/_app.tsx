@@ -9,7 +9,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import SEO from '../components/SEO';
-import { store } from '../app/store';
+import { setupStore } from '../app/store';
 import * as gtag from '../lib/gtag';
 
 import theme from '../theme/theme';
@@ -27,21 +27,18 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   const router = useRouter();
-  useEffect(
-    () => {
-      const handleRouteChange = url => {
-        gtag.pageview(url);
-        console.log('ga: url', url);
-      };
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      gtag.pageview(url);
+      console.log('ga: url', url);
+    };
 
-      router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('routeChangeComplete', handleRouteChange);
 
-      return () => {
-        router.events.off('routeChangeComplete', handleRouteChange);
-      };
-    },
-    [router.events]
-  );
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <CookiesProvider>
@@ -56,7 +53,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         </Head>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Provider store={store}>
+        <Provider store={setupStore()}>
           <Component {...pageProps} />
         </Provider>
       </ThemeProvider>

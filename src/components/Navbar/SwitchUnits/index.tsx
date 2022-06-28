@@ -15,7 +15,7 @@ import { useAppSelector } from '../../../app/hooks';
 const useStyles = makeStyles(() => ({
   closeButton: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     fontSize: '1.25rem',
     marginRight: '.75rem',
     '&:hover': {
