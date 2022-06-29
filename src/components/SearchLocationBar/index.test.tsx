@@ -4,7 +4,7 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 // import { render, screen, waitFor } from '@testing-library/react';
-import { findByText, render, screen } from '../../utils/test-utils';
+import { render, screen } from '../../utils/test-utils';
 import SearchLocationBar from './index';
 
 const handlers = [

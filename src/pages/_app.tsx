@@ -28,7 +28,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   const router = useRouter();
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteChange = (url: string) => {
       gtag.pageview(url);
       console.log('ga: url', url);
     };
