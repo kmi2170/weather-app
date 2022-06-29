@@ -1,9 +1,25 @@
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-// import { render, screen, waitFor } from '@testing-library/react';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 
-import { render, screen } from '../../utils/test-utils';
+// import { render, screen, waitFor } from '@testing-library/react';
+import { findByText, render, screen } from '../../utils/test-utils';
 import SearchLocationBar from './index';
+
+const handlers = [
+  rest.get('/api/geolocation', (req, res, ctx) => {
+    return res(ctx.json([]), ctx.delay(150));
+  }),
+];
+
+const server = setupServer(...handlers);
+// Enable API mocking before tests.
+beforeAll(() => server.listen());
+// Reset any runtime request handlers we may add during the tests.
+afterEach(() => server.resetHandlers());
+// Disable API mocking after the tests are done.
+afterAll(() => server.close());
 
 const user = userEvent.setup();
 const setup = () => render(<SearchLocationBar />);
@@ -23,11 +39,11 @@ describe('SearchLocationBar', () => {
     expect(getTextbox()).toHaveValue('');
   });
 
-  it(`type in "${testSearchTerm}", then click search icon and`, async () => {
+  it(`type in random text "abc123ABC", then click search icon and displays examples for search terms`, async () => {
     setup();
-    await user.type(getTextbox(), testSearchTerm);
+    await user.type(getTextbox(), 'abc123ABC');
     await user.click(getIcon(/search button/i));
-    // expect(getTextbox()).toHaveValue('');
+    expect(await screen.findByText(/no place found/i)).toBeInTheDocument();
   });
 });
 

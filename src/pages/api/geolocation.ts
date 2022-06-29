@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { fetchGeocodingByLocationName } from '../../api/lib/fetchWeather';
 
-export default async function onecall(
+export default async function geolocation(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
