@@ -57,7 +57,7 @@ const Buttons = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (isUnitsValid(cookies.weather_units as Units)) {
+    if (isUnitsValid(cookies.weather_units)) {
       dispatch(setUnits(cookies.weather_units as Units));
     }
   }, []);

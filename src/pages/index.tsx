@@ -59,7 +59,7 @@ const Home = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (isLocationValid(cookies.weather_location as Location)) {
+    if (isLocationValid(cookies.weather_location)) {
       dispatch(setLocation(cookies.weather_location as Location));
       return;
     }
