@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Buttons from './Buttons';
 import { useAppSelector } from '../../../app/hooks';
 
+const icon_setting = '/icon-setting.png';
+
 const useStyles = makeStyles(() => ({
   closeButton: {
     display: 'flex',
@@ -45,12 +47,7 @@ const SwitchUnits = () => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <Image
-          src="/icon_setting.png"
-          alt="setting icon"
-          width={25}
-          height={25}
-        />
+        <Image src={icon_setting} alt="setting icon" width={25} height={25} />
       </IconButton>
 
       <Menu
@@ -67,12 +64,7 @@ const SwitchUnits = () => {
             aria-haspopup="true"
             onClick={handleClose}
           >
-            <Image
-              src="/icon-close.png"
-              alt="close icon"
-              width={15}
-              height={15}
-            />
+            <Image src={icon_setting} alt="close icon" width={15} height={15} />
           </IconButton>
         </div>
         <Typography variant="subtitle1" align="center"></Typography>
