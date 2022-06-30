@@ -12,8 +12,15 @@ import Buttons from './Buttons';
 import { useAppSelector } from '../../../app/hooks';
 
 const icon_setting = '/icon-setting.png';
+const icon_close = '/icon-close.png';
 
 const useStyles = makeStyles(() => ({
+  menuContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    margin: '0 10pt',
+  },
   closeButton: {
     display: 'flex',
     justifyContent: 'center',
@@ -58,26 +65,27 @@ const SwitchUnits = () => {
         open={open}
         onClose={handleClose}
       >
-        <div className={classes.closeButton}>
-          <IconButton
-            aria-controls="icon-close"
-            aria-haspopup="true"
-            onClick={handleClose}
+        <div className={classes.menuContent}>
+          <div className={classes.closeButton}>
+            <IconButton
+              aria-controls="icon-close"
+              aria-haspopup="true"
+              onClick={handleClose}
+            >
+              <Image src={icon_close} alt="close icon" width={15} height={15} />
+            </IconButton>
+          </div>
+          <Typography
+            variant="h6"
+            align="center"
+            style={{ color: purple[500], textTransform: 'capitalize' }}
           >
-            <Image src={icon_setting} alt="close icon" width={15} height={15} />
-          </IconButton>
+            {units} Units
+          </Typography>
+          <MenuItem>
+            <Buttons />
+          </MenuItem>
         </div>
-        <Typography variant="subtitle1" align="center"></Typography>
-        <Typography
-          variant="h6"
-          align="center"
-          style={{ color: purple[500], textTransform: 'capitalize' }}
-        >
-          {units} Units
-        </Typography>
-        <MenuItem>
-          <Buttons />
-        </MenuItem>
       </Menu>
     </>
   );
