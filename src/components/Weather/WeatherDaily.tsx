@@ -1,55 +1,55 @@
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import purple from "@material-ui/core/colors/purple";
 
-import { useAppSelector } from '../../app/hooks';
-import { selectWeather } from '../../features/weatherSlice';
-import { useGetWeatherQuery } from '../../services/weatherApi';
-import { formatDigits } from '../../utils/formatDigits';
-import WeatherIcon from './icons/WeatherIcon';
-import WindIcon from './icons/WindIcon';
-import PopoverDaily from './PopoverDaily';
-import { localDate, localDay } from '../../utils/time';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice";
+import { useGetWeatherQuery } from "../../services/weatherApi";
+import { formatDigits } from "../../utils/formatDigits";
+import WeatherIcon from "./icons/WeatherIcon";
+import WindIcon from "./icons/WindIcon";
+import PopoverDaily from "./PopoverDaily";
+import { localDate, localDay } from "../../utils/time";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   locationContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+      justifyContent: "center",
     },
-    alignItems: 'center',
+    alignItems: "center",
   },
   locationSubContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   weatherContainer: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
   countryName: {
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: '1rem',
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: "1rem",
     },
   },
   iconSun: {
-    fontSize: '1rem',
+    fontSize: "1rem",
     color: purple[500],
-    marginRight: '0.5rem',
+    marginRight: "0.5rem",
   },
   iconMoon: {
-    fontSize: '1rem',
+    fontSize: "1rem",
     color: purple[500],
-    marginRight: '0.5rem',
-    marginLeft: '0.25rem',
+    marginRight: "0.5rem",
+    marginLeft: "0.25rem",
   },
   iconPop: {
     color: purple[500],
@@ -85,13 +85,13 @@ const WeatherDaily = () => {
         {daily.map((data, i: number) => (
           <Grid key={i} item xs={4} sm={3} md={2}>
             <PopoverDaily data={data} timezone={timezone}>
-              <Paper style={{ padding: '0.5rem' }}>
+              <Paper style={{ padding: "0.5rem" }}>
                 <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
                   <div>
@@ -129,7 +129,7 @@ const WeatherDaily = () => {
 
                   <Typography variant="h6" align="center">
                     {formatDigits(data.temp.max)}/{formatDigits(data.temp.min)}
-                    {units === 'imperial' ? (
+                    {units === "imperial" ? (
                       <small>&#8457;</small>
                     ) : (
                       <small>&#8451;</small>
@@ -148,8 +148,8 @@ const WeatherDaily = () => {
                     align="center"
                     className={classes.text}
                   >
-                    <i className={`wi wi-umbrella ${classes.iconPop}`} />{' '}
-                    {data.pop}%
+                    <i className={`wi wi-umbrella ${classes.iconPop}`} />{" "}
+                    {data.pop * 100}%
                   </Typography>
                 </div>
               </Paper>
