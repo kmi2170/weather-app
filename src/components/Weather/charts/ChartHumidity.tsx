@@ -27,13 +27,13 @@ ChartJS.register(
 );
 
 const ChartHumidity = ({ chartData, dataTime }: ChartProps) => {
-  const [data, setData] = useState<ChartData | null>(null);
+  const [data, setData] = useState<ChartData<"line"> | null>(null);
 
   const data_humidity = chartData.map(({ humidity }) => humidity);
   const data_clouds = chartData.map(({ clouds }) => clouds);
   const data_pop = chartData.map(({ pop }) => pop * 100);
 
-  const options: ChartOptions = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     elements: {

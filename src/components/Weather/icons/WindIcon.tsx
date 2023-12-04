@@ -1,12 +1,12 @@
-import { memo } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import purple from '@material-ui/core/colors/purple';
-import { makeStyles } from '@material-ui/core/styles';
+import { memo } from "react";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import purple from "@material-ui/core/colors/purple";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { useAppSelector } from '../../../app/hooks';
-import { wind_directions } from '../../../constants/wind';
-import { formatDigits } from '../../../utils/formatDigits';
+import { useAppSelector } from "../../../app/hooks";
+import { wind_directions } from "../../../constants/wind";
+import { formatDigits } from "../../../utils/formatDigits";
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 interface WindIconProps {
   wind_speed: number;
   wind_deg: number;
-  wind_gust: number;
+  wind_gust?: number;
   current: boolean;
 }
 
@@ -31,7 +31,7 @@ const WindIcon = ({
 
   const units = useAppSelector((states) => states.weather.units);
 
-  const speedUnit = () => (units === 'imperial' ? 'mi/h' : 'm/s');
+  const speedUnit = () => (units === "imperial" ? "mi/h" : "m/s");
 
   const windDirection = () => {
     const n_direction = Math.floor((wind_deg + 11.25) / 22.5);
@@ -58,15 +58,15 @@ const WindIcon = ({
           </Typography>
         )}
         <Typography variant="subtitle2" align="center">
-          {wind_speed ? formatDigits(wind_speed, 1) : 'N/A'}
+          {wind_speed ? formatDigits(wind_speed, 1) : "N/A"}
           {speedUnit()}
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <i
             className={windIconClass()}
-            style={{ fontSize: current ? '3rem' : '1.75rem' }}
+            style={{ fontSize: current ? "3rem" : "1.75rem" }}
           />
         </div>
       </Grid>
