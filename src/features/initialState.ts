@@ -1,4 +1,4 @@
-import { Weather } from '../api/types';
+import { Weather } from "../api/types";
 
 export type Location = {
   city: string;
@@ -8,19 +8,19 @@ export type Location = {
   lon: number;
 };
 
-export type Units = 'imperial' | 'metric';
-export type Lang = 'en' | 'ja';
+export type Units = "imperial" | "metric";
+export type Lang = "en" | "ja";
 
 export const initialState: StateType = {
   location: {
-    city: '',
-    region: '',
-    country: '',
+    city: "",
+    region: "",
+    country: "",
     lat: null,
     lon: null,
   },
-  units: 'imperial',
-  lang: 'en',
+  units: "imperial",
+  lang: "en",
   weather: null,
   selectedPageId: 1,
   isLoading: false,
