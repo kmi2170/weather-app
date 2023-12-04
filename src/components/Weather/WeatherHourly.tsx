@@ -1,12 +1,12 @@
-import { useMemo } from 'react';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import { useMemo } from "react";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { useAppSelector } from '../../app/hooks';
-import { selectWeather } from '../../features/weatherSlice';
-import { useGetWeatherQuery } from '../../services/weatherApi';
-import { localDateTime } from '../../utils/time';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice";
+import { useGetWeatherQuery } from "../../services/weatherApi";
+import { localDateTime } from "../../utils/time";
 
 import {
   ChartTemps,
@@ -14,18 +14,18 @@ import {
   ChartPrecipitation,
   ChartWind,
   ChartPressure,
-} from './charts';
+} from "./charts";
 
 const useStyles = makeStyles(() => ({
   text: {},
   paper: {
-    padding: '1rem',
+    padding: "1rem",
   },
   charts: {
-    height: '200px',
+    height: "200px",
   },
   chartsHumid: {
-    height: '250px',
+    height: "250px",
   },
 }));
 

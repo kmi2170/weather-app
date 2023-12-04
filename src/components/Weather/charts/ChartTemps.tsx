@@ -1,8 +1,29 @@
-import { useState, useEffect, memo } from 'react';
-import { pink, deepOrange } from '@material-ui/core/colors';
-import { Line } from 'react-chartjs-2';
-import { ChartOptions, ChartData } from 'chart.js';
-import { ChartProps } from '../../../api/types';
+import { useState, useEffect, memo } from "react";
+import { pink, deepOrange } from "@material-ui/core/colors";
+import { ChartOptions, ChartData } from "chart.js";
+import { ChartProps } from "../../../api/types";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
   const [data, setData] = useState<ChartData | null>(null);
@@ -33,23 +54,25 @@ const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
       labels: dataTime,
       datasets: [
         {
-          label: units === 'imperial' ? 'Temp [℉]' : 'Temp [℃]',
+          label: units === "imperial" ? "Temp [℉]" : "Temp [℃]",
           borderColor: pink[500],
           backgroundColor: pink[500],
           data: data_temp,
-          yAxisID: 'y',
+          yAxisID: "y",
         },
         {
-          label: units === 'imperial' ? 'Dew Point [℉]' : 'Dew Point [℃]',
+          label: units === "imperial" ? "Dew Point [℉]" : "Dew Point [℃]",
           borderColor: deepOrange[900],
           backgroundColor: deepOrange[900],
           data: data_dew_point,
-          yAxisID: 'y',
+          yAxisID: "y",
         },
       ],
     });
   }, [chartData]);
   /* eslint-enable react-hooks/exhaustive-deps */
+
+  if (data === null) return <div>ChartTemps</div>;
 
   return <Line options={options} data={data} />;
 };
