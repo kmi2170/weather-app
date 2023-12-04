@@ -27,12 +27,12 @@ ChartJS.register(
 );
 
 const ChartWind = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState<ChartData | null>(null);
+  const [data, setData] = useState<ChartData<"line"> | null>(null);
 
   const data_wind_speed = chartData.map(({ wind_speed }) => wind_speed);
-  const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust);
+  const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust ?? 0);
 
-  const options: ChartOptions = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     elements: {

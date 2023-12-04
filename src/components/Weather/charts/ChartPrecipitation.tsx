@@ -26,14 +26,18 @@ ChartJS.register(
 );
 
 const ChartPrecipitation = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState<ChartData | null>(null);
+  const [data, setData] = useState<ChartData<"line"> | null>(null);
 
   const fall = (fall: number) => (units === "imperial" ? +fall / 25.4 : fall);
 
-  const data_rain = chartData.map((el) => (el.rain ? fall(el.rain["1h"]) : 0));
-  const data_snow = chartData.map((el) => (el.snow ? fall(el.snow["1h"]) : 0));
+  const data_rain = chartData.map((el) =>
+    el.rain && el.rain["1h"] ? fall(el.rain["1h"]) : 0
+  );
+  const data_snow = chartData.map((el) =>
+    el.snow && el.snow["1h"] ? fall(el.snow["1h"]) : 0
+  );
 
-  const options: ChartOptions = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     elements: {

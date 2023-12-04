@@ -26,7 +26,7 @@ ChartJS.register(
 );
 
 const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState<ChartData | null>(null);
+  const [data, setData] = useState<ChartData<"line"> | null>(null);
 
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
@@ -34,7 +34,7 @@ const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
   // const maxT = Math.round(Math.max(...data_temp) / 5) * 5 + 5;
   // const minT = Math.round(Math.min(...data_dew_point) / 5) * 5 - 5;
 
-  const options: ChartOptions = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     elements: {

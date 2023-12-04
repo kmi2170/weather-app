@@ -27,13 +27,13 @@ ChartJS.register(
 );
 
 const ChartPressure = ({ chartData, dataTime, units }: ChartProps) => {
-  const [data, setData] = useState<ChartData | null>(null);
+  const [data, setData] = useState<ChartData<"line"> | null>(null);
 
   const data_pressure = chartData.map(({ pressure }) =>
     units === "imperial" ? (pressure / 1013.25) * 29.921 : pressure
   );
 
-  const options: ChartOptions = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     elements: {

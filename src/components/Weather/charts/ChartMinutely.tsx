@@ -29,7 +29,7 @@ interface ChartMinutelyProps extends Omit<ChartProps, "chartData"> {
 }
 
 const ChartMinutely = ({ chartData, dataTime, units }: ChartMinutelyProps) => {
-  const [data, setData] = useState<ChartData | null>(null);
+  const [data, setData] = useState<ChartData<"bar"> | null>(null);
 
   let isFall = false;
   const data_precipitation: number[] = chartData?.map(({ precipitation }) => {
@@ -37,7 +37,7 @@ const ChartMinutely = ({ chartData, dataTime, units }: ChartMinutelyProps) => {
     return units === "imperial" ? precipitation / 25.4 : precipitation;
   });
 
-  const options: ChartOptions = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
