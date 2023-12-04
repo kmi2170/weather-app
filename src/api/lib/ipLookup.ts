@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { Location } from '../../features/initialState';
+import axios from "axios";
+import { Location } from "../../features/initialState";
 
 type IpType = {
   city: string;
@@ -9,8 +9,8 @@ type IpType = {
   country_code: string;
 };
 
-const url = 'https://ipapi.co/json';
-export const ipLookup = async (): Promise<Location> => {
+const url = "https://ipapi.co/json";
+export const ipLookup = async (): Promise<Location | undefined> => {
   try {
     const { data } = await axios.get<IpType>(url);
     console.log(data);
@@ -22,7 +22,7 @@ export const ipLookup = async (): Promise<Location> => {
       country_code: country,
     } = data;
 
-    return { city, region: region || '', country, lat, lon };
+    return { city, region: region || "", country, lat, lon };
   } catch (error) {
     console.error(error);
   }
