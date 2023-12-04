@@ -1,61 +1,62 @@
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { purple, yellow, orange } from '@material-ui/core/colors';
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { purple, yellow, orange } from "@material-ui/core/colors";
 
-import country_region_data from 'country-region-data';
-import { useAppSelector } from '../../app/hooks';
-import { useGetWeatherQuery } from '../../services/weatherApi';
+import country_region_data from "country-region-data";
+import { useAppSelector } from "../../app/hooks";
+import { useGetWeatherQuery } from "../../services/weatherApi";
 
 import {
   tempWithUnit,
   fallWithUnit,
   pressureWithUnit,
   visibilityWithUnit,
-} from '../../utils/units';
-import WeatherIcon from './icons/WeatherIcon';
-import WindIcon from './icons/WindIcon';
-import MoonIcon from './icons/MoonIcon';
-import { currentLocalTime, localTime } from '../../utils/time';
+} from "../../utils/units";
+import WeatherIcon from "./icons/WeatherIcon";
+import WindIcon from "./icons/WindIcon";
+import MoonIcon from "./icons/MoonIcon";
+import { currentLocalTime, localTime } from "../../utils/time";
+import { Weather } from "../../api/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   locationContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+      justifyContent: "center",
     },
-    alignItems: 'center',
+    alignItems: "center",
   },
   locationSubContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   weatherContainer: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
   country: {
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: '1rem',
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: "1rem",
     },
   },
   iconSun: {
-    fontSize: '1rem',
+    fontSize: "1rem",
     color: purple[500],
-    marginRight: '0.5rem',
+    marginRight: "0.5rem",
   },
   iconMoon: {
-    fontSize: '1rem',
+    fontSize: "1rem",
     color: purple[500],
-    marginRight: '0.5rem',
-    marginLeft: '0.25rem',
+    marginRight: "0.5rem",
+    marginLeft: "0.25rem",
   },
   sunDecoration: {
     borderBottom: `2px solid ${orange[500]}`,
@@ -72,14 +73,14 @@ const WeatherCurrent = () => {
   const lang = useAppSelector((state) => state.weather.lang);
   const location = useAppSelector((state) => state.weather.location);
 
-  const {
-    data: { timezone, current, daily },
-  } = useGetWeatherQuery({
+  const { data, error } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
     lang,
   });
+
+  const { timezone, current, daily } = data as Weather;
 
   const {
     sunrise,
@@ -116,13 +117,13 @@ const WeatherCurrent = () => {
       <Typography variant="h6" className={classes.text}>
         Current
       </Typography>
-      <Paper style={{ padding: '1rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Paper style={{ padding: "1rem" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Typography
             variant="subtitle2"
             color="textSecondary"
             className={classes.text}
-            style={{ marginLeft: '1rem' }}
+            style={{ marginLeft: "1rem" }}
           >
             {currentLocalTime()}
           </Typography>
@@ -145,7 +146,7 @@ const WeatherCurrent = () => {
                 variant="h6"
                 color="textSecondary"
                 className={classes.country}
-                style={{ fontStyle: 'italic' }}
+                style={{ fontStyle: "italic" }}
               >
                 {countryName}
               </Typography>
@@ -158,7 +159,7 @@ const WeatherCurrent = () => {
                 <Typography variant="h6" align="center">
                   {weather[0].main}
                 </Typography>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <WeatherIcon
                     sunrise={sunrise}
                     sunset={sunset}
@@ -224,16 +225,16 @@ const WeatherCurrent = () => {
             </Grid>
 
             <Grid item xs={12}>
-              {rain && rain['1h'] && (
+              {rain && rain["1h"] && (
                 <Typography variant="subtitle2">
-                  Rain (Last 1 hour), {fallWithUnit(rain['1h'], units)}
+                  Rain (Last 1 hour), {fallWithUnit(rain["1h"], units)}
                 </Typography>
               )}
             </Grid>
             <Grid item xs={12}>
-              {snow && snow['1h'] && (
+              {snow && snow["1h"] && (
                 <Typography variant="subtitle2">
-                  Snow (Last 1 hour), {fallWithUnit(snow['1h'], units)}
+                  Snow (Last 1 hour), {fallWithUnit(snow["1h"], units)}
                 </Typography>
               )}
             </Grid>

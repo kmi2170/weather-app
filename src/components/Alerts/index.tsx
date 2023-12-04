@@ -1,22 +1,23 @@
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import red from '@material-ui/core/colors/red';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import red from "@material-ui/core/colors/red";
 
-import { useAppSelector } from '../../app/hooks';
-import { selectWeather } from '../../features/weatherSlice';
-import { useGetWeatherQuery } from '../../services/weatherApi';
-import { localFullDateTime } from '../../utils/time';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice";
+import { useGetWeatherQuery } from "../../services/weatherApi";
+import { localFullDateTime } from "../../utils/time";
+import { Weather } from "../../api/types";
 
 const useStyles = makeStyles(() => ({
   text: {},
   paper: {
-    padding: '1rem',
+    padding: "1rem",
   },
   description: {
     color: red[900],
-    margin: '1rem 0',
+    margin: "1rem 0",
   },
 }));
 
@@ -25,14 +26,14 @@ const Alerts = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const {
-    data: { alerts, timezone },
-  } = useGetWeatherQuery({
+  const { data, error } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
     lang,
   });
+
+  const { alerts, timezone } = data as Weather;
 
   return (
     <>

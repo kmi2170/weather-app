@@ -10,8 +10,7 @@ type IpType = {
 };
 
 const url = "https://ipapi.co/json";
-export const ipLookup = async () => {
-  //export const ipLookup = async (): Promise<Location | undefined> => {
+export const ipLookup = async (): Promise<Location | string> => {
   try {
     const { data } = await axios.get<IpType>(url);
     console.log(data);
@@ -25,6 +24,12 @@ export const ipLookup = async () => {
 
     return { city, region: region || "", country, lat, lon };
   } catch (error) {
-    console.error(error);
+    if (axios.isAxiosError(error)) {
+      console.log("error message: ", error.message);
+      return error.message;
+    } else {
+      console.log("unexpected error: ", error);
+      return "An unexpected error occurred";
+    }
   }
 };

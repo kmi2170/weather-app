@@ -15,6 +15,7 @@ import {
   ChartWind,
   ChartPressure,
 } from "./charts";
+import { Weather } from "../../api/types";
 
 const useStyles = makeStyles(() => ({
   text: {},
@@ -34,14 +35,14 @@ const WeatherHourly = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const {
-    data: { hourly, timezone },
-  } = useGetWeatherQuery({
+  const { data, error } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
     lang,
   });
+
+  const { hourly, timezone } = data as Weather;
 
   const dataTime = useMemo(
     () => hourly.map(({ dt }) => localDateTime(dt, timezone)),

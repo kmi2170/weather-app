@@ -1,18 +1,19 @@
-import { useMemo } from 'react';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import { useMemo } from "react";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { useAppSelector } from '../../app/hooks';
-import { selectWeather } from '../../features/weatherSlice';
-import { useGetWeatherQuery } from '../../services/weatherApi';
-import { localTime } from '../../utils/time';
-import { ChartMinutely } from './charts';
+import { useAppSelector } from "../../app/hooks";
+import { selectWeather } from "../../features/weatherSlice";
+import { useGetWeatherQuery } from "../../services/weatherApi";
+import { localTime } from "../../utils/time";
+import { ChartMinutely } from "./charts";
+import { Weather } from "../../api/types";
 
 const useStyles = makeStyles(() => ({
   text: {},
   paper: {
-    padding: '1rem',
+    padding: "1rem",
   },
 }));
 
@@ -21,14 +22,14 @@ const WeatherMinutely = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const {
-    data: { timezone, minutely },
-  } = useGetWeatherQuery({
+  const { data, error } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
     lang,
   });
+
+  const { timezone, minutely } = data as Weather;
 
   const dataTime = useMemo(
     () => minutely?.map(({ dt }) => localTime(dt, timezone)),

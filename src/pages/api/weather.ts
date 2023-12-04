@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { fetchWeather } from '../../api/lib/fetchWeather';
-import { WeatherQuery } from '../../api/types';
+import { NextApiRequest, NextApiResponse } from "next";
+import { fetchWeather } from "../../api/lib/fetchWeather";
+import { WeatherQuery } from "../../api/types";
 
 export default async function weather(
   req: NextApiRequest,

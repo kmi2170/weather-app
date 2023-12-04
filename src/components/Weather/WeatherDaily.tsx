@@ -12,6 +12,7 @@ import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
 import { localDate, localDay } from "../../utils/time";
+import { Weather } from "../../api/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -61,14 +62,14 @@ const WeatherDaily = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const {
-    data: { timezone, daily },
-  } = useGetWeatherQuery({
+  const { data, error } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
     lang,
   });
+
+  const { timezone, daily } = data as Weather;
 
   return (
     <>
@@ -139,7 +140,7 @@ const WeatherDaily = () => {
                   <WindIcon
                     wind_speed={data.wind_speed}
                     wind_deg={data.wind_deg}
-                    wind_gust={data.wind_gust}
+                    wind_gust={data?.wind_gust}
                     current={false}
                   />
 
