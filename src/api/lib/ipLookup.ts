@@ -10,7 +10,8 @@ type IpType = {
 };
 
 const url = "https://ipapi.co/json";
-export const ipLookup = async (): Promise<Location | undefined> => {
+export const ipLookup = async () => {
+  //export const ipLookup = async (): Promise<Location | undefined> => {
   try {
     const { data } = await axios.get<IpType>(url);
     console.log(data);
