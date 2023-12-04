@@ -4,8 +4,8 @@ export type Location = {
   city: string;
   region: string;
   country: string;
-  lat: number;
-  lon: number;
+  lat: number | null;
+  lon: number | null;
 };
 
 export type Units = "imperial" | "metric";
@@ -32,7 +32,7 @@ export type StateType = {
   location: Location;
   units: Units;
   lang: Lang;
-  weather: Weather;
+  weather: Weather | null;
   selectedPageId: number;
   isLoading: boolean;
   isError: boolean;
