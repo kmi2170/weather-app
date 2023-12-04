@@ -1,40 +1,40 @@
-import { useEffect, useRef } from 'react';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Skeleton from '@material-ui/lab/Skeleton';
-import { makeStyles } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
+import { useEffect, useRef } from "react";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Skeleton from "@material-ui/lab/Skeleton";
+import { makeStyles } from "@material-ui/core/styles";
+import purple from "@material-ui/core/colors/purple";
 
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { setLocation } from '../features/weatherSlice';
-import { asyncThunkIpLookupLocation } from '../features/weatherAsyncThunk';
-import { useGetWeatherQuery } from '../services/weatherApi';
-import { useCustomeCookies } from '../hooks/useCustomCookies';
-import Navbar from '../components/Navbar';
-import SearchLocationBar from '../components/SearchLocationBar';
-import Alerts from '../components/Alerts';
-import Footer from '../components/Footer';
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { setLocation } from "../features/weatherSlice";
+import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";
+import { useGetWeatherQuery } from "../services/weatherApi";
+import { useCustomeCookies } from "../hooks/useCustomCookies";
+import Navbar from "../components/Navbar";
+import SearchLocationBar from "../components/SearchLocationBar";
+import Alerts from "../components/Alerts";
+import Footer from "../components/Footer";
 import {
   WeatherCurrent,
   WeatherDaily,
   WeatherHourly,
   WeatherMinutely,
-} from '../components/Weather';
-import { isLocationValid } from '../utils/cookiesValidator';
-import { Location } from '../features/initialState';
+} from "../components/Weather";
+import { isLocationValid } from "../utils/cookiesValidator";
+import { Location } from "../features/initialState";
 
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     background: purple[50],
-    minHeight: '100vh',
+    minHeight: "100vh",
   },
   noLocation: {
-    margin: '5rem 0',
+    margin: "5rem 0",
   },
   title: {
-    marginTop: '1rem',
+    marginTop: "1rem",
   },
 }));
 
