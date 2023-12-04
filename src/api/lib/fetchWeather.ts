@@ -27,7 +27,7 @@ export const fetchWeather = async ({
 
 export const fetchGeocodingByLocationName = async (
   q: string
-): Promise<Geocoding[]> => {
+): Promise<Geocoding[] | undefined> => {
   const url = "https://api.openweathermap.org/geo/1.0/direct";
   try {
     const { data } = await axios.get<Geocoding[]>(url, {
