@@ -150,7 +150,7 @@ const WeatherDaily = () => {
                     className={classes.text}
                   >
                     <i className={`wi wi-umbrella ${classes.iconPop}`} />{" "}
-                    {data.pop * 100}%
+                    {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
                   </Typography>
                 </div>
               </Paper>
