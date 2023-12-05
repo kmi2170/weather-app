@@ -71,8 +71,8 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
     units,
     lang,
   });
-  const { alerts } = data as Weather;
-  const isAlerts = !!alerts;
+  // const { alerts } = data as Weather;
+  const isAlerts = !!(data as Weather)?.alerts;
 
   const handleMenuItemRefs = (id: number) => {
     window.scroll(0, ref?.current[+id - 1].offsetTop - 70);

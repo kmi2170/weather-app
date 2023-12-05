@@ -1,16 +1,18 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setLocation, setIsNotFound } from '../features/weatherSlice';
-import axios from 'axios';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { setLocation, setIsNotFound } from "../features/weatherSlice";
+import axios from "axios";
 
-import { ipLookup } from '../api/lib';
-import { Geocoding } from '../api/types';
-import { Location } from '../features/initialState';
+import { ipLookup } from "../api/lib";
+import { Geocoding } from "../api/types";
+import { Location } from "../features/initialState";
 
 export const asyncThunkIpLookupLocation = createAsyncThunk(
-  'weather/asyncThunkIpLookupLocation',
+  "weather/asyncThunkIpLookupLocation",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const { city, region, country, lat, lon } = await ipLookup();
+      // const { city, region, country, lat, lon } = await ipLookup();
+      const data = await ipLookup();
+      const { city, region, country, lat, lon } = data as Location;
 
       dispatch(setLocation({ city, region, country, lat, lon }));
     } catch (error) {
@@ -20,7 +22,7 @@ export const asyncThunkIpLookupLocation = createAsyncThunk(
 );
 
 export const asyncThunkSearchLocation = createAsyncThunk(
-  'weather/asyncThunkSearchLocation',
+  "weather/asyncThunkSearchLocation",
   async (q: string, { dispatch, rejectWithValue }) => {
     dispatch(setIsNotFound(false));
 
