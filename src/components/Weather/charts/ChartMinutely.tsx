@@ -1,9 +1,5 @@
-import { useState, useEffect, memo } from "react";
-//import { Bar } from "react-chartjs-2";
-import { ChartOptions, ChartData } from "chart.js";
+import { memo } from "react";
 import { blue } from "@material-ui/core/colors";
-import { ChartProps, WeatherMinutely } from "../../../api/types";
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { ChartOptions, ChartData } from "chart.js";
+import { ChartProps, WeatherMinutely } from "../../../api/types";
 
 ChartJS.register(
   CategoryScale,
@@ -29,8 +27,6 @@ interface ChartMinutelyProps extends Omit<ChartProps, "chartData"> {
 }
 
 const ChartMinutely = ({ chartData, dataTime, units }: ChartMinutelyProps) => {
-  const [data, setData] = useState<ChartData<"bar"> | null>(null);
-
   let isFall = false;
   const data_precipitation: number[] = chartData?.map(({ precipitation }) => {
     if (precipitation > 0) isFall = true;
@@ -52,26 +48,18 @@ const ChartMinutely = ({ chartData, dataTime, units }: ChartMinutelyProps) => {
     },
   };
 
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    setData({
-      labels: dataTime,
-      datasets: [
-        {
-          label: "Precipitation",
-          backgroundColor: blue[500],
-          borderColor: blue[900],
-          data: data_precipitation,
-        },
-      ],
-    });
-  }, [chartData]);
-  /* eslint-enable react-hooks/exhaustive-deps */
+  const data: ChartData<"bar"> = {
+    labels: dataTime,
+    datasets: [
+      {
+        label: "Precipitation",
+        backgroundColor: blue[500],
+        borderColor: blue[900],
+        data: data_precipitation,
+      },
+    ],
+  };
 
-  if (data === null) return <div>ChartMinutely</div>;
-
-  // return <div>ChartMinutely</div>;
-  //  return <Bar options={options} data={data_precipitation} />;
   return <Bar options={options} data={data} />;
 };
 
