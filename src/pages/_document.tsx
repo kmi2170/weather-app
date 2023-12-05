@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 import Document, {
   Html,
   Head,
   Main,
   NextScript,
   DocumentContext,
-} from 'next/document';
-import { ServerStyleSheets } from '@material-ui/core/styles';
-import theme from '../theme/theme';
+} from "next/document";
+import { ServerStyleSheets } from "@material-ui/core/styles";
+import theme from "../theme/theme";
 
-import { GA_TRACKING_ID } from '../lib/gtag';
+import { GA_TRACKING_ID } from "../lib/gtag";
 
 export default class MyDocument extends Document {
-  isProduction = process.env.NODE_ENV === 'production';
+  isProduction = process.env.NODE_ENV === "production";
 
   render() {
     return (
@@ -54,7 +54,9 @@ export default class MyDocument extends Document {
               {/* Global Site Tag (gtag.js) - Google Analytics */}
               <script
                 async
-                src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+                src={`https://www.googletagmanager.com/gtag/js?id=${
+                  GA_TRACKING_ID as string
+                }`}
               />
               <script
                 dangerouslySetInnerHTML={{
@@ -63,7 +65,7 @@ export default class MyDocument extends Document {
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
 
-                    gtag('config', '${GA_TRACKING_ID}', {
+                    gtag('config', '${GA_TRACKING_ID as string}', {
                       page_path: window.location.pathname,
                     });
                   `,

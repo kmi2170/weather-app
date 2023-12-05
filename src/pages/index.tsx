@@ -23,6 +23,7 @@ import {
 } from "../components/Weather";
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../features/initialState";
+import { Weather } from "../api/types";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -53,7 +54,7 @@ const Home = () => {
     units,
     lang,
   });
-  const isAlerts = !!data?.alerts;
+  const isAlerts = !!(data as Weather)?.alerts;
 
   const { cookies, setLocationCookie } = useCustomeCookies();
 
@@ -100,7 +101,11 @@ const Home = () => {
             <SearchLocationBar />
           </Grid>
 
-          <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 0)}>
+          <Grid
+            item
+            xs={12}
+            ref={(ref) => ref != null && saveMenuItemRefs(ref, 0)}
+          >
             {data ? (
               <WeatherCurrent />
             ) : (
@@ -108,7 +113,11 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 1)}>
+          <Grid
+            item
+            xs={12}
+            ref={(ref) => ref != null && saveMenuItemRefs(ref, 1)}
+          >
             {data ? (
               <WeatherMinutely />
             ) : (
@@ -116,7 +125,11 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 2)}>
+          <Grid
+            item
+            xs={12}
+            ref={(ref) => ref != null && saveMenuItemRefs(ref, 2)}
+          >
             {data ? (
               <WeatherDaily />
             ) : (
@@ -135,7 +148,11 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 3)}>
+          <Grid
+            item
+            xs={12}
+            ref={(ref) => ref != null && saveMenuItemRefs(ref, 3)}
+          >
             {data ? (
               <WeatherHourly />
             ) : (
@@ -144,7 +161,11 @@ const Home = () => {
           </Grid>
 
           {isAlerts && (
-            <Grid item xs={12} ref={(ref) => saveMenuItemRefs(ref, 4)}>
+            <Grid
+              item
+              xs={12}
+              ref={(ref) => ref != null && saveMenuItemRefs(ref, 4)}
+            >
               <Alerts />
             </Grid>
           )}
