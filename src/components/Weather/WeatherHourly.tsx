@@ -44,10 +44,7 @@ const WeatherHourly = () => {
 
   const { hourly, timezone } = data as Weather;
 
-  const dataTime = useMemo(
-    () => hourly.map(({ dt }) => localDateTime(dt, timezone)),
-    [hourly, timezone]
-  );
+  const dataTime = hourly.map(({ dt }) => localDateTime(dt, timezone));
 
   return (
     <>
@@ -56,7 +53,7 @@ const WeatherHourly = () => {
       </Typography>
       <Paper className={classes.paper}>
         <Typography variant="subtitle1" align="center" className={classes.text}>
-          Hourly Fourcast for 48 Hours
+          Hourly Forecast for 48 Hours
         </Typography>
         <div className={classes.charts}>
           <ChartTemps chartData={hourly} dataTime={dataTime} units={units} />

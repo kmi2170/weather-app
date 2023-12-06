@@ -41,11 +41,16 @@ const ChartMinutely = ({ chartData, dataTime, units }: ChartMinutelyProps) => {
         display: true,
         text: isFall
           ? units === "imperial"
-            ? "Precipitation for 1 Hour [in]"
-            : "Precipitation for 1 Hour [mm]"
-          : "No Precipitation for 1 Hour",
+            ? "Precipitation for the next 1 Hour [in]"
+            : "Precipitation for the next 1 Hour [mm]"
+          : "No Precipitation for the next 1 Hour",
       },
     },
+    // scales: {
+    //   y: {
+    //     min: 0.01,
+    //   },
+    // },
   };
 
   const data: ChartData<"bar"> = {

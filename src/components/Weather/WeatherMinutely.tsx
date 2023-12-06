@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
@@ -31,10 +30,7 @@ const WeatherMinutely = () => {
 
   const { timezone, minutely } = data as Weather;
 
-  const dataTime = useMemo(
-    () => minutely?.map(({ dt }) => localTime(dt, timezone)),
-    [minutely, timezone]
-  );
+  const dataTime = minutely?.map(({ dt }) => localTime(dt, timezone));
 
   return (
     <>
