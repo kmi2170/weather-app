@@ -139,11 +139,13 @@ const Home = () => {
                 alignItems="stretch"
                 spacing={1}
               >
-                {[1, 2, 3, 4, 5, 6, 7].map((_, i) => (
-                  <Grid key={i} item xs={4} sm={3} md={2}>
-                    <Skeleton variant="rect" height={200} />
-                  </Grid>
-                ))}
+                {Array(8)
+                  .fill(null)
+                  .map((_, i) => (
+                    <Grid key={i} item xs={4} sm={3} md={2}>
+                      <Skeleton variant="rect" height={250} />
+                    </Grid>
+                  ))}
               </Grid>
             )}
           </Grid>
