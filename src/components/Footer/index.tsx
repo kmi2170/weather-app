@@ -5,7 +5,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer style={{ margin: "5px" }}>
+    <footer style={{ padding: "10px" }}>
       <Typography variant="body2">
         &copy; kmi {year}. All rights reserved. | Powered by&nbsp;
         <a
