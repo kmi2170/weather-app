@@ -1,41 +1,41 @@
-import { memo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { setUnits } from '../../../../features/weatherSlice';
-import { Units } from '../../../../features/initialState';
+import { memo, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { setUnits } from "../../../../features/weatherSlice";
+import { Units } from "../../../../features/initialState";
 
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Tooltip from '@material-ui/core/Tooltip';
-import purple from '@material-ui/core/colors/purple';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { useCustomeCookies } from '../../../../hooks/useCustomCookies';
-import { isUnitsValid } from '../../../../utils/cookiesValidator';
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Tooltip from "@material-ui/core/Tooltip";
+import purple from "@material-ui/core/colors/purple";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { useCustomCookies } from "../../../../hooks/useCustomCookies";
+import { isUnitsValid } from "../../../../utils/cookiesValidator";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    '& > *': {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    "& > *": {
       margin: theme.spacing(0),
     },
   },
   buttonSelected: {
-    color: 'white',
+    color: "white",
     background: purple[500],
     borderColor: purple[500],
-    '&:hover': {
-      color: 'white',
+    "&:hover": {
+      color: "white",
       background: purple[500],
       borderColor: purple[500],
     },
   },
   buttonUnSelected: {
     color: purple[500],
-    background: 'transparent',
+    background: "transparent",
     borderColor: purple[500],
-    '&:hover': {
-      color: 'white',
+    "&:hover": {
+      color: "white",
       background: purple[800],
       borderColor: purple[800],
     },
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const buttonProps = [
-  { button_units: 'imperial', button_symbol: '℉' },
-  { button_units: 'metric', button_symbol: '℃' },
+  { button_units: "imperial", button_symbol: "℉" },
+  { button_units: "metric", button_symbol: "℃" },
 ];
 
 const Buttons = () => {
@@ -53,7 +53,7 @@ const Buttons = () => {
   const units = useAppSelector((state) => state.weather.units);
   const dispatch = useAppDispatch();
 
-  const { cookies, setUnitsCookie } = useCustomeCookies();
+  const { cookies, setUnitsCookie } = useCustomCookies();
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
@@ -78,7 +78,7 @@ const Buttons = () => {
           {buttonProps.map(({ button_units, button_symbol }) => (
             <Button
               key={button_units}
-              variant={button_units === units ? 'contained' : 'outlined'}
+              variant={button_units === units ? "contained" : "outlined"}
               size="small"
               onClick={() => handleClick(button_units as Units)}
               className={

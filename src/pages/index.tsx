@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setLocation } from "../features/weatherSlice";
 import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";
 import { useGetWeatherQuery } from "../services/weatherApi";
-import { useCustomeCookies } from "../hooks/useCustomCookies";
+import { useCustomCookies } from "../hooks/useCustomCookies";
 import Navbar from "../components/Navbar";
 import SearchLocationBar from "../components/SearchLocationBar";
 import Alerts from "../components/Alerts";
@@ -56,7 +56,7 @@ const Home = () => {
   });
   const isAlerts = !!(data as Weather)?.alerts;
 
-  const { cookies, setLocationCookie } = useCustomeCookies();
+  const { cookies, setLocationCookie } = useCustomCookies();
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
