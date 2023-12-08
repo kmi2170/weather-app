@@ -27,9 +27,7 @@ interface ChartMinutelyProps extends Omit<ChartProps, "chartData"> {
 }
 
 const ChartMinutely = ({ chartData, dataTime, units }: ChartMinutelyProps) => {
-  // let isFall = false;
   const data_precipitation: number[] = chartData?.map(({ precipitation }) => {
-    //    if (precipitation > 0) isFall = true;
     return units === "imperial" ? precipitation / 25.4 : precipitation;
   });
 

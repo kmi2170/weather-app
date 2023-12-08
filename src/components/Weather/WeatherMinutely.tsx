@@ -32,6 +32,8 @@ const WeatherMinutely = () => {
 
   const dataTime = minutely?.map(({ dt }) => localTime(dt, timezone));
 
+  const isFall = minutely?.some(({ precipitation }) => precipitation > 0);
+
   return (
     <>
       <Typography variant="h6" className={classes.text}>
@@ -42,7 +44,9 @@ const WeatherMinutely = () => {
         style={{ height: 200, paddingBottom: 30 }}
       >
         <Typography variant="subtitle1" align="center" className={classes.text}>
-          Precipitation Forecast for the next 1 Hour
+          {isFall
+            ? "Precipitation for the next 1 Hour"
+            : "No Precipitation for the next 1 Hour"}
         </Typography>
         <ChartMinutely chartData={minutely} dataTime={dataTime} units={units} />
       </Paper>
