@@ -37,7 +37,13 @@ const WeatherMinutely = () => {
       <Typography variant="h6" className={classes.text}>
         Minutely
       </Typography>
-      <Paper className={classes.paper} style={{ height: 150 }}>
+      <Paper
+        className={classes.paper}
+        style={{ height: 200, paddingBottom: 30 }}
+      >
+        <Typography variant="subtitle1" align="center" className={classes.text}>
+          Precipitation Forecast for the next 1 Hour
+        </Typography>
         <ChartMinutely chartData={minutely} dataTime={dataTime} units={units} />
       </Paper>
     </>
