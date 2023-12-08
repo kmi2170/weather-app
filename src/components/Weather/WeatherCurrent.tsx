@@ -150,6 +150,17 @@ const WeatherCurrent = () => {
               >
                 {countryName}
               </Typography>
+
+              {location?.lat && location?.lon && (
+                <Typography
+                  variant="subtitle2"
+                  color="textSecondary"
+                  className={classes.text}
+                  style={{ marginLeft: "1rem", marginTop: "0.25rem" }}
+                >
+                  lat: {location.lat.toFixed(3)}, lon: {location.lon.toFixed(3)}
+                </Typography>
+              )}
             </div>
           </Grid>
 
