@@ -1,33 +1,37 @@
-import { memo, useState } from 'react';
-import Image from 'next/image';
-import purple from '@material-ui/core/colors/purple';
-import { makeStyles } from '@material-ui/core/styles';
+/**
+ * @deprecated
+ * This component is deprecated. Buttons component is now used in Navbar component.
+ */
+import { memo, useState } from "react";
+import Image from "next/image";
+import purple from "@material-ui/core/colors/purple";
+import { makeStyles } from "@material-ui/core/styles";
 
-import Typography from '@material-ui/core/Typography';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton';
+import Typography from "@material-ui/core/Typography";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
 
-import Buttons from './Buttons';
-import { useAppSelector } from '../../../app/hooks';
+import Buttons from "./Buttons";
+import { useAppSelector } from "../../../app/hooks";
 
-const icon_setting = '/icon-setting.png';
-const icon_close = '/icon-close.png';
+const icon_setting = "/icon-setting.png";
+const icon_close = "/icon-close.png";
 
 const useStyles = makeStyles(() => ({
   menuContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    margin: '0 10pt',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    margin: "0 10pt",
   },
   closeButton: {
-    display: 'flex',
-    justifyContent: 'center',
-    fontSize: '1.25rem',
-    marginRight: '.75rem',
-    '&:hover': {
-      cursor: 'pointer',
+    display: "flex",
+    justifyContent: "center",
+    fontSize: "1.25rem",
+    marginRight: ".75rem",
+    "&:hover": {
+      cursor: "pointer",
     },
   },
 }));
@@ -78,7 +82,7 @@ const SwitchUnits = () => {
           <Typography
             variant="h6"
             align="center"
-            style={{ color: purple[500], textTransform: 'capitalize' }}
+            style={{ color: purple[500], textTransform: "capitalize" }}
           >
             {units} Units
           </Typography>
