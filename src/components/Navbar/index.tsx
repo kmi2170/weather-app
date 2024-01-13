@@ -11,6 +11,7 @@ import { useAppSelector } from "../../app/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import SwitchUnits from "./SwitchUnits";
 import { Weather } from "../../api/types";
+import Buttons from "./SwitchUnits/Buttons";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -116,7 +117,8 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
           )}
         </List>
 
-        <SwitchUnits />
+        <Buttons />
+        {/* <SwitchUnits /> */}
       </Toolbar>
     </AppBar>
   );
