@@ -41,7 +41,7 @@ const WeatherMinutely = () => {
       </Typography>
       <Paper
         className={classes.paper}
-        style={{ height: 200, paddingBottom: 30 }}
+        style={{ height: 220, paddingBottom: 50 }}
       >
         <Typography variant="subtitle1" align="center" className={classes.text}>
           {isFall
