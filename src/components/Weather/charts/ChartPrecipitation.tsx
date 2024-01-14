@@ -46,6 +46,11 @@ const ChartPrecipitation = ({ chartData, dataTime, units }: ChartProps) => {
         borderWidth: 3,
       },
     },
+    scales: {
+      y: {
+        min: 0,
+      },
+    },
   };
 
   const data: ChartData<"line"> = {
