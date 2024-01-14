@@ -9,9 +9,9 @@ import { purple, red } from "@material-ui/core/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import SwitchUnits from "./SwitchUnits";
+// import SwitchUnits from "./SwitchUnits";
 import { Weather } from "../../api/types";
-import Buttons from "./SwitchUnits/Buttons";
+import Buttons from "./Buttons";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {

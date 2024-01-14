@@ -2,6 +2,7 @@
  * @deprecated
  * This component is deprecated. Buttons component is now used in Navbar component.
  */
+
 import { memo, useState } from "react";
 import Image from "next/image";
 import purple from "@material-ui/core/colors/purple";
@@ -12,7 +13,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 
-import Buttons from "./Buttons";
+import Buttons from "../Buttons";
 import { useAppSelector } from "../../../app/hooks";
 
 const icon_setting = "/icon-setting.png";

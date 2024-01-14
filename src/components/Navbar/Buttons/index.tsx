@@ -1,15 +1,15 @@
 import { memo, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { setUnits } from "../../../../features/weatherSlice";
-import { Units } from "../../../../features/initialState";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { setUnits } from "../../../features/weatherSlice";
+import { Units } from "../../../features/initialState";
 
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Tooltip from "@material-ui/core/Tooltip";
 import purple from "@material-ui/core/colors/purple";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { useCustomCookies } from "../../../../hooks/useCustomCookies";
-import { isUnitsValid } from "../../../../utils/cookiesValidator";
+import { useCustomCookies } from "../../../hooks/useCustomCookies";
+import { isUnitsValid } from "../../../utils/cookiesValidator";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
