@@ -6,13 +6,15 @@ import { Units } from "../../../features/initialState";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Tooltip from "@mui/material/Tooltip";
-import { Theme } from "@mui/material/styles";
-import makeStyles from '@mui/styles/makeStyles';
+import { createTheme, Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
 import { useCustomCookies } from "../../../hooks/useCustomCookies";
 import { isUnitsValid } from "../../../utils/cookiesValidator";
-import { purple } from '@mui/material/colors';
+import { purple } from "@mui/material/colors";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const theme = createTheme();
+
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "column",

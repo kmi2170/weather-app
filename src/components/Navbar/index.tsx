@@ -13,6 +13,7 @@ import { useGetWeatherQuery } from "../../services/weatherApi";
 // import SwitchUnits from "./SwitchUnits";
 import { Weather } from "../../api/types";
 import Buttons from "./Buttons";
+import { Padding } from "@mui/icons-material";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   listItem: {
     padding: "0 1rem",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints?.down("md")]: {
       padding: "0 0.5rem",
     },
     borderBottom: `3px solid transparent`,

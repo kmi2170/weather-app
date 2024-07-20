@@ -1,8 +1,8 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { Theme } from "@mui/material/styles";
-import makeStyles from '@mui/styles/makeStyles';
+import { createTheme, Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
 import { useAppSelector } from "../../app/hooks";
 
 import { selectWeather } from "../../features/weatherSlice";
@@ -13,7 +13,7 @@ import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
 import { localDate, localDay } from "../../utils/time";
 import { Weather } from "../../api/types";
-import { purple } from '@mui/material/colors';
+import { purple } from "@mui/material/colors";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints?.down("sm")]: {
       flexDirection: "column",
       justifyContent: "center",
     },
@@ -38,7 +38,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
   },
   countryName: {
-    [theme.breakpoints.up("sm")]: {
+    sm: {
+      marginLeft: "1rem",
+    },
+    [theme.breakpoints?.up("sm")]: {
       marginLeft: "1rem",
     },
   },

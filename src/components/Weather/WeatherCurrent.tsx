@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { Theme } from "@mui/material/styles";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import { purple, yellow, orange } from "@mui/material/colors";
 
 import country_region_data from "country-region-data";
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints?.down("sm")]: {
       flexDirection: "column",
       justifyContent: "center",
     },
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
   },
   country: {
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints?.up("sm")]: {
       marginLeft: "1rem",
     },
   },
