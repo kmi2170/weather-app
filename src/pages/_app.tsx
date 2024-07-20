@@ -5,8 +5,8 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { CookiesProvider } from "react-cookie";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import SEO from "../components/SEO";
 import { store } from "../app/store";
@@ -16,6 +16,13 @@ import theme from "../theme/theme";
 import "../styles/globals.css";
 import "../styles/weathericons/css/weather-icons.min.css";
 import "../styles/weathericons/css/weather-icons-wind.min.css";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   React.useEffect(() => {
@@ -42,21 +49,23 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <CookiesProvider>
-      <ThemeProvider theme={theme}>
-        <Head>
-          <title>Weather App</title>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-          <SEO />
-        </Head>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Head>
+            <title>Weather App</title>
+            <meta
+              name="viewport"
+              content="minimum-scale=1, initial-scale=1, width=device-width"
+            />
+            <SEO />
+          </Head>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </CookiesProvider>
   );
 };

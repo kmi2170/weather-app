@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Skeleton from "@material-ui/lab/Skeleton";
-import { makeStyles } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
-
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Skeleton from '@mui/material/Skeleton';
+import makeStyles from '@mui/styles/makeStyles';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+
 import { setLocation } from "../features/weatherSlice";
 import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";
 import { useGetWeatherQuery } from "../services/weatherApi";
@@ -24,6 +23,7 @@ import {
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../features/initialState";
 import { Weather } from "../api/types";
+import { purple } from '@mui/material/colors';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -109,7 +109,7 @@ const Home = () => {
             {data ? (
               <WeatherCurrent />
             ) : (
-              <Skeleton variant="rect" height={200} />
+              <Skeleton variant="rectangular" height={200} />
             )}
           </Grid>
 
@@ -121,7 +121,7 @@ const Home = () => {
             {data ? (
               <WeatherMinutely />
             ) : (
-              <Skeleton variant="rect" height={150} />
+              <Skeleton variant="rectangular" height={150} />
             )}
           </Grid>
 
@@ -143,7 +143,7 @@ const Home = () => {
                   .fill(null)
                   .map((_, i) => (
                     <Grid key={i} item xs={4} sm={3} md={2}>
-                      <Skeleton variant="rect" height={250} />
+                      <Skeleton variant="rectangular" height={250} />
                     </Grid>
                   ))}
               </Grid>
@@ -158,7 +158,7 @@ const Home = () => {
             {data ? (
               <WeatherHourly />
             ) : (
-              <Skeleton variant="rect" height={150} />
+              <Skeleton variant="rectangular" height={150} />
             )}
           </Grid>
 
