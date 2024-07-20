@@ -3,9 +3,8 @@ import {
   configureStore,
   combineReducers,
   ThunkAction,
-  PreloadedStateShapeFromReducersMapObject,
 } from "@reduxjs/toolkit";
-//import type { PreloadedState } from '@reduxjs/toolkit';
+import type { PreloadedStateShapeFromReducersMapObject } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import weatherSlice from "../features/weatherSlice";
