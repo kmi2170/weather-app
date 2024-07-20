@@ -1,7 +1,7 @@
 import { memo } from "react";
-import purple from "@material-ui/core/colors/purple";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import { WeatherSummary } from "../../../api/types";
+import { purple } from '@mui/material/colors';
 
 const useStyles = makeStyles(() => ({
   icon: {

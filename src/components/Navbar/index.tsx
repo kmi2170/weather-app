@@ -1,11 +1,12 @@
 import { forwardRef } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { purple, red } from "@material-ui/core/colors";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import { purple, red } from "@mui/material/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   listItem: {
     padding: "0 1rem",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       padding: "0 0.5rem",
     },
     borderBottom: `3px solid transparent`,

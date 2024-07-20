@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { brown } from "@material-ui/core/colors";
+import { brown } from "@mui/material/colors";
 import {
   Chart as ChartJS,
   CategoryScale,

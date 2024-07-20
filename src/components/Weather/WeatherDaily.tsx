@@ -1,10 +1,10 @@
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
-
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import { Theme } from "@mui/material/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import { useAppSelector } from "../../app/hooks";
+
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { formatDigits } from "../../utils/formatDigits";
@@ -13,6 +13,7 @@ import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
 import { localDate, localDay } from "../../utils/time";
 import { Weather } from "../../api/types";
+import { purple } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: "column",
       justifyContent: "center",
     },

@@ -1,8 +1,9 @@
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { purple, yellow, orange } from "@material-ui/core/colors";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import { Theme } from "@mui/material/styles";
+import makeStyles from '@mui/styles/makeStyles';
+import { purple, yellow, orange } from "@mui/material/colors";
 
 import country_region_data from "country-region-data";
 import { useAppSelector } from "../../app/hooks";
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: "column",
       justifyContent: "center",
     },

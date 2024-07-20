@@ -1,9 +1,9 @@
 import { memo } from 'react';
-import Typography from '@material-ui/core/Typography';
-import purple from '@material-ui/core/colors/purple';
-import { makeStyles } from '@material-ui/core/styles';
-
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import { moon_phases, moon_phases_label } from '../../../constants/moon';
+
+import { purple } from '@mui/material/colors';
 
 const useStyles = makeStyles(() => ({
   root: {

@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { pink, deepOrange } from "@material-ui/core/colors";
+import { pink, deepOrange } from "@mui/material/colors";
 import {
   Chart as ChartJS,
   CategoryScale,
