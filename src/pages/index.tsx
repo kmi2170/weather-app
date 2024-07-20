@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Skeleton from '@mui/material/Skeleton';
-import makeStyles from '@mui/styles/makeStyles';
+import Skeleton from "@mui/material/Skeleton";
+import makeStyles from "@mui/styles/makeStyles";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 import { setLocation } from "../features/weatherSlice";
@@ -23,7 +23,7 @@ import {
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../features/initialState";
 import { Weather } from "../api/types";
-import { purple } from '@mui/material/colors';
+import { purple } from "@mui/material/colors";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -102,9 +102,10 @@ const Home = () => {
           </Grid>
 
           <Grid
+            id="current"
             item
             xs={12}
-            ref={(ref) => ref != null && saveMenuItemRefs(ref, 0)}
+            // ref={(ref) => ref != null && saveMenuItemRefs(ref, 0)}
           >
             {data ? (
               <WeatherCurrent />
@@ -114,9 +115,10 @@ const Home = () => {
           </Grid>
 
           <Grid
+            id="minutely"
             item
             xs={12}
-            ref={(ref) => ref != null && saveMenuItemRefs(ref, 1)}
+            // ref={(ref) => ref != null && saveMenuItemRefs(ref, 1)}
           >
             {data ? (
               <WeatherMinutely />
@@ -126,9 +128,10 @@ const Home = () => {
           </Grid>
 
           <Grid
+            id="daily"
             item
             xs={12}
-            ref={(ref) => ref != null && saveMenuItemRefs(ref, 2)}
+            // ref={(ref) => ref != null && saveMenuItemRefs(ref, 2)}
           >
             {data ? (
               <WeatherDaily />
@@ -151,9 +154,10 @@ const Home = () => {
           </Grid>
 
           <Grid
+            id="hourly"
             item
             xs={12}
-            ref={(ref) => ref != null && saveMenuItemRefs(ref, 3)}
+            // ref={(ref) => ref != null && saveMenuItemRefs(ref, 3)}
           >
             {data ? (
               <WeatherHourly />
@@ -164,9 +168,10 @@ const Home = () => {
 
           {isAlerts && (
             <Grid
+              id="alerts"
               item
               xs={12}
-              ref={(ref) => ref != null && saveMenuItemRefs(ref, 4)}
+              // ref={(ref) => ref != null && saveMenuItemRefs(ref, 4)}
             >
               <Alerts />
             </Grid>

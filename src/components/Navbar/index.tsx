@@ -14,6 +14,7 @@ import { useGetWeatherQuery } from "../../services/weatherApi";
 import { Weather } from "../../api/types";
 import Buttons from "./Buttons";
 import { Padding } from "@mui/icons-material";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -55,10 +56,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const list = [
-  { id: 1, name: "current" },
-  { id: 2, name: "minutely" },
-  { id: 3, name: "daily" },
-  { id: 4, name: "hourly" },
+  { id: 0, name: "current" },
+  { id: 1, name: "minutely" },
+  { id: 2, name: "daily" },
+  { id: 3, name: "hourly" },
 ];
 
 const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
@@ -91,11 +92,17 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
               dense
               disableGutters
               className={classes.listItem}
-              onClick={() => handleMenuItemRefs(id)}
+              // onClick={() => handleMenuItemRefs(id)}
             >
-              <Typography variant="h6" align="center" className={classes.text}>
-                {name}
-              </Typography>
+              <Link href={`#${name}`}>
+                <Typography
+                  variant="h6"
+                  align="center"
+                  className={classes.text}
+                >
+                  {name}
+                </Typography>
+              </Link>
             </ListItem>
           ))}
 
