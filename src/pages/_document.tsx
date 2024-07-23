@@ -6,17 +6,19 @@ import {
   NextScript,
   DocumentContext,
   DocumentProps,
+  DocumentInitialProps,
 } from "next/document";
-import ServerStyleSheets from "@mui/styles/ServerStyleSheets";
+import { ServerStyleSheets as JSSServerStyleSheets } from "@mui/styles";
 import {
   DocumentHeadTags,
   DocumentHeadTagsProps,
   documentGetInitialProps,
-} from "@mui/material-nextjs/v13-pagesRouter";
+} from "@mui/material-nextjs/v14-pagesRouter";
 
 import theme, { overlock } from "../theme/theme";
 
-import { GA_TRACKING_ID } from "../lib/gtag";
+// import { GA_TRACKING_ID } from "../lib/gtag";
+import { AppProps } from "next/app";
 
 export default function MyDocument(
   props: DocumentProps & DocumentHeadTagsProps
@@ -30,16 +32,12 @@ export default function MyDocument(
         {/* PWA primary color */}
         <meta name="theme-color" content={theme.palette.primary.main} />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        {/* <link
-          href="https://fonts.googleapis.com/css2?family=Overlock&display=swap"
-          rel="stylesheet"
-        /> */}
         <DocumentHeadTags {...props} />
 
         {/* We only want to add the scripts if in production */}
         {isProduction && (
           <>
-            {/* Global Site Tag (gtag.js) - Google Analytics */}
+            {/* Global Site Tag (gtag.js) - Google Analytics
             <script
               async
               src={`https://www.googletagmanager.com/gtag/js?id=${
@@ -58,7 +56,7 @@ export default function MyDocument(
                     });
                   `,
               }}
-            />
+            /> */}
           </>
         )}
       </Head>
@@ -70,52 +68,65 @@ export default function MyDocument(
   );
 }
 
-// `getInitialProps` belongs to `_document` (instead of `_app`),
-// it's compatible with server-side generation (SSG).
+// You can find a benchmark of the available CSS minifiers under
+// https://github.com/GoalSmashers/css-minification-benchmark
+// We have found that clean-css is faster than cssnano but the output is larger.
+// Waiting for https://github.com/cssinjs/jss/issues/279
+// 4% slower but 12% smaller output than doing it in a single step.
+//
+// It's using .browserslistrc
+let prefixer: any;
+let cleanCSS: any;
+if (process.env.NODE_ENV === "production") {
+  /* eslint-disable global-require */
+  const postcss = require("postcss");
+  const autoprefixer = require("autoprefixer");
+  const CleanCSS = require("clean-css");
+  /* eslint-enable global-require */
+
+  prefixer = postcss([autoprefixer]);
+  cleanCSS = new CleanCSS();
+}
+
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
-  // Resolution order
-  //
-  // On the server:
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. document.getInitialProps
-  // 4. app.render
-  // 5. page.render
-  // 6. document.render
-  //
-  // On the server with error:
-  // 1. document.getInitialProps
-  // 2. app.render
-  // 3. page.render
-  // 4. document.render
-  //
-  // On the client
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. app.render
-  // 4. page.render
+  const jssSheets = new JSSServerStyleSheets();
 
-  // Render app and page and get the context of the page with collected side effects.
-  const sheets = new ServerStyleSheets();
-  /* eslint-disable testing-library/render-result-naming-convention */
-  const originalRenderPage = ctx.renderPage;
-  /* eslint-enable testing-library/render-result-naming-convention */
+  const finalProps = await documentGetInitialProps(ctx, {
+    plugins: [
+      {
+        enhanceApp: (App: React.ComponentType<AppProps>) =>
+          function EnhanceApp(props: AppProps) {
+            return jssSheets.collect(<App {...props} />);
+          },
+        resolveProps: async (initialProps: DocumentInitialProps) => {
+          // Generate the css string for the styles coming from jss
+          let css = jssSheets.toString();
+          // It might be undefined, for example after an error.
+          if (css && process.env.NODE_ENV === "production") {
+            const result1 = await prefixer.process(css, { from: undefined });
+            css = result1.css;
+            css = cleanCSS.minify(css).styles;
+          }
 
-  ctx.renderPage = () =>
-    originalRenderPage({
-      // eslint-disable-next-line react/display-name
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-    });
-
-  const initialProps = await documentGetInitialProps(ctx);
-
-  // return { ...initialProps };
-  return {
-    ...initialProps,
-    // Styles fragment is rendered after the app and page rendering finish.
-    styles: [
-      ...React.Children.toArray(initialProps.styles),
-      sheets.getStyleElement(),
+          return {
+            ...initialProps,
+            styles: [
+              ...(Array.isArray(initialProps.styles)
+                ? initialProps.styles
+                : [initialProps.styles]),
+              <style
+                id="jss-server-side"
+                key="jss-server-side"
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: css }}
+              />,
+              ...React.Children.toArray(initialProps.styles),
+            ],
+          };
+        },
+      },
     ],
-  };
+  });
+
+  return finalProps;
 };

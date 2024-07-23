@@ -38,43 +38,43 @@ const MyApp = (props: AppProps) => {
     }
   }, []);
 
-  const router = useRouter();
-  useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      gtag.pageview(url);
-      console.log("ga: url", url);
-    };
+  // const router = useRouter();
+  // useEffect(() => {
+  //   const handleRouteChange = (url: string) => {
+  //     gtag.pageview(url);
+  //     console.log("ga: url", url);
+  //   };
 
-    router.events.on("routeChangeComplete", handleRouteChange);
+  //   router.events.on("routeChangeComplete", handleRouteChange);
 
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router.events]);
+  //   return () => {
+  //     router.events.off("routeChangeComplete", handleRouteChange);
+  //   };
+  // }, [router.events]);
 
   return (
-    <Provider store={store}>
-      <StyledEngineProvider injectFirst>
-        <AppCacheProvider {...props}>
-          <ThemeProvider theme={theme}>
-            <Head>
-              <title>Weather App</title>
-              <meta
-                name="viewport"
-                content="minimum-scale=1, initial-scale=1, width=device-width"
-              />
-              <SEO />
-            </Head>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <CookiesProvider>
-              <Component {...pageProps} />
-            </CookiesProvider>
-          </ThemeProvider>
-        </AppCacheProvider>
-      </StyledEngineProvider>
-    </Provider>
+    <AppCacheProvider {...props}>
+      <Head>
+        <title>Weather App</title>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+        <SEO />
+      </Head>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <Provider store={store}>
+          <CookiesProvider>
+            <Component {...pageProps} />
+          </CookiesProvider>
+        </Provider>
+      </ThemeProvider>
+    </AppCacheProvider>
   );
 };
 
 export default MyApp;
+// <StyledEngineProvider injectFirst>
+// </StyledEngineProvider>
