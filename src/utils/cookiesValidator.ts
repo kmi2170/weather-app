@@ -16,7 +16,7 @@ export const isLocationValid = (location: unknown) => {
     const keys = Object.keys(location);
     for (const key of keys) {
       if (keysToCheck.includes(key)) {
-        if (location[key] != null) return true;
+        if (location[key]) return true;
       }
       return false;
     }
