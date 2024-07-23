@@ -1,12 +1,16 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'jsdom',
+  setupFiles: ["./jest.polyfills.js"],
+  preset: "ts-jest",
+  testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    customExportConditions: [""],
+  },
   globals: {
-    'ts-jest': {
-      tsconfig: './tsconfig.jest.json',
+    "ts-jest": {
+      tsconfig: "./tsconfig.jest.json",
     },
-    setupFileAfterEnv: ['./src/jest.setup.ts'],
+    setupFileAfterEnv: ["./src/jest.setup.ts"],
     coverageThreshhold: {
       global: {
         branches: 100,
@@ -16,8 +20,8 @@ module.exports = {
       },
     },
     moduleNameMapper: {
-      '\\.(pdf|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-        '<rootDir>/__mocks__/fileMock.js',
+      "\\.(pdf|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+        "<rootDir>/__mocks__/fileMock.js",
     },
   },
 };
