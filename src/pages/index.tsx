@@ -24,11 +24,11 @@ import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../features/initialState";
 import { Weather } from "../api/types";
 import { purple } from "@mui/material/colors";
+import theme from "../theme/theme";
 
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
-    background: purple[50],
     minHeight: "100vh",
   },
   noLocation: {

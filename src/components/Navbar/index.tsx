@@ -18,7 +18,7 @@ import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
-    background: purple[50],
+    background: theme.palette.primary.light,
   },
   toolBar: {
     display: "flex",

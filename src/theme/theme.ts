@@ -1,5 +1,5 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
+import { purple, red } from "@mui/material/colors";
 import { Overlock } from "next/font/google";
 
 export const overlock = Overlock({
@@ -13,25 +13,18 @@ export const overlock = Overlock({
 let theme = createTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      light: "rgb(233, 213, 255)",
+      main: purple[500],
     },
-    secondary: {
-      main: "#19857b",
+    background: {
+      default: "rgb(233, 213, 255)",
     },
     error: {
       main: red.A400,
     },
-    background: {
-      default: "#fff",
-    },
   },
   typography: {
     fontFamily: overlock.style.fontFamily,
-    // fontFamily: [
-    //   "Overlock",
-    //   "sans-serif",
-    //   // 'Roboto Condensed',
-    // ].join(","),
   },
 });
 
