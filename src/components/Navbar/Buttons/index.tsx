@@ -88,6 +88,12 @@ const Buttons = () => {
                   ? classes.buttonSelected
                   : classes.buttonUnSelected
               }
+              style={{
+                borderRadius:
+                  button_units === "imperial"
+                    ? "10px 0 0 10px"
+                    : "0 10px 10px 0",
+              }}
             >
               {button_symbol}
             </Button>
