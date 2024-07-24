@@ -77,10 +77,6 @@ const Home = () => {
   }, [location]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  const saveMenuItemRefs = (ref: HTMLDivElement, index: number) => {
-    menuItemRefs.current[index] = ref;
-  };
-
   return (
     <div className={classes.root}>
       <Navbar ref={menuItemRefs} />
