@@ -9,7 +9,7 @@ export const fetchWeather = async ({
   units,
   lang,
 }: WeatherQuery): Promise<Weather | string> => {
-  const url = `https://api.openweathermap.org/data/2.5/onecall`;
+  const url = `https://api.openweathermap.org/data/3.0/onecall`;
   try {
     // if ((+lat || +lat === 0.0) && (+lon || +lon === 0.0)) {
     const { data } = await axios.get<Weather>(url, {

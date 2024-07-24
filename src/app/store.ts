@@ -3,19 +3,22 @@ import {
   configureStore,
   combineReducers,
   ThunkAction,
-} from '@reduxjs/toolkit';
-import type { PreloadedState } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
+} from "@reduxjs/toolkit";
+import type { PreloadedStateShapeFromReducersMapObject } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
-import weatherSlice from '../features/weatherSlice';
-import { weatherApi } from '../services/weatherApi';
+import weatherSlice from "../features/weatherSlice";
+import { weatherApi } from "../services/weatherApi";
 
 const rootReducer = combineReducers({
   weather: weatherSlice,
   [weatherApi.reducerPath]: weatherApi.reducer,
 });
 
-export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+//export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+export const setupStore = (
+  preloadedState?: PreloadedStateShapeFromReducersMapObject<RootState>
+) => {
   return configureStore({
     reducer: rootReducer,
     preloadedState,
@@ -28,7 +31,7 @@ export const store = setupStore();
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore['dispatch'];
+export type AppDispatch = AppStore["dispatch"];
 
 ///////////////
 

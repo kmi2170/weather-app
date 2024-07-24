@@ -1,14 +1,14 @@
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import red from "@material-ui/core/colors/red";
-
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import makeStyles from "@mui/styles/makeStyles";
 import { useAppSelector } from "../../app/hooks";
+
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { localFullDateTime } from "../../utils/time";
 import { Weather } from "../../api/types";
+import { red } from "@mui/material/colors";
 
 const useStyles = makeStyles(() => ({
   text: {},

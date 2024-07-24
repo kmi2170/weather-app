@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { lightBlue, lime, blueGrey } from "@material-ui/core/colors";
+import { lightBlue, lime, blueGrey } from "@mui/material/colors";
 
 import {
   Chart as ChartJS,

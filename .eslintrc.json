@@ -12,7 +12,12 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.json",
+    "projects": [
+      {
+        "root": "./src",
+        "tsconfig": "./tsconfig.json"
+      }
+    ],
     "ecmaFeatures": {
       "jsx": true
     },

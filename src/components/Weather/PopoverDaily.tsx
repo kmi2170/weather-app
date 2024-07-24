@@ -1,40 +1,44 @@
-import { useState } from 'react';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { purple, orange, yellow } from '@material-ui/core/colors';
+import { useState } from "react";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import { createTheme, Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
+import { purple, orange, yellow } from "@mui/material/colors";
 
-import { useAppSelector } from '../../app/hooks';
-import { fallWithUnit, pressureWithUnit } from '../../utils/units';
-import MoonIcon from './icons/MoonIcon';
-import { localTime } from '../../utils/time';
-import { WeatherDaily } from '../../api/types';
-import { formatDigits } from '../../utils/formatDigits';
+import { useAppSelector } from "../../app/hooks";
+import { fallWithUnit, pressureWithUnit } from "../../utils/units";
+import MoonIcon from "./icons/MoonIcon";
+import { localTime } from "../../utils/time";
+import { WeatherDaily } from "../../api/types";
+import { formatDigits } from "../../utils/formatDigits";
 
-const useStyles = makeStyles((theme: Theme) =>
+const theme = createTheme();
+
+const useStyles = makeStyles(() =>
   createStyles({
     popover: {
-      pointerEvents: 'none',
+      pointerEvents: "none",
     },
     paper: {
-      padding: theme.spacing(1),
-      minWidth: '30vw',
+      padding: theme?.spacing(1),
+      minWidth: "30vw",
     },
     iconSun: {
-      fontSize: '1rem',
+      fontSize: "1rem",
       color: purple[500],
-      marginRight: '0.5rem',
+      marginRight: "0.5rem",
     },
     iconMoon: {
-      fontSize: '1rem',
+      fontSize: "1rem",
       color: purple[500],
-      marginRight: '0.5rem',
-      marginLeft: '0.25rem',
+      marginRight: "0.5rem",
+      marginLeft: "0.25rem",
     },
     children: {
-      '&:hover': { border: `1px solid ${purple[500]}` },
+      "&:hover": { border: `1px solid ${purple[500]}` },
     },
     sunDecoration: {
       borderBottom: `2px solid ${orange[500]}`,
@@ -43,14 +47,14 @@ const useStyles = makeStyles((theme: Theme) =>
       borderBottom: `2px solid ${yellow[500]}`,
     },
     tempChange: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alighIterator: 'center',
-      marginBottom: '0.5rem',
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alighIterator: "center",
+      marginBottom: "0.5rem",
     },
     tempChangeName: {
-      textTransform: 'capitalize',
+      textTransform: "capitalize",
     },
   })
 );
@@ -97,7 +101,7 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
   return (
     <>
       <div
-        aria-owns={open ? 'mouse-over-popover' : undefined}
+        aria-owns={open ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
@@ -114,12 +118,12 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "left",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
+          vertical: "top",
+          horizontal: "left",
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
@@ -128,12 +132,12 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
         <Container maxWidth="xs">
           <Grid container alignItems="center">
             <Grid item container xs={12} spacing={4}>
-              {['morn', 'day', 'eve', 'night'].map((item) => (
+              {["morn", "day", "eve", "night"].map((item) => (
                 <Grid item key={item} className={classes.tempChange}>
                   <div className={classes.tempChangeName}>{item}</div>
                   <div>
                     {formatDigits(temp[item] as number)}
-                    {units === 'imperial' ? (
+                    {units === "imperial" ? (
                       <small>&#8457;</small>
                     ) : (
                       <small>&#8451;</small>

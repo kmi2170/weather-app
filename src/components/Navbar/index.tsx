@@ -1,17 +1,20 @@
 import { forwardRef } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { purple, red } from "@material-ui/core/colors";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import { purple, red } from "@mui/material/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 // import SwitchUnits from "./SwitchUnits";
 import { Weather } from "../../api/types";
 import Buttons from "./Buttons";
+import { Padding } from "@mui/icons-material";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   listItem: {
     padding: "0 1rem",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints?.down("md")]: {
       padding: "0 0.5rem",
     },
     borderBottom: `3px solid transparent`,
@@ -53,10 +56,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const list = [
-  { id: 1, name: "current" },
-  { id: 2, name: "minutely" },
-  { id: 3, name: "daily" },
-  { id: 4, name: "hourly" },
+  { id: 0, name: "current" },
+  { id: 1, name: "minutely" },
+  { id: 2, name: "daily" },
+  { id: 3, name: "hourly" },
 ];
 
 const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
@@ -89,11 +92,17 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
               dense
               disableGutters
               className={classes.listItem}
-              onClick={() => handleMenuItemRefs(id)}
+              // onClick={() => handleMenuItemRefs(id)}
             >
-              <Typography variant="h6" align="center" className={classes.text}>
-                {name}
-              </Typography>
+              <Link href={`#${name}`}>
+                <Typography
+                  variant="h6"
+                  align="center"
+                  className={classes.text}
+                >
+                  {name}
+                </Typography>
+              </Link>
             </ListItem>
           ))}
 

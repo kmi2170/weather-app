@@ -1,47 +1,48 @@
-import { memo, useState } from 'react';
-import Image from 'next/image';
+import { memo, useState } from "react";
+import Image from "next/image";
 
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import purple from '@material-ui/core/colors/purple';
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { asyncThunkSearchLocation } from '../../features/weatherAsyncThunk';
-import { setIsNotFound } from '../../features/weatherSlice';
+import { asyncThunkSearchLocation } from "../../features/weatherAsyncThunk";
+import { setIsNotFound } from "../../features/weatherSlice";
+import { purple } from "@mui/material/colors";
 
-const icon_search = '/icon-search.png';
-const icon_cancel = '/icon-cancel.png';
+const icon_search = "/icon-search.png";
+const icon_cancel = "/icon-cancel.png";
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 30,
-    margin: '0 5vw',
-    [theme.breakpoints.up('sm')]: {
-      margin: '0 10vw',
+    margin: "0 5vw",
+    [theme.breakpoints?.up("sm")]: {
+      margin: "0 10vw",
     },
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   searchInputbar: {
     flexGrow: 1,
   },
   messageContainer: {
     color: purple[800],
-    marginTop: '.5rem',
+    marginTop: ".5rem",
   },
   queryExamples: {
-    fontStyle: 'italic',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    fontStyle: "italic",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 }));
 
-const queryExamples = ['London', 'Seattle,WA,USA', 'Tokyo,Japan'];
+const queryExamples = ["London", "Seattle,WA,USA", "Tokyo,Japan"];
 
 const SearchLocationBar = () => {
   const classes = useStyles();
@@ -49,7 +50,7 @@ const SearchLocationBar = () => {
   const isNotFound = useAppSelector((state) => state.weather.isNotFound);
   const dispatch = useAppDispatch();
 
-  const [searchLocation, setSearchLocation] = useState<string>('');
+  const [searchLocation, setSearchLocation] = useState<string>("");
 
   const handleInput = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -59,7 +60,7 @@ const SearchLocationBar = () => {
 
   // const handleClear: React.MouseEventHandler<HTMLButtonElement> = () => {
   const handleClear = () => {
-    setSearchLocation('');
+    setSearchLocation("");
     dispatch(setIsNotFound(false));
   };
 
@@ -76,7 +77,7 @@ const SearchLocationBar = () => {
     <>
       <form onSubmit={handleSubmit}>
         <div className={classes.searchContainer}>
-          <IconButton type="submit">
+          <IconButton type="submit" size="large">
             <Image
               src={icon_search}
               alt="search button"
@@ -92,10 +93,10 @@ const SearchLocationBar = () => {
               value={searchLocation}
               onChange={handleInput}
               placeholder="Search Location; City,State,Country"
-              style={{ borderColor: 'white' }}
+              style={{ borderColor: "white" }}
             />
           </div>
-          <IconButton onClick={handleClear}>
+          <IconButton onClick={handleClear} size="large">
             <Image
               src={icon_cancel}
               alt="clear button"
@@ -113,7 +114,7 @@ const SearchLocationBar = () => {
           <Typography
             variant="h6"
             align="center"
-            style={{ fontStyle: 'italic' }}
+            style={{ fontStyle: "italic" }}
           >
             Examples (case insensitive)
           </Typography>

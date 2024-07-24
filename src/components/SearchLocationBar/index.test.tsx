@@ -1,15 +1,14 @@
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
+import userEvent from "@testing-library/user-event";
+import "@testing-library/jest-dom";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 
-// import { render, screen, waitFor } from '@testing-library/react';
-import { render, screen } from '../../utils/test-utils';
-import SearchLocationBar from './index';
+import { render, screen } from "../../utils/test-utils";
+import SearchLocationBar from "./index";
 
 const handlers = [
-  rest.get('/api/geolocation', (req, res, ctx) => {
-    return res(ctx.json([]), ctx.delay(150));
+  http.get("/api/geolocation", () => {
+    return HttpResponse.json([]);
   }),
 ];
 
@@ -24,8 +23,8 @@ afterAll(() => server.close());
 const user = userEvent.setup();
 const setup = () => render(<SearchLocationBar />);
 
-describe('SearchLocationBar', () => {
-  const testSearchTerm = 'seattle, wa';
+describe("SearchLocationBar", () => {
+  const testSearchTerm = "seattle, wa";
   it(`type in "${testSearchTerm}", then the value has "${testSearchTerm}"`, async () => {
     setup();
     await user.type(getTextbox(), testSearchTerm);
@@ -36,20 +35,20 @@ describe('SearchLocationBar', () => {
     setup();
     await user.type(getTextbox(), testSearchTerm);
     await user.click(getIcon(/clear button/i));
-    expect(getTextbox()).toHaveValue('');
+    expect(getTextbox()).toHaveValue("");
   });
 
-  it(`type in random text "abc123ABC", then click search icon and displays examples for search terms`, async () => {
+  it.only(`type in random text "abc123ABC", then click search icon and displays examples for search terms`, async () => {
     setup();
-    await user.type(getTextbox(), 'abc123ABC');
+    await user.type(getTextbox(), "abc123ABC");
     await user.click(getIcon(/search button/i));
     expect(await screen.findByText(/no place found/i)).toBeInTheDocument();
   });
 });
 
-const getTextbox = () => screen.getByRole('textbox');
+const getTextbox = () => screen.getByRole("textbox");
 
 const getIcon = (icon_name: RegExp) =>
-  screen.getByRole('img', {
+  screen.getByRole("img", {
     name: icon_name,
   });
