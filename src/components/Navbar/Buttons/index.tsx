@@ -10,11 +10,10 @@ import { createTheme, Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import { useCustomCookies } from "../../../hooks/useCustomCookies";
 import { isUnitsValid } from "../../../utils/cookiesValidator";
-import { purple } from "@mui/material/colors";
 
 const theme = createTheme();
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -25,22 +24,22 @@ const useStyles = makeStyles(() => ({
   },
   buttonSelected: {
     color: "white",
-    background: purple[500],
-    borderColor: purple[500],
+    background: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
     "&:hover": {
       color: "white",
-      background: purple[500],
-      borderColor: purple[500],
+      background: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
     },
   },
   buttonUnSelected: {
-    color: purple[500],
+    color: theme.palette.primary.main,
     background: "transparent",
-    borderColor: purple[500],
+    borderColor: theme.palette.primary.main,
     "&:hover": {
       color: "white",
-      background: purple[800],
-      borderColor: purple[800],
+      background: theme.palette.primary.dark,
+      borderColor: theme.palette.primary.dark,
     },
   },
 }));

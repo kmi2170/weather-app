@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
-import { purple, yellow, orange } from "@mui/material/colors";
+import { yellow, orange } from "@mui/material/colors";
 
 import country_region_data from "country-region-data";
 import { useAppSelector } from "../../app/hooks";
@@ -23,6 +23,9 @@ import { Weather } from "../../api/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
+  paper: {
+    padding: "1.5rem",
+  },
   locationContainer: {
     display: "flex",
     flexDirection: "row",
@@ -50,12 +53,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   iconSun: {
     fontSize: "1rem",
-    color: purple[500],
+    color: theme.palette.primary.main,
     marginRight: "0.5rem",
   },
   iconMoon: {
     fontSize: "1rem",
-    color: purple[500],
+    color: theme.palette.primary.main,
     marginRight: "0.5rem",
     marginLeft: "0.25rem",
   },
@@ -118,7 +121,7 @@ const WeatherCurrent = () => {
       <Typography variant="h6" className={classes.text}>
         Current
       </Typography>
-      <Paper style={{ padding: "1rem" }}>
+      <Paper elevation={2} className={classes.paper}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Typography
             variant="subtitle2"

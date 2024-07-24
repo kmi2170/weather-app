@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectWeather } from "../../features/weatherSlice";

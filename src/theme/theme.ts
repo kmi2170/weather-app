@@ -15,6 +15,7 @@ let theme = createTheme({
     primary: {
       light: "rgb(233, 213, 255)",
       main: purple[500],
+      dark: purple[800],
     },
     background: {
       default: "rgb(233, 213, 255)",
@@ -25,6 +26,18 @@ let theme = createTheme({
   },
   typography: {
     fontFamily: overlock.style.fontFamily,
+  },
+  components: {
+    MuiPaper: {
+      defaultProps: {
+        elevation: 2,
+      },
+      styleOverrides: {
+        root: {
+          borderRadius: "15px",
+        },
+      },
+    },
   },
 });
 
