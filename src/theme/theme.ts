@@ -38,6 +38,13 @@ let theme = createTheme({
         },
       },
     },
+    MuiSkeleton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "15px",
+        },
+      },
+    },
   },
 });
 
