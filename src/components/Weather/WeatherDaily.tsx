@@ -17,6 +17,9 @@ import { purple } from "@mui/material/colors";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
+  paper: {
+    padding: "0.5rem",
+  },
   locationContainer: {
     display: "flex",
     flexDirection: "row",
@@ -47,17 +50,17 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   iconSun: {
     fontSize: "1rem",
-    color: purple[500],
+    color: theme.palette.primary.main,
     marginRight: "0.5rem",
   },
   iconMoon: {
     fontSize: "1rem",
-    color: purple[500],
+    color: theme.palette.primary.main,
     marginRight: "0.5rem",
     marginLeft: "0.25rem",
   },
   iconPop: {
-    color: purple[500],
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -90,7 +93,7 @@ const WeatherDaily = () => {
         {daily.map((data, i: number) => (
           <Grid key={i} item xs={4} sm={3} md={2}>
             <PopoverDaily data={data} timezone={timezone}>
-              <Paper style={{ padding: "0.5rem" }}>
+              <Paper className={classes.paper}>
                 <div
                   style={{
                     display: "flex",

@@ -28,7 +28,6 @@ import { purple } from "@mui/material/colors";
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
-    background: purple[50],
     minHeight: "100vh",
   },
   noLocation: {
@@ -76,10 +75,6 @@ const Home = () => {
     }
   }, [location]);
   /* eslint-enable react-hooks/exhaustive-deps */
-
-  const saveMenuItemRefs = (ref: HTMLDivElement, index: number) => {
-    menuItemRefs.current[index] = ref;
-  };
 
   return (
     <div className={classes.root}>

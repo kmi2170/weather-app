@@ -14,7 +14,7 @@ import { purple } from "@mui/material/colors";
 
 const theme = createTheme();
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -25,22 +25,22 @@ const useStyles = makeStyles(() => ({
   },
   buttonSelected: {
     color: "white",
-    background: purple[500],
-    borderColor: purple[500],
+    background: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
     "&:hover": {
       color: "white",
-      background: purple[500],
-      borderColor: purple[500],
+      background: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
     },
   },
   buttonUnSelected: {
-    color: purple[500],
+    color: theme.palette.primary.main,
     background: "transparent",
-    borderColor: purple[500],
+    borderColor: theme.palette.primary.main,
     "&:hover": {
       color: "white",
-      background: purple[800],
-      borderColor: purple[800],
+      background: theme.palette.primary.dark,
+      borderColor: theme.palette.primary.dark,
     },
   },
 }));
@@ -89,6 +89,12 @@ const Buttons = () => {
                   ? classes.buttonSelected
                   : classes.buttonUnSelected
               }
+              style={{
+                borderRadius:
+                  button_units === "imperial"
+                    ? "10px 0 0 10px"
+                    : "0 10px 10px 0",
+              }}
             >
               {button_symbol}
             </Button>
