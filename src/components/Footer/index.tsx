@@ -5,9 +5,9 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer style={{ padding: "10px" }}>
+    <footer style={{ padding: "20px" }}>
       <Typography variant="body2">
-        &copy; kmi {year}. All rights reserved. | Powered by&nbsp;
+        &copy; Kemmei H. {year}. All rights reserved. | Powered by&nbsp;
         <a
           href="https://www.openweathermap.org/"
           rel="noopener noreferrer"
