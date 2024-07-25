@@ -22,7 +22,6 @@ import { currentLocalTime, localTime } from "../../utils/time";
 import { Weather } from "../../api/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  text: {},
   paper: {
     padding: "1.5rem",
   },

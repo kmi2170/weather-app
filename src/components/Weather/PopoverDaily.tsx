@@ -38,7 +38,7 @@ const useStyles = makeStyles(() =>
       marginLeft: "0.25rem",
     },
     children: {
-      "&:hover": { border: `1px solid ${purple[500]}` },
+      "&:hover": { border: `1px solid ${purple[500]}`, borderRadius: "15px" },
     },
     sunDecoration: {
       borderBottom: `2px solid ${orange[500]}`,
