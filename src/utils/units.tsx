@@ -1,21 +1,22 @@
-import { formatDigits } from './formatDigits';
+import { formatDigits } from "./formatDigits";
 
 export const pressureWithUnit = (p: number, units: string) =>
-  units === 'imperial'
+  units === "imperial"
     ? `${formatDigits((+p / 1013.25) * 29.921, 1)} inHg`
     : `${p} hPa`;
 
 export const fallWithUnit = (fall: number, units: string) =>
-  units === 'imperial' ? `${formatDigits(+fall / 25.4, 2)} in` : `${fall} mm`;
+  units === "imperial" ? `${formatDigits(+fall / 25.4, 2)} in` : `${fall} mm`;
 
 export const visibilityWithUnit = (v: number, units: string) =>
-  units === 'imperial'
+  units === "imperial"
     ? `${formatDigits(+v / 10000 / 1.609344, 1)} mi`
     : `${formatDigits(+v / 1000, 1)} km`;
 
 export const tempWithUnit = (t: number, units: string) => (
   <span>
     {formatDigits(+t, 0)}
-    {units === 'imperial' ? <small>&#8457;</small> : <small>&#8451;</small>}
+    {units === "imperial" ? <small> °F </small> : <small> °C</small>}
+    {/* {units === 'imperial' ? <small>&#8457;</small> : <small>&#8451;</small>} */}
   </span>
 );
