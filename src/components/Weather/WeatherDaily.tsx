@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   paper: {
     padding: "0.5rem",
+    border: `2px solid ${theme.palette.primary.light}`,
+    borderRadius: "15px",
   },
   locationContainer: {
     display: "flex",
