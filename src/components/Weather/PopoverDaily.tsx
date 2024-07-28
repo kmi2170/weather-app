@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface PopoverDailyProps {
-  children: React.ReactChild;
+  children: React.ReactNode;
   data: WeatherDaily;
   timezone: string;
 }

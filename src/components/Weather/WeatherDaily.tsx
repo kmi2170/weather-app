@@ -13,7 +13,6 @@ import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
 import { localDate, localDay } from "../../utils/time";
 import { Weather } from "../../api/types";
-import { purple } from "@mui/material/colors";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
