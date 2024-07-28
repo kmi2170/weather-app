@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme: Theme) =>
       alignIterator: "center",
       marginBottom: "0.5rem",
     },
+    temp: {
+      color: theme.palette.primary.main,
+    },
     tempChangeName: {
       textTransform: "capitalize",
     },
@@ -138,7 +141,7 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
               {["morn", "day", "eve", "night"].map((item) => (
                 <Grid item key={item} className={classes.tempChange}>
                   <div className={classes.tempChangeName}>{item}</div>
-                  <div>
+                  <div className={classes.temp}>
                     {formatDigits(temp[item] as number)}
                     {units === "imperial" ? (
                       <small>&#8457;</small>

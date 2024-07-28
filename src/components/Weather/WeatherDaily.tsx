@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.primary.dark,
   },
   text: {},
+  temp: {
+    color: theme.palette.primary.main,
+  },
   paper: {
     padding: "0.5rem",
     border: `2px solid ${theme.palette.primary.light}`,
@@ -139,7 +142,11 @@ const WeatherDaily = () => {
                     {data.weather[0].description}
                   </Typography>
 
-                  <Typography variant="h6" align="center">
+                  <Typography
+                    variant="h6"
+                    align="center"
+                    className={classes.temp}
+                  >
                     {formatDigits(data.temp.max)}/{formatDigits(data.temp.min)}
                     {units === "imperial" ? (
                       <small>&#8457;</small>

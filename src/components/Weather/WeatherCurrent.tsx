@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.primary.dark,
   },
   text: {},
+  temp: {
+    color: theme.palette.primary.main,
+  },
   paper: {
     padding: "1.5rem",
   },
@@ -192,7 +195,11 @@ const WeatherCurrent = () => {
             </Grid>
             <Grid item xs={4}>
               <div>
-                <Typography variant="h4" align="center">
+                <Typography
+                  variant="h4"
+                  align="center"
+                  className={classes.temp}
+                >
                   {tempWithUnit(temp, units)}
                 </Typography>
                 <Typography
