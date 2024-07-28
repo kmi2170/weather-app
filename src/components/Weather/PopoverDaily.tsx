@@ -3,10 +3,10 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import { createTheme, Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
+import { Theme } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
-import { purple, orange, yellow } from "@mui/material/colors";
+import { orange, yellow } from "@mui/material/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { fallWithUnit, pressureWithUnit } from "../../utils/units";
@@ -15,9 +15,7 @@ import { localTime } from "../../utils/time";
 import { WeatherDaily } from "../../api/types";
 import { formatDigits } from "../../utils/formatDigits";
 
-const theme = createTheme();
-
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     popover: {
       pointerEvents: "none",
@@ -28,17 +26,22 @@ const useStyles = makeStyles(() =>
     },
     iconSun: {
       fontSize: "1rem",
-      color: purple[500],
+      color: theme.palette.primary.main,
       marginRight: "0.5rem",
     },
     iconMoon: {
       fontSize: "1rem",
-      color: purple[500],
+      color: theme.palette.primary.main,
       marginRight: "0.5rem",
       marginLeft: "0.25rem",
     },
     children: {
-      "&:hover": { border: `1px solid ${purple[500]}`, borderRadius: "15px" },
+      border: `2px solid ${theme.palette.primary.light}`,
+      borderRadius: "15px",
+      "&:hover": {
+        border: `2px solid ${theme.palette.primary.main}`,
+        borderRadius: "15px",
+      },
     },
     sunDecoration: {
       borderBottom: `2px solid ${orange[500]}`,
@@ -50,7 +53,7 @@ const useStyles = makeStyles(() =>
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      alighIterator: "center",
+      alignIterator: "center",
       marginBottom: "0.5rem",
     },
     tempChangeName: {

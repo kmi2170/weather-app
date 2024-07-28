@@ -5,7 +5,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer style={{ padding: "20px" }}>
+    <footer style={{ margin: "20px 10px 30px 0" }}>
       <Typography variant="body2">
         &copy; Kemmei H. {year}. All rights reserved. | Powered by&nbsp;
         <a
