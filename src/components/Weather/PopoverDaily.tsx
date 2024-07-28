@@ -144,9 +144,9 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
                   <div className={classes.temp}>
                     {formatDigits(temp[item] as number)}
                     {units === "imperial" ? (
-                      <small>&#8457;</small>
+                      <small> °F </small>
                     ) : (
-                      <small>&#8451;</small>
+                      <small> °C</small>
                     )}
                   </div>
                 </Grid>

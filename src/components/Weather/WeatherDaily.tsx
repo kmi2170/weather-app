@@ -149,9 +149,9 @@ const WeatherDaily = () => {
                   >
                     {formatDigits(data.temp.max)}/{formatDigits(data.temp.min)}
                     {units === "imperial" ? (
-                      <small>&#8457;</small>
+                      <small> °F </small>
                     ) : (
-                      <small>&#8451;</small>
+                      <small> °C</small>
                     )}
                   </Typography>
 

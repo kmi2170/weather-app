@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -27,7 +26,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   text: {
     textTransform: "capitalize",
     color: theme.palette.primary.dark,
-    //color: "#000",
     "&:hover": {
       color: purple[500],
     },
@@ -55,14 +53,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const list = [
+const LinksList = [
   { id: 0, name: "current" },
   { id: 1, name: "minutely" },
   { id: 2, name: "daily" },
   { id: 3, name: "hourly" },
+  { id: 4, name: "alerts" },
 ];
 
-const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
+const Navbar = () => {
   const classes = useStyles();
 
   const units = useAppSelector((state) => state.weather.units);
@@ -77,15 +76,11 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   });
   const isAlerts = !!(data as Weather)?.alerts;
 
-  const handleMenuItemRefs = (id: number) => {
-    window.scroll(0, ref?.current[+id - 1].offsetTop - 70);
-  };
-
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar variant="dense" className={classes.toolBar}>
         <List dense disablePadding className={classes.list}>
-          {list.map(({ id, name }) => (
+          {LinksList.map(({ id, name }) => (
             <ListItem
               key={id}
               dense
@@ -111,15 +106,16 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
               disableGutters
               alignItems="center"
               className={classes.listItem}
-              onClick={() => handleMenuItemRefs(5)}
             >
-              <Typography
-                variant="h6"
-                align="center"
-                className={classes.textAlerts}
-              >
-                Alerts
-              </Typography>
+              <Link href={`#${LinksList[4]}`}>
+                <Typography
+                  variant="h6"
+                  align="center"
+                  className={classes.textAlerts}
+                >
+                  Alerts
+                </Typography>
+              </Link>
             </ListItem>
           )}
         </List>
@@ -131,4 +127,4 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
   );
 };
 
-export default forwardRef(Navbar);
+export default Navbar;

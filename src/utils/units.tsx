@@ -17,6 +17,5 @@ export const tempWithUnit = (t: number, units: string) => (
   <span>
     {formatDigits(+t, 0)}
     {units === "imperial" ? <small> °F </small> : <small> °C</small>}
-    {/* {units === 'imperial' ? <small>&#8457;</small> : <small>&#8451;</small>} */}
   </span>
 );
