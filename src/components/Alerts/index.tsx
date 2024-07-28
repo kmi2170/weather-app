@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import makeStyles from "@mui/styles/makeStyles";
+import { Theme } from "@mui/material/styles";
 import { useAppSelector } from "../../app/hooks";
 
 import { selectWeather } from "../../features/weatherSlice";
@@ -10,7 +11,10 @@ import { localFullDateTime } from "../../utils/time";
 import { Weather } from "../../api/types";
 import { red } from "@mui/material/colors";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
+  textTitle: {
+    color: theme.palette.primary.dark,
+  },
   text: {},
   paper: {
     padding: "1rem",
@@ -39,7 +43,7 @@ const Alerts = () => {
     <>
       {alerts && (
         <>
-          <Typography variant="subtitle1" className={classes.text}>
+          <Typography variant="h6" className={classes.textTitle}>
             Alerts
           </Typography>
           <Grid container spacing={2}>

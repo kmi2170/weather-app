@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -23,8 +23,9 @@ import {
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../features/initialState";
 import { Weather } from "../api/types";
+import { Theme } from "@mui/material";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
     minHeight: "100vh",
@@ -34,12 +35,12 @@ const useStyles = makeStyles(() => ({
   },
   title: {
     marginTop: "1rem",
+    color: theme.palette.primary.dark,
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  const menuItemRefs = useRef(new Array(4) as HTMLDivElement[]);
 
   const dispatch = useAppDispatch();
   const units = useAppSelector((state) => state.weather.units);
@@ -77,7 +78,7 @@ const Home = () => {
 
   return (
     <div className={classes.root}>
-      <Navbar ref={menuItemRefs} />
+      <Navbar />
       <Container>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>
@@ -95,12 +96,7 @@ const Home = () => {
             <SearchLocationBar />
           </Grid>
 
-          <Grid
-            id="current"
-            item
-            xs={12}
-            // ref={(ref) => ref != null && saveMenuItemRefs(ref, 0)}
-          >
+          <Grid id="current" item xs={12}>
             {data ? (
               <WeatherCurrent />
             ) : (
@@ -108,12 +104,7 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid
-            id="minutely"
-            item
-            xs={12}
-            // ref={(ref) => ref != null && saveMenuItemRefs(ref, 1)}
-          >
+          <Grid id="minutely" item xs={12}>
             {data ? (
               <WeatherMinutely />
             ) : (
@@ -121,12 +112,7 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid
-            id="daily"
-            item
-            xs={12}
-            // ref={(ref) => ref != null && saveMenuItemRefs(ref, 2)}
-          >
+          <Grid id="daily" item xs={12}>
             {data ? (
               <WeatherDaily />
             ) : (
@@ -147,12 +133,7 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid
-            id="hourly"
-            item
-            xs={12}
-            // ref={(ref) => ref != null && saveMenuItemRefs(ref, 3)}
-          >
+          <Grid id="hourly" item xs={12}>
             {data ? (
               <WeatherHourly />
             ) : (
@@ -161,12 +142,7 @@ const Home = () => {
           </Grid>
 
           {isAlerts && (
-            <Grid
-              id="alerts"
-              item
-              xs={12}
-              // ref={(ref) => ref != null && saveMenuItemRefs(ref, 4)}
-            >
+            <Grid id="alerts" item xs={12}>
               <Alerts />
             </Grid>
           )}

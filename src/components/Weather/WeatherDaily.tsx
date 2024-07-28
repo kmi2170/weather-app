@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { createTheme, Theme } from "@mui/material/styles";
+import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import { useAppSelector } from "../../app/hooks";
 
@@ -15,6 +15,9 @@ import { localDate, localDay } from "../../utils/time";
 import { Weather } from "../../api/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
+  textTitle: {
+    color: theme.palette.primary.dark,
+  },
   text: {},
   paper: {
     padding: "0.5rem",
@@ -81,7 +84,7 @@ const WeatherDaily = () => {
 
   return (
     <>
-      <Typography variant="subtitle1" className={classes.text}>
+      <Typography variant="h6" className={classes.textTitle}>
         Daily Weather
       </Typography>
 

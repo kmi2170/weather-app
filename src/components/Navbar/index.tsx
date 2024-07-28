@@ -10,10 +10,8 @@ import { purple, red } from "@mui/material/colors";
 
 import { useAppSelector } from "../../app/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-// import SwitchUnits from "./SwitchUnits";
 import { Weather } from "../../api/types";
 import Buttons from "./Buttons";
-import { Padding } from "@mui/icons-material";
 import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -28,7 +26,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   text: {
     textTransform: "capitalize",
-    color: "#000",
+    color: theme.palette.primary.dark,
+    //color: "#000",
     "&:hover": {
       color: purple[500],
     },
@@ -76,7 +75,6 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
     units,
     lang,
   });
-  // const { alerts } = data as Weather;
   const isAlerts = !!(data as Weather)?.alerts;
 
   const handleMenuItemRefs = (id: number) => {
@@ -93,7 +91,6 @@ const Navbar = (_, ref: React.MutableRefObject<HTMLDivElement[]>) => {
               dense
               disableGutters
               className={classes.listItem}
-              // onClick={() => handleMenuItemRefs(id)}
             >
               <Link href={`#${name}`}>
                 <Typography
