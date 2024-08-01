@@ -15,7 +15,7 @@ import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
-    background: theme.palette.primary.light,
+    background: "rgba(233, 213, 255, 0.8)",
     borderRadius: 0,
   },
   toolBar: {
