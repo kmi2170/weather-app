@@ -1,7 +1,7 @@
 import { memo, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { setUnits } from "../../../features/weatherSlice";
-import { Units } from "../../../features/initialState";
+import { setUnits } from "../../../slice/weatherSlice";
+import { Units } from "../../../store/initialState";
 
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";

@@ -7,7 +7,7 @@ import {
 import type { PreloadedStateShapeFromReducersMapObject } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-import weatherSlice from "../features/weatherSlice";
+import weatherSlice from "../slice/weatherSlice";
 import { weatherApi } from "../services/weatherApi";
 
 const rootReducer = combineReducers({

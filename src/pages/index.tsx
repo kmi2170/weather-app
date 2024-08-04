@@ -6,8 +6,8 @@ import Skeleton from "@mui/material/Skeleton";
 import makeStyles from "@mui/styles/makeStyles";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
-import { setLocation } from "../features/weatherSlice";
-import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";
+import { setLocation } from "../slice/weatherSlice";
+import { asyncThunkIpLookupLocation } from "../slice/weatherAsyncThunk";
 import { useGetWeatherQuery } from "../services/weatherApi";
 import { useCustomCookies } from "../hooks/useCustomCookies";
 import Navbar from "../components/Navbar";
@@ -21,7 +21,7 @@ import {
   WeatherMinutely,
 } from "../components/Weather";
 import { isLocationValid } from "../utils/cookiesValidator";
-import { Location } from "../features/initialState";
+import { Location } from "../store/initialState";
 import { Weather } from "../api/types";
 import { Theme } from "@mui/material";
 

@@ -8,8 +8,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
-import { asyncThunkSearchLocation } from "../../features/weatherAsyncThunk";
-import { setIsNotFound } from "../../features/weatherSlice";
+import { asyncThunkSearchLocation } from "../../slice/weatherAsyncThunk";
+import { setIsNotFound } from "../../slice/weatherSlice";
 import { purple } from "@mui/material/colors";
 
 const icon_search = "/icon-search.png";

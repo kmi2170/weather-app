@@ -5,7 +5,7 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import { useAppSelector } from "../../store/hooks";
 
-import { selectWeather } from "../../features/weatherSlice";
+import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { formatDigits } from "../../utils/formatDigits";
 import WeatherIcon from "./icons/WeatherIcon";

@@ -4,7 +4,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import { Theme } from "@mui/material/styles";
 
 import { useAppSelector } from "../../store/hooks";
-import { selectWeather } from "../../features/weatherSlice";
+import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { localTime } from "../../utils/time";
 import { ChartMinutely } from "./charts";
