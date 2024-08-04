@@ -7,7 +7,7 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import { purple, red } from "@mui/material/colors";
 
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../store/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { Weather } from "../../api/types";
 import Buttons from "./Buttons";

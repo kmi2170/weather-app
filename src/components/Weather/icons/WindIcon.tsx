@@ -1,12 +1,12 @@
 import { memo } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import makeStyles from '@mui/styles/makeStyles';
-import { useAppSelector } from "../../../app/hooks";
+import makeStyles from "@mui/styles/makeStyles";
+import { useAppSelector } from "../../../store/hooks";
 
 import { wind_directions } from "../../../constants/wind";
 import { formatDigits } from "../../../utils/formatDigits";
-import { purple } from '@mui/material/colors';
+import { purple } from "@mui/material/colors";
 
 const useStyles = makeStyles(() => ({
   icon: {

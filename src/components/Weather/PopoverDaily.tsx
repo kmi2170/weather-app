@@ -8,7 +8,7 @@ import { Theme } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import { orange, yellow } from "@mui/material/colors";
 
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../store/hooks";
 import { fallWithUnit, pressureWithUnit } from "../../utils/units";
 import MoonIcon from "./icons/MoonIcon";
 import { localTime } from "../../utils/time";

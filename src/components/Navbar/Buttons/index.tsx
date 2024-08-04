@@ -1,5 +1,5 @@
 import { memo, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setUnits } from "../../../features/weatherSlice";
 import { Units } from "../../../features/initialState";
 

@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../store/hooks";
 
 import { selectWeather } from "../../features/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";

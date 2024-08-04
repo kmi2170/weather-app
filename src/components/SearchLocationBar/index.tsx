@@ -6,7 +6,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
 import { asyncThunkSearchLocation } from "../../features/weatherAsyncThunk";
 import { setIsNotFound } from "../../features/weatherSlice";

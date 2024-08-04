@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import makeStyles from "@mui/styles/makeStyles";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 import { setLocation } from "../features/weatherSlice";
 import { asyncThunkIpLookupLocation } from "../features/weatherAsyncThunk";

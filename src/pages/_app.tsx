@@ -15,7 +15,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 
 import SEO from "../components/SEO";
-import { store } from "../app/store";
+import { store } from "../store/store";
 import * as gtag from "../lib/gtag";
 
 import theme from "../theme/theme";

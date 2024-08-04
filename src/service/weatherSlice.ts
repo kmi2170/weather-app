@@ -1,13 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../app/store';
-import { initialState, Location, Units } from './initialState';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store/store";
+import { initialState, Location, Units } from "./initialState";
 import {
   asyncThunkIpLookupLocation,
   asyncThunkSearchLocation,
-} from '../features/weatherAsyncThunk';
+} from "../features/weatherAsyncThunk";
 
 export const weatherSlice = createSlice({
-  name: 'weather',
+  name: "weather",
   initialState,
   reducers: {
     setLocation: (state, action: PayloadAction<Location>) => {

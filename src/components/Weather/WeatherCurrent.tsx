@@ -6,7 +6,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import { yellow, orange } from "@mui/material/colors";
 
 import country_region_data from "country-region-data";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../store/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 
 import {

@@ -4,7 +4,7 @@ import type { RenderOptions } from "@testing-library/react";
 import type { PreloadedStateShapeFromReducersMapObject } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 
-import { AppStore, RootState, setupStore } from "../app/store";
+import { AppStore, RootState, setupStore } from "../store/store";
 // As a basic setup, import your same slice reducers
 
 // This type interface extends the default options for render from RTL, as well
