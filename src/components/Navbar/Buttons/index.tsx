@@ -79,13 +79,17 @@ const Buttons = () => {
               variant={button_units === units ? "contained" : "outlined"}
               size="small"
               onClick={() => handleClick(button_units as Units)}
-              sx={(theme) => ({
-                ...buttonTheme(button_units, units, theme),
-                borderRadius:
-                  button_units === "imperial"
-                    ? "10px 0 0 10px"
-                    : "0 10px 10px 0",
-              })}
+              sx={[
+                (theme) => ({
+                  ...buttonTheme(button_units, units, theme),
+                }),
+                {
+                  borderRadius:
+                    button_units === "imperial"
+                      ? "10px 0 0 10px"
+                      : "0 10px 10px 0",
+                },
+              ]}
             >
               {button_symbol}
             </Button>
