@@ -3,8 +3,8 @@ import {
   configureStore,
   combineReducers,
   ThunkAction,
+  PreloadedStateShapeFromReducersMapObject,
 } from "@reduxjs/toolkit";
-import type { PreloadedStateShapeFromReducersMapObject } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import weatherSlice from "../slice/weatherSlice";
@@ -15,7 +15,6 @@ const rootReducer = combineReducers({
   [weatherApi.reducerPath]: weatherApi.reducer,
 });
 
-//export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 export const setupStore = (
   preloadedState?: PreloadedStateShapeFromReducersMapObject<RootState>
 ) => {
@@ -26,18 +25,15 @@ export const setupStore = (
       getDefaultMiddleware().concat(weatherApi.middleware),
   });
 };
-
 export const store = setupStore();
-
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore["dispatch"];
 
-///////////////
-
 // export const store = configureStore({
 //   reducer: rootReducer,
-//   middleware: (gDM) => gDM().concat(weatherApi.middleware),
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware().concat(weatherApi.middleware),
 // });
 // export type RootState = ReturnType<typeof store.getState>;
 // export type AppDispatch = typeof store.dispatch;
