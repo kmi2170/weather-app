@@ -29,10 +29,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     "&:hover": {
       color: purple[500],
     },
+    [theme.breakpoints?.down("sm")]: {
+      fontSize: "1.0rem",
+    },
   },
   textAlerts: {
     textTransform: "capitalize",
     color: red[500],
+    fontSize: "1.0rem",
     "&:hover": {
       color: purple[500],
     },
