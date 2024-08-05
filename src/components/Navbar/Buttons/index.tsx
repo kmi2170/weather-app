@@ -6,44 +6,35 @@ import { Units } from "../../../store/initialState";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Tooltip from "@mui/material/Tooltip";
-import { createTheme, Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
+import Box from "@mui/material/Box";
+import { Theme } from "@mui/material/styles";
 import { useCustomCookies } from "../../../hooks/useCustomCookies";
 import { isUnitsValid } from "../../../utils/cookiesValidator";
-import { purple } from "@mui/material/colors";
 
-const theme = createTheme();
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    "& > *": {
-      margin: theme.spacing(0),
-    },
-  },
-  buttonSelected: {
+const buttonSelected = (theme: Theme) => ({
+  color: "white",
+  background: theme.palette.primary.main,
+  borderColor: theme.palette.primary.main,
+  "&:hover": {
     color: "white",
     background: theme.palette.primary.main,
     borderColor: theme.palette.primary.main,
-    "&:hover": {
-      color: "white",
-      background: theme.palette.primary.main,
-      borderColor: theme.palette.primary.main,
-    },
   },
-  buttonUnSelected: {
-    color: theme.palette.primary.main,
-    background: "transparent",
-    borderColor: theme.palette.primary.main,
-    "&:hover": {
-      color: "white",
-      background: theme.palette.primary.dark,
-      borderColor: theme.palette.primary.dark,
-    },
+});
+
+const buttonUnSelected = (theme: Theme) => ({
+  color: theme.palette.primary.main,
+  background: "transparent",
+  borderColor: theme.palette.primary.main,
+  "&:hover": {
+    color: "white",
+    background: theme.palette.primary.dark,
+    borderColor: theme.palette.primary.dark,
   },
-}));
+});
+
+const buttonTheme = (button_units: string, units: string, theme: Theme) =>
+  button_units === units ? buttonSelected(theme) : buttonUnSelected(theme);
 
 const buttonProps = [
   { button_units: "imperial", button_symbol: "℉" },
@@ -51,22 +42,20 @@ const buttonProps = [
 ];
 
 const Buttons = () => {
-  const classes = useStyles();
-
   const units = useAppSelector((state) => state.weather.units);
   const dispatch = useAppDispatch();
 
   const { cookies, setUnitsCookie } = useCustomCookies();
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (isUnitsValid(cookies.weather_units)) {
       dispatch(setUnits(cookies.weather_units as Units));
     }
   }, []);
 
-  useEffect(() => setUnitsCookie(units), [units]);
-  /* eslint-enable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    setUnitsCookie(units);
+  }, [units]);
 
   const handleClick = (b_units: Units) => {
     if (b_units !== units) {
@@ -76,7 +65,13 @@ const Buttons = () => {
 
   return (
     <Tooltip title="Switch Units">
-      <div className={classes.root}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <ButtonGroup color="primary" aria-label="switch units">
           {buttonProps.map(({ button_units, button_symbol }) => (
             <Button
@@ -84,23 +79,19 @@ const Buttons = () => {
               variant={button_units === units ? "contained" : "outlined"}
               size="small"
               onClick={() => handleClick(button_units as Units)}
-              className={
-                button_units === units
-                  ? classes.buttonSelected
-                  : classes.buttonUnSelected
-              }
-              style={{
+              sx={(theme) => ({
+                ...buttonTheme(button_units, units, theme),
                 borderRadius:
                   button_units === "imperial"
                     ? "10px 0 0 10px"
                     : "0 10px 10px 0",
-              }}
+              })}
             >
               {button_symbol}
             </Button>
           ))}
         </ButtonGroup>
-      </div>
+      </Box>
     </Tooltip>
   );
 };
