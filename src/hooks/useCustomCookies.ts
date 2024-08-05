@@ -1,5 +1,5 @@
 import { useCookies } from "react-cookie";
-import { Location, Units } from "../features/initialState";
+import { Location, Units } from "../store/initialState";
 
 const cookiesOptions = {
   path: "/",

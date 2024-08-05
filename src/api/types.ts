@@ -1,4 +1,4 @@
-import { Units } from '../features/initialState';
+import { Units } from "../store/initialState";
 
 export type CookieLocation = Record<string, string> | null | undefined;
 
@@ -39,10 +39,10 @@ export type WeatherCurrent = {
   wind_gust?: number;
   weather: WeatherSummary[];
   rain?: {
-    '1h'?: number;
+    "1h"?: number;
   };
   snow?: {
-    '1h'?: number;
+    "1h"?: number;
   };
 };
 
@@ -65,10 +65,10 @@ export type WeatherHourly = {
   wind_deg: number;
   wind_gust?: number;
   rain?: {
-    '1h'?: number;
+    "1h"?: number;
   };
   snow?: {
-    '1h'?: number;
+    "1h"?: number;
   };
   weather: {
     id: number;

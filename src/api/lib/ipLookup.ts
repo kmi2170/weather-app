@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Location } from "../../features/initialState";
+import { Location } from "../../store/initialState";
 
 type IpType = {
   city: string;
