@@ -5,7 +5,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
-import { purple, red } from "@mui/material/colors";
+import { grey, purple, red } from "@mui/material/colors";
 
 import { useAppSelector } from "../../store/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme: Theme) => ({
       color: purple[500],
     },
   },
+  textAlertsDisabled: {
+    textTransform: "capitalize",
+    color: grey[500],
+    fontSize: "1.0rem",
+  },
   list: {
     display: "flex",
     flexDirection: "row",
@@ -55,6 +60,13 @@ const useStyles = makeStyles((theme: Theme) => ({
       borderBottom: `3px solid ${purple[500]}`,
     },
   },
+  listItemDisabled: {
+    padding: "0 1rem",
+    [theme.breakpoints?.down("md")]: {
+      padding: "0 0.5rem",
+    },
+    borderBottom: `3px solid transparent`,
+  },
 }));
 
 const LinksList = [
@@ -62,7 +74,7 @@ const LinksList = [
   { id: 1, name: "minutely" },
   { id: 2, name: "daily" },
   { id: 3, name: "hourly" },
-  { id: 4, name: "alerts" },
+  // { id: 4, name: "alerts" },
 ];
 
 const Navbar = () => {
@@ -103,29 +115,28 @@ const Navbar = () => {
             </ListItem>
           ))}
 
-          {isAlerts && (
-            <ListItem
-              key={5}
-              dense
-              disableGutters
-              alignItems="center"
-              className={classes.listItem}
-            >
-              <Link href={`#${LinksList[4]}`}>
-                <Typography
-                  variant="h6"
-                  align="center"
-                  className={classes.textAlerts}
-                >
-                  Alerts
-                </Typography>
-              </Link>
-            </ListItem>
-          )}
+          <ListItem
+            key={5}
+            dense
+            disableGutters
+            alignItems="center"
+            className={isAlerts ? classes.listItem : classes.listItemDisabled}
+          >
+            <Link href={`#${LinksList[4]}`}>
+              <Typography
+                variant="h6"
+                align="center"
+                className={
+                  isAlerts ? classes.textAlerts : classes.textAlertsDisabled
+                }
+              >
+                Alerts
+              </Typography>
+            </Link>
+          </ListItem>
         </List>
 
         <Buttons />
-        {/* <SwitchUnits /> */}
       </Toolbar>
     </AppBar>
   );
