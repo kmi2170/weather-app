@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
-import makeStyles from "@mui/styles/makeStyles";
+import Box from "@mui/material/Box";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 import { setLocation } from "../slice/weatherSlice";
@@ -23,25 +23,8 @@ import {
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../store/initialState";
 import { Weather } from "../api/types";
-import { Theme } from "@mui/material";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    minHeight: "100vh",
-  },
-  noLocation: {
-    margin: "5rem 0",
-  },
-  title: {
-    marginTop: "1rem",
-    color: theme.palette.primary.dark,
-  },
-}));
 
 const Home = () => {
-  const classes = useStyles();
-
   const dispatch = useAppDispatch();
   const units = useAppSelector((state) => state.weather.units);
   const lang = useAppSelector((state) => state.weather.lang);
@@ -57,7 +40,6 @@ const Home = () => {
 
   const { cookies, setLocationCookie } = useCustomCookies();
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (isLocationValid(cookies.weather_location)) {
       dispatch(setLocation(cookies.weather_location as Location));
@@ -74,10 +56,14 @@ const Home = () => {
       setLocationCookie(location);
     }
   }, [location]);
-  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
-    <div className={classes.root}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        minHeight: "100vh",
+      }}
+    >
       <Navbar />
       <Container>
         <Grid container spacing={2} justifyContent="center">
@@ -86,7 +72,10 @@ const Home = () => {
               variant="h3"
               component="h1"
               align="center"
-              className={classes.title}
+              sx={(theme) => ({
+                marginTop: "1rem",
+                color: theme.palette.primary.dark,
+              })}
             >
               My Weather Station
             </Typography>
@@ -150,7 +139,7 @@ const Home = () => {
 
         <Footer />
       </Container>
-    </div>
+    </Box>
   );
 };
 
