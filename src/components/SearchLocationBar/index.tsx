@@ -1,52 +1,21 @@
 import { memo, useState } from "react";
 import Image from "next/image";
 
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import Box from "@mui/material/Box";
 
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { asyncThunkSearchLocation } from "../../slice/weatherAsyncThunk";
 import { setIsNotFound } from "../../slice/weatherSlice";
-import { purple } from "@mui/material/colors";
 
 const icon_search = "/icon-search.png";
 const icon_cancel = "/icon-cancel.png";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  searchContainer: {
-    backgroundColor: "#fff",
-    borderRadius: 30,
-    margin: "0 5vw",
-    [theme.breakpoints?.up("sm")]: {
-      margin: "0 10vw",
-    },
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  searchInputbar: {
-    flexGrow: 1,
-  },
-  messageContainer: {
-    color: purple[800],
-    marginTop: ".5rem",
-  },
-  queryExamples: {
-    fontStyle: "italic",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-}));
-
 const queryExamples = ["London", "Seattle,WA,USA", "Tokyo,Japan"];
 
 const SearchLocationBar = () => {
-  const classes = useStyles();
-
   const isNotFound = useAppSelector((state) => state.weather.isNotFound);
   const dispatch = useAppDispatch();
 
@@ -58,8 +27,7 @@ const SearchLocationBar = () => {
     setSearchLocation(e.target.value);
   };
 
-  // const handleClear: React.MouseEventHandler<HTMLButtonElement> = () => {
-  const handleClear = () => {
+  const handleClear: React.MouseEventHandler<HTMLButtonElement> = () => {
     setSearchLocation("");
     dispatch(setIsNotFound(false));
   };
@@ -76,7 +44,19 @@ const SearchLocationBar = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className={classes.searchContainer}>
+        <Box
+          sx={(theme) => ({
+            backgroundColor: "#fff",
+            borderRadius: 30,
+            margin: "0 5vw",
+            [theme.breakpoints?.up("sm")]: {
+              margin: "0 10vw",
+            },
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          })}
+        >
           <IconButton type="submit" size="large">
             <Image
               src={icon_search}
@@ -85,7 +65,11 @@ const SearchLocationBar = () => {
               height={20}
             />
           </IconButton>
-          <div className={classes.searchInputbar}>
+          <Box
+            sx={{
+              flexGrow: 1,
+            }}
+          >
             <TextField
               fullWidth
               type="text"
@@ -95,7 +79,7 @@ const SearchLocationBar = () => {
               placeholder="Search Location; City,State,Country"
               style={{ borderColor: "white" }}
             />
-          </div>
+          </Box>
           <IconButton onClick={handleClear} size="large">
             <Image
               src={icon_cancel}
@@ -104,10 +88,15 @@ const SearchLocationBar = () => {
               height={20}
             />
           </IconButton>
-        </div>
+        </Box>
       </form>
       {isNotFound && (
-        <div className={classes.messageContainer}>
+        <Box
+          sx={(theme) => ({
+            color: theme.palette.primary.dark,
+            marginTop: ".5rem",
+          })}
+        >
           <Typography variant="h5" align="center">
             No Place Found
           </Typography>
@@ -118,14 +107,21 @@ const SearchLocationBar = () => {
           >
             Examples (case insensitive)
           </Typography>
-          <div className={classes.queryExamples}>
+          <Box
+            sx={{
+              fontStyle: "italic",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
             {queryExamples.map((example) => (
               <Typography key={example} variant="h6" align="center">
                 {example}
               </Typography>
             ))}
-          </div>
-        </div>
+          </Box>
+        </Box>
       )}
     </>
   );

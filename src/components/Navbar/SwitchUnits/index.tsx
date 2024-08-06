@@ -7,6 +7,7 @@ import { memo, useState } from "react";
 import Image from "next/image";
 import makeStyles from "@mui/styles/makeStyles";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -71,8 +72,25 @@ const SwitchUnits = () => {
         open={open}
         onClose={handleClose}
       >
-        <div className={classes.menuContent}>
-          <div className={classes.closeButton}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            margin: "0 10pt",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "1.25rem",
+              marginRight: ".75rem",
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+          >
             <IconButton
               aria-controls="icon-close"
               aria-haspopup="true"
@@ -81,7 +99,7 @@ const SwitchUnits = () => {
             >
               <Image src={icon_close} alt="close icon" width={15} height={15} />
             </IconButton>
-          </div>
+          </Box>
           <Typography
             variant="h6"
             align="center"
@@ -92,7 +110,7 @@ const SwitchUnits = () => {
           <MenuItem>
             <Buttons />
           </MenuItem>
-        </div>
+        </Box>
       </Menu>
     </>
   );
