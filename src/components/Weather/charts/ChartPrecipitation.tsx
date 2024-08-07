@@ -85,7 +85,7 @@ const ChartPrecipitation = ({
         height: height,
       }}
     >
-      <Line options={options} data={data} />;
+      <Line options={options} data={data} />
     </Box>
   );
 };

@@ -64,7 +64,7 @@ const ChartPressure = ({
 
   return (
     <Box sx={{ height: height }}>
-      <Line options={options} data={data} />;
+      <Line options={options} data={data} />
     </Box>
   );
 };
