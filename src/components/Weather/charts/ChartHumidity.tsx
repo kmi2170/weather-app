@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Box from "@mui/material/Box";
 import { lightBlue, lime, blueGrey } from "@mui/material/colors";
 
 import {
@@ -25,7 +26,11 @@ ChartJS.register(
   Legend
 );
 
-const ChartHumidity = ({ chartData, dataTime }: ChartProps) => {
+const ChartHumidity = ({
+  chartData,
+  dataTime,
+  height = "200px",
+}: ChartProps) => {
   const data_humidity = chartData.map(({ humidity }) => humidity);
   const data_clouds = chartData.map(({ clouds }) => clouds);
   const data_pop = chartData.map(({ pop }) => pop * 100);
@@ -77,7 +82,11 @@ const ChartHumidity = ({ chartData, dataTime }: ChartProps) => {
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return (
+    <Box sx={{ height: height }}>
+      <Line options={options} data={data} />;
+    </Box>
+  );
 };
 
 export default memo(ChartHumidity);

@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Box from "@mui/material/Box";
 import { blue, grey } from "@mui/material/colors";
 import {
   Chart as ChartJS,
@@ -24,7 +25,12 @@ ChartJS.register(
   Legend
 );
 
-const ChartPrecipitation = ({ chartData, dataTime, units }: ChartProps) => {
+const ChartPrecipitation = ({
+  chartData,
+  dataTime,
+  units,
+  height = "200px",
+}: ChartProps) => {
   const fall = (fall: number) => (units === "imperial" ? +fall / 25.4 : fall);
 
   const data_rain = chartData.map((el) =>
@@ -73,7 +79,15 @@ const ChartPrecipitation = ({ chartData, dataTime, units }: ChartProps) => {
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return (
+    <Box
+      sx={{
+        height: height,
+      }}
+    >
+      <Line options={options} data={data} />;
+    </Box>
+  );
 };
 
 export default memo(ChartPrecipitation);

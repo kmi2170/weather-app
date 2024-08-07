@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Box from "@mui/material/Box";
 import { brown } from "@mui/material/colors";
 import {
   Chart as ChartJS,
@@ -24,7 +25,12 @@ ChartJS.register(
   Legend
 );
 
-const ChartPressure = ({ chartData, dataTime, units }: ChartProps) => {
+const ChartPressure = ({
+  chartData,
+  dataTime,
+  units,
+  height = "200px",
+}: ChartProps) => {
   const data_pressure = chartData.map(({ pressure }) =>
     units === "imperial" ? (pressure / 1013.25) * 29.921 : pressure
   );
@@ -56,7 +62,11 @@ const ChartPressure = ({ chartData, dataTime, units }: ChartProps) => {
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return (
+    <Box sx={{ height: height }}>
+      <Line options={options} data={data} />;
+    </Box>
+  );
 };
 
 export default memo(ChartPressure);
