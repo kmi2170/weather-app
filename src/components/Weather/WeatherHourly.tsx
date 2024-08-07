@@ -1,8 +1,5 @@
-import { useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import makeStyles from "@mui/styles/makeStyles";
-import { Theme } from "@mui/material/styles";
 
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
@@ -18,25 +15,7 @@ import {
 } from "./charts";
 import { Weather } from "../../api/types";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  textTitle: {
-    color: theme.palette.primary.dark,
-  },
-  text: {},
-  paper: {
-    padding: "1rem",
-  },
-  charts: {
-    height: "200px",
-  },
-  chartsHumid: {
-    height: "250px",
-  },
-}));
-
 const WeatherHourly = () => {
-  const classes = useStyles();
-
   const { units, lang, location } = useAppSelector(selectWeather);
 
   const { data, error } = useGetWeatherQuery({
@@ -52,32 +31,48 @@ const WeatherHourly = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.textTitle}>
+      <Typography
+        variant="h6"
+        sx={(theme) => ({
+          color: theme.palette.primary.dark,
+        })}
+      >
         Hourly
       </Typography>
-      <Paper className={classes.paper}>
-        <Typography variant="subtitle1" align="center" className={classes.text}>
+
+      <Paper
+        sx={{
+          padding: "1rem",
+        }}
+      >
+        <Typography variant="subtitle1" align="center">
           Hourly Forecast for 48 Hours
         </Typography>
-        <div className={classes.charts}>
-          <ChartTemps chartData={hourly} dataTime={dataTime} units={units} />
-        </div>
-        <div className={classes.chartsHumid}>
-          <ChartHumidity chartData={hourly} dataTime={dataTime} />
-        </div>
-        <div className={classes.charts}>
-          <ChartPrecipitation
-            chartData={hourly}
-            dataTime={dataTime}
-            units={units}
-          />
-        </div>
-        <div className={classes.charts}>
-          <ChartWind chartData={hourly} dataTime={dataTime} units={units} />
-        </div>
-        <div className={classes.charts}>
-          <ChartPressure chartData={hourly} dataTime={dataTime} units={units} />
-        </div>
+
+        <ChartTemps
+          chartData={hourly}
+          dataTime={dataTime}
+          units={units}
+          height="200px"
+        />
+        <ChartHumidity chartData={hourly} dataTime={dataTime} height="250px" />
+        <ChartPrecipitation
+          chartData={hourly}
+          dataTime={dataTime}
+          units={units}
+        />
+        <ChartWind
+          chartData={hourly}
+          dataTime={dataTime}
+          units={units}
+          height="200px"
+        />
+        <ChartPressure
+          chartData={hourly}
+          dataTime={dataTime}
+          units={units}
+          height="200px"
+        />
       </Paper>
     </>
   );
