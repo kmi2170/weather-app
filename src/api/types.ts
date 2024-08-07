@@ -6,6 +6,7 @@ export interface ChartProps {
   chartData: WeatherHourly;
   dataTime: string[];
   units?: Units;
+  height?: string;
 }
 
 export type WeatherQuery = {

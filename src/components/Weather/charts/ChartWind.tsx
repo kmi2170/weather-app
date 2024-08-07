@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Box from "@mui/material/Box";
 import { green, lightGreen } from "@mui/material/colors";
 import {
   Chart as ChartJS,
@@ -24,7 +25,12 @@ ChartJS.register(
   Legend
 );
 
-const ChartWind = ({ chartData, dataTime, units }: ChartProps) => {
+const ChartWind = ({
+  chartData,
+  dataTime,
+  units,
+  height = "200px",
+}: ChartProps) => {
   const data_wind_speed = chartData.map(({ wind_speed }) => wind_speed);
   const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust ?? 0);
 
@@ -62,7 +68,11 @@ const ChartWind = ({ chartData, dataTime, units }: ChartProps) => {
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return (
+    <Box sx={{ height: height }}>
+      <Line options={options} data={data} />;
+    </Box>
+  );
 };
 
 export default memo(ChartWind);

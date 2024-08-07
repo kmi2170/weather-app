@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Box from "@mui/material/Box";
 import { pink, deepOrange } from "@mui/material/colors";
 import {
   Chart as ChartJS,
@@ -24,7 +25,7 @@ ChartJS.register(
   Legend
 );
 
-const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
+const ChartTemps = ({ chartData, dataTime, units, height }: ChartProps) => {
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
 
@@ -65,7 +66,11 @@ const ChartTemps = ({ chartData, dataTime, units }: ChartProps) => {
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return (
+    <Box sx={{ height: height }}>
+      <Line options={options} data={data} />
+    </Box>
+  );
 };
 
 export default memo(ChartTemps);

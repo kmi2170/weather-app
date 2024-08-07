@@ -1,7 +1,5 @@
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import makeStyles from "@mui/styles/makeStyles";
-import { Theme } from "@mui/material/styles";
 
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
@@ -10,19 +8,7 @@ import { localTime } from "../../utils/time";
 import { ChartMinutely } from "./charts";
 import { Weather } from "../../api/types";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  textTitle: {
-    color: theme.palette.primary.dark,
-  },
-  text: {},
-  paper: {
-    padding: "1rem",
-  },
-}));
-
 const WeatherMinutely = () => {
-  const classes = useStyles();
-
   const { units, lang, location } = useAppSelector(selectWeather);
 
   const { data, error } = useGetWeatherQuery({
@@ -40,14 +26,22 @@ const WeatherMinutely = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.textTitle}>
+      <Typography
+        variant="h6"
+        sx={(theme) => ({
+          color: theme.palette.primary.dark,
+        })}
+      >
         Minutely
       </Typography>
       <Paper
-        className={classes.paper}
-        style={{ height: 220, paddingBottom: 50 }}
+        sx={{
+          padding: "1rem",
+          height: "220px",
+          paddingBottom: "50px",
+        }}
       >
-        <Typography variant="subtitle1" align="center" className={classes.text}>
+        <Typography variant="subtitle1" align="center">
           {isFall
             ? "Precipitation for the next 1 Hour"
             : "No Precipitation for the next 1 Hour"}
