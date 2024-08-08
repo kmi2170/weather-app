@@ -20,6 +20,10 @@ let theme = createTheme({
     background: {
       default: "rgb(233, 213, 255)",
     },
+    warning: {
+      light: red.A100,
+      main: red[500],
+    },
     error: {
       main: red.A400,
     },

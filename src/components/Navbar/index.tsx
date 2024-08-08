@@ -104,19 +104,24 @@ const Navbar = () => {
                 padding: "0 0.5rem",
               },
               borderBottom: `3px solid transparent`,
+              "&:hover": isAlerts
+                ? {
+                    borderBottom: `3px solid ${theme.palette.warning.light}`,
+                  }
+                : undefined,
             })}
           >
-            <Link href={`#${LinksList[4]}`}>
+            <Link href={`#alerts`}>
               <Typography
                 variant="h6"
                 align="center"
                 sx={(theme) => ({
                   textTransform: "capitalize",
-                  color: isAlerts ? red[500] : grey[500],
+                  color: isAlerts ? theme.palette.warning.main : grey[500],
                   fontSize: "1.0rem",
                   "&:hover": isAlerts
                     ? {
-                        color: theme.palette.primary.main,
+                        color: theme.palette.warning.light,
                       }
                     : undefined,
                 })}
