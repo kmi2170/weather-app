@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store/store";
-import { initialState, Location, Units } from "../store/initialState";
+import { initialState, Lang, Location, Units } from "../store/initialState";
 import {
   asyncThunkIpLookupLocation,
   asyncThunkSearchLocation,
@@ -22,9 +22,9 @@ export const weatherSlice = createSlice({
     setIsNotFound: (state, action: PayloadAction<boolean>) => {
       state.isNotFound = action.payload;
     },
-    /* setLang: (state, action: PayloadAction<Lang>) => {
+    setLang: (state, action: PayloadAction<Lang>) => {
       state.lang = action.payload;
-    }, */
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,6 +55,7 @@ export const weatherSlice = createSlice({
 
 export const selectWeather = (state: RootState) => state.weather;
 
-export const { setLocation, setUnits, setIsNotFound } = weatherSlice.actions;
+export const { setLocation, setUnits, setIsNotFound, setLang } =
+  weatherSlice.actions;
 
 export default weatherSlice.reducer;
