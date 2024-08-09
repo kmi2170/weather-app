@@ -22,12 +22,13 @@ import {
 } from "../components/Weather";
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../store/initialState";
+import ErrorModal from "../components/Modals/errorModal";
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const { units, lang, location } = useAppSelector((state) => state.weather);
 
-  const { isLoading } = useGetWeatherQuery({
+  const { isLoading, isError } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
@@ -60,6 +61,7 @@ const Home = () => {
         minHeight: "100vh",
       }}
     >
+      {isError && <ErrorModal />}
       <Navbar />
       <Container>
         <Grid container spacing={2} justifyContent="center">
