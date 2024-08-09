@@ -61,7 +61,8 @@ const Home = () => {
         minHeight: "100vh",
       }}
     >
-      {isError && <ErrorModal />}
+      {/* {isError && <ErrorModal />} */}
+      {true && <ErrorModal />}
       <Navbar />
       <Container>
         <Grid container spacing={2} justifyContent="center">
