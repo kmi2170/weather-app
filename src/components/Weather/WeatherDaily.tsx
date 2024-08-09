@@ -76,7 +76,7 @@ const WeatherDaily = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data, error } = useGetWeatherQuery({
+  const { data } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,

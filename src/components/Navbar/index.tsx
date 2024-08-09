@@ -20,9 +20,7 @@ const LinksList = [
 ];
 
 const Navbar = () => {
-  const units = useAppSelector((state) => state.weather.units);
-  const lang = useAppSelector((state) => state.weather.lang);
-  const location = useAppSelector((state) => state.weather.location);
+  const { units, location, lang } = useAppSelector((state) => state.weather);
 
   const { data } = useGetWeatherQuery({
     lat: String(location.lat),

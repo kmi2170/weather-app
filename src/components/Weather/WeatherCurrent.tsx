@@ -79,9 +79,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const WeatherCurrent = () => {
   const classes = useStyles();
 
-  const units = useAppSelector((state) => state.weather.units);
-  const lang = useAppSelector((state) => state.weather.lang);
-  const location = useAppSelector((state) => state.weather.location);
+  const { units, location, lang } = useAppSelector((state) => state.weather);
 
   const { data, error } = useGetWeatherQuery({
     lat: String(location.lat),

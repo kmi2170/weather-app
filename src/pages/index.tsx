@@ -25,9 +25,7 @@ import { Location } from "../store/initialState";
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const units = useAppSelector((state) => state.weather.units);
-  const lang = useAppSelector((state) => state.weather.lang);
-  const location = useAppSelector((state) => state.weather.location);
+  const { units, lang, location } = useAppSelector((state) => state.weather);
 
   const { isLoading } = useGetWeatherQuery({
     lat: String(location.lat),
