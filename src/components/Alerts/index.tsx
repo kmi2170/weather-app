@@ -19,6 +19,10 @@ const Alerts = () => {
     lang,
   });
 
+  if (!(data as Weather)?.alerts) {
+    return null;
+  }
+
   const { alerts, timezone } = data as Weather;
 
   return (

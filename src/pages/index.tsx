@@ -22,7 +22,6 @@ import {
 } from "../components/Weather";
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../store/initialState";
-import { Weather } from "../api/types";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +35,6 @@ const Home = () => {
     units,
     lang,
   });
-  const isAlerts = !!(data as Weather)?.alerts;
 
   const { cookies, setLocationCookie } = useCustomCookies();
 
@@ -130,11 +128,9 @@ const Home = () => {
             )}
           </Grid>
 
-          {isAlerts && (
-            <Grid id="alerts" item xs={12}>
-              <Alerts />
-            </Grid>
-          )}
+          <Grid id="alerts" item xs={12}>
+            <Alerts />
+          </Grid>
         </Grid>
 
         <Footer />
