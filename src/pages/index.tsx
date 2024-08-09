@@ -29,7 +29,7 @@ const Home = () => {
   const lang = useAppSelector((state) => state.weather.lang);
   const location = useAppSelector((state) => state.weather.location);
 
-  const { data } = useGetWeatherQuery({
+  const { isLoading } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
@@ -84,7 +84,7 @@ const Home = () => {
           </Grid>
 
           <Grid id="current" item xs={12}>
-            {data ? (
+            {!isLoading ? (
               <WeatherCurrent />
             ) : (
               <Skeleton variant="rectangular" height={200} />
@@ -92,7 +92,7 @@ const Home = () => {
           </Grid>
 
           <Grid id="minutely" item xs={12}>
-            {data ? (
+            {!isLoading ? (
               <WeatherMinutely />
             ) : (
               <Skeleton variant="rectangular" height={150} />
@@ -100,7 +100,7 @@ const Home = () => {
           </Grid>
 
           <Grid id="daily" item xs={12}>
-            {data ? (
+            {!isLoading ? (
               <WeatherDaily />
             ) : (
               <Grid
@@ -121,7 +121,7 @@ const Home = () => {
           </Grid>
 
           <Grid id="hourly" item xs={12}>
-            {data ? (
+            {!isLoading ? (
               <WeatherHourly />
             ) : (
               <Skeleton variant="rectangular" height={150} />
