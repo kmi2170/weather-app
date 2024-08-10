@@ -3,14 +3,13 @@ import { setLocation, setIsNotFound } from "../slice/weatherSlice";
 import axios from "axios";
 
 import { ipLookup } from "../api/lib";
-import { Geocoding } from "../api/types";
+import { Geocoding, LocationType } from "../api/types";
 import { Location } from "../store/initialState";
 
 export const asyncThunkIpLookupLocation = createAsyncThunk(
   "weather/asyncThunkIpLookupLocation",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      // const { city, region, country, lat, lon } = await ipLookup();
       const data = await ipLookup();
       const { city, region, country, lat, lon } = data as Location;
 

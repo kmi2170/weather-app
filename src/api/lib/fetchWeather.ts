@@ -11,15 +11,11 @@ export const fetchWeather = async ({
 }: WeatherQuery): Promise<Weather | string> => {
   const url = `https://api.openweathermap.org/data/3.0/onecall`;
   try {
-    // if ((+lat || +lat === 0.0) && (+lon || +lon === 0.0)) {
     const { data } = await axios.get<Weather>(url, {
       params: { lat, lon, units, lang, appid },
     });
 
     return data;
-    // } else {
-    //   return null;
-    // }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);

@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { asyncThunkSearchLocation } from "../../slice/weatherAsyncThunk";
 import { setIsNotFound } from "../../slice/weatherSlice";
+import SearchLocationModal from "../Modals/SearchLocation/searchLocationModal";
+import { MGlassIcon } from "../../assets/icons/mGlass";
 
 const icon_search = "/icon-search.png";
 const icon_cancel = "/icon-cancel.png";
@@ -41,8 +43,54 @@ const SearchLocationBar = () => {
     }
   };
 
+  const [open, setOpen] = useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
+      <SearchLocationModal open={open} handleClose={handleClose} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ position: "relative" }}>
+          <Box
+            sx={(theme) => ({
+              width: 300,
+              [theme.breakpoints.up("md")]: {
+                width: 600,
+              },
+            })}
+          >
+            <input
+              placeholder="Search City"
+              onClick={handleOpen}
+              style={{
+                paddingLeft: 50,
+                height: "2rem",
+                width: "100%",
+                border: "none",
+                borderRadius: "10px",
+                outline: "none",
+              }}
+            />
+          </Box>
+          <Box
+            sx={(theme) => ({
+              position: "absolute",
+              top: 5,
+              left: 10,
+              color: theme.palette.primary.main,
+            })}
+          >
+            <MGlassIcon />
+          </Box>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit}>
         <Box
           sx={(theme) => ({
@@ -57,20 +105,20 @@ const SearchLocationBar = () => {
             alignItems: "center",
           })}
         >
-          <IconButton type="submit" size="large">
+          {/* <IconButton type="submit" size="large">
             <Image
               src={icon_search}
               alt="search button"
               width={20}
               height={20}
             />
-          </IconButton>
+          </IconButton> */}
           <Box
             sx={{
               flexGrow: 1,
             }}
           >
-            <TextField
+            {/* <TextField
               fullWidth
               type="text"
               variant="standard"
@@ -78,16 +126,17 @@ const SearchLocationBar = () => {
               onChange={handleInput}
               placeholder="Search Location; City,State,Country"
               style={{ borderColor: "white" }}
-            />
+              onClick={handleOpen}
+            /> */}
           </Box>
-          <IconButton onClick={handleClear} size="large">
+          {/* <IconButton onClick={handleClear} size="large">
             <Image
               src={icon_cancel}
               alt="clear button"
               width={20}
               height={20}
             />
-          </IconButton>
+          </IconButton> */}
         </Box>
       </form>
       {isNotFound && (
