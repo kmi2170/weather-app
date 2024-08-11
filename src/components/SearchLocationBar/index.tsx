@@ -10,7 +10,7 @@ import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { asyncThunkSearchLocation } from "../../slice/weatherAsyncThunk";
 import { setIsNotFound } from "../../slice/weatherSlice";
 import SearchLocationModal from "../Modals/SearchLocation/searchLocationModal";
-import { MGlassIcon } from "../../assets/icons/mGlass";
+import { MGlassIcon } from "../../assets/icons";
 
 const icon_search = "/icon-search.png";
 const icon_cancel = "/icon-cancel.png";
@@ -50,6 +50,7 @@ const SearchLocationBar = () => {
   return (
     <>
       <SearchLocationModal open={open} handleClose={handleClose} />
+
       <div
         style={{
           display: "flex",
