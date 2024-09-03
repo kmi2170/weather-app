@@ -1,8 +1,15 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { purple, red } from "@mui/material/colors";
-import { Overlock } from "next/font/google";
+import { Overlock, Rubik } from "next/font/google";
 
 export const overlock = Overlock({
+  subsets: ["latin"],
+  style: "normal",
+  weight: ["400"],
+  display: "swap",
+});
+
+export const rubik = Rubik({
   subsets: ["latin"],
   style: "normal",
   weight: ["400"],
@@ -29,7 +36,8 @@ let theme = createTheme({
     },
   },
   typography: {
-    fontFamily: overlock.style.fontFamily,
+    fontFamily: rubik.style.fontFamily,
+    // fontFamily: overlock.style.fontFamily,
   },
   components: {
     MuiPaper: {
