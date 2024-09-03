@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { asyncThunkSearchLocation } from "../../slice/weatherAsyncThunk";
@@ -43,13 +44,20 @@ const SearchLocationBar = () => {
     }
   };
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
-    <>
-      <SearchLocationModal open={open} handleClose={handleClose} />
+    <div>
+      <Modal
+        open={open}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        // onClose={handleClose}
+      >
+        <SearchLocationModal handleClose={handleClose} />
+      </Modal>
 
       <div
         style={{
@@ -76,6 +84,7 @@ const SearchLocationBar = () => {
                 border: "none",
                 borderRadius: "10px",
                 outline: "none",
+                caretColor: "transparent",
               }}
             />
           </Box>
@@ -173,7 +182,7 @@ const SearchLocationBar = () => {
           </Box>
         </Box>
       )}
-    </>
+    </div>
   );
 };
 

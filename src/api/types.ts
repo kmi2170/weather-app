@@ -148,6 +148,8 @@ export type LocationType = {
   country_code?: string;
   elevation?: string;
   timezone?: string;
+  latitude: number;
+  longitude: number;
 };
 
 export type LocationAllType = {

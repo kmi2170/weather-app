@@ -1,56 +1,105 @@
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { ClearIcon, MGlassIcon } from "../../../assets/icons";
-import { ChangeEvent, useRef, useState } from "react";
+import { ClearIcon, CloseIcon, MGlassIcon } from "../../../assets/icons";
+
 import { purple } from "@mui/material/colors";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { asyncThunkFindLocations } from "../../../slice/locationsAsyncThunk";
+import { LocationList } from "./locationList";
+import { LocationType } from "../../../api/types";
+import { setLocations } from "../../../slice/locationsSlice";
+import { setLocation } from "../../../slice/weatherSlice";
+import { Location } from "../../../store/initialState";
 
 const style = {
   position: "absolute" as "absolute",
-  top: "20%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
+  width: "800px",
+  height: "800px",
+  overflowY: "auto",
   boxShadow: 24,
-  p: 4,
-  outline: 0,
+  padding: 4,
   borderRadius: "10px",
 };
 
 type SearchLocationModalProps = {
-  open: boolean;
   handleClose(): void;
 };
 
 export default function SearchLocationModal(props: SearchLocationModalProps) {
-  const { open, handleClose } = props;
+  const { handleClose } = props;
 
-  //const isNotFound = useAppSelector((state) => state.weather.isNotFound);
-  const locations = useAppSelector((state) => state.locations);
+  const { locations } = useAppSelector((state) => state.locations);
   const dispatch = useAppDispatch();
 
-  console.log(locations);
-
-  const [candidateLocations, setCandidateLocations] = useState([]);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
   const [isShortCharacter, setIsShortCharacter] = useState(true);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current?.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    function handleKeyPress(e: KeyboardEvent) {
+      switch (e.key) {
+        case "ArrowUp":
+          setSelectedLocationIndex((prev) => {
+            return prev > 0 ? prev - 1 : prev;
+          });
+          break;
+        case "ArrowDown":
+          setSelectedLocationIndex((prev) => {
+            return prev < locations.length - 1 ? prev + 1 : prev;
+          });
+          break;
+        case "Enter":
+          const location = locations[selectedLocationIndex] as LocationType;
+          console.log(location);
+          const { name, admin1, country, latitude, longitude } = location;
+          const displayLocation = {
+            city: name,
+            region: admin1,
+            country: country,
+            lat: latitude,
+            lon: longitude,
+          } as Location;
+          dispatch(setLocation(displayLocation));
+          closeModal();
+        case "Escape":
+          closeModal();
+          break;
+        default:
+          break;
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [selectedLocationIndex, locations]);
+
   function onTypeWithDebounce(e: ChangeEvent) {
     if (!inputRef.current?.value) return;
 
     if (inputRef.current.value.length <= 1) {
-      if (candidateLocations.length) setCandidateLocations([]);
+      if (locations.length !== 0) dispatch(setLocations([]));
       if (!isShortCharacter) setIsShortCharacter(true);
       return;
     }
 
     if (timerRef.current) {
       clearTimeout(timerRef.current);
+      timerRef.current = null;
     }
 
     timerRef.current = setTimeout(async () => {
@@ -66,78 +115,172 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
     }, 500);
   }
 
+  const handleHoverLocation = useCallback(function handleHoverLocation(
+    selectedIdx: number
+  ) {
+    setSelectedLocationIndex(selectedIdx);
+  },
+  []);
+
+  const handleClickLocation = useCallback(
+    function handleClickLocation(selectedIdx: number) {
+      const location = locations[selectedIdx] as LocationType;
+      console.log(locations);
+      const { name, admin1, country, latitude, longitude } = location;
+      const displayLocation = {
+        city: name,
+        region: admin1,
+        country: country,
+        lat: latitude,
+        lon: longitude,
+      } as Location;
+      dispatch(setLocation(displayLocation));
+      closeModal();
+    },
+    [locations]
+  );
+
+  const clearText = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+      inputRef.current?.focus();
+
+      dispatch(setLocations([]));
+      if (!isShortCharacter) setIsShortCharacter(true);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    }
+  }, [isShortCharacter]);
+
+  const closeModal = () => {
+    dispatch(setLocations([]));
+    handleClose();
+  };
+
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+      <Box
+        sx={(theme) => ({
+          ...style,
+          border: `2px solid ${theme.palette.primary.light}`,
+          [theme.breakpoints.down("md")]: {
+            width: "600px",
+          },
+          [theme.breakpoints.down("sm")]: {
+            width: "350px",
+            height: "600px",
+          },
+        })}
       >
-        <Box
-          sx={(theme) => ({
-            ...style,
-            border: `2px solid ${theme.palette.primary.light}`,
-            width: "400px",
-            [theme.breakpoints.down("sm")]: {
-              width: "350px",
-            },
-          })}
-        >
-          <div style={{ position: "relative" }}>
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Enter City Name"
-              onChange={onTypeWithDebounce}
-              onKeyDown={() => {}}
-              spellCheck="false"
-              autoComplete="off"
-              style={{
-                paddingLeft: 50,
-                height: "2rem",
-                width: "100%",
-                border: `2px solid ${purple[200]}`,
-                borderRadius: "10px",
-                outline: "none",
-              }}
-            />
-            <Box
-              sx={(theme) => ({
-                position: "absolute",
-                top: 5,
-                left: 10,
-                color: theme.palette.primary.main,
-              })}
-            >
-              <MGlassIcon />
-            </Box>
-            <Box
-              sx={(theme) => ({
-                position: "absolute",
-                top: 5,
-                right: 10,
-                color: theme.palette.primary.main,
-              })}
-            >
-              <ClearIcon />
-            </Box>
-          </div>
+        <CloseButton onClick={closeModal} />
 
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            align="center"
-            sx={{ marginTop: "1rem" }}
-          >
-            Type more than one character
-          </Typography>
-          {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            type in city name
-          </Typography> */}
-        </Box>
-      </Modal>
+        <div style={{ position: "relative", marginTop: 50 }}>
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Enter City Name"
+            onChange={onTypeWithDebounce}
+            onKeyDown={() => {}}
+            spellCheck="false"
+            autoComplete="off"
+            style={{
+              paddingLeft: 50,
+              height: "3rem",
+              width: "100%",
+              border: `2px solid ${purple[200]}`,
+              borderRadius: "10px",
+              outline: "none",
+            }}
+          />
+          <MGlassButton />
+          <ClearButton onClick={clearText} />
+        </div>
+
+        <LocationList
+          locations={locations}
+          selectedLocationIndex={selectedLocationIndex}
+          handleClickLocation={handleClickLocation}
+          handleHoverLocation={handleHoverLocation}
+        />
+
+        <Message
+          isShortCharacter={isShortCharacter}
+          listLength={locations.length}
+        />
+      </Box>
     </div>
   );
 }
+
+type MessageProps = {
+  isShortCharacter: boolean;
+  listLength: number;
+};
+
+function Message(props: MessageProps) {
+  const { isShortCharacter, listLength } = props;
+
+  return (
+    <>
+      {isShortCharacter && (
+        <Typography variant="h6" align="center" sx={{ marginTop: "1rem" }}>
+          Type more than one character
+        </Typography>
+      )}
+      {!isShortCharacter && listLength === 0 && (
+        <Typography variant="h6" align="center" sx={{ marginTop: "1rem" }}>
+          No Place was Found
+        </Typography>
+      )}
+    </>
+  );
+}
+
+const MGlassButton = () => {
+  return (
+    <Box
+      sx={(theme) => ({
+        position: "absolute",
+        top: 15,
+        left: 10,
+        color: theme.palette.primary.main,
+      })}
+    >
+      <MGlassIcon />
+    </Box>
+  );
+};
+
+const ClearButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <Box
+      sx={(theme) => ({
+        position: "absolute",
+        top: 15,
+        right: 10,
+        color: theme.palette.primary.main,
+      })}
+      onClick={onClick}
+    >
+      <ClearIcon />
+    </Box>
+  );
+};
+
+const CloseButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <Box
+      sx={(theme) => ({
+        position: "absolute",
+        top: 15,
+        right: 20,
+        color: theme.palette.primary.main,
+      })}
+      onClick={onClick}
+    >
+      <CloseIcon />
+    </Box>
+  );
+};

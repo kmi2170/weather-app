@@ -111,15 +111,6 @@ const WeatherCurrent = () => {
 
   const { city, region, country } = location;
 
-  const countryData = country_region_data.filter(
-    (el) => el.countryShortCode === country
-  );
-  const countryName = countryData.length ? countryData[0].countryName : country;
-  const regionData = countryData[0].regions.filter(
-    (el) => el.shortCode === region
-  );
-  const regionName = regionData.length ? regionData[0].name : region;
-
   return (
     <>
       <Typography variant="h6" className={classes.textTitle}>
@@ -143,10 +134,10 @@ const WeatherCurrent = () => {
               <div className={classes.locationSubContainer}>
                 <Typography variant="h5" className={classes.text}>
                   {city}
-                  {regionName && <span>,&nbsp;</span>}
+                  {region && <span>,&nbsp;</span>}
                 </Typography>
                 <Typography variant="h6" className={classes.text}>
-                  {regionName}
+                  {region}
                 </Typography>
               </div>
 
@@ -156,7 +147,7 @@ const WeatherCurrent = () => {
                 className={classes.country}
                 style={{ fontStyle: "italic" }}
               >
-                {countryName}
+                {country}
               </Typography>
 
               {location?.lat && location?.lon && (
