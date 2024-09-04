@@ -1,7 +1,7 @@
 import { memo } from "react";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import { WeatherSummary } from "../../../api/types";
-import { purple } from '@mui/material/colors';
+import { purple } from "@mui/material/colors";
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -13,40 +13,39 @@ const useStyles = makeStyles(() => ({
 interface WeaterIconProps {
   sunset?: number;
   sunrise?: number;
-  weather: WeatherSummary[];
+  time?: number;
+  weatherId: number;
   current: boolean;
+  size: string;
 }
 
 const WeatherIcon = ({
   sunset,
   sunrise,
-  weather,
+  time,
+  weatherId,
   current,
+  size = "2rem",
 }: WeaterIconProps) => {
   const classes = useStyles();
 
   const weatherIconClass = () => {
     if (current) {
-      const dt = Math.floor(new Date().getTime() / 1000);
+      const t = time || Math.floor(new Date().getTime() / 1000);
       const period =
         sunrise && sunset
-          ? sunrise <= dt && dt <= sunset
+          ? sunrise <= t && t <= sunset
             ? "day"
             : "night"
           : "day";
 
-      return `wi wi-owm-${period}-${weather[0].id} ${classes.icon}`;
+      return `wi wi-owm-${period}-${weatherId} ${classes.icon}`;
     }
 
-    return `wi wi-owm-day-${weather[0].id} ${classes.icon}`;
+    return `wi wi-owm-day-${weatherId} ${classes.icon}`;
   };
 
-  return (
-    <i
-      className={weatherIconClass()}
-      style={{ fontSize: current ? "4rem" : "2rem" }}
-    />
-  );
+  return <i className={weatherIconClass()} style={{ fontSize: size }} />;
 };
 
 export default memo(WeatherIcon);

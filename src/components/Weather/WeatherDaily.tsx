@@ -133,7 +133,11 @@ const WeatherDaily = () => {
                   >
                     {data.weather[0].main}
                   </Typography>
-                  <WeatherIcon weather={data.weather} current={false} />
+                  <WeatherIcon
+                    weatherId={data.weather[0].id}
+                    current={false}
+                    size="2rem"
+                  />
                   <Typography
                     variant="subtitle2"
                     align="center"

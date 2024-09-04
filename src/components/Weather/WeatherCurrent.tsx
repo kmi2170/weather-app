@@ -173,8 +173,9 @@ const WeatherCurrent = () => {
                   <WeatherIcon
                     sunrise={sunrise}
                     sunset={sunset}
-                    weather={weather}
+                    weatherId={weather[0].id}
                     current
+                    size="4rem"
                   />
                 </div>
                 <Typography variant="subtitle2" align="center">
