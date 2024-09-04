@@ -53,6 +53,11 @@ const Navbar = () => {
             display: "flex",
             flexDirection: "row",
             overflowX: "auto",
+            "-ms-overflow-style": "none", // IE and Edge
+            "scrollbar-width": "none", // Firefox
+            "&::-webkit-scrollbar": {
+              display: "none", // Chrome, Safari, and Opera
+            },
           })}
         >
           {LinksList.map(({ id, name }) => (
@@ -64,11 +69,14 @@ const Navbar = () => {
                 padding: "0 1rem",
                 [theme.breakpoints?.down("md")]: {
                   padding: "0 0.5rem",
+                  // "&:hover": {
+                  //   color: theme.palette.primary.main,
+                  // },
                 },
-                borderBottom: `3px solid transparent`,
-                "&:hover": {
-                  borderBottom: `3px solid ${theme.palette.primary.main}`,
-                },
+                // borderBottom: `3px solid transparent`,
+                // "&:hover": {
+                //   borderBottom: `3px solid ${theme.palette.primary.main}`,
+                // },
               })}
             >
               <Link href={`#${name}`}>
@@ -78,7 +86,7 @@ const Navbar = () => {
                   sx={(theme) => ({
                     textTransform: "capitalize",
                     color: theme.palette.primary.dark,
-                    "&:hover": {
+                    "&:active": {
                       color: theme.palette.primary.main,
                     },
                     [theme.breakpoints?.down("sm")]: {
@@ -102,12 +110,12 @@ const Navbar = () => {
               [theme.breakpoints?.down("md")]: {
                 padding: "0 0.5rem",
               },
-              borderBottom: `3px solid transparent`,
-              "&:hover": isAlerts
-                ? {
-                    borderBottom: `3px solid ${theme.palette.warning.light}`,
-                  }
-                : undefined,
+              // borderBottom: `3px solid transparent`,
+              // "&:hover": isAlerts
+              //   ? {
+              //       borderBottom: `3px solid ${theme.palette.warning.light}`,
+              //     }
+              //   : undefined,
             })}
           >
             <Link href={`#alerts`}>
@@ -118,7 +126,7 @@ const Navbar = () => {
                   textTransform: "capitalize",
                   color: isAlerts ? theme.palette.warning.main : grey[500],
                   fontSize: "1.0rem",
-                  "&:hover": isAlerts
+                  "&:active": isAlerts
                     ? {
                         color: theme.palette.warning.light,
                       }
