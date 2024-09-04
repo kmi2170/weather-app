@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <AppBar
       position="sticky"
-      sx={{ background: "rgba(233, 213, 255, 0.8)", borderRadius: 0 }}
+      sx={{ background: "rgba(233, 213, 255, 0.9)", borderRadius: 0 }}
     >
       <Toolbar
         variant="dense"
@@ -67,16 +67,7 @@ const Navbar = () => {
               disableGutters
               sx={(theme) => ({
                 padding: "0 1rem",
-                [theme.breakpoints?.down("md")]: {
-                  padding: "0 0.5rem",
-                  // "&:hover": {
-                  //   color: theme.palette.primary.main,
-                  // },
-                },
-                // borderBottom: `3px solid transparent`,
-                // "&:hover": {
-                //   borderBottom: `3px solid ${theme.palette.primary.main}`,
-                // },
+                [theme.breakpoints?.down("md")]: { padding: "0 0.5rem" },
               })}
             >
               <Link href={`#${name}`}>
@@ -86,12 +77,8 @@ const Navbar = () => {
                   sx={(theme) => ({
                     textTransform: "capitalize",
                     color: theme.palette.primary.dark,
-                    "&:active": {
-                      color: theme.palette.primary.main,
-                    },
-                    [theme.breakpoints?.down("sm")]: {
-                      fontSize: "1.0rem",
-                    },
+                    "&:active": { color: theme.palette.primary.main },
+                    [theme.breakpoints?.down("sm")]: { fontSize: "1.0rem" },
                   })}
                 >
                   {name}
@@ -107,15 +94,7 @@ const Navbar = () => {
             alignItems="center"
             sx={(theme) => ({
               padding: "0 1rem",
-              [theme.breakpoints?.down("md")]: {
-                padding: "0 0.5rem",
-              },
-              // borderBottom: `3px solid transparent`,
-              // "&:hover": isAlerts
-              //   ? {
-              //       borderBottom: `3px solid ${theme.palette.warning.light}`,
-              //     }
-              //   : undefined,
+              [theme.breakpoints?.down("md")]: { padding: "0 0.5rem" },
             })}
           >
             <Link href={`#alerts`}>
@@ -127,9 +106,7 @@ const Navbar = () => {
                   color: isAlerts ? theme.palette.warning.main : grey[500],
                   fontSize: "1.0rem",
                   "&:active": isAlerts
-                    ? {
-                        color: theme.palette.warning.light,
-                      }
+                    ? { color: theme.palette.warning.light }
                     : undefined,
                 })}
               >
@@ -160,7 +137,7 @@ const MenuRightBlur = memo(() => {
         width: "15%",
         height: "100%",
         backgroundImage:
-          "linear-gradient(90deg,rgba(233, 213, 255, 0.8), rgba(233, 213, 255, 0.0))",
+          "linear-gradient(90deg,rgba(233, 213, 255, 0.9), rgba(233, 213, 255, 0.0))",
       }}
     />
   );
@@ -176,7 +153,7 @@ const MenuLeftBlur = memo(() => {
         width: "30%",
         height: "100%",
         backgroundImage:
-          "linear-gradient(90deg,rgba(233, 213, 255, 0.5), rgba(233, 213, 255, 0.8))",
+          "linear-gradient(90deg,rgba(233, 213, 255, 0.5), rgba(233, 213, 255, 0.9))",
       }}
     />
   );

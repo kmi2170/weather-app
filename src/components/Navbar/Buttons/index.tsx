@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import { Theme } from "@mui/material/styles";
 import { useCustomCookies } from "../../../hooks/useCustomCookies";
 import { isUnitsValid } from "../../../utils/cookiesValidator";
+import { Typography } from "@mui/material";
 
 const buttonSelected = (theme: Theme) => ({
   color: "white",
@@ -86,12 +87,12 @@ const Buttons = () => {
                 {
                   borderRadius:
                     button_units === "imperial"
-                      ? "10px 0 0 10px"
-                      : "0 10px 10px 0",
+                      ? "20px 0 0 20px"
+                      : "0 20px 20px 0",
                 },
               ]}
             >
-              {button_symbol}
+              <Typography variant="subtitle1">{button_symbol}</Typography>
             </Button>
           ))}
         </ButtonGroup>
