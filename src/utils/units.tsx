@@ -19,3 +19,10 @@ export const tempWithUnit = (t: number, units: string) => (
     {units === "imperial" ? <small> °F </small> : <small> °C</small>}
   </span>
 );
+
+export const isDay = (t: number, sunrise: number, sunset: number) => {
+  if (t == null || sunrise == null || sunset == null) {
+    return true;
+  }
+  return sunrise <= t && t <= sunset;
+};
