@@ -19,6 +19,7 @@ import {
   WeatherDaily,
   WeatherHourly,
   WeatherMinutely,
+  WeatherFortyEightHours,
 } from "../components/Weather";
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../store/initialState";
@@ -88,6 +89,14 @@ const Home = () => {
               <WeatherCurrent />
             ) : (
               <Skeleton variant="rectangular" height={200} />
+            )}
+          </Grid>
+
+          <Grid id="forty-eight-hours" item xs={12}>
+            {!isLoading ? (
+              <WeatherFortyEightHours />
+            ) : (
+              <Skeleton variant="rectangular" height={150} />
             )}
           </Grid>
 
