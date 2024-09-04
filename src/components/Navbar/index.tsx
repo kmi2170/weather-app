@@ -3,13 +3,15 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { grey, red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 
 import { useAppSelector } from "../../store/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { Weather } from "../../api/types";
 import Buttons from "./Buttons";
 import Link from "next/link";
+import { Box } from "@mui/material";
+import { memo } from "react";
 
 const LinksList = [
   { id: 0, name: "current" },
@@ -33,10 +35,7 @@ const Navbar = () => {
   return (
     <AppBar
       position="sticky"
-      sx={{
-        background: "rgba(233, 213, 255, 0.8)",
-        borderRadius: 0,
-      }}
+      sx={{ background: "rgba(233, 213, 255, 0.8)", borderRadius: 0 }}
     >
       <Toolbar
         variant="dense"
@@ -49,10 +48,12 @@ const Navbar = () => {
         <List
           dense
           disablePadding
-          sx={{
+          sx={(theme) => ({
+            position: "relative",
             display: "flex",
             flexDirection: "row",
-          }}
+            overflowX: "auto",
+          })}
         >
           {LinksList.map(({ id, name }) => (
             <ListItem
@@ -130,6 +131,9 @@ const Navbar = () => {
           </ListItem>
         </List>
 
+        <MenuRightBlur />
+        <MenuLeftBlur />
+
         <Buttons />
       </Toolbar>
     </AppBar>
@@ -137,3 +141,35 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const MenuRightBlur = memo(() => {
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "15%",
+        height: "100%",
+        backgroundImage:
+          "linear-gradient(90deg,rgba(233, 213, 255, 0.8), rgba(233, 213, 255, 0.0))",
+      }}
+    />
+  );
+});
+
+const MenuLeftBlur = memo(() => {
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        width: "30%",
+        height: "100%",
+        backgroundImage:
+          "linear-gradient(90deg,rgba(233, 213, 255, 0.5), rgba(233, 213, 255, 0.8))",
+      }}
+    />
+  );
+});
