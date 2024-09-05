@@ -129,7 +129,7 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid id="hourly" item xs={12}>
+          <Grid id="charts" item xs={12}>
             {!isLoading ? (
               <WeatherHourly />
             ) : (

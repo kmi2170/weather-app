@@ -14,11 +14,11 @@ import { Box } from "@mui/material";
 import { memo } from "react";
 
 const LinksList = [
-  { id: 0, name: "current" },
-  { id: 1, name: "minutely" },
-  { id: 2, name: "daily" },
-  { id: 3, name: "hourly" },
-  // { id: 4, name: "alerts" },
+  { id: "current", name: "current" },
+  { id: "minutely", name: "minutely" },
+  { id: "forty-eight-hours", name: "48hours" },
+  { id: "daily", name: "daily" },
+  { id: "charts", name: "charts" },
 ];
 
 const Navbar = () => {
@@ -70,7 +70,7 @@ const Navbar = () => {
                 [theme.breakpoints?.down("md")]: { padding: "0 0.5rem" },
               })}
             >
-              <Link href={`#${name}`}>
+              <Link href={`#${id}`}>
                 <Typography
                   variant="h6"
                   align="center"

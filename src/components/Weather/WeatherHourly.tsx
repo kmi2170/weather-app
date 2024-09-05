@@ -37,7 +37,7 @@ const WeatherHourly = () => {
           color: theme.palette.primary.dark,
         })}
       >
-        Hourly
+        48 Hours Charts
       </Typography>
 
       <Paper
