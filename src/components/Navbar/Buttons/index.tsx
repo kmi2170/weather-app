@@ -38,8 +38,8 @@ const buttonTheme = (button_units: string, units: string, theme: Theme) =>
   button_units === units ? buttonSelected(theme) : buttonUnSelected(theme);
 
 const buttonProps = [
-  { button_units: "imperial", button_symbol: "℉" },
-  { button_units: "metric", button_symbol: "℃" },
+  { button_units: "imperial", button_symbol: "°F" },
+  { button_units: "metric", button_symbol: "°C" },
 ];
 
 const Buttons = () => {
@@ -92,7 +92,7 @@ const Buttons = () => {
                 },
               ]}
             >
-              <Typography variant="subtitle1">{button_symbol}</Typography>
+              <Typography variant="subtitle2">{button_symbol}</Typography>
             </Button>
           ))}
         </ButtonGroup>
