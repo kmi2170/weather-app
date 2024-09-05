@@ -118,6 +118,7 @@ export type WeatherDaily = {
   rain?: number;
   snow?: number;
   uvi: number;
+  summary: string;
 };
 
 export type Alerts = {

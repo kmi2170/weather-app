@@ -78,6 +78,7 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
   const units = useAppSelector((state) => state.weather.units);
 
   const {
+    summary,
     clouds,
     humidity,
     pressure,
@@ -133,9 +134,27 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
-        transitionDuration={{ enter: 3000 }}
+        transitionDuration={{ enter: 1000 }}
       >
         <Container maxWidth="xs">
+          <Grid item xs={12}>
+            {summary && (
+              <Typography
+                variant="h6"
+                sx={(theme) => ({
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  width: "100%",
+                  padding: "5px 20px",
+                  borderRadius: "10px",
+                  color: theme.palette.primary.dark,
+                  backgroundColor: theme.palette.primary.light,
+                })}
+              >
+                {summary}
+              </Typography>
+            )}
+          </Grid>
           <Grid container alignItems="center">
             <Grid item container xs={12} spacing={4}>
               {["morn", "day", "eve", "night"].map((item) => (
