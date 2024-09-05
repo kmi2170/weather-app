@@ -1,4 +1,5 @@
 import { formatDigits } from "./formatDigits";
+import { localTime } from "./time";
 
 export const pressureWithUnit = (p: number, units: string) =>
   units === "imperial"
@@ -24,5 +25,6 @@ export const isDay = (t: number, sunrise: number, sunset: number) => {
   if (t == null || sunrise == null || sunset == null) {
     return true;
   }
+
   return sunrise <= t && t <= sunset;
 };

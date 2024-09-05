@@ -19,8 +19,10 @@ const WeatherFortyEightHours = () => {
     lang,
   });
 
-  const { current, hourly, timezone } = data as Weather;
-  const { sunrise, sunset } = current;
+  const { daily, hourly, timezone } = data as Weather;
+  const sunAlmanac = daily.slice(0, 3).map((data) => {
+    return [data.dt, data.sunrise, data.sunset];
+  });
 
   return (
     <>
@@ -55,6 +57,13 @@ const WeatherFortyEightHours = () => {
             }}
           >
             {hourly.map((data) => {
+              const sunRiseSet = sunAlmanac.filter(
+                (times) =>
+                  localDay(times[0], timezone) === localDay(data.dt, timezone)
+              )[0];
+              const sunrise = sunRiseSet[1];
+              const sunset = sunRiseSet[2];
+
               return (
                 <div
                   style={{
