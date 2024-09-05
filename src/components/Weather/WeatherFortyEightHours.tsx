@@ -1,25 +1,10 @@
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import {
-  localDate,
-  localDateTime,
-  localDay,
-  localTimeHour,
-} from "../../utils/time";
-
-import {
-  ChartTemps,
-  ChartTempWithWeather,
-  ChartHumidity,
-  ChartPrecipitation,
-  ChartWind,
-  ChartPressure,
-} from "./charts";
+import { localDate, localDay, localTimeHour } from "../../utils/time";
 import { Weather } from "../../api/types";
 import WeatherIcon from "./icons/WeatherIcon";
 import { isDay, tempWithUnit } from "../../utils/units";
@@ -70,8 +55,6 @@ const WeatherFortyEightHours = () => {
             }}
           >
             {hourly.map((data) => {
-              console.log(isDay(data.dt, sunrise, sunset));
-
               return (
                 <div
                   style={{
@@ -125,32 +108,7 @@ const WeatherFortyEightHours = () => {
               );
             })}
           </div>
-
-          {/* <ChartTempWithWeather
-              chartData={hourly}
-              dataTime={dataTime}
-              units={units}
-              height="200px"
-            /> */}
         </div>
-        {/* <ChartHumidity chartData={hourly} dataTime={dataTime} height="250px" />
-        <ChartPrecipitation
-          chartData={hourly}
-          dataTime={dataTime}
-          units={units}
-        />
-        <ChartWind
-          chartData={hourly}
-          dataTime={dataTime}
-          units={units}
-          height="200px"
-        />
-        <ChartPressure
-          chartData={hourly}
-          dataTime={dataTime}
-          units={units}
-          height="200px"
-        /> */}
       </Paper>
     </>
   );
