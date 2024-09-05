@@ -4,6 +4,7 @@ export type CookieLocation = Record<string, string> | null | undefined;
 
 export interface ChartProps {
   chartData: WeatherHourly;
+  maxValue?: number;
   dataTime: string[];
   units?: Units;
   height?: string;
