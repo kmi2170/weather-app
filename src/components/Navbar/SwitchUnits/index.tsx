@@ -1,6 +1,6 @@
 /**
  * @deprecated
- * This component is deprecated. Buttons component is now used in Navbar component.
+ * Buttons is now used in Navbar.
  */
 
 import { memo, useState } from "react";

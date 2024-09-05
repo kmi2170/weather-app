@@ -23,28 +23,56 @@ ChartJS.register(
 );
 
 interface ChartMinutelyProps extends Omit<ChartProps, "chartData"> {
-  chartData: WeatherMinutely;
+  chartData: number[];
 }
 
-const ChartMinutely = ({ chartData, dataTime, units }: ChartMinutelyProps) => {
-  const data_precipitation: number[] = chartData?.map(({ precipitation }) => {
-    return units === "imperial" ? precipitation / 25.4 : precipitation;
-  });
+const ChartMinutely = ({
+  chartData,
+  dataTime,
+  units,
+  maxValue,
+}: ChartMinutelyProps) => {
+  const formatter = (x: number) => {
+    if (x === 0) return null;
+    return x.toFixed(2);
+  };
 
   const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        display: true,
+        min: 0,
+        max: maxValue ? maxValue * 1.5 : 0.1,
+        ticks: {
+          display: true,
+        },
+        grid: {
+          display: true,
+        },
+      },
+    },
+
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   };
 
   const data: ChartData<"bar"> = {
     labels: dataTime,
     datasets: [
       {
-        label:
-          units === "imperial" ? "Precipitation [in]" : "Precipitation [mm]",
         borderColor: blue[500],
         backgroundColor: blue[500],
-        data: data_precipitation,
+        data: chartData,
       },
     ],
   };
