@@ -241,7 +241,7 @@ const WeatherCurrent = () => {
             </Grid>
 
             <Grid item xs={12}>
-              {totalPrecipitation && (
+              {totalPrecipitation > 0 && (
                 <Typography variant="subtitle2">
                   Precipitation{" "}
                   {precipitationWithUnit(totalPrecipitation, units)}
