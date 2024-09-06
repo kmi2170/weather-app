@@ -136,6 +136,7 @@ const WeatherDaily = () => {
                       variant="subtitle2"
                       align="center"
                       className={classes.text}
+                      sx={{ marginTop: "10px" }}
                     >
                       {data.weather[0].main}
                     </Typography>
@@ -148,6 +149,7 @@ const WeatherDaily = () => {
                       variant="subtitle2"
                       align="center"
                       className={classes.text}
+                      height="2.5rem"
                     >
                       {data.weather[0].description}
                     </Typography>
