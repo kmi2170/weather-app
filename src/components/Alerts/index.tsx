@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -81,4 +83,4 @@ const Alerts = () => {
   );
 };
 
-export default Alerts;
+export default memo(Alerts);

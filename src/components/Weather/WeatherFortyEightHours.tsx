@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -164,4 +166,4 @@ const WeatherFortyEightHours = () => {
   );
 };
 
-export default WeatherFortyEightHours;
+export default memo(WeatherFortyEightHours);
