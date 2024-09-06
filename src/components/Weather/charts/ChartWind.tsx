@@ -46,6 +46,13 @@ const ChartWind = ({
         borderWidth: 3,
       },
     },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
   };
 
   const data: ChartData<"line"> = {

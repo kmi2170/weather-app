@@ -48,6 +48,11 @@ const ChartHumidity = ({
       },
     },
     scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
       y: {
         max: 100,
         min: 0,

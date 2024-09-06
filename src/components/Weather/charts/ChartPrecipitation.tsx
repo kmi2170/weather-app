@@ -54,6 +54,11 @@ const ChartPrecipitation = ({
       },
     },
     scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
       y: {
         min: 0,
       },
