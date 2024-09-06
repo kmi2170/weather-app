@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
@@ -7,6 +8,7 @@ import { useGetWeatherQuery } from "../../services/weatherApi";
 import { localDate, localDay, localTimeHour } from "../../utils/time";
 import { Weather } from "../../api/types";
 import WeatherIcon from "./icons/WeatherIcon";
+import WindIcon from "./icons/WindIcon";
 import { isDay, tempWithUnit } from "../../utils/units";
 
 const WeatherFortyEightHours = () => {
@@ -82,7 +84,11 @@ const WeatherFortyEightHours = () => {
                   <Typography variant="subtitle2" align="center">
                     {localDay(data.dt, timezone)}
                   </Typography>
-                  <Typography variant="h6" color="textSecondary" align="center">
+                  <Typography
+                    variant="subtitle2"
+                    color="textSecondary"
+                    align="center"
+                  >
                     {localDate(data.dt, timezone)}
                   </Typography>
                   <WeatherIcon
@@ -97,18 +103,33 @@ const WeatherFortyEightHours = () => {
                     variant="h6"
                     align="center"
                     sx={(theme) => ({
-                      width: "3rem",
+                      width: "5rem",
+                      marginBottom: "5px",
                       color: theme.palette.primary.main,
                     })}
                   >
                     {tempWithUnit(data.temp, units)}
                   </Typography>
+                  <WindIcon
+                    wind_speed={data.wind_speed}
+                    wind_deg={data.wind_deg}
+                    wind_gust={data?.wind_gust}
+                    current={false}
+                  />
                   <Typography
                     variant="subtitle2"
                     align="center"
-                    sx={{ width: "4.0rem", marginBottom: "2px" }}
+                    sx={{
+                      marginTop: "8px",
+                      marginBottom: "5px",
+                      width: "5.0rem",
+                    }}
                   >
-                    <i className={`wi wi-umbrella`} />{" "}
+                    <Box
+                      component="i"
+                      sx={(theme) => ({ color: theme.palette.primary.main })}
+                      className={`wi wi-umbrella`}
+                    />{" "}
                     {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
                   </Typography>
                   <Typography variant="h6" align="center">
