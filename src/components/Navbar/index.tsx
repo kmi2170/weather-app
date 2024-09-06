@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,7 +13,6 @@ import { Weather } from "../../api/types";
 import Buttons from "./Buttons";
 import Link from "next/link";
 import { Box } from "@mui/material";
-import { memo } from "react";
 
 const LinksList = [
   { id: "top", name: "current" },
@@ -125,7 +126,7 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);
 
 const MenuRightBlur = memo(() => {
   return (
