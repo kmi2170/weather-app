@@ -1,4 +1,11 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -63,7 +70,6 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
           break;
         case "Enter":
           const location = locations[selectedLocationIndex] as LocationType;
-          console.log(location);
           const { name, admin1, country, latitude, longitude } = location;
           const displayLocation = {
             city: name,
@@ -125,7 +131,6 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
   const handleClickLocation = useCallback(
     function handleClickLocation(selectedIdx: number) {
       const location = locations[selectedIdx] as LocationType;
-      console.log(locations);
       const { name, admin1, country, latitude, longitude } = location;
       const displayLocation = {
         city: name,
@@ -146,18 +151,18 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
       inputRef.current?.focus();
 
       dispatch(setLocations([]));
-      if (!isShortCharacter) setIsShortCharacter(true);
+      setIsShortCharacter(true);
       if (timerRef.current) {
         clearTimeout(timerRef.current);
         timerRef.current = null;
       }
     }
-  }, [isShortCharacter]);
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     dispatch(setLocations([]));
     handleClose();
-  };
+  }, []);
 
   return (
     <div>
@@ -253,7 +258,7 @@ const MGlassButton = () => {
   );
 };
 
-const ClearButton = ({ onClick }: { onClick: () => void }) => {
+const ClearButton = memo(({ onClick }: { onClick: () => void }) => {
   return (
     <Box
       sx={(theme) => ({
@@ -267,9 +272,9 @@ const ClearButton = ({ onClick }: { onClick: () => void }) => {
       <ClearIcon />
     </Box>
   );
-};
+});
 
-const CloseButton = ({ onClick }: { onClick: () => void }) => {
+const CloseButton = memo(({ onClick }: { onClick: () => void }) => {
   return (
     <Box
       sx={(theme) => ({
@@ -283,4 +288,4 @@ const CloseButton = ({ onClick }: { onClick: () => void }) => {
       <CloseIcon />
     </Box>
   );
-};
+});
