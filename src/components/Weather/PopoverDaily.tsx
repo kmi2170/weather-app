@@ -9,7 +9,7 @@ import createStyles from "@mui/styles/createStyles";
 import { orange, yellow } from "@mui/material/colors";
 
 import { useAppSelector } from "../../store/hooks";
-import { fallWithUnit, pressureWithUnit } from "../../utils/units";
+import { precipitationWithUnit, pressureWithUnit } from "../../utils/units";
 import MoonIcon from "./icons/MoonIcon";
 import { localDate, localDay, localTime } from "../../utils/time";
 import { WeatherDaily } from "../../api/types";
@@ -177,14 +177,14 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
             <Grid item xs={12}>
               {rain && (
                 <Typography variant="subtitle2">
-                  Rain {fallWithUnit(rain, units)}
+                  Rain {precipitationWithUnit(rain, units)}
                 </Typography>
               )}
             </Grid>
             <Grid item xs={12}>
               {snow && (
                 <Typography variant="subtitle2">
-                  Snow {fallWithUnit(snow, units)}
+                  Snow {precipitationWithUnit(snow, units)}
                 </Typography>
               )}
             </Grid>

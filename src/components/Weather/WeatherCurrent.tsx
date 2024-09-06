@@ -5,13 +5,12 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import { yellow, orange } from "@mui/material/colors";
 
-import country_region_data from "country-region-data";
 import { useAppSelector } from "../../store/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 
 import {
   tempWithUnit,
-  fallWithUnit,
+  precipitationWithUnit,
   pressureWithUnit,
   visibilityWithUnit,
 } from "../../utils/units";
@@ -110,6 +109,8 @@ const WeatherCurrent = () => {
   const { moonrise, moonset, moon_phase } = daily[0];
 
   const { city, region, country } = location;
+
+  const totalPrecipitation = (rain?.["1h"] || 0) + (snow?.["1h"] || 0);
 
   return (
     <>
@@ -240,19 +241,27 @@ const WeatherCurrent = () => {
             </Grid>
 
             <Grid item xs={12}>
+              {totalPrecipitation && (
+                <Typography variant="subtitle2">
+                  Precipitation{" "}
+                  {precipitationWithUnit(totalPrecipitation, units)}
+                </Typography>
+              )}
+            </Grid>
+            {/* <Grid item xs={12}>
               {rain && rain["1h"] && (
                 <Typography variant="subtitle2">
-                  Rain (Last 1 hour), {fallWithUnit(rain["1h"], units)}
+                  Rain (Last 1 hour), {precipitationWithUnit(rain["1h"], units)}
                 </Typography>
               )}
             </Grid>
             <Grid item xs={12}>
               {snow && snow["1h"] && (
                 <Typography variant="subtitle2">
-                  Snow (Last 1 hour), {fallWithUnit(snow["1h"], units)}
+                  Snow (Last 1 hour), {precipitationWithUnit(snow["1h"], units)}
                 </Typography>
               )}
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={6}>
               <Typography variant="subtitle2">

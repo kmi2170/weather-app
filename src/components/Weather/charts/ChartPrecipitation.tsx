@@ -31,13 +31,14 @@ const ChartPrecipitation = ({
   units,
   height = "200px",
 }: ChartProps) => {
-  const fall = (fall: number) => (units === "imperial" ? +fall / 25.4 : fall);
+  const precipitation = (fall: number) =>
+    units === "imperial" ? +fall / 25.4 : fall;
 
   const data_rain = chartData.map((el) =>
-    el.rain && el.rain["1h"] ? fall(el.rain["1h"]) : 0
+    el.rain && el.rain["1h"] ? precipitation(el.rain["1h"]) : 0
   );
   const data_snow = chartData.map((el) =>
-    el.snow && el.snow["1h"] ? fall(el.snow["1h"]) : 0
+    el.snow && el.snow["1h"] ? precipitation(el.snow["1h"]) : 0
   );
 
   const options: ChartOptions<"line"> = {

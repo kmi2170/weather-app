@@ -6,8 +6,10 @@ export const pressureWithUnit = (p: number, units: string) =>
     ? `${formatDigits((+p / 1013.25) * 29.921, 1)} inHg`
     : `${p} hPa`;
 
-export const fallWithUnit = (fall: number, units: string) =>
-  units === "imperial" ? `${formatDigits(+fall / 25.4, 2)} in` : `${fall} mm`;
+export const precipitationWithUnit = (precipitation: number, units: string) =>
+  units === "imperial"
+    ? `${formatDigits(+precipitation / 25.4, 2)} in`
+    : `${precipitation} mm`;
 
 export const visibilityWithUnit = (v: number, units: string) =>
   units === "imperial"

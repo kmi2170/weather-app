@@ -9,7 +9,7 @@ import { localDate, localDay, localTimeHour } from "../../utils/time";
 import { Weather } from "../../api/types";
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
-import { isDay, tempWithUnit } from "../../utils/units";
+import { isDay, precipitationWithUnit, tempWithUnit } from "../../utils/units";
 
 const WeatherFortyEightHours = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
@@ -65,6 +65,9 @@ const WeatherFortyEightHours = () => {
               )[0];
               const sunrise = sunRiseSet[1];
               const sunset = sunRiseSet[2];
+
+              const totalPrecipitation =
+                (data?.rain?.["1h"] || 0) + (data?.snow?.["1h"] || 0);
 
               return (
                 <div
@@ -131,6 +134,22 @@ const WeatherFortyEightHours = () => {
                       className={`wi wi-umbrella`}
                     />{" "}
                     {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    align="center"
+                    sx={{
+                      marginTop: "8px",
+                      marginBottom: "5px",
+                      width: "5.0rem",
+                    }}
+                  >
+                    <Box
+                      component="i"
+                      sx={(theme) => ({ color: theme.palette.primary.main })}
+                      className={`wi wi-raindrop`}
+                    />{" "}
+                    {precipitationWithUnit(totalPrecipitation, units)}
                   </Typography>
                   <Typography variant="h6" align="center">
                     {localTimeHour(data.dt, timezone)}

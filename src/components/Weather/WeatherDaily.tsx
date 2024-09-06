@@ -13,6 +13,7 @@ import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
 import { localDate, localDay } from "../../utils/time";
 import { Weather } from "../../api/types";
+import { precipitationWithUnit } from "../../utils/units";
 
 const useStyles = makeStyles((theme: Theme) => ({
   textTitle: {
@@ -97,88 +98,101 @@ const WeatherDaily = () => {
         alignItems="stretch"
         spacing={1}
       >
-        {daily.map((data, i: number) => (
-          <Grid key={i} item xs={4} sm={3} md={2}>
-            <PopoverDaily data={data} timezone={timezone}>
-              <Paper className={classes.paper}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <div>
+        {daily.map((data, i: number) => {
+          const totalPrecipitation = (data?.rain || 0) + (data?.snow || 0);
+
+          return (
+            <Grid key={i} item xs={4} sm={3} md={2}>
+              <PopoverDaily data={data} timezone={timezone}>
+                <Paper className={classes.paper}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>
+                      <Typography
+                        variant="subtitle2"
+                        align="center"
+                        className={classes.text}
+                      >
+                        {localDay(data.dt, timezone)}
+                      </Typography>
+                      <Typography
+                        variant="subtitle2"
+                        color="textSecondary"
+                        align="center"
+                        className={classes.text}
+                      >
+                        {localDate(data.dt, timezone)}
+                      </Typography>
+                    </div>
                     <Typography
                       variant="subtitle2"
                       align="center"
                       className={classes.text}
                     >
-                      {localDay(data.dt, timezone)}
+                      {data.weather[0].main}
+                    </Typography>
+                    <WeatherIcon
+                      weatherId={data.weather[0].id}
+                      current={false}
+                      size="2rem"
+                    />
+                    <Typography
+                      variant="subtitle2"
+                      align="center"
+                      className={classes.text}
+                    >
+                      {data.weather[0].description}
+                    </Typography>
+
+                    <Typography
+                      variant="h6"
+                      align="center"
+                      className={classes.temp}
+                    >
+                      {formatDigits(data.temp.max)}/
+                      {formatDigits(data.temp.min)}
+                      {units === "imperial" ? (
+                        <small> °F </small>
+                      ) : (
+                        <small> °C</small>
+                      )}
+                    </Typography>
+
+                    <WindIcon
+                      wind_speed={data.wind_speed}
+                      wind_deg={data.wind_deg}
+                      wind_gust={data?.wind_gust}
+                      current={false}
+                    />
+
+                    <Typography
+                      variant="subtitle2"
+                      align="center"
+                      className={classes.text}
+                    >
+                      <i className={`wi wi-umbrella ${classes.iconPop}`} />{" "}
+                      {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
                     </Typography>
                     <Typography
                       variant="subtitle2"
-                      color="textSecondary"
                       align="center"
                       className={classes.text}
                     >
-                      {localDate(data.dt, timezone)}
+                      <i className={`wi wi-raindrop ${classes.iconPop}`} />{" "}
+                      {precipitationWithUnit(totalPrecipitation, units)}
                     </Typography>
                   </div>
-                  <Typography
-                    variant="subtitle2"
-                    align="center"
-                    className={classes.text}
-                  >
-                    {data.weather[0].main}
-                  </Typography>
-                  <WeatherIcon
-                    weatherId={data.weather[0].id}
-                    current={false}
-                    size="2rem"
-                  />
-                  <Typography
-                    variant="subtitle2"
-                    align="center"
-                    className={classes.text}
-                  >
-                    {data.weather[0].description}
-                  </Typography>
-
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    className={classes.temp}
-                  >
-                    {formatDigits(data.temp.max)}/{formatDigits(data.temp.min)}
-                    {units === "imperial" ? (
-                      <small> °F </small>
-                    ) : (
-                      <small> °C</small>
-                    )}
-                  </Typography>
-
-                  <WindIcon
-                    wind_speed={data.wind_speed}
-                    wind_deg={data.wind_deg}
-                    wind_gust={data?.wind_gust}
-                    current={false}
-                  />
-
-                  <Typography
-                    variant="subtitle2"
-                    align="center"
-                    className={classes.text}
-                  >
-                    <i className={`wi wi-umbrella ${classes.iconPop}`} />{" "}
-                    {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
-                  </Typography>
-                </div>
-              </Paper>
-            </PopoverDaily>
-          </Grid>
-        ))}
+                </Paper>
+              </PopoverDaily>
+            </Grid>
+          );
+        })}
       </Grid>
     </>
   );
