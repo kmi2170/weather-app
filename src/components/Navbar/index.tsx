@@ -14,7 +14,7 @@ import { Box } from "@mui/material";
 import { memo } from "react";
 
 const LinksList = [
-  { id: "current", name: "current" },
+  { id: "top", name: "current" },
   { id: "minutely", name: "minutely" },
   { id: "forty-eight-hours", name: "48hours" },
   { id: "daily", name: "daily" },

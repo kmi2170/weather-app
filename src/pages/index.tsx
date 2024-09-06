@@ -63,6 +63,7 @@ const Home = () => {
       }}
     >
       {isError && <ErrorModal />}
+      <div id="top" />
       <Navbar />
       <Container>
         <Grid container spacing={2} justifyContent="center">
@@ -84,7 +85,7 @@ const Home = () => {
             <SearchLocationBar />
           </Grid>
 
-          <Grid id="current" item xs={12}>
+          <Grid item xs={12}>
             {!isLoading ? (
               <WeatherCurrent />
             ) : (
