@@ -11,7 +11,7 @@ import { orange, yellow } from "@mui/material/colors";
 import { useAppSelector } from "../../store/hooks";
 import { fallWithUnit, pressureWithUnit } from "../../utils/units";
 import MoonIcon from "./icons/MoonIcon";
-import { localTime } from "../../utils/time";
+import { localDate, localDay, localTime } from "../../utils/time";
 import { WeatherDaily } from "../../api/types";
 import { formatDigits } from "../../utils/formatDigits";
 
@@ -138,17 +138,19 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
       >
         <Container maxWidth="xs">
           <Grid item xs={12}>
+            <Typography variant="subtitle2" align="center">
+              {localDay(data.dt, timezone)} {localDate(data.dt, timezone)}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
             {summary && (
               <Typography
                 variant="h6"
                 sx={(theme) => ({
                   marginTop: "10px",
-                  marginBottom: "10px",
+                  marginBottom: "25px",
                   width: "100%",
-                  padding: "5px 20px",
-                  borderRadius: "10px",
                   color: theme.palette.primary.dark,
-                  backgroundColor: theme.palette.primary.light,
                 })}
               >
                 {summary}

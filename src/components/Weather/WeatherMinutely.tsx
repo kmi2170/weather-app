@@ -46,7 +46,7 @@ const WeatherMinutely = () => {
       <Paper
         sx={{
           padding: "1rem",
-          height: "220px",
+          height: "200px",
           paddingBottom: "50px",
         }}
       >
