@@ -243,12 +243,9 @@ const WeatherCurrent = () => {
             </Grid>
 
             <Grid item xs={12}>
-              {totalPrecipitation > 0 && (
-                <Typography variant="subtitle2">
-                  Precipitation{" "}
-                  {precipitationWithUnit(totalPrecipitation, units)}
-                </Typography>
-              )}
+              <Typography variant="subtitle2">
+                Precipitation {precipitationWithUnit(totalPrecipitation, units)}
+              </Typography>
             </Grid>
             {/* <Grid item xs={12}>
               {rain && rain["1h"] && (
