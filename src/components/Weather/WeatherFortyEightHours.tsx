@@ -72,12 +72,11 @@ const WeatherFortyEightHours = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     padding: "2px",
-                    backgroundColor: isDay(data.dt, sunrise, sunset)
-                      ? "rgba(255, 253, 208,0.6)"
-                      : // ? "rgba(224, 255, 255, 0.5)"
-                        "rgba(0,0,139,0.2)",
-                    // "rgba(211, 211, 211, 0.5)",
-                    borderRadius: "5px",
+                    borderBottom: "solid",
+                    borderBottomWidth: "5px",
+                    borderBottomColor: isDay(data.dt, sunrise, sunset)
+                      ? "rgba(255, 165, 0,0.5)"
+                      : "rgba(0,0,139,0.5)",
                   }}
                 >
                   <Typography variant="subtitle2" align="center">
