@@ -29,8 +29,8 @@ interface ChartMinutelyProps extends Omit<ChartProps, "chartData"> {
 const ChartMinutely = ({
   chartData,
   dataTime,
-  units,
   maxValue,
+  height,
 }: ChartMinutelyProps) => {
   const formatter = (x: number) => {
     if (x === 0) return null;
@@ -77,7 +77,7 @@ const ChartMinutely = ({
     ],
   };
 
-  return <Bar options={options} data={data} />;
+  return <Bar options={options} data={data} height={height} />;
 };
 
 export default memo(ChartMinutely);
