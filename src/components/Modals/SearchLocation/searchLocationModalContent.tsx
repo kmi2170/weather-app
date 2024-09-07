@@ -80,6 +80,7 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
           } as Location;
           dispatch(setLocation(displayLocation));
           closeModal();
+          break;
         case "Escape":
           closeModal();
           break;
