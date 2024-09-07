@@ -42,124 +42,118 @@ const WeatherFortyEightHours = () => {
       <Paper
         sx={{
           padding: "1rem",
+          paddingBottom: "1.5rem",
+          width: "100%",
+          overflowX: "scroll",
         }}
       >
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            overflowX: "scroll",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            gap: "5px",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              gap: "5px",
-            }}
-          >
-            {hourly.map((data) => {
-              const sunRiseSet = sunAlmanac.filter(
-                (times) =>
-                  localDay(times[0], timezone) === localDay(data.dt, timezone)
-              )[0];
-              const sunrise = sunRiseSet[1];
-              const sunset = sunRiseSet[2];
+          {hourly.map((data) => {
+            const sunRiseSet = sunAlmanac.filter(
+              (times) =>
+                localDay(times[0], timezone) === localDay(data.dt, timezone)
+            )[0];
+            const sunrise = sunRiseSet[1];
+            const sunset = sunRiseSet[2];
 
-              const totalPrecipitation =
-                (data?.rain?.["1h"] || 0) + (data?.snow?.["1h"] || 0);
+            const totalPrecipitation =
+              (data?.rain?.["1h"] || 0) + (data?.snow?.["1h"] || 0);
 
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "2px",
-                    borderBottom: "solid",
-                    borderBottomWidth: "5px",
-                    borderBottomColor: isDay(data.dt, sunrise, sunset)
-                      ? "rgba(255, 165, 0,0.5)"
-                      : "rgba(0,0,139,0.5)",
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "2px",
+                  borderBottom: "solid",
+                  borderBottomWidth: "5px",
+                  borderBottomColor: isDay(data.dt, sunrise, sunset)
+                    ? "rgba(255, 165, 0,0.5)"
+                    : "rgba(0,0,139,0.5)",
+                }}
+              >
+                <Typography variant="subtitle2" align="center">
+                  {localDay(data.dt, timezone)}
+                </Typography>
+                <Typography
+                  variant="subtitle2"
+                  color="textSecondary"
+                  align="center"
+                >
+                  {localDate(data.dt, timezone)}
+                </Typography>
+                <WeatherIcon
+                  sunset={sunset}
+                  sunrise={sunrise}
+                  time={data.dt}
+                  weatherId={data.weather[0].id}
+                  current
+                  size="1.5rem"
+                />
+                <Typography
+                  variant="h6"
+                  align="center"
+                  sx={(theme) => ({
+                    width: "5rem",
+                    marginBottom: "5px",
+                    color: theme.palette.primary.main,
+                  })}
+                >
+                  {tempWithUnit(data.temp, units)}
+                </Typography>
+                <WindIcon
+                  wind_speed={data.wind_speed}
+                  wind_deg={data.wind_deg}
+                  wind_gust={data?.wind_gust}
+                  current={false}
+                />
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  sx={{
+                    marginTop: "8px",
+                    marginBottom: "5px",
+                    width: "5.0rem",
                   }}
                 >
-                  <Typography variant="subtitle2" align="center">
-                    {localDay(data.dt, timezone)}
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    color="textSecondary"
-                    align="center"
-                  >
-                    {localDate(data.dt, timezone)}
-                  </Typography>
-                  <WeatherIcon
-                    sunset={sunset}
-                    sunrise={sunrise}
-                    time={data.dt}
-                    weatherId={data.weather[0].id}
-                    current
-                    size="1.5rem"
-                  />
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    sx={(theme) => ({
-                      width: "5rem",
-                      marginBottom: "5px",
-                      color: theme.palette.primary.main,
-                    })}
-                  >
-                    {tempWithUnit(data.temp, units)}
-                  </Typography>
-                  <WindIcon
-                    wind_speed={data.wind_speed}
-                    wind_deg={data.wind_deg}
-                    wind_gust={data?.wind_gust}
-                    current={false}
-                  />
-                  <Typography
-                    variant="subtitle2"
-                    align="center"
-                    sx={{
-                      marginTop: "8px",
-                      marginBottom: "5px",
-                      width: "5.0rem",
-                    }}
-                  >
-                    <Box
-                      component="i"
-                      sx={(theme) => ({ color: theme.palette.primary.main })}
-                      className={`wi wi-umbrella`}
-                    />{" "}
-                    {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    align="center"
-                    sx={{
-                      marginTop: "8px",
-                      marginBottom: "5px",
-                      width: "5.0rem",
-                    }}
-                  >
-                    <Box
-                      component="i"
-                      sx={(theme) => ({ color: theme.palette.primary.main })}
-                      className={`wi wi-raindrop`}
-                    />{" "}
-                    {precipitationWithUnit(totalPrecipitation, units)}
-                  </Typography>
-                  <Typography variant="h6" align="center">
-                    {localTimeHour(data.dt, timezone)}
-                  </Typography>
-                </div>
-              );
-            })}
-          </div>
+                  <Box
+                    component="i"
+                    sx={(theme) => ({ color: theme.palette.primary.main })}
+                    className={`wi wi-umbrella`}
+                  />{" "}
+                  {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
+                </Typography>
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  sx={{
+                    marginTop: "8px",
+                    marginBottom: "5px",
+                    width: "5.0rem",
+                  }}
+                >
+                  <Box
+                    component="i"
+                    sx={(theme) => ({ color: theme.palette.primary.main })}
+                    className={`wi wi-raindrop`}
+                  />{" "}
+                  {precipitationWithUnit(totalPrecipitation, units)}
+                </Typography>
+                <Typography variant="h6" align="center">
+                  {localTimeHour(data.dt, timezone)}
+                </Typography>
+              </div>
+            );
+          })}
         </div>
       </Paper>
     </>
