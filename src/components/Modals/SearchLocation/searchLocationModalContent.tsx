@@ -28,6 +28,7 @@ const style = {
   bgcolor: "background.paper",
   width: "800px",
   height: "800px",
+  maxHeight: "100vh",
   overflowY: "auto",
   boxShadow: 24,
   padding: 4,

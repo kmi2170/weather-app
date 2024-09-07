@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, useRef, useLayoutEffect } from "react";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -10,14 +10,43 @@ import SearchLocationModalContent from "../Modals/SearchLocation/searchLocationM
 import { MGlassIcon } from "../../assets/icons";
 
 const SearchLocationBar = () => {
+  const [open, setOpen] = useState(false);
+  const [showKeys, setShowKeys] = useState(true);
+  const ref = useRef<HTMLDivElement>(null);
+
   const dispatch = useAppDispatch();
 
-  const [open, setOpen] = useState(false);
+  function handelResize() {
+    const width = window.innerWidth;
+    if (width < 600) {
+      setShowKeys(false);
+    } else {
+      setShowKeys(true);
+    }
+  }
+
+  useLayoutEffect(() => {
+    if (ref.current) {
+      handelResize();
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handelResize);
+
+    return () => {
+      window.removeEventListener("resize", handelResize);
+    };
+  }, []);
 
   useEffect(() => {
     let keyPressed = {};
 
     function handleKeyPress(e: KeyboardEvent) {
+      if (!showKeys) {
+        return;
+      }
+
       keyPressed[e.key] = true;
 
       if (keyPressed["Control"] && keyPressed["k"]) {
@@ -36,7 +65,7 @@ const SearchLocationBar = () => {
       window.removeEventListener("keydown", handleKeyPress);
       window.removeEventListener("keyup", deleteKeyPressed);
     };
-  }, []);
+  }, [showKeys]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -45,7 +74,7 @@ const SearchLocationBar = () => {
   };
 
   return (
-    <div>
+    <div ref={ref}>
       <Modal
         open={open}
         aria-labelledby="modal-modal-title"
@@ -94,46 +123,48 @@ const SearchLocationBar = () => {
           >
             <MGlassIcon />
           </Box>
-          <Box
-            sx={(theme) => ({
-              position: "absolute",
-              top: 4,
-              right: 10,
-              display: "flex",
-              flexDirection: "row",
-              [theme.breakpoints.down("sm")]: {
-                display: "none",
-              },
-            })}
-          >
-            <Typography
-              variant="subtitle2"
+          {showKeys && (
+            <Box
               sx={(theme) => ({
-                marginRight: "3px",
-                padding: "0 2px",
-                color: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main,
-                borderWidth: "2px",
-                borderStyle: "solid",
-                borderRadius: "5px",
+                position: "absolute",
+                top: 4,
+                right: 10,
+                display: "flex",
+                flexDirection: "row",
+                [theme.breakpoints.down("sm")]: {
+                  display: "none",
+                },
               })}
             >
-              CTL
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              sx={(theme) => ({
-                padding: "0 5px",
-                color: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main,
-                borderWidth: "2px",
-                borderStyle: "solid",
-                borderRadius: "5px",
-              })}
-            >
-              K
-            </Typography>
-          </Box>
+              <Typography
+                variant="subtitle2"
+                sx={(theme) => ({
+                  marginRight: "3px",
+                  padding: "0 2px",
+                  color: theme.palette.primary.main,
+                  borderColor: theme.palette.primary.main,
+                  borderWidth: "2px",
+                  borderStyle: "solid",
+                  borderRadius: "5px",
+                })}
+              >
+                CTL
+              </Typography>
+              <Typography
+                variant="subtitle2"
+                sx={(theme) => ({
+                  padding: "0 5px",
+                  color: theme.palette.primary.main,
+                  borderColor: theme.palette.primary.main,
+                  borderWidth: "2px",
+                  borderStyle: "solid",
+                  borderRadius: "5px",
+                })}
+              >
+                K
+              </Typography>
+            </Box>
+          )}
         </div>
       </div>
     </div>
