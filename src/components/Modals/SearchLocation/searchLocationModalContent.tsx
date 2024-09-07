@@ -110,12 +110,12 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
 
     timerRef.current = setTimeout(async () => {
       const typedName = inputRef.current?.value as string;
-      dispatch(asyncThunkFindLocations(typedName)).catch((error) =>
-        console.error(error)
-      );
-      if (!timerRef.current) {
-        return;
+      try {
+        dispatch(asyncThunkFindLocations(typedName));
+      } catch (error) {
+        console.error(error);
       }
+
       if (isShortCharacter) setIsShortCharacter(false);
       timerRef.current = null;
     }, 500);
