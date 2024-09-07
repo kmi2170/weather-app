@@ -9,6 +9,7 @@ import {
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 import { ClearIcon, CloseIcon, MGlassIcon } from "../../../assets/icons";
 
 import { purple } from "@mui/material/colors";
@@ -42,7 +43,9 @@ type SearchLocationModalContentProps = {
 const SearchLocationModalContent = (props: SearchLocationModalContentProps) => {
   const { closeModal } = props;
 
-  const { locations } = useAppSelector((state) => state.locations);
+  const { locations, isLoading, isError } = useAppSelector(
+    (state) => state.locations
+  );
   const dispatch = useAppDispatch();
 
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
@@ -207,6 +210,8 @@ const SearchLocationModalContent = (props: SearchLocationModalContentProps) => {
         <Message
           isShortCharacter={isShortCharacter}
           listLength={locations.length}
+          isLoading={isLoading}
+          isError={isError}
         />
       </Box>
     </div>
@@ -218,21 +223,37 @@ export default SearchLocationModalContent;
 type MessageProps = {
   isShortCharacter: boolean;
   listLength: number;
+  isLoading: boolean;
+  isError: boolean;
 };
 
 function Message(props: MessageProps) {
-  const { isShortCharacter, listLength } = props;
+  const { isShortCharacter, listLength, isLoading, isError } = props;
+
+  let message = "";
+
+  if (!isLoading) {
+    if (isShortCharacter) {
+      message = "Type more than one character";
+    } else if (isError) {
+      message = "Something went wrong. Please try again later";
+    } else if (listLength === 0) {
+      message = "No Place was Found";
+    }
+  }
 
   return (
     <>
-      {isShortCharacter && (
-        <Typography variant="h6" align="center" sx={{ marginTop: "1rem" }}>
-          Type more than one character
-        </Typography>
+      {isLoading && (
+        <Box
+          sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+        >
+          <CircularProgress color="primary" />
+        </Box>
       )}
-      {!isShortCharacter && listLength === 0 && (
+      {message && (
         <Typography variant="h6" align="center" sx={{ marginTop: "1rem" }}>
-          No Place was Found
+          {message}
         </Typography>
       )}
     </>
