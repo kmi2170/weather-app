@@ -1,5 +1,6 @@
 import axios from "axios";
 import { LocationType } from "../types";
+import { SignalWifi1BarLock } from "@mui/icons-material";
 
 const baseUrl = "https://geocoding-api.open-meteo.com/v1/search";
 
@@ -11,13 +12,15 @@ const defaultSearchParamsObj = {
 const searchParams = new URLSearchParams(defaultSearchParamsObj);
 
 export async function findLocations(
-  locationName: string
+  locationName: string,
+  signal: AbortSignal
 ): Promise<LocationType[] | string> {
   try {
     searchParams.set("name", locationName);
     const url = `${baseUrl}?${searchParams}`;
     const { data } = await axios.get(url, {
       params: { name: locationName },
+      signal,
     });
     const results = data?.results;
     return results as LocationType[];

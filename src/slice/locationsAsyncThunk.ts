@@ -6,9 +6,9 @@ import { LocationType } from "../api/types";
 
 export const asyncThunkFindLocations = createAsyncThunk(
   "weather/asyncFindLocations",
-  async (q: string, { dispatch, rejectWithValue }) => {
+  async (q: string, { dispatch, rejectWithValue, signal }) => {
     try {
-      const data = await findLocations(q);
+      const data = await findLocations(q, signal);
       dispatch(setLocations((data || []) as LocationType[]));
     } catch (error) {
       return rejectWithValue(error);
