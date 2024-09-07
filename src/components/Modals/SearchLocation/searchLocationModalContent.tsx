@@ -34,12 +34,12 @@ const style = {
   borderRadius: "10px",
 };
 
-type SearchLocationModalProps = {
-  handleClose(): void;
+type SearchLocationModalContentProps = {
+  closeModal(): void;
 };
 
-export default function SearchLocationModal(props: SearchLocationModalProps) {
-  const { handleClose } = props;
+const SearchLocationModalContent = (props: SearchLocationModalContentProps) => {
+  const { closeModal } = props;
 
   const { locations } = useAppSelector((state) => state.locations);
   const dispatch = useAppDispatch();
@@ -79,9 +79,6 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
             lon: longitude,
           } as Location;
           dispatch(setLocation(displayLocation));
-          closeModal();
-          break;
-        case "Escape":
           closeModal();
           break;
         default:
@@ -160,11 +157,6 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
     }
   }, []);
 
-  const closeModal = useCallback(() => {
-    dispatch(setLocations([]));
-    handleClose();
-  }, []);
-
   return (
     <div>
       <Box
@@ -218,7 +210,9 @@ export default function SearchLocationModal(props: SearchLocationModalProps) {
       </Box>
     </div>
   );
-}
+};
+
+export default SearchLocationModalContent;
 
 type MessageProps = {
   isShortCharacter: boolean;

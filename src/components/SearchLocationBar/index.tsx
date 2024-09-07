@@ -4,11 +4,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
+import { useAppDispatch } from "../../store/hooks";
+import { setLocations } from "../../slice/locationsSlice";
 import SearchLocationModalContent from "../Modals/SearchLocation/searchLocationModalContent";
 import { MGlassIcon } from "../../assets/icons";
-import theme from "../../theme/theme";
 
 const SearchLocationBar = () => {
+  const dispatch = useAppDispatch();
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -36,7 +39,10 @@ const SearchLocationBar = () => {
   }, []);
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    dispatch(setLocations([]));
+  };
 
   return (
     <div>
@@ -44,9 +50,9 @@ const SearchLocationBar = () => {
         open={open}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        // onClose={handleClose}
+        onClose={handleClose}
       >
-        <SearchLocationModalContent handleClose={handleClose} />
+        <SearchLocationModalContent closeModal={handleClose} />
       </Modal>
 
       <div
