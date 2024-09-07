@@ -68,6 +68,7 @@ const WeatherFortyEightHours = () => {
 
             return (
               <div
+                key={data.dt}
                 style={{
                   display: "flex",
                   flexDirection: "column",
