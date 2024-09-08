@@ -22,15 +22,15 @@ export const localTimeHour = (time: number, timeZone: string) => {
 };
 
 export const localDateTime = (time: number, timeZone: string) => {
-  return dayjs.tz(time * 1000, timeZone).format("DD ddd h a");
+  return dayjs.tz(time * 1000, timeZone).format("D ddd h a");
 };
 
 export const localFullDateTime = (time: number, timeZone: string) => {
-  return dayjs.tz(time * 1000, timeZone).format("MM/DD ddd h:mm a");
+  return dayjs.tz(time * 1000, timeZone).format("M/D ddd h:mm a");
 };
 
 export const localDay = (time: number, timeZone: string) => {
-  return dayjs.tz(time * 1000, timeZone).format("MM/DD");
+  return dayjs.tz(time * 1000, timeZone).format("M/D");
 };
 
 export const localDate = (time: number, timeZone: string) => {
