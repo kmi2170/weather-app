@@ -15,7 +15,7 @@ const SearchLocationBar = () => {
 
   const dispatch = useAppDispatch();
 
-  const { isMobile } = useIsMobile();
+  const { isMobile } = useIsMobile({ breakpoint: 600 });
 
   useEffect(() => {
     let keyPressed = {};
