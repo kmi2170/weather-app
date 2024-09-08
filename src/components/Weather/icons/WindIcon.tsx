@@ -58,7 +58,7 @@ const WindIcon = ({
           </Typography>
         )}
         <Typography variant="subtitle2" align="center">
-          {wind_speed ? formatDigits(wind_speed, 1) : "N/A"}
+          {formatDigits(wind_speed || 0, 1)}
           {speedUnit()}
         </Typography>
       </Grid>
@@ -71,11 +71,9 @@ const WindIcon = ({
         </div>
       </Grid>
       <Grid item xs={12}>
-        {wind_gust && (
-          <Typography variant="subtitle2" align="center">
-            Gust {formatDigits(wind_gust, 1)}
-          </Typography>
-        )}
+        <Typography variant="subtitle2" align="center">
+          Gust {formatDigits(wind_gust || 0, 1)}
+        </Typography>
       </Grid>
     </Grid>
   );
