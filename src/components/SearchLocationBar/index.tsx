@@ -9,6 +9,7 @@ import { setLocations } from "../../slice/locationsSlice";
 import SearchLocationModalContent from "../Modals/SearchLocation/searchLocationModalContent";
 import { MGlassIcon } from "../../assets/icons";
 import useIsMobile from "../../hooks/useIsMobile";
+import useKeysToOpenModal from "../../hooks/useKeysToOpenModal";
 
 const SearchLocationBar = () => {
   const [open, setOpen] = useState(false);
@@ -17,39 +18,13 @@ const SearchLocationBar = () => {
 
   const { isMobile } = useIsMobile({ breakpoint: 600 });
 
-  useEffect(() => {
-    let keyPressed = {};
-
-    function handleKeyPress(e: KeyboardEvent) {
-      if (!isMobile) {
-        return;
-      }
-
-      keyPressed[e.key] = true;
-
-      if (keyPressed["Control"] && keyPressed["k"]) {
-        e.preventDefault();
-        handleOpen();
-      }
-    }
-
-    function deleteKeyPressed(e: KeyboardEvent) {
-      delete keyPressed[e.key];
-    }
-
-    window.addEventListener("keydown", handleKeyPress);
-    window.addEventListener("keyup", deleteKeyPressed);
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-      window.removeEventListener("keyup", deleteKeyPressed);
-    };
-  }, [isMobile]);
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
     dispatch(setLocations([]));
   };
+
+  useKeysToOpenModal({ isMobile, handleOpen });
 
   return (
     <div>
