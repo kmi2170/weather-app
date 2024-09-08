@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useRef, useLayoutEffect } from "react";
+import { memo, useState, useEffect } from "react";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -8,42 +8,20 @@ import { useAppDispatch } from "../../store/hooks";
 import { setLocations } from "../../slice/locationsSlice";
 import SearchLocationModalContent from "../Modals/SearchLocation/searchLocationModalContent";
 import { MGlassIcon } from "../../assets/icons";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const SearchLocationBar = () => {
   const [open, setOpen] = useState(false);
-  const [showKeys, setShowKeys] = useState(true);
-  const ref = useRef<HTMLDivElement>(null);
 
   const dispatch = useAppDispatch();
 
-  function handelResize() {
-    const width = window.innerWidth;
-    if (width < 600) {
-      setShowKeys(false);
-    } else {
-      setShowKeys(true);
-    }
-  }
-
-  useLayoutEffect(() => {
-    if (ref.current) {
-      handelResize();
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", handelResize);
-
-    return () => {
-      window.removeEventListener("resize", handelResize);
-    };
-  }, []);
+  const { isMobile } = useIsMobile();
 
   useEffect(() => {
     let keyPressed = {};
 
     function handleKeyPress(e: KeyboardEvent) {
-      if (!showKeys) {
+      if (!isMobile) {
         return;
       }
 
@@ -65,7 +43,7 @@ const SearchLocationBar = () => {
       window.removeEventListener("keydown", handleKeyPress);
       window.removeEventListener("keyup", deleteKeyPressed);
     };
-  }, [showKeys]);
+  }, [isMobile]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -74,7 +52,7 @@ const SearchLocationBar = () => {
   };
 
   return (
-    <div ref={ref}>
+    <div>
       <Modal
         open={open}
         aria-labelledby="modal-modal-title"
@@ -123,7 +101,7 @@ const SearchLocationBar = () => {
           >
             <MGlassIcon />
           </Box>
-          {showKeys && (
+          {isMobile && (
             <Box
               sx={(theme) => ({
                 position: "absolute",
