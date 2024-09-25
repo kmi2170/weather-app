@@ -18,9 +18,6 @@ import { Weather } from "../../api/types";
 import { precipitationWithUnit } from "../../utils/units";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  textTitle: {
-    color: theme.palette.primary.dark,
-  },
   text: {},
   temp: {
     color: theme.palette.primary.main,
@@ -90,10 +87,6 @@ const WeatherDaily = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.textTitle}>
-        Daily Weather
-      </Typography>
-
       <Grid
         container
         justifyContent="flex-start"

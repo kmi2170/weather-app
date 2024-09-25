@@ -23,9 +23,6 @@ import { currentLocalTime, localTime } from "../../utils/time";
 import { Weather } from "../../api/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  textTitle: {
-    color: theme.palette.primary.dark,
-  },
   text: {},
   temp: {
     color: theme.palette.primary.main,
@@ -116,9 +113,6 @@ const WeatherCurrent = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.textTitle}>
-        Current
-      </Typography>
       <Paper elevation={2} className={classes.paper}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Typography

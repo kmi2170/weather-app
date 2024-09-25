@@ -37,14 +37,6 @@ const WeatherMinutely = () => {
 
   return (
     <>
-      <Typography
-        variant="h6"
-        sx={(theme) => ({
-          color: theme.palette.primary.dark,
-        })}
-      >
-        Minutely
-      </Typography>
       <Paper
         sx={{
           padding: "1rem",

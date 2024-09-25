@@ -86,30 +86,62 @@ const Home = () => {
           </Grid>
 
           <Grid item xs={12}>
+            <Typography
+              variant="h6"
+              sx={(theme) => ({
+                color: theme.palette.primary.dark,
+              })}
+            >
+              Current
+            </Typography>
             {!isLoading ? (
               <WeatherCurrent />
+            ) : (
+              <Skeleton variant="rectangular" height={275} />
+            )}
+          </Grid>
+
+          <Grid id="minutely" item xs={12}>
+            <Typography
+              variant="h6"
+              sx={(theme) => ({
+                color: theme.palette.primary.dark,
+              })}
+            >
+              Minutely
+            </Typography>
+            {!isLoading ? (
+              <WeatherMinutely />
             ) : (
               <Skeleton variant="rectangular" height={200} />
             )}
           </Grid>
 
-          <Grid id="minutely" item xs={12}>
-            {!isLoading ? (
-              <WeatherMinutely />
-            ) : (
-              <Skeleton variant="rectangular" height={150} />
-            )}
-          </Grid>
-
           <Grid id="forty-eight-hours" item xs={12}>
+            <Typography
+              variant="h6"
+              sx={(theme) => ({
+                color: theme.palette.primary.dark,
+              })}
+            >
+              48 Hours
+            </Typography>
             {!isLoading ? (
               <WeatherFortyEightHours />
             ) : (
-              <Skeleton variant="rectangular" height={150} />
+              <Skeleton variant="rectangular" height={325} />
             )}
           </Grid>
 
           <Grid id="daily" item xs={12}>
+            <Typography
+              variant="h6"
+              sx={(theme) => ({
+                color: theme.palette.primary.dark,
+              })}
+            >
+              Daily Weather
+            </Typography>
             {!isLoading ? (
               <WeatherDaily />
             ) : (
@@ -123,7 +155,7 @@ const Home = () => {
                   .fill(null)
                   .map((_, i) => (
                     <Grid key={i} item xs={4} sm={3} md={2}>
-                      <Skeleton variant="rectangular" height={250} />
+                      <Skeleton variant="rectangular" height={350} />
                     </Grid>
                   ))}
               </Grid>
@@ -131,10 +163,18 @@ const Home = () => {
           </Grid>
 
           <Grid id="charts" item xs={12}>
+            <Typography
+              variant="h6"
+              sx={(theme) => ({
+                color: theme.palette.primary.dark,
+              })}
+            >
+              48 Hours Charts
+            </Typography>
             {!isLoading ? (
               <WeatherHourly />
             ) : (
-              <Skeleton variant="rectangular" height={150} />
+              <Skeleton variant="rectangular" height={600} />
             )}
           </Grid>
 

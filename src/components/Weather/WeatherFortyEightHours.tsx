@@ -30,15 +30,6 @@ const WeatherFortyEightHours = () => {
 
   return (
     <>
-      <Typography
-        variant="h6"
-        sx={(theme) => ({
-          color: theme.palette.primary.dark,
-        })}
-      >
-        48 Hours
-      </Typography>
-
       <Paper
         sx={{
           padding: "1rem",
