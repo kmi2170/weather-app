@@ -93,17 +93,17 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid id="forty-eight-hours" item xs={12}>
+          <Grid id="minutely" item xs={12}>
             {!isLoading ? (
-              <WeatherFortyEightHours />
+              <WeatherMinutely />
             ) : (
               <Skeleton variant="rectangular" height={150} />
             )}
           </Grid>
 
-          <Grid id="minutely" item xs={12}>
+          <Grid id="forty-eight-hours" item xs={12}>
             {!isLoading ? (
-              <WeatherMinutely />
+              <WeatherFortyEightHours />
             ) : (
               <Skeleton variant="rectangular" height={150} />
             )}

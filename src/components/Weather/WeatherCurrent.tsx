@@ -172,7 +172,13 @@ const WeatherCurrent = () => {
                 <Typography variant="h6" align="center">
                   {weather[0].main}
                 </Typography>
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    minHeight: "4rem",
+                  }}
+                >
                   <WeatherIcon
                     sunrise={sunrise}
                     sunset={sunset}
