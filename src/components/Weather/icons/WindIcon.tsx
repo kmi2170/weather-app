@@ -50,33 +50,55 @@ const WindIcon = ({
   };
 
   return (
-    <Grid container justifyContent="center" alignItems="center">
-      <Grid item xs={12}>
-        {current && (
-          <Typography variant="h6" align="center">
-            {windDirection()}
-          </Typography>
-        )}
-        <Typography variant="subtitle2" align="center">
-          {formatDigits(wind_speed || 0, 1)}
-          {speedUnit()}
+    <>
+      {current && (
+        <Typography variant="h6" align="center">
+          {windDirection()}
         </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <i
-            className={windIconClass()}
-            style={{ fontSize: current ? "3rem" : "1.75rem" }}
-          />
-        </div>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="subtitle2" align="center">
-          Gust {formatDigits(wind_gust || 0, 1)}
-        </Typography>
-      </Grid>
-    </Grid>
+      )}
+      <Typography variant="subtitle2" align="center">
+        {formatDigits(wind_speed || 0, 1)}
+        {speedUnit()}
+      </Typography>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <i
+          className={windIconClass()}
+          style={{ fontSize: current ? "3rem" : "1.75rem" }}
+        />
+      </div>
+      <Typography variant="subtitle2" align="center">
+        Gust {formatDigits(wind_gust || 0, 1)}
+      </Typography>
+    </>
   );
+  // return (
+  //   <Grid container justifyContent="center" alignItems="center">
+  //     <Grid item xs={12}>
+  //       {current && (
+  //         <Typography variant="h6" align="center">
+  //           {windDirection()}
+  //         </Typography>
+  //       )}
+  //       <Typography variant="subtitle2" align="center">
+  //         {formatDigits(wind_speed || 0, 1)}
+  //         {speedUnit()}
+  //       </Typography>
+  //     </Grid>
+  //     <Grid item xs={12}>
+  //       <div style={{ display: "flex", justifyContent: "center" }}>
+  //         <i
+  //           className={windIconClass()}
+  //           style={{ fontSize: current ? "3rem" : "1.75rem" }}
+  //         />
+  //       </div>
+  //     </Grid>
+  //     <Grid item xs={12}>
+  //       <Typography variant="subtitle2" align="center">
+  //         Gust {formatDigits(wind_gust || 0, 1)}
+  //       </Typography>
+  //     </Grid>
+  //   </Grid>
+  // );
 };
 
 export default memo(WindIcon);
