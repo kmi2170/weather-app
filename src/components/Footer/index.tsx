@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer style={{ margin: "20px 10px 30px 0" }}>
       <Typography variant="body2">
-        {year} &copy; Kemmei H. | Powered by OpenWeather.com
+        &copy; {year} Kemmei H. | Powered by OpenWeather.com
         {/* <a
           href="https://www.openweathermap.org/"
           rel="noopener noreferrer"
