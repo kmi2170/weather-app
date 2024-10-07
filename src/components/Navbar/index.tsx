@@ -1,4 +1,4 @@
-import { memo } from "react";
+import React, { memo, useEffect } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -31,6 +31,22 @@ const Navbar = () => {
     units,
     lang,
   });
+
+  const handleScroll = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    const element = document.querySelector(`#${id}`);
+    if (element) {
+      window.scrollTo({
+        behavior: "smooth",
+        top:
+          element.getBoundingClientRect().top -
+          document.body.getBoundingClientRect().top -
+          40,
+      });
+      // element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const isAlerts = !!(data as Weather)?.alerts;
 
   return (
@@ -71,7 +87,7 @@ const Navbar = () => {
                 [theme.breakpoints?.down("md")]: { padding: "0 0.5rem" },
               })}
             >
-              <Link href={`#${id}`}>
+              <Link href={`#${id}`} passHref>
                 <Typography
                   variant="h6"
                   align="center"
@@ -81,6 +97,7 @@ const Navbar = () => {
                     "&:active": { color: theme.palette.primary.main },
                     [theme.breakpoints?.down("sm")]: { fontSize: "1.0rem" },
                   })}
+                  onClick={(e) => handleScroll(e, `${id}`)}
                 >
                   {name}
                 </Typography>
@@ -98,7 +115,7 @@ const Navbar = () => {
               [theme.breakpoints?.down("md")]: { padding: "0 0.5rem" },
             })}
           >
-            <Link href={`#alerts`}>
+            <Link href={`#alerts`} passHref>
               <Typography
                 variant="h6"
                 align="center"
@@ -110,6 +127,7 @@ const Navbar = () => {
                     ? { color: theme.palette.warning.light }
                     : undefined,
                 })}
+                onClick={(e) => handleScroll(e, `alerts`)}
               >
                 Alerts
               </Typography>
