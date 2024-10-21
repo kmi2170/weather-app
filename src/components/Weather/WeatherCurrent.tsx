@@ -79,7 +79,7 @@ const WeatherCurrent = () => {
 
   const { units, location, lang } = useAppSelector((state) => state.weather);
 
-  const { data, error } = useGetWeatherQuery({
+  const { data } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,

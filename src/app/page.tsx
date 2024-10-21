@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -29,12 +31,15 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const { units, lang, location } = useAppSelector((state) => state.weather);
 
-  const { isLoading, isError } = useGetWeatherQuery({
+  const { data, isLoading, isError } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
     lang,
   });
+
+  // console.log(location);
+  // console.log({ isLoading, data });
 
   const { cookies, setLocationCookie } = useCustomCookies();
 
@@ -63,8 +68,10 @@ const Home = () => {
       }}
     >
       {isError && <ErrorModal />}
+
       <div id="top" />
       <Navbar />
+
       <Container>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>
