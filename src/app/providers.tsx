@@ -1,17 +1,12 @@
 "use client";
 
-import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
-import { store } from "../store/store";
+import StoreProvider from "./storeProvider";
 
-export default function StoreProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <Provider store={store}>
-      <CookiesProvider>{children}</CookiesProvider>
-    </Provider>
+    <CookiesProvider>
+      <StoreProvider>{children}</StoreProvider>
+    </CookiesProvider>
   );
 }
