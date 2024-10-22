@@ -1,8 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { fetchGeocodingByLocationName } from "../../../api/lib";
 import { NextResponse } from "next/server";
+import { fetchGeocodingByLocationName } from "../../../api/lib";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: Request) {
   try {
     const url = new URL(req.url as string);
     const searchParams = url.searchParams;

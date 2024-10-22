@@ -1,9 +1,8 @@
-import { NextApiRequest } from "next";
+import { NextResponse } from "next/server";
 import { fetchWeather } from "../../../api/lib/fetchWeather";
 import { WeatherQuery } from "../../../api/types";
-import { NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: Request) {
   try {
     const url = new URL(req?.url as string);
     const searchParams = url.searchParams;
