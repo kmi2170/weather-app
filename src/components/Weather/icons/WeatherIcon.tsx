@@ -1,6 +1,5 @@
 import { memo } from "react";
 import makeStyles from "@mui/styles/makeStyles";
-import { WeatherSummary } from "../../../api/types";
 import { purple } from "@mui/material/colors";
 
 const useStyles = makeStyles(() => ({
@@ -10,7 +9,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface WeaterIconProps {
+interface WeatherIconProps {
   sunset?: number;
   sunrise?: number;
   time?: number;
@@ -26,7 +25,7 @@ const WeatherIcon = ({
   weatherId,
   current,
   size = "2rem",
-}: WeaterIconProps) => {
+}: WeatherIconProps) => {
   const classes = useStyles();
 
   const weatherIconClass = () => {

@@ -1,3 +1,5 @@
+"use client";
+
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { purple, red } from "@mui/material/colors";
 import { Overlock, Rubik } from "next/font/google";
