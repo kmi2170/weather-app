@@ -19,7 +19,12 @@ export const weatherApi = createApi({
         return `weather?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}`;
       },
     }),
+    getWeatherMap: builder.query<any | string, any>({
+      query: ({ lat, lon }) => {
+        return `weathermap?lat=${lat}&lon=${lon}`;
+      },
+    }),
   }),
 });
 
-export const { useGetWeatherQuery } = weatherApi;
+export const { useGetWeatherQuery, useGetWeatherMapQuery } = weatherApi;

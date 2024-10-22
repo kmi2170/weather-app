@@ -12,9 +12,11 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import weatherSlice from "../slice/weatherSlice";
 import { weatherApi } from "../services/weatherApi";
 import locationsSlice from "../slice/locationsSlice";
+import weatherMapSlice from "../slice/weatherMapSlice";
 
 const rootReducer = combineReducers({
   weather: weatherSlice,
+  weatherMap: weatherMapSlice,
   locations: locationsSlice,
   [weatherApi.reducerPath]: weatherApi.reducer,
 });

@@ -106,7 +106,7 @@ const Navbar = () => {
           ))}
 
           <ListItem
-            key={5}
+            key="alert"
             dense
             disableGutters
             alignItems="center"
@@ -130,6 +130,32 @@ const Navbar = () => {
                 onClick={(e) => handleScroll(e, `alerts`)}
               >
                 Alerts
+              </Typography>
+            </Link>
+          </ListItem>
+
+          <ListItem
+            key="map"
+            dense
+            disableGutters
+            alignItems="center"
+            sx={(theme) => ({
+              padding: "0 1rem",
+              [theme.breakpoints?.down("md")]: { padding: "0 0.5rem" },
+            })}
+          >
+            <Link href="/weathermap">
+              <Typography
+                variant="h6"
+                align="center"
+                sx={(theme) => ({
+                  textTransform: "capitalize",
+                  color: theme.palette.primary.dark,
+                  "&:active": { color: theme.palette.primary.main },
+                  [theme.breakpoints?.down("sm")]: { fontSize: "1.0rem" },
+                })}
+              >
+                Map
               </Typography>
             </Link>
           </ListItem>
