@@ -1,4 +1,4 @@
-import { Weather } from "../api/types";
+import { Weather } from "../api/types/weather";
 
 // export type Location = {
 //   city: string;

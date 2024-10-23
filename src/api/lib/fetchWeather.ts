@@ -1,5 +1,5 @@
 import axios from "axios";
-import { WeatherQuery, Weather, Geocoding } from "../types";
+import { WeatherQuery, Weather, Geocoding } from "../types/weather";
 
 const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
 

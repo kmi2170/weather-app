@@ -16,7 +16,7 @@ import { purple } from "@mui/material/colors";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { asyncThunkFindLocations } from "../../../slice/locationsAsyncThunk";
 import { LocationList } from "./locationList";
-import { LocationType } from "../../../api/types";
+import { LocationType } from "../../../api/types/weather";
 import { setLocations } from "../../../slice/locationsSlice";
 import { setLocation } from "../../../slice/weatherSlice";
 import { Location } from "../../../store/initialState";

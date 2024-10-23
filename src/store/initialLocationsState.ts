@@ -1,4 +1,4 @@
-import { LocationType } from "../api/types";
+import { LocationType } from "../api/types/weather";
 
 export const initialLocationsState: LocationsStateType = {
   locations: [],

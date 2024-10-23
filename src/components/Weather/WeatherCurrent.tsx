@@ -20,7 +20,7 @@ import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import MoonIcon from "./icons/MoonIcon";
 import { currentLocalTime, localTime } from "../../utils/time";
-import { Weather } from "../../api/types";
+import { Weather } from "../../api/types/weather";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},

@@ -1,4 +1,4 @@
-import { LocationType } from "../../../api/types";
+import { LocationType } from "../../../api/types/weather";
 import { LocationListItem } from "./locationListItem";
 
 type LocationsListProps = {

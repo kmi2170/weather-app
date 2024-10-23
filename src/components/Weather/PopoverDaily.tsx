@@ -12,7 +12,7 @@ import { useAppSelector } from "../../store/hooks";
 import { precipitationWithUnit, pressureWithUnit } from "../../utils/units";
 import MoonIcon from "./icons/MoonIcon";
 import { localDate, localDay, localTime } from "../../utils/time";
-import { WeatherDaily } from "../../api/types";
+import { WeatherDaily } from "../../api/types/weather";
 import { formatDigits } from "../../utils/formatDigits";
 
 const useStyles = makeStyles((theme: Theme) =>

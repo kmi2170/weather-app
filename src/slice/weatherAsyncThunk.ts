@@ -3,7 +3,7 @@ import { setLocation, setIsNotFound } from "../slice/weatherSlice";
 import axios from "axios";
 
 import { ipLookup } from "../api/lib";
-import { Geocoding, LocationType } from "../api/types";
+import { Geocoding, LocationType } from "../api/types/weather";
 import { Location } from "../store/initialState";
 
 export const asyncThunkIpLookupLocation = createAsyncThunk(

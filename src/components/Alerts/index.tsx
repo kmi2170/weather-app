@@ -8,7 +8,7 @@ import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { localFullDateTime } from "../../utils/time";
-import { Weather } from "../../api/types";
+import { Weather } from "../../api/types/weather";
 import { red } from "@mui/material/colors";
 
 const Alerts = () => {

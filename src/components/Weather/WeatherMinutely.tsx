@@ -8,7 +8,7 @@ import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { localTime } from "../../utils/time";
 import { ChartMinutely } from "./charts";
-import { Weather } from "../../api/types";
+import { Weather } from "../../api/types/weather";
 
 const WeatherMinutely = () => {
   const { units, lang, location } = useAppSelector(selectWeather);

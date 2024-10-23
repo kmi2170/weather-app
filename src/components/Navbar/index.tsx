@@ -9,7 +9,7 @@ import { grey } from "@mui/material/colors";
 
 import { useAppSelector } from "../../store/hooks";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import { Weather } from "../../api/types";
+import { Weather } from "../../api/types/weather";
 import Buttons from "./Buttons";
 import Link from "next/link";
 import { Box } from "@mui/material";

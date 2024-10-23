@@ -1,17 +1,13 @@
-"use client";
-
-import { useGetWeatherMapQuery } from "../../services/weatherApi";
-import { useAppSelector } from "../../store/hooks";
+import useWeatherMap from "../../hooks/useWeatherMap";
 
 const WeatherMap = () => {
-  const { location } = useAppSelector((state) => state.weather);
+  const Map = useWeatherMap();
 
-  const { data, isLoading, isError } = useGetWeatherMapQuery({
-    lat: String(location.lat),
-    lon: String(location.lon),
-  });
-  console.log(data);
-  return <div>Map</div>;
+  return (
+    <div style={{}}>
+      <Map />
+    </div>
+  );
 };
 
 export default WeatherMap;

@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { Theme } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-import { LocationType } from "../../../api/types";
+import { LocationType } from "../../../api/types/weather";
 
 type LocationListItemProps = {
   index: number;

@@ -1,4 +1,4 @@
-import { Units } from "../store/initialState";
+import { Units } from "../../store/initialState";
 
 export type CookieLocation = Record<string, string> | null | undefined;
 

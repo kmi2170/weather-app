@@ -8,7 +8,7 @@ import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
 import { localDate, localDay, localTimeHour } from "../../utils/time";
-import { Weather } from "../../api/types";
+import { Weather } from "../../api/types/weather";
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import { isDay, precipitationWithUnit, tempWithUnit } from "../../utils/units";

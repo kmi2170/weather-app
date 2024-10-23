@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import { ChartOptions, ChartData } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { ChartProps } from "../../../api/types";
+import { ChartProps } from "../../../api/types/weather";
 
 ChartJS.register(
   CategoryScale,

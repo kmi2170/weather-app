@@ -14,7 +14,7 @@ import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
 import { localDate, localDay } from "../../utils/time";
-import { Weather } from "../../api/types";
+import { Weather } from "../../api/types/weather";
 import { precipitationWithUnit } from "../../utils/units";
 
 const useStyles = makeStyles((theme: Theme) => ({

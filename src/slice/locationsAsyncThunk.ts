@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setLocations } from "./locationsSlice";
 
 import { findLocations } from "../api/lib";
-import { LocationType } from "../api/types";
+import { LocationType } from "../api/types/weather";
 
 export const asyncThunkFindLocations = createAsyncThunk(
   "weather/asyncFindLocations",

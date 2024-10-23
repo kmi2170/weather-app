@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { fetchWeather } from "../../../api/lib/fetchWeather";
-import { WeatherQuery } from "../../../api/types";
+import { WeatherQuery } from "../../../api/types/weather";
 
 export async function GET(req: Request) {
   try {

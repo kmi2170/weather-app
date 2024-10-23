@@ -15,7 +15,7 @@ import {
   ChartWind,
   ChartPressure,
 } from "./charts";
-import { Weather } from "../../api/types";
+import { Weather } from "../../api/types/weather";
 
 const WeatherHourly = () => {
   const { units, lang, location } = useAppSelector(selectWeather);

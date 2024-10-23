@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialLocationsState } from "../store/initialLocationsState";
 import { asyncThunkFindLocations } from "./locationsAsyncThunk";
-import { LocationType } from "../api/types";
+import { LocationType } from "../api/types/weather";
 
 export const locationsSlice = createSlice({
   name: "locations",

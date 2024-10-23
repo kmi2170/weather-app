@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LocationType } from "../types";
+import { LocationType } from "../types/weather";
 import { SignalWifi1BarLock } from "@mui/icons-material";
 
 const baseUrl = "https://geocoding-api.open-meteo.com/v1/search";

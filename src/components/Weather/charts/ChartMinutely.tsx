@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
-import { ChartProps, WeatherMinutely } from "../../../api/types";
+import { ChartProps, WeatherMinutely } from "../../../api/types/weather";
 
 ChartJS.register(
   CategoryScale,

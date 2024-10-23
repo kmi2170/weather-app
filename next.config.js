@@ -3,4 +3,7 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true, // temporary ignore eslint until eslint 9 is supported.
   },
+  images: {
+    domains: ["tile.openweathermap.org"],
+  },
 };
