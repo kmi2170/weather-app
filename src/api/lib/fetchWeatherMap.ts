@@ -4,13 +4,13 @@ import { WeatherMapQuery } from "../types/weatherMap";
 const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_KEY;
 
 export const fetchWeatherMap = async ({
-  lat,
-  lon,
+  x,
+  y,
   zoom,
   layer,
 }: WeatherMapQuery): Promise<string> => {
   try {
-    const url = `https://tile.openweathermap.org/map/${layer}/${zoom}/1/1.png`;
+    const url = `https://tile.openweathermap.org/map/${layer}/${zoom}/${x}/${y}.png`;
 
     const { data } = await axios.get(url, {
       params: { appid },

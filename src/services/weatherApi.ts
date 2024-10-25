@@ -21,8 +21,8 @@ export const weatherApi = createApi({
       },
     }),
     getWeatherMap: builder.query<string, WeatherMapQuery>({
-      query: ({ lat, lon, zoom, layer }) => {
-        return `weathermap?layer=${layer}&lat=${lat}&lon=${lon}&zoom=${zoom}`;
+      query: ({ x, y, zoom, layer }) => {
+        return `weathermap?layer=${layer}&x=${x}&y=${y}&zoom=${zoom}`;
       },
     }),
   }),

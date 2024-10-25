@@ -7,8 +7,8 @@ export async function GET(req: Request) {
     const url = new URL(req?.url as string);
     const searchParams = url.searchParams;
     const query = {
-      lat: searchParams.get("lat"),
-      lon: searchParams.get("lon"),
+      x: searchParams.get("x"),
+      y: searchParams.get("y"),
       zoom: searchParams.get("zoom"),
       layer: searchParams.get("layer"),
     } as WeatherMapQuery;
