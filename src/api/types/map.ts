@@ -7,11 +7,21 @@ export const layers = [
 ] as const;
 
 export type WeatherMapLayerNames = (typeof layers)[number]["name"];
-export type WeatherMapLayerIds = (typeof layers)[number]["id"];
+export type WeatherMapLayerKeys = (typeof layers)[number]["id"];
 
 export type WeatherMapQuery = {
-  x: string;
-  y: string;
-  zoom: string;
-  layer: WeatherMapLayerIds;
+  lat: number;
+  lon: number;
+  zoom: number;
+  layer: WeatherMapLayerKeys;
 };
+
+export type WeatherMapResponse = {
+  bounds: BoundsType;
+  img: string;
+  tileCoords: TileCoords;
+};
+
+export type TileCoords = [number, number];
+
+export type BoundsType = [[number, number], [number, number]];

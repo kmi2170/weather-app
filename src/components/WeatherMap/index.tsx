@@ -1,10 +1,16 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { SetStateAction, useRef, useState } from "react";
 
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import { ImageOverlay, MapContainer, TileLayer } from "react-leaflet";
+import {
+  ImageOverlay,
+  MapContainer,
+  TileLayer,
+  useMapEvent,
+  useMapEvents,
+} from "react-leaflet";
 import { LatLngBoundsExpression, LeafletEvent, map } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -12,26 +18,32 @@ import { useGetWeatherMapQuery } from "../../services/weatherApi";
 import { useAppSelector } from "../../store/hooks";
 import {
   layers,
-  WeatherMapLayerIds,
+  WeatherMapLayerKeys,
   WeatherMapLayerNames,
-} from "../../api/types/weatherMap";
+  WeatherMapResponse,
+} from "../../api/types/map";
+import { requestToBodyStream } from "next/dist/server/body-streams";
+import { Dispatch } from "@reduxjs/toolkit";
+import { init } from "next/dist/compiled/webpack/webpack";
+
+const lat = 47;
+const lon = -122;
+const initZoom = 1;
 
 const Map = () => {
   const { location } = useAppSelector((state) => state.weather);
 
   const mapRef = useRef(null);
 
-  const [zoom, setZoom] = useState(1);
-  const [layer, setLayer] = useState<WeatherMapLayerIds>("temp_new");
-  const [tiles, setTiles] = useState(
-    Array(zoom + 1).fill(Array(zoom + 1).fill(null))
-  );
-  console.log(tiles);
+  const [zoom, setZoom] = useState(initZoom);
+  const [layer, setLayer] = useState<WeatherMapLayerKeys>("temp_new");
+
+  console.log(zoom);
 
   const { data, isLoading, isError } = useGetWeatherMapQuery({
-    x: String(0),
-    y: String(0),
-    zoom: String(0),
+    lat,
+    lon,
+    zoom,
     layer,
   });
 
@@ -40,9 +52,7 @@ const Map = () => {
     [90, 180],
   ] as LatLngBoundsExpression;
 
-  const bounds = latLngBounds;
-
-  const handleSelectLayer = (id: WeatherMapLayerIds) => {
+  const handleSelectLayer = (id: WeatherMapLayerKeys) => {
     setLayer(id);
   };
 
@@ -53,7 +63,6 @@ const Map = () => {
       <Paper
         elevation={6}
         sx={{
-          // position: "relative",
           width: "80vw",
           height: "80vh",
           margin: "5rem auto 0 auto",
@@ -67,14 +76,14 @@ const Map = () => {
             padding: 0,
             margin: 0,
           }}
-          center={[-100, 100]}
-          zoom={zoom}
+          center={[47, -122]}
+          zoom={initZoom}
           scrollWheelZoom={true}
           maxBounds={latLngBounds}
           // @ts-ignore
-          whenReady={(e) => {
-            // e.target.fitBounds(bounds);
-          }}
+          // whenReady={(e) => {
+          //   e.target.fitBounds(bounds);
+          // }}
           // Have the map adjust its view to the same bounds as the Image Overlay
         >
           <TileLayer
@@ -82,7 +91,21 @@ const Map = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <ImageOverlay url={data} bounds={latLngBounds} opacity={0.99} />
+          <ZoomLevel setZoom={setZoom} />
+
+          {data.map((tile) => {
+            const { success } = tile;
+            const { bounds, img, tileCoords } = success as WeatherMapResponse;
+
+            return (
+              <ImageOverlay
+                key={JSON.stringify(bounds)}
+                url={img}
+                bounds={bounds as LatLngBoundsExpression}
+                opacity={0.99}
+              />
+            );
+          })}
         </MapContainer>
       </Paper>
 
@@ -94,7 +117,7 @@ const Map = () => {
 export default Map;
 
 type LayerSelectButtonsProps = {
-  handleClick: (id: WeatherMapLayerIds) => void;
+  handleClick: (id: WeatherMapLayerKeys) => void;
 };
 
 const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
@@ -124,4 +147,20 @@ const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
       })}
     </div>
   );
+};
+
+type ZoomLevelProps = {
+  setZoom: React.Dispatch<SetStateAction<number>>;
+};
+
+const ZoomLevel = (props: ZoomLevelProps) => {
+  const { setZoom } = props;
+
+  const mapEvents = useMapEvents({
+    zoomend: () => {
+      setZoom(mapEvents.getZoom());
+    },
+  });
+
+  return null;
 };

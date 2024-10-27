@@ -1,17 +1,27 @@
 import { NextResponse } from "next/server";
 import { fetchWeatherMap } from "../../../api/lib/fetchWeatherMap";
-import { WeatherMapQuery } from "../../../api/types/weatherMap";
+import { WeatherMapLayerKeys, WeatherMapQuery } from "../../../api/types/map";
 
 export async function GET(req: Request) {
   try {
     const url = new URL(req?.url as string);
     const searchParams = url.searchParams;
-    const query = {
-      x: searchParams.get("x"),
-      y: searchParams.get("y"),
-      zoom: searchParams.get("zoom"),
-      layer: searchParams.get("layer"),
-    } as WeatherMapQuery;
+
+    const lat = searchParams.get("lat");
+    const lon = searchParams.get("lon");
+    const zoom = searchParams.get("zoom");
+    const layer = searchParams.get("layer");
+
+    if (lat == null || lon == null || zoom == null || layer == null) {
+      throw new Error("not sufficient parameters");
+    }
+
+    const query: WeatherMapQuery = {
+      lat: Number(lat),
+      lon: Number(lon),
+      zoom: Number(zoom),
+      layer: layer as WeatherMapLayerKeys,
+    };
 
     const data = await fetchWeatherMap(query);
     return NextResponse.json(data, { status: 200 });
