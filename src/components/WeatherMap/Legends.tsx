@@ -19,9 +19,31 @@ const Legends = (props: LegendsProps) => {
 
   const name = layers.filter((_layer) => _layer.id === layer)[0].name;
 
-  const data = legends[name] as LegendType[];
+  if (layer === "precipitation_new") {
+    const data1 = legends["rain"] as LegendType[];
+    const data2 = legends["snow"] as LegendType[];
 
-  return <Legend layerName={name} legend={data} />;
+    return (
+      <Grid
+        container
+        gap="3.0rem"
+        justifyContent="center"
+        alignContent="center"
+      >
+        <Grid item>
+          <Legend layerName="rain" legend={data1} />
+        </Grid>
+        <Grid item>
+          <Legend layerName="snow" legend={data2} />
+        </Grid>
+      </Grid>
+    );
+  } else {
+    const name = layers.filter((_layer) => _layer.id === layer)[0].name;
+    const data = legends[name] as LegendType[];
+
+    return <Legend layerName={name} legend={data} />;
+  }
 };
 
 export default Legends;

@@ -1,9 +1,9 @@
 // rain (mm)
 export const rain = [
-  { value: 0, color: "rgba(225, 200, 100, 0)" },
-  { value: 0.1, color: "rgba(200, 150, 150, 0)" },
-  { value: 0.2, color: "rgba(150, 150, 170, 0)" },
-  { value: 0.5, color: "rgba(120, 120, 190, 0)" },
+  // { value: 0, color: "rgba(225, 200, 100, 0)" },
+  // { value: 0.1, color: "rgba(200, 150, 150, 0)" },
+  // { value: 0.2, color: "rgba(150, 150, 170, 0)" },
+  // { value: 0.5, color: "rgba(120, 120, 190, 0)" },
   { value: 1, color: "rgba(110, 110, 205, 0.3)" },
   { value: 10, color: "rgba(80,80, 225, 0.7)" },
   { value: 140, color: "rgba(20, 20, 255, 0.9)" },
@@ -11,7 +11,7 @@ export const rain = [
 
 // snow (mm)
 export const snow = [
-  { value: 0, color: "transparent" },
+  // { value: 0, color: "transparent" },
   { value: 5, color: "#00d8ff" },
   { value: 10, color: "#00b6ff" },
   { value: 25.076, color: "#9549ff" },
