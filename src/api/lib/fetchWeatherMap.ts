@@ -20,39 +20,85 @@ export const fetchWeatherMap = async ({
   try {
     const numOfDivision = Math.pow(2, zoom);
 
-    const asyncFunctionsArray = Array.from(
-      { length: numOfDivision },
-      (_: unknown, iLat: number) =>
-        Array.from({ length: numOfDivision }, (_: unknown, iLon: number) => {
-          const params = {
-            tileX: iLat,
-            tileY: iLon,
-            zoom,
-            layer,
-            appid: appid!,
-          };
+    const [pixelX, pixelY] = latLngToPixel({ lat, lng: lon, zoom });
 
-          return createAsyncFunction(params);
-        })
+    const tileX_center = Math.floor(pixelX / TILE_SIZE);
+    const tileY_center = Math.floor(pixelY / TILE_SIZE);
+
+    // const asyncFunctionsArray = Array.from(
+    //   { length: numOfDivision },
+    //   (_: unknown, iLat: number) =>
+    //     Array.from({ length: numOfDivision }, (_: unknown, iLon: number) => {
+    //       const params = {
+    //         tileX: iLat,
+    //         tileY: iLon,
+    //         zoom,
+    //         layer,
+    //         appid: appid!,
+    //       };
+
+    //       return createAsyncFunction(params);
+    //     })
+    // );
+
+    const asyncFunctionsArray: CreateAsyncFunctionResponse[] = [];
+
+    const subTileX_center = Math.floor(
+      (pixelX - tileX_center * TILE_SIZE) / (TILE_SIZE * 0.5)
     );
+    const subTileY_center = Math.floor(
+      (pixelY - tileY_center * TILE_SIZE) / (TILE_SIZE * 0.5)
+    );
+
+    const dyL = subTileY_center === 0 ? 1 : 0;
+    const dyR = subTileY_center === 1 ? 1 : 0;
+    const dxL = subTileX_center === 0 ? 1 : 0;
+    const dxR = subTileX_center === 1 ? 1 : 0;
+
+    const num = 1;
+
+    for (
+      let iLat = tileY_center - num - dyL;
+      iLat <= tileY_center + num + dyR;
+      iLat++
+    ) {
+      for (
+        let iLon = tileX_center - num - dxL;
+        iLon <= tileX_center + num + dxR;
+        iLon++
+      ) {
+        if (
+          iLat < 0 ||
+          iLon < 0 ||
+          iLat >= numOfDivision ||
+          iLon >= numOfDivision
+        ) {
+          continue;
+        }
+
+        const params = {
+          tileX: iLon,
+          tileY: iLat,
+          zoom,
+          layer,
+          appid: appid!,
+        };
+
+        asyncFunctionsArray.push(createAsyncFunction(params));
+      }
+    }
 
     const results = await Promise.all(
-      asyncFunctionsArray.map(async (row) => {
-        return await Promise.all(row.map((func) => func()));
-      })
+      asyncFunctionsArray.map((func) => func())
     );
 
-    const flattenedResults = results.flat();
-
-    const errorExists = flattenedResults.some((data) =>
-      data.hasOwnProperty("error")
-    );
+    const errorExists = results.some((data) => data.hasOwnProperty("error"));
 
     if (errorExists) {
       throw new Error("failed to fetch image data");
     }
 
-    return flattenedResults;
+    return results;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
@@ -72,9 +118,13 @@ type CreateAsyncFunctionParams = {
   appid: string;
 };
 
+type CreateAsyncFunctionResponse = () => Promise<
+  CustomResponse<WeatherMapResponse>
+>;
+
 function createAsyncFunction(
   params: CreateAsyncFunctionParams
-): () => Promise<CustomResponse<WeatherMapResponse>> {
+): CreateAsyncFunctionResponse {
   return async () => {
     try {
       const { tileX, tileY, zoom, layer, appid } = params;
@@ -145,18 +195,36 @@ function calculateBounds(params: CalculateBoundsParams): BoundsType {
   return bounds;
 }
 
+type LatLngToPixelParams = {
+  lat: number;
+  lng: number;
+  zoom: number;
+  L?: number;
+};
+
+function latLngToPixel(params: LatLngToPixelParams): [number, number] {
+  const { lat, lng, zoom, L = 85.05112878 } = params;
+
+  const pixelX = Math.pow(2, zoom + 7) * (lng / 180 + 1);
+  const pixelY =
+    (Math.pow(2, zoom + 7) / Math.PI) *
+    (-Math.atanh(Math.sin((Math.PI / 180) * lat)) +
+      Math.atanh(Math.sin((Math.PI / 180) * L)));
+
+  return [pixelX, pixelY];
+}
+
 type PixelToLatLngParams = {
   pixelX: number;
   pixelY: number;
   zoom: number;
+  L?: number;
 };
 
 function pixelToLatLng(params: PixelToLatLngParams): [number, number] {
-  const { pixelX, pixelY, zoom } = params;
+  const { pixelX, pixelY, zoom, L = 85.05112878 } = params;
 
-  const L = 85;
-
-  const lon = 180 * (pixelX / Math.pow(2, zoom + 7) - 1);
+  const lng = 180 * (pixelX / Math.pow(2, zoom + 7) - 1);
   const lat =
     (180 / Math.PI) *
     Math.asin(
@@ -165,5 +233,5 @@ function pixelToLatLng(params: PixelToLatLngParams): [number, number] {
           Math.atanh(Math.sin((Math.PI / 180) * L))
       )
     );
-  return [lat, lon];
+  return [lat, lng];
 }

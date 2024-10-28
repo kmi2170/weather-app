@@ -10,7 +10,10 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 import { setLocation } from "../slice/weatherSlice";
 import { asyncThunkIpLookupLocation } from "../slice/weatherAsyncThunk";
-import { useGetWeatherQuery } from "../services/weatherApi";
+import {
+  useGetWeatherMapQuery,
+  useGetWeatherQuery,
+} from "../services/weatherApi";
 import { useCustomCookies } from "../hooks/useCustomCookies";
 import Navbar from "../components/Navbar";
 import SearchLocationBar from "../components/SearchLocationBar";
@@ -26,6 +29,7 @@ import {
 import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../store/initialState";
 import ErrorModal from "../components/Modals/errorModal";
+import WeatherMap from "./weathermap/page";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -106,6 +110,18 @@ const Home = () => {
             ) : (
               <Skeleton variant="rectangular" height={275} />
             )}
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography
+              variant="h6"
+              sx={(theme) => ({
+                color: theme.palette.primary.dark,
+              })}
+            >
+              Map
+            </Typography>
+            <WeatherMap />
           </Grid>
 
           <Grid id="minutely" item xs={12}>

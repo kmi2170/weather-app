@@ -8,10 +8,9 @@ import {
   ImageOverlay,
   MapContainer,
   TileLayer,
-  useMapEvent,
   useMapEvents,
 } from "react-leaflet";
-import { LatLngBoundsExpression, LeafletEvent, map } from "leaflet";
+import { LatLngBoundsExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import { useGetWeatherMapQuery } from "../../services/weatherApi";
@@ -22,23 +21,32 @@ import {
   WeatherMapLayerNames,
   WeatherMapResponse,
 } from "../../api/types/map";
-import { requestToBodyStream } from "next/dist/server/body-streams";
-import { Dispatch } from "@reduxjs/toolkit";
-import { init } from "next/dist/compiled/webpack/webpack";
+import Legends from "./Legends";
 
-const lat = 47;
-const lon = -122;
-const initZoom = 1;
+// const lat = 46.94195;
+// const lon = -122.60632;
+const initZoom = 6;
+const minZoom = 4;
+
+// const latLngBounds = [
+//   [-90, -180],
+//   [90, 180],
+// ] as LatLngBoundsExpression;
 
 const Map = () => {
   const { location } = useAppSelector((state) => state.weather);
 
   const mapRef = useRef(null);
 
-  const [zoom, setZoom] = useState(initZoom);
+  const [zoom, setZoom] = useState(minZoom);
   const [layer, setLayer] = useState<WeatherMapLayerKeys>("temp_new");
 
   console.log(zoom);
+
+  const lat = location.lat!;
+  const lon = location.lon!;
+
+  // if (lat == null && lon == null) return null;
 
   const { data, isLoading, isError } = useGetWeatherMapQuery({
     lat,
@@ -46,11 +54,6 @@ const Map = () => {
     zoom,
     layer,
   });
-
-  const latLngBounds = [
-    [-90, -180],
-    [90, 180],
-  ] as LatLngBoundsExpression;
 
   const handleSelectLayer = (id: WeatherMapLayerKeys) => {
     setLayer(id);
@@ -60,56 +63,53 @@ const Map = () => {
 
   return (
     <>
-      <Paper
-        elevation={6}
-        sx={{
-          width: "80vw",
-          height: "80vh",
-          margin: "5rem auto 0 auto",
+      <MapContainer
+        ref={mapRef}
+        style={{
+          width: "768px",
+          height: "512px",
+          padding: 0,
+          margin: 0,
         }}
+        center={[lat, lon]}
+        zoom={initZoom}
+        // dragging={false}
+        scrollWheelZoom={false}
+        // maxBounds={latLngBounds}
+        minZoom={minZoom}
+        maxZoom={10}
+        // @ts-ignore
+        whenReady={(e) => {
+          // e.target.fitBounds(bounds);
+        }}
+        // Have the map adjust its view to the same bounds as the Image Overlay
       >
-        <MapContainer
-          ref={mapRef}
-          style={{
-            width: "100%",
-            height: "100%",
-            padding: 0,
-            margin: 0,
-          }}
-          center={[47, -122]}
-          zoom={initZoom}
-          scrollWheelZoom={true}
-          maxBounds={latLngBounds}
-          // @ts-ignore
-          // whenReady={(e) => {
-          //   e.target.fitBounds(bounds);
-          // }}
-          // Have the map adjust its view to the same bounds as the Image Overlay
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-          <ZoomLevel setZoom={setZoom} />
+        <ZoomLevel setZoom={setZoom} center={[lat, lon]} />
 
-          {data.map((tile) => {
-            const { success } = tile;
-            const { bounds, img, tileCoords } = success as WeatherMapResponse;
+        {data.map((tile) => {
+          const { success } = tile;
+          const { bounds, img, tileCoords } = success as WeatherMapResponse;
 
-            return (
-              <ImageOverlay
-                key={JSON.stringify(bounds)}
-                url={img}
-                bounds={bounds as LatLngBoundsExpression}
-                opacity={0.99}
-              />
-            );
-          })}
-        </MapContainer>
-      </Paper>
+          // const [x, y] = tileCoords;
+
+          return (
+            <ImageOverlay
+              key={JSON.stringify(bounds)}
+              url={img}
+              bounds={bounds as LatLngBoundsExpression}
+              opacity={1}
+            />
+          );
+        })}
+      </MapContainer>
 
       <LayerSelectButtons handleClick={handleSelectLayer} />
+      <Legends layer={layer} />
     </>
   );
 };
@@ -128,6 +128,7 @@ const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
         marginTop: "2rem",
         padding: "1rem",
         display: "flex",
+        flexDirection: "column",
         flexWrap: "wrap",
         gap: "0.5rem",
         justifyContent: "center",
@@ -151,15 +152,21 @@ const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
 
 type ZoomLevelProps = {
   setZoom: React.Dispatch<SetStateAction<number>>;
+  center: [number, number];
 };
 
 const ZoomLevel = (props: ZoomLevelProps) => {
-  const { setZoom } = props;
+  const { setZoom, center } = props;
 
   const mapEvents = useMapEvents({
     zoomend: () => {
       setZoom(mapEvents.getZoom());
+      mapEvents.setView(center, mapEvents.getZoom(), { animate: true });
     },
+    // dragend: () => {
+    //   setZoom(mapEvents.getZoom());
+    //   mapEvents.setView(center, mapEvents.getZoom(), { animate: true });
+    // },
   });
 
   return null;
