@@ -2,7 +2,7 @@
 
 import { SetStateAction, useRef, useState } from "react";
 
-import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import {
   ImageOverlay,
@@ -62,55 +62,64 @@ const Map = () => {
   if (isLoading || !data) return null;
 
   return (
-    <>
-      <MapContainer
-        ref={mapRef}
-        style={{
-          width: "768px",
-          height: "512px",
-          padding: 0,
-          margin: 0,
-        }}
-        center={[lat, lon]}
-        zoom={initZoom}
-        // dragging={false}
-        scrollWheelZoom={false}
-        // maxBounds={latLngBounds}
-        minZoom={minZoom}
-        maxZoom={10}
-        // @ts-ignore
-        whenReady={(e) => {
-          // e.target.fitBounds(bounds);
-        }}
-        // Have the map adjust its view to the same bounds as the Image Overlay
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-
-        <ZoomLevel setZoom={setZoom} center={[lat, lon]} />
-
-        {data.map((tile) => {
-          const { success } = tile;
-          const { bounds, img, tileCoords } = success as WeatherMapResponse;
-
-          // const [x, y] = tileCoords;
-
-          return (
-            <ImageOverlay
-              key={JSON.stringify(bounds)}
-              url={img}
-              bounds={bounds as LatLngBoundsExpression}
-              opacity={1}
+    <Grid container flexDirection="column">
+      <Grid item container flexDirection={{ xs: "column", md: "row" }}>
+        <Grid item>
+          <MapContainer
+            ref={mapRef}
+            style={{
+              width: "768px",
+              height: "512px",
+              padding: 0,
+              margin: 0,
+            }}
+            center={[lat, lon]}
+            zoom={initZoom}
+            // dragging={false}
+            scrollWheelZoom={false}
+            // maxBounds={latLngBounds}
+            minZoom={minZoom}
+            maxZoom={10}
+            // @ts-ignore
+            whenReady={(e) => {
+              // e.target.fitBounds(bounds);
+            }}
+            // Have the map adjust its view to the same bounds as the Image Overlay
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-          );
-        })}
-      </MapContainer>
 
-      <LayerSelectButtons handleClick={handleSelectLayer} />
-      <Legends layer={layer} />
-    </>
+            <ZoomLevel setZoom={setZoom} center={[lat, lon]} />
+
+            {data.map((tile) => {
+              const { success } = tile;
+              const { bounds, img, tileCoords } = success as WeatherMapResponse;
+
+              // const [x, y] = tileCoords;
+
+              return (
+                <ImageOverlay
+                  key={JSON.stringify(bounds)}
+                  url={img}
+                  bounds={bounds as LatLngBoundsExpression}
+                  opacity={1}
+                />
+              );
+            })}
+          </MapContainer>
+        </Grid>
+
+        <Grid item>
+          <LayerSelectButtons handleClick={handleSelectLayer} />
+        </Grid>
+      </Grid>
+
+      <Grid xs={12} item sx={{ marginTop: "1rem" }}>
+        <Legends layer={layer} />
+      </Grid>
+    </Grid>
   );
 };
 
@@ -123,16 +132,16 @@ type LayerSelectButtonsProps = {
 const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
   const { handleClick } = props;
   return (
-    <div
-      style={{
+    <Grid
+      container
+      flexDirection={{ xs: "row", md: "column" }}
+      justifyContent="center"
+      alignContent="center"
+      flexWrap="wrap"
+      gap="0.5rem"
+      sx={{
         marginTop: "2rem",
         padding: "1rem",
-        display: "flex",
-        flexDirection: "column",
-        flexWrap: "wrap",
-        gap: "0.5rem",
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
       {layers.map((layer) => {
@@ -146,7 +155,7 @@ const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
           </Button>
         );
       })}
-    </div>
+    </Grid>
   );
 };
 
@@ -163,10 +172,6 @@ const ZoomLevel = (props: ZoomLevelProps) => {
       setZoom(mapEvents.getZoom());
       mapEvents.setView(center, mapEvents.getZoom(), { animate: true });
     },
-    // dragend: () => {
-    //   setZoom(mapEvents.getZoom());
-    //   mapEvents.setView(center, mapEvents.getZoom(), { animate: true });
-    // },
   });
 
   return null;

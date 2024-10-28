@@ -1,9 +1,9 @@
 export const layers = [
-  { id: "temp_new", name: "Temperature" },
-  { id: "precipitation_new", name: "Precipitation" },
-  { id: "clouds_new", name: "Clouds" },
-  { id: "wind_new", name: "Wind" },
-  { id: "pressure_new", name: "Pressure" },
+  { id: "temp_new", name: "temperature" },
+  { id: "precipitation_new", name: "precipitation" },
+  { id: "clouds_new", name: "clouds" },
+  { id: "wind_new", name: "wind" },
+  { id: "pressure_new", name: "pressure" },
 ] as const;
 
 export type WeatherMapLayerNames = (typeof layers)[number]["name"];
