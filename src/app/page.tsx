@@ -121,7 +121,11 @@ const Home = () => {
             >
               Map
             </Typography>
-            <WeatherMap />
+            {!isLoading ? (
+              <WeatherMap />
+            ) : (
+              <Skeleton variant="rectangular" height={600} />
+            )}
           </Grid>
 
           <Grid id="minutely" item xs={12}>
