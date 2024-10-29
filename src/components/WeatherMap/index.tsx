@@ -57,21 +57,38 @@ const Map = () => {
     layer,
   });
 
-  const handleSelectLayer = (id: WeatherMapLayerKeys) => {
-    setLayer(id);
+  const handleSelectLayer = (
+    id: WeatherMapLayerKeys,
+    layer: WeatherMapLayerKeys
+  ) => {
+    if (id !== layer) {
+      setLayer(id);
+    }
   };
 
   if (isLoading || !data) return null;
 
   return (
     <Grid container flexDirection="column">
-      <Grid item container flexDirection={{ xs: "column", md: "row" }}>
-        <Grid item>
+      <Grid
+        item
+        container
+        flexDirection={{ xs: "column" }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid
+          item
+          sx={{
+            width: { xs: "330px", sm: "512px", md: "650px", lg: "768px" },
+            height: { xs: "256px", sm: "384px", md: "512px", lg: "512px" },
+          }}
+        >
           <MapContainer
             ref={mapRef}
             style={{
-              width: "768px",
-              height: "512px",
+              width: "100%",
+              height: "100%",
               padding: 0,
               margin: 0,
             }}
@@ -83,10 +100,9 @@ const Map = () => {
             minZoom={minZoom}
             maxZoom={10}
             // @ts-ignore
-            whenReady={(e) => {
-              // e.target.fitBounds(bounds);
-            }}
-            // Have the map adjust its view to the same bounds as the Image Overlay
+            // whenReady={(e) => {
+            // e.target.fitBounds(bounds);
+            // }}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -98,7 +114,6 @@ const Map = () => {
             {data.map((tile) => {
               const { success } = tile;
               const { bounds, img, tileCoords } = success as WeatherMapResponse;
-
               // const [x, y] = tileCoords;
 
               return (
@@ -114,7 +129,7 @@ const Map = () => {
         </Grid>
 
         <Grid item>
-          <LayerSelectButtons handleClick={handleSelectLayer} />
+          <LayerSelectButtons layer={layer} handleClick={handleSelectLayer} />
         </Grid>
       </Grid>
 
@@ -130,32 +145,39 @@ const Map = () => {
 export default Map;
 
 type LayerSelectButtonsProps = {
-  handleClick: (id: WeatherMapLayerKeys) => void;
+  layer: WeatherMapLayerKeys;
+  handleClick: (id: WeatherMapLayerKeys, layer: WeatherMapLayerKeys) => void;
 };
 
 const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
-  const { handleClick } = props;
+  const { layer, handleClick } = props;
   return (
     <Grid
       container
-      flexDirection={{ xs: "row", md: "column" }}
+      flexDirection={{ xs: "row" }}
       justifyContent="center"
       alignContent="center"
       flexWrap="wrap"
       gap="0.5rem"
       sx={{
-        marginTop: "2rem",
+        marginTop: "1rem",
         padding: "1rem",
       }}
     >
-      {layers.map((layer) => {
+      {layers.map(({ id, name }) => {
         return (
           <Button
-            id={layer.id}
-            variant="outlined"
-            onClick={() => handleClick(layer.id)}
+            id={id}
+            variant={"contained"}
+            onClick={() => handleClick(id, layer)}
+            disabled={layer === id}
+            sx={(theme) => ({
+              ":disabled": {
+                color: theme.palette.primary.main,
+              },
+            })}
           >
-            {layer.name}
+            {name}
           </Button>
         );
       })}
