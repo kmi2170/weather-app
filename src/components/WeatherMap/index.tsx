@@ -3,6 +3,7 @@
 import { SetStateAction, useRef, useState } from "react";
 
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {
   ImageOverlay,
@@ -22,6 +23,7 @@ import {
   WeatherMapResponse,
 } from "../../api/types/map";
 import Legends from "./Legends";
+import { Height } from "@mui/icons-material";
 
 // const lat = 46.94195;
 // const lon = -122.60632;
@@ -116,8 +118,10 @@ const Map = () => {
         </Grid>
       </Grid>
 
-      <Grid xs={12} item sx={{ marginTop: "1rem" }}>
-        <Legends layer={layer} />
+      <Grid xs={12} item>
+        <Box sx={{ height: "2rem", marginTop: "1rem" }}>
+          <Legends layer={layer} />
+        </Box>
       </Grid>
     </Grid>
   );

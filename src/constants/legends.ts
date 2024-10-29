@@ -64,7 +64,7 @@ export const pressure = [
 
 // wind (m/s)
 export const wind = [
-  { value: 1, color: "rgba(255,255,255, 0)" },
+  // { value: 1, color: "rgba(255,255,255, 0)" },
   { value: 5, color: "rgba(238,206,206, 0.4)" },
   { value: 15, color: "rgba(179,100,188, 0.7)" },
   { value: 25, color: "rgba(63,33,59, 0.8)" },
