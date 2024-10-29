@@ -20,6 +20,7 @@ const LinksList = [
   { id: "forty-eight-hours", name: "48hours" },
   { id: "daily", name: "daily" },
   { id: "charts", name: "charts" },
+  { id: "map", name: "map" },
 ];
 
 const Navbar = () => {
@@ -134,7 +135,7 @@ const Navbar = () => {
             </Link>
           </ListItem>
 
-          <ListItem
+          {/* <ListItem
             key="map"
             dense
             disableGutters
@@ -158,7 +159,7 @@ const Navbar = () => {
                 Map
               </Typography>
             </Link>
-          </ListItem>
+          </ListItem> */}
         </List>
 
         <MenuRightBlur />
