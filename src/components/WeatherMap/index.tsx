@@ -66,6 +66,7 @@ const Map = () => {
 
   if (isLoading || !data) return null;
 
+  console.log(data);
   return (
     <Grid container flexDirection="column">
       <Grid
