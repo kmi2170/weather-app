@@ -64,7 +64,7 @@ const Map = () => {
     }
   };
 
-  if (isLoading || !data || !Array.isArray(data)) return null;
+  // if (isLoading || !data || !Array.isArray(data)) return null;
 
   console.log(data);
   return (
@@ -110,22 +110,25 @@ const Map = () => {
 
             <ZoomLevel setZoom={setZoom} center={[lat, lon]} />
 
-            {data.map((tile) => {
-              if (tile?.error) return null;
+            {!isLoading &&
+              !isError &&
+              data?.map((tile) => {
+                if (tile?.error) return null;
 
-              const { success } = tile;
-              const { bounds, img, tileCoords } = success as WeatherMapResponse;
-              // const [x, y] = tileCoords;
+                const { success } = tile;
+                const { bounds, img, tileCoords } =
+                  success as WeatherMapResponse;
+                // const [x, y] = tileCoords;
 
-              return (
-                <ImageOverlay
-                  key={String(tileCoords[0]) + String(tileCoords[1])}
-                  url={img}
-                  bounds={bounds as LatLngBoundsExpression}
-                  opacity={1}
-                />
-              );
-            })}
+                return (
+                  <ImageOverlay
+                    key={String(tileCoords[0]) + String(tileCoords[1])}
+                    url={img}
+                    bounds={bounds as LatLngBoundsExpression}
+                    opacity={1}
+                  />
+                );
+              })}
           </MapContainer>
         </Grid>
 
