@@ -133,15 +133,15 @@ const Map = () => {
           </MapContainer>
         </Grid>
 
+        <Grid xs={12} item>
+          <Box sx={{ height: "2rem", marginTop: "1rem" }}>
+            <Legends layer={layer} />
+          </Box>
+        </Grid>
+
         <Grid item>
           <LayerSelectButtons layer={layer} handleClick={handleSelectLayer} />
         </Grid>
-      </Grid>
-
-      <Grid xs={12} item>
-        <Box sx={{ height: "2rem", marginTop: "1rem" }}>
-          <Legends layer={layer} />
-        </Box>
       </Grid>
     </Grid>
   );
@@ -173,12 +173,13 @@ const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
         return (
           <Button
             key={id}
-            variant={"contained"}
+            variant="outlined"
             onClick={() => handleClick(id, layer)}
             disabled={layer === id}
             sx={(theme) => ({
               ":disabled": {
-                color: theme.palette.primary.main,
+                color: "white",
+                backgroundColor: theme.palette.primary.main,
               },
             })}
           >
