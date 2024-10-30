@@ -109,7 +109,9 @@ const Map = () => {
 
             <ZoomLevel setZoom={setZoom} center={[lat, lon]} />
 
-            {data.map((tile) => {
+            {data?.map((tile) => {
+              if (tile?.error) return null;
+
               const { success } = tile;
               const { bounds, img, tileCoords } = success as WeatherMapResponse;
               // const [x, y] = tileCoords;
