@@ -50,8 +50,10 @@ export const fetchWeatherMap = async ({
       (pixelY - tileY_center * TILE_SIZE) / (TILE_SIZE * 0.5)
     );
 
-    const dyL = subTileY_center === 0 ? 1 : 0;
-    const dyR = subTileY_center === 1 ? 1 : 0;
+    const dyL = 0;
+    const dyR = 0;
+    // const dyL = subTileY_center === 0 ? 1 : 0;
+    // const dyR = subTileY_center === 1 ? 1 : 0;
     const dxL = subTileX_center === 0 ? 1 : 0;
     const dxR = subTileX_center === 1 ? 1 : 0;
 

@@ -19,11 +19,9 @@ import { useAppSelector } from "../../store/hooks";
 import {
   layers,
   WeatherMapLayerKeys,
-  WeatherMapLayerNames,
   WeatherMapResponse,
 } from "../../api/types/map";
 import Legends from "./Legends";
-import { Height } from "@mui/icons-material";
 
 // const lat = 46.94195;
 // const lon = -122.60632;
@@ -94,8 +92,8 @@ const Map = () => {
             }}
             center={[lat, lon]}
             zoom={initZoom}
-            // dragging={false}
-            scrollWheelZoom={false}
+            dragging={false}
+            scrollWheelZoom={true}
             // maxBounds={latLngBounds}
             minZoom={minZoom}
             maxZoom={10}

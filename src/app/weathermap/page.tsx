@@ -13,6 +13,7 @@ const WeatherMap = () => {
         // width: "768px",
         // height: "768px",
         padding: "1.5rem",
+        minHeight: "650px",
         // width: "512px",
         // width: "100%",
         // height: "600px",
