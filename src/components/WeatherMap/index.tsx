@@ -64,7 +64,7 @@ const Map = () => {
     }
   };
 
-  if (isLoading || !data) return null;
+  if (isLoading || !data || !Array.isArray(data)) return null;
 
   console.log(data);
   return (
@@ -110,7 +110,7 @@ const Map = () => {
 
             <ZoomLevel setZoom={setZoom} center={[lat, lon]} />
 
-            {data?.map((tile) => {
+            {data.map((tile) => {
               if (tile?.error) return null;
 
               const { success } = tile;
