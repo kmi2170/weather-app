@@ -136,6 +136,10 @@ function createAsyncFunction(
       const { data } = await axios.get(url, {
         params: { appid },
         responseType: "arraybuffer",
+        headers: {
+          "Content-Type": "image/png",
+        },
+        withCredentials: true,
       });
 
       const bounds = calculateBounds({ zoom, tileX, tileY });

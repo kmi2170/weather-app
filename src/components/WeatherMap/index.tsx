@@ -112,7 +112,8 @@ const Map = () => {
 
             {!isLoading &&
               !isError &&
-              data?.map((tile) => {
+              Array.isArray(data) &&
+              data.map((tile) => {
                 if (tile?.error) return null;
 
                 const { success } = tile;
