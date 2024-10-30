@@ -119,7 +119,7 @@ const Map = () => {
 
               return (
                 <ImageOverlay
-                  key={JSON.stringify(bounds)}
+                  key={JSON.stringify(tileCoords)}
                   url={img}
                   bounds={bounds as LatLngBoundsExpression}
                   opacity={1}
@@ -168,7 +168,7 @@ const LayerSelectButtons = (props: LayerSelectButtonsProps) => {
       {layers.map(({ id, name }) => {
         return (
           <Button
-            id={id}
+            key={id}
             variant={"contained"}
             onClick={() => handleClick(id, layer)}
             disabled={layer === id}
