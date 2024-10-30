@@ -119,7 +119,7 @@ const Map = () => {
 
               return (
                 <ImageOverlay
-                  key={JSON.stringify(tileCoords)}
+                  key={String(tileCoords[0]) + String(tileCoords[1])}
                   url={img}
                   bounds={bounds as LatLngBoundsExpression}
                   opacity={1}
