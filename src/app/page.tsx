@@ -10,10 +10,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 import { setLocation } from "../slice/weatherSlice";
 import { asyncThunkIpLookupLocation } from "../slice/weatherAsyncThunk";
-import {
-  useGetWeatherMapQuery,
-  useGetWeatherQuery,
-} from "../services/weatherApi";
+import { useGetWeatherQuery } from "../services/weatherApi";
 import { useCustomCookies } from "../hooks/useCustomCookies";
 import Navbar from "../components/Navbar";
 import SearchLocationBar from "../components/SearchLocationBar";
@@ -30,7 +27,6 @@ import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../store/initialState";
 import ErrorModal from "../components/Modals/errorModal";
 import WeatherMap from "./weathermap/page";
-import { Height } from "@mui/icons-material";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -190,7 +186,7 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid id="map" item xs={12}>
+          {/* <Grid id="map" item xs={12}>
             <Typography
               variant="h6"
               sx={(theme) => ({
@@ -207,7 +203,7 @@ const Home = () => {
                 sx={{ height: { xs: "500px", sm: "600px", md: "650px" } }}
               />
             )}
-          </Grid>
+          </Grid> */}
 
           <Grid id="alerts" item xs={12}>
             <Alerts />

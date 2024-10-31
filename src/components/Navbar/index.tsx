@@ -20,7 +20,7 @@ const LinksList = [
   { id: "forty-eight-hours", name: "48hours" },
   { id: "daily", name: "daily" },
   { id: "charts", name: "charts" },
-  { id: "map", name: "map" },
+  // { id: "map", name: "map" },
 ];
 
 const Navbar = () => {
