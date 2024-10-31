@@ -36,9 +36,8 @@ export async function GET(req: Request) {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET",
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        // "Set-Cookie":
-        //   "cookieName=cookieValue; SameSite=None; Secure; HttpOnly; Path=/",
-        "Set-Cookie": `token=${token?.value}`,
+        "Set-Cookie": `__vercel_live_token=${token?.value}; SameSite=None; Secure; HttpOnly; Path=/`,
+        // "Set-Cookie": `token=${token?.value}`,
       },
     });
   } catch (error) {
