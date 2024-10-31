@@ -113,25 +113,6 @@ const Home = () => {
             )}
           </Grid>
 
-          <Grid id="map" item xs={12}>
-            <Typography
-              variant="h6"
-              sx={(theme) => ({
-                color: theme.palette.primary.dark,
-              })}
-            >
-              Map
-            </Typography>
-            {!isLoading ? (
-              <WeatherMap />
-            ) : (
-              <Skeleton
-                variant="rectangular"
-                sx={{ height: { xs: "500px", sm: "600px", md: "650px" } }}
-              />
-            )}
-          </Grid>
-
           <Grid id="minutely" item xs={12}>
             <Typography
               variant="h6"
@@ -206,6 +187,25 @@ const Home = () => {
               <WeatherHourly />
             ) : (
               <Skeleton variant="rectangular" height={600} />
+            )}
+          </Grid>
+
+          <Grid id="map" item xs={12}>
+            <Typography
+              variant="h6"
+              sx={(theme) => ({
+                color: theme.palette.primary.dark,
+              })}
+            >
+              Map
+            </Typography>
+            {!isLoading ? (
+              <WeatherMap />
+            ) : (
+              <Skeleton
+                variant="rectangular"
+                sx={{ height: { xs: "500px", sm: "600px", md: "650px" } }}
+              />
             )}
           </Grid>
 
