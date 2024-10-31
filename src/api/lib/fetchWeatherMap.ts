@@ -139,7 +139,6 @@ function createAsyncFunction(
         headers: {
           "Content-Type": "image/png",
         },
-        withCredentials: true,
       });
 
       const bounds = calculateBounds({ zoom, tileX, tileY });
