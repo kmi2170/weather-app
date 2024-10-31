@@ -60,7 +60,7 @@ const Navbar = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
+          justifyContent: "space-around",
         }}
       >
         <List
@@ -69,7 +69,9 @@ const Navbar = () => {
           sx={(theme) => ({
             position: "relative",
             display: "flex",
-            // paddingRight: "5rem",
+            maxWidth: "80%",
+            paddingRight: "2rem",
+            paddingLeft: "2rem",
             flexDirection: "row",
             overflowX: "auto",
             "-ms-overflow-style": "none", // IE and Edge
@@ -130,8 +132,8 @@ const Navbar = () => {
                     : undefined,
                 })}
                 onClick={(e) => {
+                  console.log({ isAlerts });
                   if (isAlerts) {
-                    console.log({ isAlerts });
                     handleScroll(e, `alerts`);
                   } else {
                     e.preventDefault();
