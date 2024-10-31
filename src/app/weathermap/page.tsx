@@ -8,15 +8,8 @@ const WeatherMap = () => {
     <Paper
       elevation={2}
       sx={{
-        // width: "80vw",
-        // height: "80vh",
-        // width: "768px",
-        // height: "768px",
         padding: "1.5rem",
-        minHeight: "650px",
-        // width: "512px",
-        // width: "100%",
-        // height: "600px",
+        minHeight: { xs: "500px", sm: "600px", md: "650px" },
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",

@@ -30,6 +30,7 @@ import { isLocationValid } from "../utils/cookiesValidator";
 import { Location } from "../store/initialState";
 import ErrorModal from "../components/Modals/errorModal";
 import WeatherMap from "./weathermap/page";
+import { Height } from "@mui/icons-material";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -124,7 +125,10 @@ const Home = () => {
             {!isLoading ? (
               <WeatherMap />
             ) : (
-              <Skeleton variant="rectangular" height={600} />
+              <Skeleton
+                variant="rectangular"
+                sx={{ height: { xs: "500px", sm: "600px", md: "650px" } }}
+              />
             )}
           </Grid>
 

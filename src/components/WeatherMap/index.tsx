@@ -41,8 +41,6 @@ const Map = () => {
   const [zoom, setZoom] = useState(minZoom);
   const [layer, setLayer] = useState<WeatherMapLayerKeys>("temp_new");
 
-  console.log(zoom);
-
   const lat = location.lat!;
   const lon = location.lon!;
 
@@ -64,9 +62,6 @@ const Map = () => {
     }
   };
 
-  // if (isLoading || !data || !Array.isArray(data)) return null;
-
-  console.log(data);
   return (
     <Grid container flexDirection="column">
       <Grid
