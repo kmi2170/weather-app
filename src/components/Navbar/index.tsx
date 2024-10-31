@@ -74,8 +74,8 @@ const Navbar = () => {
             paddingLeft: "2rem",
             flexDirection: "row",
             overflowX: "auto",
-            "-ms-overflow-style": "none", // IE and Edge
-            "scrollbar-width": "none", // Firefox
+            msOverflowStyle: "none", // IE and Edge
+            scrollbarWidth: "none", // Firefox
             "&::-webkit-scrollbar": {
               display: "none", // Chrome, Safari, and Opera
             },
