@@ -14,8 +14,22 @@ export async function GET(req: Request) {
     } as WeatherQuery;
 
     const data = await fetchWeather(query);
-    return NextResponse.json(data, { status: 200 });
+    return NextResponse.json(data, {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET ",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
   } catch (error) {
-    return NextResponse.json(error, { status: 500 });
+    return NextResponse.json(error, {
+      status: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET ",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
   }
 }
