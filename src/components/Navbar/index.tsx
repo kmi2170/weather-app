@@ -69,6 +69,7 @@ const Navbar = () => {
           sx={(theme) => ({
             position: "relative",
             display: "flex",
+            // paddingRight: "5rem",
             flexDirection: "row",
             overflowX: "auto",
             "-ms-overflow-style": "none", // IE and Edge
@@ -128,38 +129,19 @@ const Navbar = () => {
                     ? { color: theme.palette.warning.light }
                     : undefined,
                 })}
-                onClick={(e) => handleScroll(e, `alerts`)}
+                onClick={(e) => {
+                  if (isAlerts) {
+                    console.log({ isAlerts });
+                    handleScroll(e, `alerts`);
+                  } else {
+                    e.preventDefault();
+                  }
+                }}
               >
                 Alerts
               </Typography>
             </Link>
           </ListItem>
-
-          {/* <ListItem
-            key="map"
-            dense
-            disableGutters
-            alignItems="center"
-            sx={(theme) => ({
-              padding: "0 1rem",
-              [theme.breakpoints?.down("md")]: { padding: "0 0.5rem" },
-            })}
-          >
-            <Link href="/weathermap">
-              <Typography
-                variant="h6"
-                align="center"
-                sx={(theme) => ({
-                  textTransform: "capitalize",
-                  color: theme.palette.primary.dark,
-                  "&:active": { color: theme.palette.primary.main },
-                  [theme.breakpoints?.down("sm")]: { fontSize: "1.0rem" },
-                })}
-              >
-                Map
-              </Typography>
-            </Link>
-          </ListItem> */}
         </List>
 
         <MenuRightBlur />
