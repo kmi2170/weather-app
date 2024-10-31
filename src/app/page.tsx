@@ -186,7 +186,7 @@ const Home = () => {
             )}
           </Grid>
 
-          {/* <Grid id="map" item xs={12}>
+          <Grid id="map" item xs={12}>
             <Typography
               variant="h6"
               sx={(theme) => ({
@@ -203,7 +203,7 @@ const Home = () => {
                 sx={{ height: { xs: "500px", sm: "600px", md: "650px" } }}
               />
             )}
-          </Grid> */}
+          </Grid>
 
           <Grid id="alerts" item xs={12}>
             <Alerts />
