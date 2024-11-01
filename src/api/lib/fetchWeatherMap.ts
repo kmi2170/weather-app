@@ -90,9 +90,13 @@ export const fetchWeatherMap = async ({
       }
     }
 
+    console.log("fetchWeatherMap create promise functions");
+
     const results = await Promise.all(
       asyncFunctionsArray.map((func) => func())
     );
+
+    console.log("fetchWeatherMap promise resolved");
 
     const errorExists = results.some((data) => data.hasOwnProperty("error"));
 
