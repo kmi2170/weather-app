@@ -22,9 +22,10 @@ const WeatherMinutely = () => {
 
   const { timezone, minutely } = data as Weather;
 
-  const data_precipitation: number[] = minutely?.map(({ precipitation }) => {
-    return units === "imperial" ? precipitation / 25.4 : precipitation;
-  });
+  const data_precipitation: number[] =
+    minutely?.map(({ precipitation }) => {
+      return units === "imperial" ? precipitation / 25.4 : precipitation;
+    }) || [];
 
   const maxPrecipitation = Math.max(...data_precipitation);
 
@@ -47,7 +48,9 @@ const WeatherMinutely = () => {
         <Typography variant="subtitle1" align="center">
           {isFall
             ? `Precipitation for the next 1 Hour ${unitsLabel}`
-            : `No Precipitation for the next 1 Hour`}
+            : data_precipitation.length > 0
+            ? `No Precipitation for the next 1 Hour`
+            : "Precipitation Data is Not Available"}
         </Typography>
         <ChartMinutely
           chartData={data_precipitation}
