@@ -1,7 +1,7 @@
 import axios from "axios";
 import { WeatherQuery, Weather, Geocoding } from "../types/weather";
 
-const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_KEY;
+const appid = process.env.OPEN_WEATHER_KEY;
 
 export const fetchWeather = async ({
   lat,

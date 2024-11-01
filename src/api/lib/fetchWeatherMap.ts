@@ -7,7 +7,7 @@ import {
 } from "../types/map";
 import { CustomResponse } from "../types";
 
-const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_KEY;
+const appid = process.env.OPEN_WEATHER_MAP_KEY;
 
 const TILE_SIZE = 256;
 
@@ -90,13 +90,9 @@ export const fetchWeatherMap = async ({
       }
     }
 
-    console.log("fetchWeatherMap create promise functions");
-
     const results = await Promise.all(
       asyncFunctionsArray.map((func) => func())
     );
-
-    console.log("fetchWeatherMap promise resolved", results);
 
     const errorExists = results.some((data) => data.hasOwnProperty("error"));
 
