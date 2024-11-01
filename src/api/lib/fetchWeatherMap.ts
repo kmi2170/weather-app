@@ -96,7 +96,7 @@ export const fetchWeatherMap = async ({
       asyncFunctionsArray.map((func) => func())
     );
 
-    console.log("fetchWeatherMap promise resolved");
+    console.log("fetchWeatherMap promise resolved", results);
 
     const errorExists = results.some((data) => data.hasOwnProperty("error"));
 
