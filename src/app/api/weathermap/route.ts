@@ -29,17 +29,8 @@ export async function GET(req: Request) {
     };
 
     const data = await fetchWeatherMap(query);
-    // return NextResponse.json(data, { status: 200 });
-    return NextResponse.json(data, {
-      status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Set-Cookie": `__vercel_live_token=${token?.value}; SameSite=None; Secure; HttpOnly; Path=/`,
-        // "Set-Cookie": `token=${token?.value}`,
-      },
-    });
+
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
     return NextResponse.json(error, { status: 500 });
   }
