@@ -30,7 +30,7 @@ export async function GET(req: Request) {
 
     const data = await fetchWeatherMap(query);
     // return NextResponse.json(data, { status: 200 });
-    return new Response(JSON.stringify(data), {
+    return NextResponse.json(data, {
       status: 200,
       headers: {
         "Access-Control-Allow-Origin": "*",
