@@ -34,6 +34,7 @@ const minZoom = 4;
 // ] as LatLngBoundsExpression;
 
 const markerIcon = new L.Icon({
+  iconRetinaUrl: "/marker-icon-2x.png",
   iconUrl: "/marker-icon.png",
   shadowUrl: "/marker-shadow.png",
   iconSize: [25, 25],
