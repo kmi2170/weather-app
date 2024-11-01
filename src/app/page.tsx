@@ -39,9 +39,6 @@ const Home = () => {
     lang,
   });
 
-  // console.log(location);
-  // console.log({ isLoading, data });
-
   const { cookies, setLocationCookie } = useCustomCookies();
 
   useEffect(() => {

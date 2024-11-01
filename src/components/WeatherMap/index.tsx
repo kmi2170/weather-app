@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -8,11 +8,13 @@ import Button from "@mui/material/Button";
 import {
   ImageOverlay,
   MapContainer,
+  Marker,
   TileLayer,
   useMapEvents,
 } from "react-leaflet";
 import { LatLngBoundsExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
 import { useGetWeatherMapQuery } from "../../services/weatherApi";
 import { useAppSelector } from "../../store/hooks";
@@ -23,8 +25,6 @@ import {
 } from "../../api/types/map";
 import Legends from "./Legends";
 
-// const lat = 46.94195;
-// const lon = -122.60632;
 const initZoom = 6;
 const minZoom = 4;
 
@@ -33,18 +33,23 @@ const minZoom = 4;
 //   [90, 180],
 // ] as LatLngBoundsExpression;
 
+const markerIcon = new L.Icon({
+  iconUrl: "/marker-icon.png",
+  shadowUrl: "/marker-shadow.png",
+  iconSize: [25, 25],
+  iconAnchor: [12, 25],
+});
+
 const Map = () => {
   const { location } = useAppSelector((state) => state.weather);
 
-  const mapRef = useRef(null);
+  const mapRef = useRef<L.Map | null>(null);
 
   const [zoom, setZoom] = useState(minZoom);
   const [layer, setLayer] = useState<WeatherMapLayerKeys>("temp_new");
 
   const lat = location.lat!;
   const lon = location.lon!;
-
-  // if (lat == null && lon == null) return null;
 
   const { data, isLoading, isError } = useGetWeatherMapQuery({
     lat,
@@ -61,6 +66,16 @@ const Map = () => {
       setLayer(id);
     }
   };
+
+  useEffect(() => {
+    const moveToTargetLocation = () => {
+      if (mapRef !== null) {
+        mapRef?.current?.flyTo({ lat, lng: lon }, initZoom, { duration: 2 });
+      }
+    };
+
+    moveToTargetLocation();
+  }, [lat, lon]);
 
   return (
     <Grid container flexDirection="column">
@@ -89,10 +104,10 @@ const Map = () => {
             center={[lat, lon]}
             zoom={initZoom}
             dragging={false}
-            scrollWheelZoom={true}
+            scrollWheelZoom={false}
             // maxBounds={latLngBounds}
             minZoom={minZoom}
-            maxZoom={10}
+            maxZoom={11}
             // @ts-ignore
             // whenReady={(e) => {
             // e.target.fitBounds(bounds);
@@ -125,6 +140,8 @@ const Map = () => {
                   />
                 );
               })}
+
+            <Marker position={{ lat, lng: lon }} />
           </MapContainer>
         </Grid>
 
