@@ -78,6 +78,7 @@ const Navbar = () => {
                 borderRadius: 0,
                 backgroundColor: theme.palette.primary.light,
               },
+              display: { xs: "block", md: "none" }, // hide drawer when changing the screen width with drawer open
             })}
           >
             <Box sx={{ width: 250 }}>
