@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,6 +7,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
+import MenuIcon from "@mui/icons-material/Menu";
 import { grey } from "@mui/material/colors";
 
 import { useAppSelector } from "../../store/hooks";
@@ -15,7 +16,6 @@ import { Weather } from "../../api/types/weather";
 import Buttons from "./Buttons";
 import Link from "next/link";
 import { Box } from "@mui/material";
-import { opendir } from "fs";
 
 const LinksList = [
   { id: "top", name: "current" },
@@ -37,21 +37,6 @@ const Navbar = () => {
     lang,
   });
 
-  const handleScrollToId = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    const element = document.querySelector(`#${id}`);
-    if (element) {
-      window.scrollTo({
-        behavior: "smooth",
-        top:
-          element.getBoundingClientRect().top -
-          document.body.getBoundingClientRect().top -
-          40,
-      });
-      // element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
   const isAlerts = !!(data as Weather)?.alerts;
 
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -59,7 +44,6 @@ const Navbar = () => {
   const toggle = (newOpenDrawer: boolean) => {
     setOpenDrawer(newOpenDrawer);
   };
-  console.log({ openDrawer });
 
   return (
     <AppBar
@@ -67,16 +51,25 @@ const Navbar = () => {
       sx={{
         background: "rgba(233, 213, 255, 0.9)",
         borderRadius: 0,
-        height: "3.5rem",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
-      <Toolbar variant="dense" sx={{}}>
+      <Toolbar
+        variant="dense"
+        sx={{
+          height: "3.5rem",
+          width: "100%",
+          display: "flex",
+          justifyContent: {
+            xs: "space-between",
+            md: "center",
+          },
+          alignItems: "center",
+        }}
+      >
         <Box sx={{ display: { xs: "block", md: "none" } }}>
-          <Button onClick={() => toggle(true)}>Open</Button>
+          <Button onClick={() => toggle(true)}>
+            <MenuIcon />
+          </Button>
           <Drawer
             open={openDrawer}
             onClose={() => toggle(false)}
@@ -87,13 +80,8 @@ const Navbar = () => {
               },
             })}
           >
-            <Box
-              sx={(theme) => ({
-                width: 250,
-              })}
-              // onClick={() => toggle(false)}
-            >
-              <NavContent isAlerts={isAlerts} />
+            <Box sx={{ width: 250 }}>
+              <NavContent isAlerts={isAlerts} close={() => toggle(false)} />
             </Box>
           </Drawer>
         </Box>
@@ -101,6 +89,8 @@ const Navbar = () => {
         <Box sx={{ display: { xs: "none", md: "block" } }}>
           <NavContent isAlerts={isAlerts} />
         </Box>
+
+        <Buttons />
       </Toolbar>
     </AppBar>
   );
@@ -108,10 +98,10 @@ const Navbar = () => {
 
 export default memo(Navbar);
 
-type NavContentProps = { isAlerts: boolean };
+type NavContentProps = { isAlerts: boolean; close?: () => void };
 
 const NavContent = (props: NavContentProps) => {
-  const { isAlerts } = props;
+  const { isAlerts, close } = props;
 
   const handleScrollToId = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
@@ -192,6 +182,9 @@ const NavContent = (props: NavContentProps) => {
                     console.log({ isAlerts });
                     if (isAlerts) {
                       handleScrollToId(e, `alerts`);
+                      if (close) {
+                        close();
+                      }
                     } else {
                       e.preventDefault();
                     }
@@ -211,7 +204,12 @@ const NavContent = (props: NavContentProps) => {
                       fontSize: "1.0rem",
                     },
                   })}
-                  onClick={(e) => handleScrollToId(e, `${id}`)}
+                  onClick={(e) => {
+                    handleScrollToId(e, `${id}`);
+                    if (close) {
+                      close();
+                    }
+                  }}
                 >
                   {name}
                 </Typography>
@@ -220,8 +218,6 @@ const NavContent = (props: NavContentProps) => {
           </ListItem>
         ))}
       </List>
-
-      <Buttons />
     </Box>
   );
 };
