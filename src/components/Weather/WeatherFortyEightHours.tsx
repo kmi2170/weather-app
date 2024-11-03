@@ -98,12 +98,14 @@ const WeatherFortyEightHours = () => {
             zIndex: 10,
           }}
           onMouseDown={() => startScroll("left")}
+          onTouchStart={() => startScroll("left")}
           onMouseUp={stopScroll}
           onMouseLeave={stopScroll}
+          onTouchEnd={stopScroll}
         >
           <ArrowCircleLeftIcon
             sx={(theme) => ({
-              fontSize: "4rem",
+              fontSize: { xs: "3rem", md: "4rem" },
               color: theme.palette.primary.dark,
               opacity: 0.7,
             })}
@@ -119,12 +121,14 @@ const WeatherFortyEightHours = () => {
             zIndex: 10,
           }}
           onMouseDown={() => startScroll("right")}
+          onTouchStart={() => startScroll("right")}
           onMouseUp={stopScroll}
           onMouseLeave={stopScroll}
+          onTouchEnd={stopScroll}
         >
           <ArrowCircleRightIcon
             sx={(theme) => ({
-              fontSize: "4rem",
+              fontSize: { xs: "3rem", md: "4rem" },
               color: theme.palette.primary.dark,
               opacity: 0.7,
             })}
