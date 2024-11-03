@@ -165,21 +165,26 @@ const WeatherFortyEightHours = () => {
             const totalPrecipitation =
               (data?.rain?.["1h"] || 0) + (data?.snow?.["1h"] || 0);
 
+            const _isDay = isDay(data.dt, sunrise, sunset);
+
             return (
-              <div
+              <Box
                 key={data.dt}
-                style={{
+                sx={(theme) => ({
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
                   padding: "2px",
-                  borderBottom: "solid",
-                  borderBottomWidth: "5px",
-                  borderBottomColor: isDay(data.dt, sunrise, sunset)
-                    ? "rgba(255, 165, 0,0.5)"
-                    : "rgba(0,0,139,0.5)",
-                }}
+                  // borderBottom: "solid",
+                  // borderBottomWidth: "5px",
+                  // borderBottomColor: _isDay
+                  //   ? "rgba(255, 165, 0,0.5)"
+                  //   : "rgba(0,0,139,0.5)",
+                  background: _isDay ? null : theme.palette.primary.light,
+                  borderRadius: "10px",
+                  boxShadow: "6px 4px 6px rgba(0, 0, 0, 0.1)",
+                })}
               >
                 <Typography variant="subtitle2" align="center">
                   {localDay(data.dt, timezone)}
@@ -251,7 +256,7 @@ const WeatherFortyEightHours = () => {
                 <Typography variant="h6" align="center">
                   {localTimeHour(data.dt, timezone)}
                 </Typography>
-              </div>
+              </Box>
             );
           })}
         </div>
