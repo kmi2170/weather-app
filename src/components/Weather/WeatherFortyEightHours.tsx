@@ -1,8 +1,9 @@
-import { memo } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
@@ -10,10 +11,19 @@ import { useGetWeatherQuery } from "../../services/weatherApi";
 import { localDate, localDay, localTimeHour } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import WeatherIcon from "./icons/WeatherIcon";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import WindIcon from "./icons/WindIcon";
 import { isDay, precipitationWithUnit, tempWithUnit } from "../../utils/units";
+import { scopedCssBaselineClasses } from "@mui/material";
 
 const WeatherFortyEightHours = () => {
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
   const { units, lang, location } = useAppSelector(selectWeather);
 
   const { data, error } = useGetWeatherQuery({
@@ -28,10 +38,104 @@ const WeatherFortyEightHours = () => {
     return [data.dt, data.sunrise, data.sunset];
   });
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!scrollRef) return;
+
+      const scrollLeft = scrollRef.current?.scrollLeft;
+      const scrollWidth = scrollRef.current?.scrollWidth;
+      const clientWidth = scrollRef.current?.clientWidth;
+
+      const scrollContentWidth = scrollWidth! - clientWidth!;
+
+      if (scrollLeft === 0) {
+        setShowLeftArrow(false);
+      } else {
+        setShowLeftArrow(true);
+      }
+
+      if (scrollLeft === scrollContentWidth) {
+        setShowRightArrow(false);
+      } else {
+        setShowRightArrow(true);
+      }
+    };
+
+    if (scrollRef?.current) {
+      scrollRef.current.addEventListener("scroll", handleScroll);
+      return () => {
+        scrollRef.current?.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, []);
+
+  const startScroll = (direction: "left" | "right") => {
+    if (scrollRef?.current) {
+      if (intervalRef?.current) clearInterval(intervalRef.current);
+
+      const amount = direction === "left" ? -50 : 50;
+
+      intervalRef.current = setInterval(() => {
+        scrollRef.current?.scrollBy({ left: amount, behavior: "smooth" });
+      }, 50);
+    }
+  };
+
+  const stopScroll = () => {
+    if (intervalRef?.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
+
   return (
-    <>
+    <div style={{ position: "relative" }}>
+      {showLeftArrow && (
+        <IconButton
+          sx={{
+            position: "absolute",
+            top: "calc(50% - 4rem)",
+            left: 0,
+            zIndex: 10,
+          }}
+          onMouseDown={() => startScroll("left")}
+          onMouseUp={stopScroll}
+          onMouseLeave={stopScroll}
+        >
+          <ArrowCircleLeftIcon
+            sx={(theme) => ({
+              fontSize: "4rem",
+              color: theme.palette.primary.dark,
+              opacity: 0.7,
+            })}
+          />
+        </IconButton>
+      )}
+      {showRightArrow && (
+        <IconButton
+          sx={{
+            position: "absolute",
+            top: "calc(50% - 4rem)",
+            right: 0,
+            zIndex: 10,
+          }}
+          onMouseDown={() => startScroll("right")}
+          onMouseUp={stopScroll}
+          onMouseLeave={stopScroll}
+        >
+          <ArrowCircleRightIcon
+            sx={(theme) => ({
+              fontSize: "4rem",
+              color: theme.palette.primary.dark,
+              opacity: 0.7,
+            })}
+          />
+        </IconButton>
+      )}
+
       <Paper
+        ref={scrollRef}
         sx={{
+          position: "relative",
           padding: "1rem",
           paddingBottom: "1.5rem",
           width: "100%",
@@ -148,8 +252,8 @@ const WeatherFortyEightHours = () => {
           })}
         </div>
       </Paper>
-    </>
+    </div>
   );
 };
 
-export default memo(WeatherFortyEightHours);
+export default WeatherFortyEightHours;
