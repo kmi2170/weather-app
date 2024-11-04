@@ -15,7 +15,6 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import WindIcon from "./icons/WindIcon";
 import { isDay, precipitationWithUnit, tempWithUnit } from "../../utils/units";
-import { scopedCssBaselineClasses } from "@mui/material";
 
 const WeatherFortyEightHours = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -91,6 +90,8 @@ const WeatherFortyEightHours = () => {
     <div style={{ position: "relative" }}>
       {showLeftArrow && (
         <IconButton
+          title="arrow-left-scroll"
+          aria-label="arrow-left-scroll"
           sx={{
             position: "absolute",
             top: "calc(50% - 4rem)",
@@ -114,6 +115,8 @@ const WeatherFortyEightHours = () => {
       )}
       {showRightArrow && (
         <IconButton
+          title="arrow-right-scroll"
+          aria-label="arrow-right-scroll"
           sx={{
             position: "absolute",
             top: "calc(50% - 4rem)",
