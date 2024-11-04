@@ -1,13 +1,5 @@
 import { memo } from "react";
-import makeStyles from "@mui/styles/makeStyles";
-import { purple } from "@mui/material/colors";
-
-const useStyles = makeStyles(() => ({
-  icon: {
-    color: purple[500],
-    margin: "0.5rem 0",
-  },
-}));
+import theme from "../../../theme/theme";
 
 interface WeatherIconProps {
   sunset?: number;
@@ -16,6 +8,7 @@ interface WeatherIconProps {
   weatherId: number;
   current: boolean;
   size: string;
+  iconColor?: string;
 }
 
 const WeatherIcon = ({
@@ -25,9 +18,8 @@ const WeatherIcon = ({
   weatherId,
   current,
   size = "2rem",
+  iconColor,
 }: WeatherIconProps) => {
-  const classes = useStyles();
-
   const weatherIconClass = () => {
     if (current) {
       const t = time || Math.floor(new Date().getTime() / 1000);
@@ -38,13 +30,18 @@ const WeatherIcon = ({
             : "night"
           : "day";
 
-      return `wi wi-owm-${period}-${weatherId} ${classes.icon}`;
+      return `wi wi-owm-${period}-${weatherId} `;
     }
 
-    return `wi wi-owm-day-${weatherId} ${classes.icon}`;
+    return `wi wi-owm-day-${weatherId} `;
   };
 
-  return <i className={weatherIconClass()} style={{ fontSize: size }} />;
+  return (
+    <i
+      className={weatherIconClass()}
+      style={{ fontSize: size, color: iconColor, margin: "0.5rem 0" }}
+    />
+  );
 };
 
 export default memo(WeatherIcon);

@@ -1,24 +1,17 @@
 import { memo } from "react";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import makeStyles from "@mui/styles/makeStyles";
 import { useAppSelector } from "../../../store/hooks";
 
 import { wind_directions } from "../../../constants/wind";
 import { formatDigits } from "../../../utils/formatDigits";
-import { purple } from "@mui/material/colors";
-
-const useStyles = makeStyles(() => ({
-  icon: {
-    color: purple[500],
-  },
-}));
 
 interface WindIconProps {
   wind_speed: number;
   wind_deg: number;
   wind_gust?: number;
   current: boolean;
+  fontColor?: string;
+  iconColor?: string;
 }
 
 const WindIcon = ({
@@ -26,9 +19,9 @@ const WindIcon = ({
   wind_deg,
   wind_gust,
   current,
+  fontColor,
+  iconColor,
 }: WindIconProps) => {
-  const classes = useStyles();
-
   const units = useAppSelector((states) => states.weather.units);
 
   const speedUnit = () => (units === "imperial" ? "mi/h" : "m/s");
@@ -46,59 +39,34 @@ const WindIcon = ({
     const direction =
       n_direction === 16 ? wind_directions[0] : wind_directions[n_direction];
 
-    return `wi wi-wind wi-from-${direction} ${classes.icon}`;
+    return `wi wi-wind wi-from-${direction}`;
   };
 
   return (
     <>
       {current && (
-        <Typography variant="h6" align="center">
+        <Typography variant="h6" align="center" sx={{ color: fontColor }}>
           {windDirection()}
         </Typography>
       )}
-      <Typography variant="subtitle2" align="center">
+      <Typography variant="subtitle2" align="center" sx={{ color: fontColor }}>
         {formatDigits(wind_speed || 0, 1)}
         {speedUnit()}
       </Typography>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <i
           className={windIconClass()}
-          style={{ fontSize: current ? "3rem" : "1.75rem" }}
+          style={{
+            fontSize: current ? "3rem" : "1.75rem",
+            color: iconColor,
+          }}
         />
       </div>
-      <Typography variant="subtitle2" align="center">
+      <Typography variant="subtitle2" align="center" sx={{ color: fontColor }}>
         Gust {formatDigits(wind_gust || 0, 1)}
       </Typography>
     </>
   );
-  // return (
-  //   <Grid container justifyContent="center" alignItems="center">
-  //     <Grid item xs={12}>
-  //       {current && (
-  //         <Typography variant="h6" align="center">
-  //           {windDirection()}
-  //         </Typography>
-  //       )}
-  //       <Typography variant="subtitle2" align="center">
-  //         {formatDigits(wind_speed || 0, 1)}
-  //         {speedUnit()}
-  //       </Typography>
-  //     </Grid>
-  //     <Grid item xs={12}>
-  //       <div style={{ display: "flex", justifyContent: "center" }}>
-  //         <i
-  //           className={windIconClass()}
-  //           style={{ fontSize: current ? "3rem" : "1.75rem" }}
-  //         />
-  //       </div>
-  //     </Grid>
-  //     <Grid item xs={12}>
-  //       <Typography variant="subtitle2" align="center">
-  //         Gust {formatDigits(wind_gust || 0, 1)}
-  //       </Typography>
-  //     </Grid>
-  //   </Grid>
-  // );
 };
 
 export default memo(WindIcon);

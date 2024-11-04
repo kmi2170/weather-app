@@ -15,6 +15,7 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import WindIcon from "./icons/WindIcon";
 import { isDay, precipitationWithUnit, tempWithUnit } from "../../utils/units";
+import theme from "../../theme/theme";
 
 const WeatherFortyEightHours = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -168,6 +169,11 @@ const WeatherFortyEightHours = () => {
             const totalPrecipitation =
               (data?.rain?.["1h"] || 0) + (data?.snow?.["1h"] || 0);
 
+            const font_color = _isDay ? "black" : "white";
+            const icon_color = _isDay
+              ? theme.palette.primary.main
+              : theme.palette.primary.light;
+
             return (
               <Box
                 key={data.dt}
@@ -182,7 +188,7 @@ const WeatherFortyEightHours = () => {
                   // borderBottomColor: _isDay
                   //   ? "rgba(255, 165, 0,0.5)"
                   //   : "rgba(0,0,139,0.5)",
-                  background: _isDay ? null : theme.palette.primary.light,
+                  background: _isDay ? null : theme.palette.primary.dark,
                   borderRadius: "10px",
                   boxShadow: "6px 4px 6px rgba(0, 0, 0, 0.1)",
                 })}
@@ -204,6 +210,7 @@ const WeatherFortyEightHours = () => {
                   weatherId={data.weather[0].id}
                   current
                   size="1.5rem"
+                  iconColor={icon_color}
                 />
                 <Typography
                   variant="h6"
@@ -221,6 +228,8 @@ const WeatherFortyEightHours = () => {
                   wind_deg={data.wind_deg}
                   wind_gust={data?.wind_gust}
                   current={false}
+                  fontColor={font_color}
+                  iconColor={icon_color}
                 />
                 <Typography
                   variant="subtitle2"
