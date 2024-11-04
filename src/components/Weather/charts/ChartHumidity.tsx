@@ -65,6 +65,7 @@ const ChartHumidity = ({
         },
       },
       y: {
+        border: { display: false },
         max: 100,
         min: 0,
       },

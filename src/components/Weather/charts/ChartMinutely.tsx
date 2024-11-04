@@ -29,14 +29,20 @@ interface ChartMinutelyProps extends Omit<ChartProps, "chartData"> {
 const ChartMinutely = ({
   chartData,
   dataTime,
-  maxValue,
+  // maxValue,
   height,
+  units,
 }: ChartMinutelyProps) => {
   const formatter = (x: number) => {
     if (x === 0) return null;
     return x.toFixed(2);
   };
 
+  const tick = units === "imperial" ? 0.2 : 5;
+
+  const maxValue = Math.ceil(Math.max(...chartData) / tick) * tick;
+
+  console.log(chartData);
   const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,
@@ -49,12 +55,15 @@ const ChartMinutely = ({
       y: {
         display: true,
         min: 0,
-        max: maxValue ? maxValue * 1.5 : 0.1,
+        max: maxValue,
         ticks: {
           display: true,
         },
         grid: {
           display: true,
+        },
+        border: {
+          display: false,
         },
       },
     },

@@ -42,7 +42,7 @@ const ChartTemps = ({
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
 
   const bg_night_color = "rgba(0, 0, 0, 0.05)";
-  const tick = units === "imperial" ? 10 : 5;
+  const tick = units === "imperial" ? 5 : 5;
 
   const maxValue = Math.ceil(Math.max(...data_temp) / tick) * tick;
   const minValue = Math.floor(Math.min(...data_dew_point) / tick) * tick;
@@ -67,8 +67,12 @@ const ChartTemps = ({
         grid: {
           display: false,
         },
+        ticks: {
+          padding: 0,
+        },
       },
       y: {
+        border: { display: false },
         max: maxValue,
         min: minValue,
       },

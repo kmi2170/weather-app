@@ -79,7 +79,9 @@ const ChartPrecipitation = ({
         },
       },
       y: {
+        border: { display: false },
         min: 0,
+        max: maxValue,
       },
     },
     plugins: {

@@ -64,6 +64,7 @@ const ChartPressure = ({
         },
       },
       y: {
+        border: { display: false },
         max: maxValue,
         min: minValue,
       },
