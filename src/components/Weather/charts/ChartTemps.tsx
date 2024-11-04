@@ -10,27 +10,45 @@ import {
   Title,
   Tooltip,
   Legend,
+  BarController,
+  LineController,
+  BarElement,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
   LineElement,
+  BarElement,
+  PointElement,
+  BarController,
+  LineController,
   Title,
   Tooltip,
   Legend
 );
 
-const ChartTemps = ({ chartData, dataTime, units, height }: ChartProps) => {
+const ChartTemps = ({
+  chartData,
+  dataTime,
+  units,
+  height,
+  dataIsDay,
+}: ChartProps) => {
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
 
-  // const maxT = Math.round(Math.max(...data_temp) / 5) * 5 + 5;
-  // const minT = Math.round(Math.min(...data_dew_point) / 5) * 5 - 5;
+  const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  const tick = units === "imperial" ? 10 : 5;
+
+  const maxValue = Math.ceil(Math.max(...data_temp) / tick) * tick;
+  const minValue = Math.floor(Math.min(...data_dew_point) / tick) * tick;
+  const data_isDay = dataIsDay?.map((isDay) =>
+    isDay ? 0 : maxValue
+  ) as number[];
 
   const options: ChartOptions<"line"> = {
     responsive: true,
@@ -50,16 +68,34 @@ const ChartTemps = ({ chartData, dataTime, units, height }: ChartProps) => {
           display: false,
         },
       },
+      y: {
+        max: maxValue,
+        min: minValue,
+      },
+    },
+    plugins: {
+      tooltip: {
+        filter: function (tooltipItem) {
+          return tooltipItem.datasetIndex !== 2;
+        },
+      },
+      legend: {
+        labels: {
+          filter: function (labelItem) {
+            return labelItem.datasetIndex !== 2;
+          },
+        },
+      },
     },
   };
 
-  const data: ChartData<"line"> = {
+  const data: ChartData<"line" | "bar"> = {
     labels: dataTime,
     datasets: [
       {
         label: units === "imperial" ? "Temp [℉]" : "Temp [℃]",
-        borderColor: pink[500],
-        backgroundColor: pink[500],
+        borderColor: pink[400],
+        backgroundColor: pink[400],
         data: data_temp,
         yAxisID: "y",
       },
@@ -70,12 +106,20 @@ const ChartTemps = ({ chartData, dataTime, units, height }: ChartProps) => {
         data: data_dew_point,
         yAxisID: "y",
       },
+      {
+        type: "bar",
+        backgroundColor: bg_night_color,
+        data: data_isDay,
+        barPercentage: 1,
+        categoryPercentage: 0.999999,
+        yAxisID: "y",
+      },
     ],
   };
 
   return (
     <Box sx={{ height: height }}>
-      <Line options={options} data={data} />
+      <Chart type="line" options={options} data={data} />
     </Box>
   );
 };

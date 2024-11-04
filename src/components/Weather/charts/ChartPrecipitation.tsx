@@ -1,6 +1,6 @@
 import { memo } from "react";
 import Box from "@mui/material/Box";
-import { blue, grey } from "@mui/material/colors";
+import { blue, purple } from "@mui/material/colors";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,16 +10,24 @@ import {
   Title,
   Tooltip,
   Legend,
+  BarElement,
+  BarController,
+  LineController,
+  Filler,
 } from "chart.js";
 import { ChartOptions, ChartData } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Chart } from "react-chartjs-2";
 import { ChartProps } from "../../../api/types/weather";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
   LineElement,
+  BarElement,
+  PointElement,
+  BarController,
+  LineController,
+  Filler,
   Title,
   Tooltip,
   Legend
@@ -28,6 +36,7 @@ ChartJS.register(
 const ChartPrecipitation = ({
   chartData,
   dataTime,
+  dataIsDay,
   units,
   height = "200px",
 }: ChartProps) => {
@@ -41,7 +50,17 @@ const ChartPrecipitation = ({
     el.snow && el.snow["1h"] ? precipitation(el.snow["1h"]) : 0
   );
 
-  const options: ChartOptions<"line"> = {
+  const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  const tick = units === "imperial" ? 0.2 : 5;
+
+  const maxValue =
+    Math.ceil(Math.max(Math.max(...data_rain), Math.max(...data_snow)) / tick) *
+    tick;
+  const data_isDay = dataIsDay?.map((isDay) =>
+    isDay ? 0 : maxValue
+  ) as number[];
+
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,
     elements: {
@@ -63,23 +82,49 @@ const ChartPrecipitation = ({
         min: 0,
       },
     },
+    plugins: {
+      tooltip: {
+        filter: function (tooltipItem) {
+          return tooltipItem.datasetIndex !== 2;
+        },
+      },
+      legend: {
+        labels: {
+          filter: function (labelItem) {
+            return labelItem.datasetIndex !== 2;
+          },
+        },
+      },
+    },
   };
 
-  const data: ChartData<"line"> = {
+  const data: ChartData<"line" | "bar"> = {
     labels: dataTime,
     datasets: [
       {
+        type: "line",
         label: units === "imperial" ? "Rain [in]" : "Rain [mm]",
         borderColor: blue[500],
-        backgroundColor: blue[500],
+        backgroundColor: blue[200],
         data: data_rain,
+        fill: true,
         yAxisID: "y",
       },
       {
+        type: "line",
         label: units === "imperial" ? "Snow [in]" : "Snow [mm]",
-        borderColor: grey[500],
-        backgroundColor: grey[500],
+        borderColor: purple[500],
+        backgroundColor: purple[200],
+        fill: true,
         data: data_snow,
+        yAxisID: "y",
+      },
+      {
+        type: "bar",
+        data: data_isDay,
+        backgroundColor: bg_night_color,
+        barPercentage: 1,
+        categoryPercentage: 0.999999,
         yAxisID: "y",
       },
     ],
@@ -91,7 +136,7 @@ const ChartPrecipitation = ({
         height: height,
       }}
     >
-      <Line options={options} data={data} />
+      <Chart type="line" options={options} data={data} />
     </Box>
   );
 };

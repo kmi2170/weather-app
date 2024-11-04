@@ -162,13 +162,11 @@ const WeatherFortyEightHours = () => {
               (times) =>
                 localDay(times[0], timezone) === localDay(data.dt, timezone)
             )[0];
-            const sunrise = sunRiseSet[1];
-            const sunset = sunRiseSet[2];
+            const [_, sunrise, sunset] = sunRiseSet;
+            const _isDay = isDay(data.dt, sunrise, sunset);
 
             const totalPrecipitation =
               (data?.rain?.["1h"] || 0) + (data?.snow?.["1h"] || 0);
-
-            const _isDay = isDay(data.dt, sunrise, sunset);
 
             return (
               <Box

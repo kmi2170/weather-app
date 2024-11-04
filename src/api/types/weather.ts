@@ -6,6 +6,7 @@ export interface ChartProps {
   chartData: WeatherHourly;
   maxValue?: number;
   dataTime: string[];
+  dataIsDay?: boolean[];
   units?: Units;
   height?: string;
 }
