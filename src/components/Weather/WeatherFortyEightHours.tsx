@@ -108,7 +108,7 @@ const WeatherFortyEightHours = () => {
           <ArrowCircleLeftIcon
             sx={(theme) => ({
               fontSize: { xs: "3rem", md: "4rem" },
-              color: theme.palette.primary.main,
+              color: theme.palette.primary.dark,
               opacity: 0.7,
             })}
           />
@@ -133,7 +133,7 @@ const WeatherFortyEightHours = () => {
           <ArrowCircleRightIcon
             sx={(theme) => ({
               fontSize: { xs: "3rem", md: "4rem" },
-              color: theme.palette.primary.main,
+              color: theme.palette.primary.dark,
               opacity: 0.7,
             })}
           />
@@ -173,9 +173,11 @@ const WeatherFortyEightHours = () => {
             const font_color_temp = _isDay
               ? theme.palette.primary.main
               : "pink";
-            const font_color_date = _isDay ? "dodgerblue" : "lightblue";
-            const icon_color = _isDay ? theme.palette.primary.main : "pink";
-            const bg_color = _isDay ? "lightcyan" : theme.palette.primary.dark;
+            const font_color_date = _isDay ? "dodgerblue" : "lightcyan";
+            const icon_color = _isDay
+              ? theme.palette.primary.main
+              : "lightpink";
+            const bg_color = _isDay ? "lightcyan" : theme.palette.primary.main;
 
             return (
               <Box
