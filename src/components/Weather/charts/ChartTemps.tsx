@@ -17,7 +17,6 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
-import theme from "../../../theme/theme";
 
 ChartJS.register(
   CategoryScale,
@@ -39,11 +38,11 @@ const ChartTemps = ({
   height,
   dataIsDay,
   chartBoxStyle,
+  chartBackgroundProps,
 }: ChartProps) => {
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
 
-  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const tick = units === "imperial" ? 5 : 5;
 
   const maxValue = Math.ceil(Math.max(...data_temp) / tick) * tick;
@@ -114,11 +113,9 @@ const ChartTemps = ({
       },
       {
         type: "bar",
-        backgroundColor: bg_night_color,
         data: data_isDay,
-        barPercentage: 1,
-        categoryPercentage: 0.999999,
         yAxisID: "y",
+        ...chartBackgroundProps,
       },
     ],
   };

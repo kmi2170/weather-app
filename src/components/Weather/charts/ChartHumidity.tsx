@@ -1,6 +1,6 @@
 import { memo } from "react";
 import Box from "@mui/material/Box";
-import { lightBlue, lime, blueGrey, blue } from "@mui/material/colors";
+import { lime, blueGrey, blue } from "@mui/material/colors";
 
 import {
   Chart as ChartJS,
@@ -18,7 +18,6 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
-import { tooltip } from "leaflet";
 
 ChartJS.register(
   CategoryScale,
@@ -39,13 +38,12 @@ const ChartHumidity = ({
   dataIsDay,
   height = "200px",
   chartBoxStyle,
+  chartBackgroundProps,
 }: ChartProps) => {
   const data_humidity = chartData.map(({ humidity }) => humidity);
   const data_clouds = chartData.map(({ clouds }) => clouds);
   const data_pop = chartData.map(({ pop }) => pop * 100);
 
-  // const bg_night_color = "rgba(0, 0, 0, 0.05)";
-  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const data_isDay = dataIsDay?.map((isDay) => (isDay ? 0 : 100)) as number[];
 
   const options: ChartOptions<"line"> = {
@@ -117,11 +115,9 @@ const ChartHumidity = ({
       },
       {
         type: "bar",
-        backgroundColor: bg_night_color,
         data: data_isDay,
-        barPercentage: 1,
-        categoryPercentage: 0.999999,
         yAxisID: "y",
+        ...chartBackgroundProps,
       },
     ],
   };

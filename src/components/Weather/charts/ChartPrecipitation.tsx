@@ -40,6 +40,7 @@ const ChartPrecipitation = ({
   units,
   height = "200px",
   chartBoxStyle,
+  chartBackgroundProps,
 }: ChartProps) => {
   const precipitation = (fall: number) =>
     units === "imperial" ? +fall / 25.4 : fall;
@@ -126,10 +127,8 @@ const ChartPrecipitation = ({
       {
         type: "bar",
         data: data_isDay,
-        backgroundColor: bg_night_color,
-        barPercentage: 1,
-        categoryPercentage: 0.999999,
         yAxisID: "y",
+        ...chartBackgroundProps,
       },
     ],
   };

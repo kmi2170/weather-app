@@ -38,12 +38,11 @@ const ChartWind = ({
   units,
   height = "200px",
   chartBoxStyle,
+  chartBackgroundProps,
 }: ChartProps) => {
   const data_wind_speed = chartData.map(({ wind_speed }) => wind_speed);
   const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust ?? 0);
 
-  // const bg_night_color = "rgba(0, 0, 0, 0.05)";
-  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const tick = units === "imperial" ? 10 : 5;
 
   const maxValue =
@@ -117,11 +116,9 @@ const ChartWind = ({
       },
       {
         type: "bar",
-        backgroundColor: bg_night_color,
         data: data_isDay,
-        barPercentage: 1,
-        categoryPercentage: 0.999999,
         yAxisID: "y",
+        ...chartBackgroundProps,
       },
     ],
   };

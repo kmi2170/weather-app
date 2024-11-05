@@ -19,12 +19,19 @@ import { Weather } from "../../api/types/weather";
 import { isDay } from "../../utils/units";
 import { SxProps } from "@mui/material";
 import theme from "../../theme/theme";
+import { ChartData } from "chart.js";
 
 const chartBoxStyle: SxProps = {
   padding: "5px 10px",
   borderRadius: "10px",
   boxShadow: `3px 3px 3px ${theme.palette.primary.light}`,
   border: `1px solid ${theme.palette.primary.light}`,
+};
+
+const chartDarkBackground: Record<string, string | number> = {
+  backgroundColor: "rgba(0, 0, 128, 0.1)",
+  barPercentage: 1,
+  categoryPercentage: 0.999999,
 };
 
 const WeatherHourly = () => {
@@ -76,6 +83,7 @@ const WeatherHourly = () => {
           units={units}
           height="200px"
           chartBoxStyle={chartBoxStyle}
+          chartBackgroundProps={chartDarkBackground}
         />
         <ChartHumidity
           chartData={hourly}
@@ -83,6 +91,7 @@ const WeatherHourly = () => {
           dataIsDay={dataIsDay}
           height="250px"
           chartBoxStyle={chartBoxStyle}
+          chartBackgroundProps={chartDarkBackground}
         />
         <ChartPrecipitation
           chartData={hourly}
@@ -90,6 +99,7 @@ const WeatherHourly = () => {
           dataIsDay={dataIsDay}
           units={units}
           chartBoxStyle={chartBoxStyle}
+          chartBackgroundProps={chartDarkBackground}
         />
         <ChartWind
           chartData={hourly}
@@ -98,6 +108,7 @@ const WeatherHourly = () => {
           units={units}
           height="200px"
           chartBoxStyle={chartBoxStyle}
+          chartBackgroundProps={chartDarkBackground}
         />
         <ChartPressure
           chartData={hourly}
@@ -106,6 +117,7 @@ const WeatherHourly = () => {
           units={units}
           height="200px"
           chartBoxStyle={chartBoxStyle}
+          chartBackgroundProps={chartDarkBackground}
         />
       </Paper>
     </>

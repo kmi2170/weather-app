@@ -32,13 +32,12 @@ const ChartPressure = ({
   units,
   height = "200px",
   chartBoxStyle,
+  chartBackgroundProps,
 }: ChartProps) => {
   const data_pressure = chartData.map(({ pressure }) =>
     units === "imperial" ? (pressure / 1013.25) * 29.921 : pressure
   );
 
-  // const bg_night_color = "rgba(0, 0, 0, 0.05)";
-  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const tick = units === "imperial" ? 0.1 : 5;
 
   const maxValue = Math.ceil(Math.max(...data_pressure) / tick) * tick;
@@ -99,11 +98,9 @@ const ChartPressure = ({
       },
       {
         type: "bar",
-        backgroundColor: bg_night_color,
         data: data_isDay,
-        barPercentage: 1,
-        categoryPercentage: 0.999999,
         yAxisID: "y",
+        ...chartBackgroundProps,
       },
     ],
   };

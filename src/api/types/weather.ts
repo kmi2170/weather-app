@@ -11,6 +11,7 @@ export interface ChartProps {
   units?: Units;
   height?: string;
   chartBoxStyle?: SxProps;
+  chartBackgroundProps?: Record<string, string | number>;
 }
 
 export type WeatherQuery = {
