@@ -53,9 +53,9 @@ const WeatherHourly = () => {
           padding: "1rem",
         }}
       >
-        <Typography variant="subtitle1" align="center">
+        {/* <Typography variant="subtitle1" align="center">
           Hourly Forecast for 48 Hours
-        </Typography>
+        </Typography> */}
 
         <ChartTemps
           chartData={hourly}
