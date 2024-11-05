@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/material";
 import { Units } from "../../store/initialState";
 
 export type CookieLocation = Record<string, string> | null | undefined;
@@ -9,6 +10,7 @@ export interface ChartProps {
   dataIsDay?: boolean[];
   units?: Units;
   height?: string;
+  chartBoxStyle?: SxProps;
 }
 
 export type WeatherQuery = {

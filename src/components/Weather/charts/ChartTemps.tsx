@@ -17,6 +17,7 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
+import theme from "../../../theme/theme";
 
 ChartJS.register(
   CategoryScale,
@@ -37,6 +38,7 @@ const ChartTemps = ({
   units,
   height,
   dataIsDay,
+  chartBoxStyle,
 }: ChartProps) => {
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
@@ -122,7 +124,16 @@ const ChartTemps = ({
   };
 
   return (
-    <Box sx={{ height: height }}>
+    <Box
+      sx={{
+        height: height,
+        ...chartBoxStyle,
+        // padding: "5px 10px",
+        // borderRadius: "5px",
+        // boxShadow: `3px 3px 3px ${theme.palette.primary.light}`,
+        // border: "1px solid purple",
+      }}
+    >
       <Chart type="line" options={options} data={data} />
     </Box>
   );

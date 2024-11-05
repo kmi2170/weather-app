@@ -31,6 +31,7 @@ const ChartPressure = ({
   dataIsDay,
   units,
   height = "200px",
+  chartBoxStyle,
 }: ChartProps) => {
   const data_pressure = chartData.map(({ pressure }) =>
     units === "imperial" ? (pressure / 1013.25) * 29.921 : pressure
@@ -108,7 +109,7 @@ const ChartPressure = ({
   };
 
   return (
-    <Box sx={{ height: height }}>
+    <Box sx={{ height: height, ...chartBoxStyle }}>
       <Chart type="line" options={options} data={data} />
     </Box>
   );

@@ -39,6 +39,7 @@ const ChartPrecipitation = ({
   dataIsDay,
   units,
   height = "200px",
+  chartBoxStyle,
 }: ChartProps) => {
   const precipitation = (fall: number) =>
     units === "imperial" ? +fall / 25.4 : fall;
@@ -137,6 +138,7 @@ const ChartPrecipitation = ({
     <Box
       sx={{
         height: height,
+        ...chartBoxStyle,
       }}
     >
       <Chart type="line" options={options} data={data} />

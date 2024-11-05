@@ -17,6 +17,15 @@ import {
 } from "./charts";
 import { Weather } from "../../api/types/weather";
 import { isDay } from "../../utils/units";
+import { SxProps } from "@mui/material";
+import theme from "../../theme/theme";
+
+const chartBoxStyle: SxProps = {
+  padding: "5px 10px",
+  borderRadius: "10px",
+  boxShadow: `3px 3px 3px ${theme.palette.primary.light}`,
+  border: `1px solid ${theme.palette.primary.light}`,
+};
 
 const WeatherHourly = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
@@ -51,6 +60,9 @@ const WeatherHourly = () => {
       <Paper
         sx={{
           padding: "1rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
         }}
       >
         {/* <Typography variant="subtitle1" align="center">
@@ -63,18 +75,21 @@ const WeatherHourly = () => {
           dataIsDay={dataIsDay}
           units={units}
           height="200px"
+          chartBoxStyle={chartBoxStyle}
         />
         <ChartHumidity
           chartData={hourly}
           dataTime={dataTime}
           dataIsDay={dataIsDay}
           height="250px"
+          chartBoxStyle={chartBoxStyle}
         />
         <ChartPrecipitation
           chartData={hourly}
           dataTime={dataTime}
           dataIsDay={dataIsDay}
           units={units}
+          chartBoxStyle={chartBoxStyle}
         />
         <ChartWind
           chartData={hourly}
@@ -82,6 +97,7 @@ const WeatherHourly = () => {
           dataIsDay={dataIsDay}
           units={units}
           height="200px"
+          chartBoxStyle={chartBoxStyle}
         />
         <ChartPressure
           chartData={hourly}
@@ -89,6 +105,7 @@ const WeatherHourly = () => {
           dataIsDay={dataIsDay}
           units={units}
           height="200px"
+          chartBoxStyle={chartBoxStyle}
         />
       </Paper>
     </>

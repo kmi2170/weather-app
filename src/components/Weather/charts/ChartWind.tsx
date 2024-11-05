@@ -37,6 +37,7 @@ const ChartWind = ({
   dataIsDay,
   units,
   height = "200px",
+  chartBoxStyle,
 }: ChartProps) => {
   const data_wind_speed = chartData.map(({ wind_speed }) => wind_speed);
   const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust ?? 0);
@@ -126,7 +127,7 @@ const ChartWind = ({
   };
 
   return (
-    <Box sx={{ height: height }}>
+    <Box sx={{ height: height, ...chartBoxStyle }}>
       <Chart type="line" options={options} data={data} />
     </Box>
   );

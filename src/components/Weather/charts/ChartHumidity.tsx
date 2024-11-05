@@ -38,6 +38,7 @@ const ChartHumidity = ({
   dataTime,
   dataIsDay,
   height = "200px",
+  chartBoxStyle,
 }: ChartProps) => {
   const data_humidity = chartData.map(({ humidity }) => humidity);
   const data_clouds = chartData.map(({ clouds }) => clouds);
@@ -126,7 +127,7 @@ const ChartHumidity = ({
   };
 
   return (
-    <Box sx={{ height: height }}>
+    <Box sx={{ height: height, ...chartBoxStyle }}>
       <Chart type="line" options={options} data={data} />
     </Box>
   );
