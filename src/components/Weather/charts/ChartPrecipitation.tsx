@@ -52,16 +52,19 @@ const ChartPrecipitation = ({
     el.snow && el.snow["1h"] ? precipitation(el.snow["1h"]) : 0
   );
 
-  // const bg_night_color = "rgba(0, 0, 0, 0.05)";
-  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const tick = units === "imperial" ? 0.2 : 5;
 
   const maxValue =
     Math.ceil(Math.max(Math.max(...data_rain), Math.max(...data_snow)) / tick) *
-    tick;
+      tick || units === "imperial"
+      ? 0.2
+      : 1;
+
   const data_isDay = dataIsDay?.map((isDay) =>
     isDay ? 0 : maxValue
   ) as number[];
+
+  console.log(maxValue, data_rain);
 
   const options: ChartOptions<"bar"> = {
     responsive: true,
@@ -137,6 +140,7 @@ const ChartPrecipitation = ({
     <Box
       sx={{
         height: height,
+
         ...chartBoxStyle,
       }}
     >

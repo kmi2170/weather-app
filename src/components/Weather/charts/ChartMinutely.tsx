@@ -42,7 +42,6 @@ const ChartMinutely = ({
 
   const maxValue = Math.ceil(Math.max(...chartData) / tick) * tick;
 
-  console.log(chartData);
   const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,
