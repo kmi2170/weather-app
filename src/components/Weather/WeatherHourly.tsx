@@ -28,10 +28,12 @@ const chartBoxStyle: SxProps = {
 };
 
 const chartDarkBackground: Record<string, string | number> = {
-  backgroundColor: theme.palette.primary.light,
+  backgroundColor: "rgba(233, 213, 255, 0.5)",
   // backgroundColor: "rgba(0, 0, 128, 0.1)",
+  borderColor: "rgba(233, 213, 255, 0.5)",
+  borderWidth: 0,
   barPercentage: 1,
-  categoryPercentage: 0.999999,
+  categoryPercentage: 1.0,
 };
 
 const WeatherHourly = () => {

@@ -125,10 +125,6 @@ const ChartTemps = ({
       sx={{
         height: height,
         ...chartBoxStyle,
-        // padding: "5px 10px",
-        // borderRadius: "5px",
-        // boxShadow: `3px 3px 3px ${theme.palette.primary.light}`,
-        // border: "1px solid purple",
       }}
     >
       <Chart type="line" options={options} data={data} />
