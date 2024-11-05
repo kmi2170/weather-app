@@ -41,7 +41,7 @@ const ChartTemps = ({
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
 
-  const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const tick = units === "imperial" ? 5 : 5;
 
   const maxValue = Math.ceil(Math.max(...data_temp) / tick) * tick;

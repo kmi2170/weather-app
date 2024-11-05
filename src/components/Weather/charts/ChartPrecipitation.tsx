@@ -50,7 +50,8 @@ const ChartPrecipitation = ({
     el.snow && el.snow["1h"] ? precipitation(el.snow["1h"]) : 0
   );
 
-  const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  // const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const tick = units === "imperial" ? 0.2 : 5;
 
   const maxValue =

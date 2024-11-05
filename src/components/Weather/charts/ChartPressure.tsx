@@ -36,7 +36,8 @@ const ChartPressure = ({
     units === "imperial" ? (pressure / 1013.25) * 29.921 : pressure
   );
 
-  const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  // const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const tick = units === "imperial" ? 0.1 : 5;
 
   const maxValue = Math.ceil(Math.max(...data_pressure) / tick) * tick;

@@ -43,7 +43,8 @@ const ChartHumidity = ({
   const data_clouds = chartData.map(({ clouds }) => clouds);
   const data_pop = chartData.map(({ pop }) => pop * 100);
 
-  const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  // const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const data_isDay = dataIsDay?.map((isDay) => (isDay ? 0 : 100)) as number[];
 
   const options: ChartOptions<"line"> = {

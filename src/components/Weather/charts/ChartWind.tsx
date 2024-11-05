@@ -41,7 +41,8 @@ const ChartWind = ({
   const data_wind_speed = chartData.map(({ wind_speed }) => wind_speed);
   const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust ?? 0);
 
-  const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  // const bg_night_color = "rgba(0, 0, 0, 0.05)";
+  const bg_night_color = "rgba(0, 0, 128, 0.1)";
   const tick = units === "imperial" ? 10 : 5;
 
   const maxValue =
