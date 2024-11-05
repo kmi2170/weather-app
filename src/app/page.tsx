@@ -145,7 +145,7 @@ const Home = () => {
                 color: theme.palette.primary.dark,
               })}
             >
-              Daily Weather
+              Daily
             </Typography>
             {!isLoading ? (
               <WeatherDaily />
