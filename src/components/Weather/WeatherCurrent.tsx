@@ -15,22 +15,22 @@ import {
   precipitationWithUnit,
   pressureWithUnit,
   visibilityWithUnit,
+  isDay,
 } from "../../utils/units";
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import MoonIcon from "./icons/MoonIcon";
 import { currentLocalTime, localTime } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
+import theme from "../../theme/theme";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
-  temp: {
-    color: theme.palette.primary.main,
-  },
   paper: {
-    padding: "1.5rem",
+    padding: "1.5rem 3.5rem 1.5rem 3.5rem",
   },
   locationContainer: {
+    marginBottom: "0.5rem",
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -50,12 +50,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  main: {
-    color: "lightseagreen",
+  weatherMain: {
+    borderRadius: "20px",
   },
-  description: {
-    color: "lightseagreen",
-  },
+  cloud: { marginBottom: "1rem" },
   country: {
     [theme.breakpoints?.up("sm")]: {
       marginLeft: "1rem",
@@ -95,6 +93,7 @@ const WeatherCurrent = () => {
   const { timezone, current, daily } = data as Weather;
 
   const {
+    dt,
     sunrise,
     sunset,
     temp,
@@ -117,6 +116,13 @@ const WeatherCurrent = () => {
 
   const totalPrecipitation = (rain?.["1h"] || 0) + (snow?.["1h"] || 0);
 
+  const _isDay = isDay(dt, sunrise, sunset);
+  const font_color = _isDay ? "black" : "white";
+  const font_color_temp = _isDay ? theme.palette.primary.main : "pink";
+  const font_color_date = _isDay ? "dodgerblue" : "lightcyan";
+  const icon_color = _isDay ? theme.palette.primary.main : "lightpink";
+  const bg_color = _isDay ? "lightcyan" : theme.palette.primary.main;
+
   return (
     <>
       <Paper elevation={2} className={classes.paper}>
@@ -132,47 +138,53 @@ const WeatherCurrent = () => {
         </div>
 
         <Grid container justifyContent="center" alignItems="center" spacing={3}>
-          <Grid item xs={12}>
-            <div className={classes.locationContainer}>
-              <div className={classes.locationSubContainer}>
-                <Typography variant="h5" className={classes.text}>
-                  {city}
-                  {region && <span>,&nbsp;</span>}
-                </Typography>
-                <Typography variant="h6" className={classes.text}>
-                  {region}
-                </Typography>
-              </div>
-
-              <Typography
-                variant="h6"
-                color="textSecondary"
-                className={classes.country}
-                style={{ fontStyle: "italic" }}
-              >
-                {country}
+          <Grid item xs={12} className={classes.locationContainer}>
+            <div className={classes.locationSubContainer}>
+              <Typography variant="h5" className={classes.text}>
+                {city}
+                {region && <span>,&nbsp;</span>}
               </Typography>
-
-              {location?.lat && location?.lon && (
-                <Typography
-                  variant="subtitle2"
-                  color="textSecondary"
-                  className={classes.text}
-                  style={{ marginLeft: "1rem", marginTop: "0.25rem" }}
-                >
-                  lat: {location.lat.toFixed(3)}, lon: {location.lon.toFixed(3)}
-                </Typography>
-              )}
+              <Typography variant="h6" className={classes.text}>
+                {region}
+              </Typography>
             </div>
+
+            <Typography
+              variant="h6"
+              color="textSecondary"
+              className={classes.country}
+              style={{ fontStyle: "italic" }}
+            >
+              {country}
+            </Typography>
+
+            {location?.lat && location?.lon && (
+              <Typography
+                variant="subtitle2"
+                color="textSecondary"
+                className={classes.text}
+                style={{ marginLeft: "1rem", marginTop: "0.25rem" }}
+              >
+                lat: {location.lat.toFixed(3)}, lon: {location.lon.toFixed(3)}
+              </Typography>
+            )}
           </Grid>
 
-          <Grid item xs={12} sm={6} container alignItems="center">
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            container
+            alignItems="center"
+            className={classes.weatherMain}
+            sx={{ backgroundColor: bg_color }}
+          >
             <Grid item xs={4}>
               <div className={classes.weatherContainer}>
                 <Typography
                   variant="h6"
                   align="center"
-                  className={classes.main}
+                  sx={{ color: font_color }}
                 >
                   {weather[0].main}
                 </Typography>
@@ -189,12 +201,13 @@ const WeatherCurrent = () => {
                     weatherId={weather[0].id}
                     current
                     size="4rem"
+                    iconColor={icon_color}
                   />
                 </div>
                 <Typography
                   variant="subtitle2"
                   align="center"
-                  className={classes.description}
+                  sx={{ color: font_color }}
                 >
                   {weather[0].description}
                 </Typography>
@@ -205,7 +218,7 @@ const WeatherCurrent = () => {
                 <Typography
                   variant="h4"
                   align="center"
-                  className={classes.temp}
+                  sx={{ color: font_color_temp }}
                 >
                   {tempWithUnit(temp, units)}
                 </Typography>
@@ -213,6 +226,7 @@ const WeatherCurrent = () => {
                   variant="subtitle2"
                   color="textSecondary"
                   align="center"
+                  sx={{ color: font_color }}
                 >
                   Feels like {tempWithUnit(feels_like, units)}
                 </Typography>
@@ -224,13 +238,16 @@ const WeatherCurrent = () => {
                 wind_deg={wind_deg}
                 wind_gust={wind_gust}
                 current
+                iconColor={icon_color}
+                fontColor={font_color_temp}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.cloud}>
               <Typography
                 variant="subtitle2"
                 color="textSecondary"
                 align="center"
+                sx={{ color: font_color }}
               >
                 Cloud Cover {clouds} %
               </Typography>
