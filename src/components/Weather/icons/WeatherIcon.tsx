@@ -18,7 +18,7 @@ const WeatherIcon = ({
   weatherId,
   current,
   size = "2rem",
-  iconColor,
+  iconColor = theme.palette.primary.main,
 }: WeatherIconProps) => {
   const weatherIconClass = () => {
     if (current) {

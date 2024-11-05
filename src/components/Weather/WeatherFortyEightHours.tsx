@@ -108,7 +108,7 @@ const WeatherFortyEightHours = () => {
           <ArrowCircleLeftIcon
             sx={(theme) => ({
               fontSize: { xs: "3rem", md: "4rem" },
-              color: theme.palette.primary.dark,
+              color: theme.palette.primary.main,
               opacity: 0.7,
             })}
           />
@@ -133,7 +133,7 @@ const WeatherFortyEightHours = () => {
           <ArrowCircleRightIcon
             sx={(theme) => ({
               fontSize: { xs: "3rem", md: "4rem" },
-              color: theme.palette.primary.dark,
+              color: theme.palette.primary.main,
               opacity: 0.7,
             })}
           />
@@ -170,9 +170,12 @@ const WeatherFortyEightHours = () => {
               (data?.rain?.["1h"] || 0) + (data?.snow?.["1h"] || 0);
 
             const font_color = _isDay ? "black" : "white";
-            const icon_color = _isDay
+            const font_color_temp = _isDay
               ? theme.palette.primary.main
-              : theme.palette.primary.light;
+              : "pink";
+            const font_color_date = _isDay ? "dodgerblue" : "lightblue";
+            const icon_color = _isDay ? theme.palette.primary.main : "pink";
+            const bg_color = _isDay ? "lightcyan" : theme.palette.primary.dark;
 
             return (
               <Box
@@ -182,24 +185,29 @@ const WeatherFortyEightHours = () => {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  padding: "2px",
+                  padding: "5px 2px",
                   // borderBottom: "solid",
                   // borderBottomWidth: "5px",
                   // borderBottomColor: _isDay
                   //   ? "rgba(255, 165, 0,0.5)"
                   //   : "rgba(0,0,139,0.5)",
-                  background: _isDay ? null : theme.palette.primary.dark,
+                  background: bg_color,
                   borderRadius: "10px",
-                  boxShadow: "6px 4px 6px rgba(0, 0, 0, 0.1)",
+                  // boxShadow: "6px 4px 6px rgba(0, 0, 0, 0.1)",
+                  boxShadow: `2px 2px 4px ${theme.palette.primary.dark}`,
                 })}
               >
-                <Typography variant="subtitle2" align="center">
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  sx={{ color: font_color }}
+                >
                   {localDay(data.dt, timezone)}
                 </Typography>
                 <Typography
                   variant="subtitle2"
-                  color="textSecondary"
                   align="center"
+                  sx={{ color: font_color_date }}
                 >
                   {localDate(data.dt, timezone)}
                 </Typography>
@@ -218,7 +226,7 @@ const WeatherFortyEightHours = () => {
                   sx={(theme) => ({
                     width: "5rem",
                     marginBottom: "5px",
-                    color: theme.palette.primary.main,
+                    color: font_color_temp,
                   })}
                 >
                   {tempWithUnit(data.temp, units)}
@@ -238,11 +246,12 @@ const WeatherFortyEightHours = () => {
                     marginTop: "8px",
                     marginBottom: "5px",
                     width: "5.0rem",
+                    color: font_color,
                   }}
                 >
                   <Box
                     component="i"
-                    sx={(theme) => ({ color: theme.palette.primary.main })}
+                    sx={{ color: icon_color }}
                     className={`wi wi-umbrella`}
                   />{" "}
                   {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
@@ -254,16 +263,21 @@ const WeatherFortyEightHours = () => {
                     marginTop: "8px",
                     marginBottom: "5px",
                     width: "5.0rem",
+                    color: font_color,
                   }}
                 >
                   <Box
                     component="i"
-                    sx={(theme) => ({ color: theme.palette.primary.main })}
+                    sx={{ color: icon_color }}
                     className={`wi wi-raindrop`}
                   />{" "}
                   {precipitationWithUnit(totalPrecipitation, units)}
                 </Typography>
-                <Typography variant="h6" align="center">
+                <Typography
+                  variant="h6"
+                  align="center"
+                  sx={{ color: font_color_date }}
+                >
                   {localTimeHour(data.dt, timezone)}
                 </Typography>
               </Box>

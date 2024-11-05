@@ -4,6 +4,7 @@ import { useAppSelector } from "../../../store/hooks";
 
 import { wind_directions } from "../../../constants/wind";
 import { formatDigits } from "../../../utils/formatDigits";
+import theme from "../../../theme/theme";
 
 interface WindIconProps {
   wind_speed: number;
@@ -19,8 +20,8 @@ const WindIcon = ({
   wind_deg,
   wind_gust,
   current,
-  fontColor,
-  iconColor,
+  fontColor = "black",
+  iconColor = theme.palette.primary.main,
 }: WindIconProps) => {
   const units = useAppSelector((states) => states.weather.units);
 
