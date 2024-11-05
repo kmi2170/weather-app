@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import { localDate, localDay, localTimeHour } from "../../utils/time";
+import { localDay, localDate, localTimeHour } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import WeatherIcon from "./icons/WeatherIcon";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
@@ -161,7 +161,7 @@ const WeatherFortyEightHours = () => {
           {hourly.map((data) => {
             const sunRiseSet = sunAlmanac.filter(
               (times) =>
-                localDay(times[0], timezone) === localDay(data.dt, timezone)
+                localDate(times[0], timezone) === localDate(data.dt, timezone)
             )[0];
             const [_, sunrise, sunset] = sunRiseSet;
             const _isDay = isDay(data.dt, sunrise, sunset);
@@ -202,14 +202,14 @@ const WeatherFortyEightHours = () => {
                   align="center"
                   sx={{ color: font_color }}
                 >
-                  {localDay(data.dt, timezone)}
+                  {localDate(data.dt, timezone)}
                 </Typography>
                 <Typography
                   variant="subtitle2"
                   align="center"
                   sx={{ color: font_color_date }}
                 >
-                  {localDate(data.dt, timezone)}
+                  {localDay(data.dt, timezone)}
                 </Typography>
                 <WeatherIcon
                   sunset={sunset}

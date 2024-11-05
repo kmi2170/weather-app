@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import { localDay, localDayTime } from "../../utils/time";
+import { localDate, localDayTime } from "../../utils/time";
 
 import {
   ChartTemps,
@@ -52,7 +52,7 @@ const WeatherHourly = () => {
 
   const dataIsDay = hourly.map((data) => {
     const sunRiseSet = sunAlmanac.filter(
-      (times) => localDay(times[0], timezone) === localDay(data.dt, timezone)
+      (times) => localDate(times[0], timezone) === localDate(data.dt, timezone)
     )[0];
     const [_, sunrise, sunset] = sunRiseSet;
     const _isDay = isDay(data.dt, sunrise, sunset);

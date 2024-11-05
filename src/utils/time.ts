@@ -33,10 +33,10 @@ export const localFullDateTime = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("M/D ddd h:mm a");
 };
 
-export const localDay = (time: number, timeZone: string) => {
+export const localDate = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("M/D");
 };
 
-export const localDate = (time: number, timeZone: string) => {
+export const localDay = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("ddd");
 };

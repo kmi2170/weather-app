@@ -13,13 +13,27 @@ import { formatDigits } from "../../utils/formatDigits";
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
-import { localDate, localDay } from "../../utils/time";
+import { localDay, localDate } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import { precipitationWithUnit } from "../../utils/units";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
+  day: {
+    color: "dodgerblue",
+    // color: theme.palette.primary.main,
+  },
+  description: {
+    color: "lightseagreen",
+    // color: theme.palette.primary.main,
+  },
   temp: {
+    color: theme.palette.primary.main,
+  },
+  pop: {
+    color: theme.palette.primary.main,
+  },
+  precipitation: {
     color: theme.palette.primary.main,
   },
   paper: {
@@ -114,15 +128,14 @@ const WeatherDaily = () => {
                         align="center"
                         className={classes.text}
                       >
-                        {localDay(data.dt, timezone)}
+                        {localDate(data.dt, timezone)}
                       </Typography>
                       <Typography
                         variant="subtitle2"
-                        color="textSecondary"
                         align="center"
-                        className={classes.text}
+                        className={classes.day}
                       >
-                        {localDate(data.dt, timezone)}
+                        {localDay(data.dt, timezone)}
                       </Typography>
                     </div>
                     <Typography
@@ -141,7 +154,7 @@ const WeatherDaily = () => {
                     <Typography
                       variant="subtitle2"
                       align="center"
-                      className={classes.text}
+                      className={classes.description}
                       height="2.5rem"
                     >
                       {data.weather[0].description}
@@ -171,7 +184,7 @@ const WeatherDaily = () => {
                     <Typography
                       variant="subtitle2"
                       align="center"
-                      className={classes.text}
+                      className={classes.pop}
                     >
                       <i className={`wi wi-umbrella ${classes.iconPop}`} />{" "}
                       {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
@@ -179,7 +192,7 @@ const WeatherDaily = () => {
                     <Typography
                       variant="subtitle2"
                       align="center"
-                      className={classes.text}
+                      className={classes.precipitation}
                     >
                       <i className={`wi wi-raindrop ${classes.iconPop}`} />{" "}
                       {precipitationWithUnit(totalPrecipitation, units)}

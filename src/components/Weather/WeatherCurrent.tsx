@@ -50,6 +50,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
   },
+  main: {
+    color: "lightseagreen",
+  },
+  description: {
+    color: "lightseagreen",
+  },
   country: {
     [theme.breakpoints?.up("sm")]: {
       marginLeft: "1rem",
@@ -163,7 +169,11 @@ const WeatherCurrent = () => {
           <Grid item xs={12} sm={6} container alignItems="center">
             <Grid item xs={4}>
               <div className={classes.weatherContainer}>
-                <Typography variant="h6" align="center">
+                <Typography
+                  variant="h6"
+                  align="center"
+                  className={classes.main}
+                >
                   {weather[0].main}
                 </Typography>
                 <div
@@ -181,7 +191,11 @@ const WeatherCurrent = () => {
                     size="4rem"
                   />
                 </div>
-                <Typography variant="subtitle2" align="center">
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  className={classes.description}
+                >
                   {weather[0].description}
                 </Typography>
               </div>

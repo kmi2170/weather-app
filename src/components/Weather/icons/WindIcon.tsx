@@ -46,7 +46,11 @@ const WindIcon = ({
   return (
     <>
       {current && (
-        <Typography variant="h6" align="center" sx={{ color: fontColor }}>
+        <Typography
+          variant="h6"
+          align="center"
+          sx={{ color: theme.palette.primary.main }}
+        >
           {windDirection()}
         </Typography>
       )}
