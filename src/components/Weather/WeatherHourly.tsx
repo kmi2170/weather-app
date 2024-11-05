@@ -28,11 +28,13 @@ const chartBoxStyle: SxProps = {
 };
 
 const chartDarkBackground: Record<string, string | number> = {
-  backgroundColor: "rgba(233, 213, 255, 0.5)",
+  // backgroundColor: "rgba(72, 61, 139, 0.5)",
+  // borderColor: "rgba(72, 61, 139, 0.5)",
+  borderWidth: 0,
+  // backgroundColor: "rgba(233, 213, 255, 0.5)",
   // backgroundColor: "rgba(0, 0, 128, 0.1)",
   borderColor: "rgba(233, 213, 255, 0.5)",
-  borderWidth: 0,
-  barPercentage: 1,
+  barPercentage: 1.0,
   categoryPercentage: 1.0,
 };
 

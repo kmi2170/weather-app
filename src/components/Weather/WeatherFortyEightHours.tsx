@@ -177,7 +177,8 @@ const WeatherFortyEightHours = () => {
             const icon_color = _isDay
               ? theme.palette.primary.main
               : "lightpink";
-            const bg_color = _isDay ? "lightcyan" : theme.palette.primary.main;
+            const bg_color = _isDay ? "lightcyan" : "darkslateblue";
+            // const bg_color = _isDay ? "lightcyan" : theme.palette.primary.main;
 
             return (
               <Box

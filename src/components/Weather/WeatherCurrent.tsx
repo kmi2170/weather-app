@@ -121,7 +121,9 @@ const WeatherCurrent = () => {
   const font_color_temp = _isDay ? theme.palette.primary.main : "pink";
   const font_color_date = _isDay ? "dodgerblue" : "lightcyan";
   const icon_color = _isDay ? theme.palette.primary.main : "lightpink";
-  const bg_color = _isDay ? "lightcyan" : theme.palette.primary.main;
+  const bg_color = _isDay ? "lightcyan" : "darkslateblue";
+  // const bg_color = _isDay ? "lightcyan" : "midnightblue";
+  // const bg_color = _isDay ? "lightcyan" : theme.palette.primary.main;
 
   return (
     <>
