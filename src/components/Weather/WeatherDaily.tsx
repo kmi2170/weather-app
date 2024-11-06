@@ -37,9 +37,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.primary.main,
   },
   paper: {
-    padding: "0.5rem",
-    border: `2px solid ${theme.palette.primary.light}`,
+    padding: "0.5rem 0",
+    // border: `2px solid ${theme.palette.primary.light}`,
     borderRadius: "15px",
+    backgroundColor: "cornsilk",
   },
   locationContainer: {
     display: "flex",
@@ -113,7 +114,7 @@ const WeatherDaily = () => {
           return (
             <Grid key={i} item xs={4} sm={3} md={2}>
               <PopoverDaily data={data} timezone={timezone}>
-                <Paper className={classes.paper}>
+                <Paper elevation={2} className={classes.paper}>
                   <div
                     style={{
                       display: "flex",
