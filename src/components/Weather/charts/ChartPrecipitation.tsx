@@ -64,8 +64,6 @@ const ChartPrecipitation = ({
     isDay ? 0 : maxValue
   ) as number[];
 
-  console.log(maxValue, data_rain);
-
   const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,

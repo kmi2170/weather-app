@@ -23,16 +23,21 @@ import MoonIcon from "./icons/MoonIcon";
 import { currentLocalTime, localTime } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import theme from "../../theme/theme";
+import { Units } from "../../store/initialState";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {},
   paper: {
-    padding: "1.5rem 3.5rem 1.5rem 3.5rem",
+    // padding: "1.5rem 3.5rem 1.5rem 3.5rem",
+  },
+  currentMain: {
+    display: "flex",
+    flexDirection: "column",
   },
   locationContainer: {
     marginBottom: "0.5rem",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "flex-start",
     [theme.breakpoints?.down("sm")]: {
       flexDirection: "column",
@@ -55,9 +60,34 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   cloud: { marginBottom: "1rem" },
   country: {
+    fontStyle: "italic",
     [theme.breakpoints?.up("sm")]: {
       marginLeft: "1rem",
     },
+  },
+  currentOthers: {
+    padding: "1rem 2rem",
+    background: "lightgreen",
+    display: "flex",
+    flexDirection: "row",
+    gap: "2rem",
+  },
+  currentOthersData: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  almanac: {
+    padding: "1rem 2rem",
+    background: "lightyellow",
+  },
+  almanacTime: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    gap: "2rem",
+    alignItems: "center",
   },
   iconSun: {
     fontSize: "1rem",
@@ -127,211 +157,328 @@ const WeatherCurrent = () => {
 
   return (
     <>
-      <Paper elevation={2} className={classes.paper}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Typography
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.text}
-            style={{ marginLeft: "1rem" }}
-          >
-            {currentLocalTime()}
-          </Typography>
-        </div>
-
-        <Grid container justifyContent="center" alignItems="center" spacing={3}>
-          <Grid item xs={12} className={classes.locationContainer}>
-            <div className={classes.locationSubContainer}>
-              <Typography variant="h5" className={classes.text}>
-                {city}
-                {region && <span>,&nbsp;</span>}
-              </Typography>
-              <Typography variant="h6" className={classes.text}>
-                {region}
-              </Typography>
-            </div>
-
-            <Typography
-              variant="h6"
-              color="textSecondary"
-              className={classes.country}
-              style={{ fontStyle: "italic" }}
-            >
-              {country}
-            </Typography>
-
-            {location?.lat && location?.lon && (
-              <Typography
-                variant="subtitle2"
-                color="textSecondary"
-                className={classes.text}
-                style={{ marginLeft: "1rem", marginTop: "0.25rem" }}
-              >
-                lat: {location.lat.toFixed(3)}, lon: {location.lon.toFixed(3)}
-              </Typography>
-            )}
+      <div>
+        <Grid container justifyContent="center" alignItems="center" spacing={1}>
+          <Grid item xs={12} sm={7}>
+            <CurrentMain
+              city={city}
+              region={region}
+              country={country}
+              lat={location?.lat}
+              lon={location?.lon}
+              sunrise={sunrise}
+              sunset={sunset}
+              id={weather[0]?.id}
+              main={weather[0]?.main}
+              description={weather[0]?.description}
+              temp={temp}
+              feels_like={feels_like}
+              wind_speed={wind_speed}
+              wind_deg={wind_deg}
+              wind_gust={wind_gust}
+              clouds={clouds}
+              units={units}
+              isDay={_isDay}
+            />
           </Grid>
 
           <Grid
             item
-            xs={12}
-            sm={6}
             container
-            alignItems="center"
-            className={classes.weatherMain}
-            sx={{ backgroundColor: bg_color }}
+            xs={12}
+            sm={5}
+            flexDirection="column"
+            justifyContent="space-between"
+            alignItems="space-between"
           >
-            <Grid item xs={4}>
-              <div className={classes.weatherContainer}>
-                <Typography
-                  variant="h6"
-                  align="center"
-                  sx={{ color: font_color }}
-                >
-                  {weather[0].main}
-                </Typography>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    minHeight: "4rem",
-                  }}
-                >
-                  <WeatherIcon
-                    sunrise={sunrise}
-                    sunset={sunset}
-                    weatherId={weather[0].id}
-                    current
-                    size="4rem"
-                    iconColor={icon_color}
-                  />
-                </div>
-                <Typography
-                  variant="subtitle2"
-                  align="center"
-                  sx={{ color: font_color }}
-                >
-                  {weather[0].description}
-                </Typography>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div>
-                <Typography
-                  variant="h4"
-                  align="center"
-                  sx={{ color: font_color_temp }}
-                >
-                  {tempWithUnit(temp, units)}
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  color="textSecondary"
-                  align="center"
-                  sx={{ color: font_color }}
-                >
-                  Feels like {tempWithUnit(feels_like, units)}
-                </Typography>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <WindIcon
-                wind_speed={wind_speed}
-                wind_deg={wind_deg}
-                wind_gust={wind_gust}
-                current
-                iconColor={icon_color}
-                fontColor={font_color_temp}
-              />
-            </Grid>
-            <Grid item xs={12} className={classes.cloud}>
-              <Typography
-                variant="subtitle2"
-                color="textSecondary"
-                align="center"
-                sx={{ color: font_color }}
-              >
-                Cloud Cover {clouds} %
-              </Typography>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12} sm={6} container>
-            <Grid item xs={6}>
-              <Typography variant="subtitle2">Humidity {humidity} %</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle2">
-                Pressure {pressureWithUnit(pressure, units)}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Typography variant="subtitle2">
-                Visibility {visibilityWithUnit(visibility, units)}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle2">UV index {uvi}</Typography>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Typography variant="subtitle2">
-                Precipitation {precipitationWithUnit(totalPrecipitation, units)}
-              </Typography>
-            </Grid>
-            {/* <Grid item xs={12}>
-              {rain && rain["1h"] && (
-                <Typography variant="subtitle2">
-                  Rain (Last 1 hour), {precipitationWithUnit(rain["1h"], units)}
-                </Typography>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              {snow && snow["1h"] && (
-                <Typography variant="subtitle2">
-                  Snow (Last 1 hour), {precipitationWithUnit(snow["1h"], units)}
-                </Typography>
-              )}
-            </Grid> */}
-
-            <Grid item xs={6}>
-              <Typography variant="subtitle2">
-                <span className={classes.sunDecoration}>Sun</span>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <i className={`wi wi-sunrise ${classes.iconSun}`} />
-                {localTime(sunrise, timezone)}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle2">
-                <i className={`wi wi-sunset ${classes.iconSun}`} />
-                {localTime(sunset, timezone)}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Typography variant="subtitle2">
-                <span className={classes.moonDecoration}>Moon</span>
-                &nbsp;
-                <i className={`wi wi-moonrise ${classes.iconMoon}`} />
-                {localTime(moonrise, timezone)}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle2">
-                <i className={`wi wi-moonset ${classes.iconMoon}`} />
-                {localTime(moonset, timezone)}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <MoonIcon moon_phase={moon_phase} />
-            </Grid>
+            <CurrentOthers
+              totalPrecipitation={totalPrecipitation}
+              humidity={humidity}
+              pressure={pressure}
+              visibility={visibility}
+              uvi={uvi}
+              units={units}
+            />
+            <Almanac
+              sunrise={sunrise}
+              sunset={sunset}
+              moonrise={moonrise}
+              moonset={moonset}
+              moon_phase={moon_phase}
+              timezone={timezone}
+            />
           </Grid>
         </Grid>
-      </Paper>
+      </div>
     </>
   );
 };
 
 export default memo(WeatherCurrent);
+
+type CurrentMainProps = {
+  city: string;
+  region: string;
+  country: string;
+  lat?: number | null;
+  lon?: number | null;
+  sunrise: number;
+  sunset: number;
+  id: number;
+  main: string;
+  description: string;
+  temp: number;
+  feels_like: number;
+  wind_speed: number;
+  wind_deg: number;
+  wind_gust?: number;
+  clouds: number;
+  units: Units;
+  isDay: boolean;
+};
+
+const CurrentMain = (props: CurrentMainProps) => {
+  const classes = useStyles();
+
+  const {
+    city,
+    region,
+    country,
+    lat,
+    lon,
+    sunrise,
+    sunset,
+    id,
+    main,
+    description,
+    temp,
+    feels_like,
+    wind_speed,
+    wind_deg,
+    wind_gust,
+    clouds,
+    units,
+    isDay,
+  } = props;
+
+  const font_color = isDay ? "black" : "white";
+  const font_color_temp = isDay ? theme.palette.primary.main : "pink";
+  const font_color_date = isDay ? "dodgerblue" : "lightcyan";
+  const icon_color = isDay ? theme.palette.primary.main : "lightpink";
+  const bg_color = isDay ? "lightcyan" : "darkslateblue";
+
+  return (
+    <Paper
+      elevation={2}
+      className={classes.currentMain}
+      sx={{ backgroundColor: bg_color }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          variant="subtitle1"
+          className={classes.text}
+          sx={{ color: font_color, marginTop: "0.5rem", marginLeft: "2rem" }}
+        >
+          {currentLocalTime()}
+        </Typography>
+      </div>
+
+      <div className={classes.locationContainer}>
+        <div className={classes.locationSubContainer}>
+          <Typography variant="h5" sx={{ color: font_color_date }}>
+            {city}
+            {region && <span>,&nbsp;</span>}
+          </Typography>
+          <Typography variant="h6" sx={{ color: font_color_date }}>
+            {region}
+          </Typography>
+          <Typography
+            variant="h6"
+            className={classes.country}
+            sx={{ color: font_color_date }}
+          >
+            {country}
+          </Typography>
+        </div>
+
+        {lat && lon && (
+          <Typography
+            variant="subtitle2"
+            className={classes.text}
+            sx={{ color: font_color, marginLeft: "1rem", marginTop: "0.25rem" }}
+          >
+            lat: {lat.toFixed(3)}, lon: {lon.toFixed(3)}
+          </Typography>
+        )}
+      </div>
+
+      <Grid
+        item
+        container
+        flexDirection="row"
+        justifyContent="space-around"
+        alignItems="center"
+        className={classes.weatherMain}
+      >
+        <Grid item xs={4}>
+          <div className={classes.weatherContainer}>
+            <Typography variant="h6" align="center" sx={{ color: font_color }}>
+              {main}
+            </Typography>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                minHeight: "4rem",
+              }}
+            >
+              <WeatherIcon
+                sunrise={sunrise}
+                sunset={sunset}
+                weatherId={id}
+                current
+                size="4rem"
+                iconColor={icon_color}
+              />
+            </div>
+            <Typography
+              variant="subtitle2"
+              align="center"
+              sx={{ color: font_color }}
+            >
+              {description}
+            </Typography>
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          <div>
+            <Typography
+              variant="h4"
+              align="center"
+              sx={{ color: font_color_temp }}
+            >
+              {tempWithUnit(temp, units)}
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              color="textSecondary"
+              align="center"
+              sx={{ color: font_color }}
+            >
+              Feels like {tempWithUnit(feels_like, units)}
+            </Typography>
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          <WindIcon
+            wind_speed={wind_speed}
+            wind_deg={wind_deg}
+            wind_gust={wind_gust}
+            current
+            iconColor={icon_color}
+            fontColor={font_color_temp}
+          />
+        </Grid>
+
+        <Typography
+          variant="subtitle2"
+          color="textSecondary"
+          align="center"
+          className={classes.cloud}
+          sx={{ color: font_color, width: "100%" }}
+        >
+          Cloud Cover {clouds} %
+        </Typography>
+      </Grid>
+    </Paper>
+  );
+};
+
+type CurrentOthersProps = {
+  totalPrecipitation: number;
+  humidity: number;
+  pressure: number;
+  visibility: number;
+  uvi: number;
+  units: Units;
+};
+
+const CurrentOthers = (props: CurrentOthersProps) => {
+  const classes = useStyles();
+
+  const { totalPrecipitation, humidity, pressure, visibility, uvi, units } =
+    props;
+
+  return (
+    <Paper elevation={2} className={classes.currentOthers}>
+      <div className={classes.currentOthersData}>
+        <Typography variant="subtitle2">
+          Precipitation {precipitationWithUnit(totalPrecipitation, units)}
+        </Typography>
+        <Typography variant="subtitle2">Humidity {humidity} %</Typography>
+        <Typography variant="subtitle2">
+          Pressure {pressureWithUnit(pressure, units)}
+        </Typography>
+      </div>
+
+      <div className={classes.currentOthersData}>
+        <Typography variant="subtitle2">
+          Visibility {visibilityWithUnit(visibility, units)}
+        </Typography>
+
+        <Typography variant="subtitle2">UV index {uvi}</Typography>
+      </div>
+    </Paper>
+  );
+};
+
+type AlmanacProps = {
+  sunrise: number;
+  sunset: number;
+  moonrise: number;
+  moonset: number;
+  moon_phase: number;
+  timezone: string;
+};
+
+const Almanac = (props: AlmanacProps) => {
+  const classes = useStyles();
+
+  const { sunrise, sunset, moonrise, moonset, moon_phase, timezone } = props;
+
+  return (
+    <Paper elevation={2} className={classes.almanac}>
+      <div className={classes.almanacTime}>
+        <Typography variant="subtitle2">
+          <span className={classes.sunDecoration}>Sun</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <i className={`wi wi-sunrise ${classes.iconSun}`} />
+          {localTime(sunrise, timezone)}
+        </Typography>
+        <Typography variant="subtitle2">
+          <i className={`wi wi-sunset ${classes.iconSun}`} />
+          {localTime(sunset, timezone)}
+        </Typography>
+      </div>
+
+      <div className={classes.almanacTime}>
+        <Typography variant="subtitle2">
+          <span className={classes.moonDecoration}>Moon</span>
+          &nbsp;
+          <i className={`wi wi-moonrise ${classes.iconMoon}`} />
+          {localTime(moonrise, timezone)}
+        </Typography>
+        <Typography variant="subtitle2">
+          <i className={`wi wi-moonset ${classes.iconMoon}`} />
+          {localTime(moonset, timezone)}
+        </Typography>
+      </div>
+      <MoonIcon moon_phase={moon_phase} />
+    </Paper>
+  );
+};
