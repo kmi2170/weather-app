@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     // color: theme.palette.primary.main,
   },
   description: {
-    color: "lightseagreen",
+    color: "forestgreen",
     // color: theme.palette.primary.main,
   },
   temp: {
@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   weatherContainer: {
     display: "flex",
     flexDirection: "column",
+  },
+  main: {
+    color: theme.palette.primary.dark,
   },
   countryName: {
     sm: {
@@ -142,7 +145,7 @@ const WeatherDaily = () => {
                     <Typography
                       variant="subtitle2"
                       align="center"
-                      className={classes.text}
+                      className={classes.main}
                       sx={{ marginTop: "10px" }}
                     >
                       {data.weather[0].main}

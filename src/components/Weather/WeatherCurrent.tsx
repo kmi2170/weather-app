@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   currentOthers: {
     padding: "1rem 2rem",
-    background: "lightgreen",
+    background: "palegreen",
     display: "flex",
     flexDirection: "row",
     gap: "2rem",
@@ -190,6 +190,7 @@ const WeatherCurrent = () => {
             flexDirection="column"
             justifyContent="space-between"
             alignItems="space-between"
+            gap="0.75rem"
           >
             <CurrentOthers
               totalPrecipitation={totalPrecipitation}
@@ -262,6 +263,7 @@ const CurrentMain = (props: CurrentMainProps) => {
   } = props;
 
   const font_color = isDay ? "black" : "white";
+  const font_color_main = isDay ? "black" : "pink";
   const font_color_temp = isDay ? theme.palette.primary.main : "pink";
   const font_color_date = isDay ? "dodgerblue" : "lightcyan";
   const icon_color = isDay ? theme.palette.primary.main : "lightpink";
@@ -327,7 +329,11 @@ const CurrentMain = (props: CurrentMainProps) => {
       >
         <Grid item xs={4}>
           <div className={classes.weatherContainer}>
-            <Typography variant="h6" align="center" sx={{ color: font_color }}>
+            <Typography
+              variant="h6"
+              align="center"
+              sx={{ color: font_color_main }}
+            >
               {main}
             </Typography>
             <div
