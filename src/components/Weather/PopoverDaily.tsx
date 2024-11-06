@@ -11,7 +11,7 @@ import { orange, yellow } from "@mui/material/colors";
 import { useAppSelector } from "../../store/hooks";
 import { precipitationWithUnit, pressureWithUnit } from "../../utils/units";
 import MoonIcon from "./icons/MoonIcon";
-import { localDay, localDate, localTime } from "../../utils/time";
+import { dayWithTZ, dateWithTZ, timeWithTZ } from "../../utils/time";
 import { WeatherDaily } from "../../api/types/weather";
 import { formatDigits } from "../../utils/formatDigits";
 
@@ -139,7 +139,7 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
         <Container maxWidth="xs">
           <Grid item xs={12}>
             <Typography variant="subtitle2" align="center">
-              {localDate(data.dt, timezone)} {localDay(data.dt, timezone)}
+              {dateWithTZ(data.dt, timezone)} {dayWithTZ(data.dt, timezone)}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -215,13 +215,13 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
                   <span className={classes.sunDecoration}>Sun</span>
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <i className={`wi wi-sunrise ${classes.iconSun}`} />
-                  {localTime(sunrise, timezone)}
+                  {timeWithTZ(sunrise, timezone)}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle2">
                   <i className={`wi wi-sunset ${classes.iconSun}`} />
-                  {localTime(sunset, timezone)}
+                  {timeWithTZ(sunset, timezone)}
                 </Typography>
               </Grid>
 
@@ -230,13 +230,13 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
                   <span className={classes.moonDecoration}>Moon</span>
                   &nbsp;
                   <i className={`wi wi-moonrise ${classes.iconMoon}`} />
-                  {localTime(moonrise, timezone)}
+                  {timeWithTZ(moonrise, timezone)}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle2">
                   <i className={`wi wi-moonset ${classes.iconMoon}`} />
-                  {localTime(moonset, timezone)}
+                  {timeWithTZ(moonset, timezone)}
                 </Typography>
               </Grid>
               <Grid item xs={12}>

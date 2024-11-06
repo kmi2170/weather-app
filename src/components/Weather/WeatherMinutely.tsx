@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import { localTime } from "../../utils/time";
+import { timeWithTZ } from "../../utils/time";
 import { ChartMinutely } from "./charts";
 import { Weather } from "../../api/types/weather";
 
@@ -29,7 +29,7 @@ const WeatherMinutely = () => {
 
   // const maxPrecipitation = Math.max(...data_precipitation);
 
-  const dataTime = minutely?.map(({ dt }) => localTime(dt, timezone));
+  const dataTime = minutely?.map(({ dt }) => timeWithTZ(dt, timezone));
 
   const isFall = minutely?.some(({ precipitation }) => precipitation > 0);
 

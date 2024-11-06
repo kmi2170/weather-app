@@ -1,5 +1,5 @@
 import { formatDigits } from "./formatDigits";
-import { localTime } from "./time";
+import { timeWithTZ } from "./time";
 
 export const pressureWithUnit = (p: number, units: string) =>
   units === "imperial"

@@ -13,7 +13,7 @@ import { formatDigits } from "../../utils/formatDigits";
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
-import { localDay, localDate } from "../../utils/time";
+import { dayWithTZ, dateWithTZ } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import { precipitationWithUnit } from "../../utils/units";
 
@@ -132,14 +132,14 @@ const WeatherDaily = () => {
                         align="center"
                         className={classes.text}
                       >
-                        {localDate(data.dt, timezone)}
+                        {dateWithTZ(data.dt, timezone)}
                       </Typography>
                       <Typography
                         variant="subtitle2"
                         align="center"
                         className={classes.day}
                       >
-                        {localDay(data.dt, timezone)}
+                        {dayWithTZ(data.dt, timezone)}
                       </Typography>
                     </div>
                     <Typography

@@ -7,7 +7,7 @@ import { useAppSelector } from "../../store/hooks";
 
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import { localFullDateTime } from "../../utils/time";
+import { dayDateTimeWithTZ } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import { red } from "@mui/material/colors";
 
@@ -58,10 +58,10 @@ const Alerts = () => {
                       ))}
                     </Typography>
                     <Typography variant="subtitle2">
-                      Start - {localFullDateTime(start, timezone)}
+                      Start - {dayDateTimeWithTZ(start, timezone)}
                     </Typography>
                     <Typography variant="subtitle2">
-                      End - {localFullDateTime(end, timezone)}
+                      End - {dayDateTimeWithTZ(end, timezone)}
                     </Typography>
                     <Typography
                       variant="body1"

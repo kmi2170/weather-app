@@ -20,7 +20,12 @@ import {
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import MoonIcon from "./icons/MoonIcon";
-import { currentLocalTime, localTime } from "../../utils/time";
+import {
+  currentTZ,
+  dayDateTimeLocal,
+  dayDateTimeWithTZ,
+  timeWithTZ,
+} from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import theme from "../../theme/theme";
 import { Units } from "../../store/initialState";
@@ -67,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   currentOthers: {
     padding: "1rem 2rem",
-    background: "palegreen",
+    background: "snow",
     display: "flex",
     flexDirection: "row",
     gap: "2rem",
@@ -147,13 +152,6 @@ const WeatherCurrent = () => {
   const totalPrecipitation = (rain?.["1h"] || 0) + (snow?.["1h"] || 0);
 
   const _isDay = isDay(dt, sunrise, sunset);
-  const font_color = _isDay ? "black" : "white";
-  const font_color_temp = _isDay ? theme.palette.primary.main : "pink";
-  const font_color_date = _isDay ? "dodgerblue" : "lightcyan";
-  const icon_color = _isDay ? theme.palette.primary.main : "lightpink";
-  const bg_color = _isDay ? "lightcyan" : "darkslateblue";
-  // const bg_color = _isDay ? "lightcyan" : "midnightblue";
-  // const bg_color = _isDay ? "lightcyan" : theme.palette.primary.main;
 
   return (
     <>
@@ -166,6 +164,8 @@ const WeatherCurrent = () => {
               country={country}
               lat={location?.lat}
               lon={location?.lon}
+              dt={dt}
+              timezone={timezone}
               sunrise={sunrise}
               sunset={sunset}
               id={weather[0]?.id}
@@ -223,6 +223,8 @@ type CurrentMainProps = {
   country: string;
   lat?: number | null;
   lon?: number | null;
+  dt: number;
+  timezone: string;
   sunrise: number;
   sunset: number;
   id: number;
@@ -247,6 +249,8 @@ const CurrentMain = (props: CurrentMainProps) => {
     country,
     lat,
     lon,
+    dt,
+    timezone,
     sunrise,
     sunset,
     id,
@@ -278,6 +282,7 @@ const CurrentMain = (props: CurrentMainProps) => {
       <div
         style={{
           display: "flex",
+          justifyContent: "flex-start",
           alignItems: "center",
         }}
       >
@@ -286,8 +291,17 @@ const CurrentMain = (props: CurrentMainProps) => {
           className={classes.text}
           sx={{ color: font_color, marginTop: "0.5rem", marginLeft: "2rem" }}
         >
-          {currentLocalTime()}
+          {dayDateTimeLocal(dt)}
         </Typography>
+        {timezone !== currentTZ() && (
+          <Typography
+            variant="subtitle1"
+            className={classes.text}
+            sx={{ color: font_color, marginTop: "0.5rem", marginLeft: "2rem" }}
+          >
+            (Local: {dayDateTimeWithTZ(dt, timezone)})
+          </Typography>
+        )}
       </div>
 
       <div className={classes.locationContainer}>
@@ -302,7 +316,7 @@ const CurrentMain = (props: CurrentMainProps) => {
           <Typography
             variant="h6"
             className={classes.country}
-            sx={{ color: font_color_date }}
+            sx={{ color: font_color_date, ml: "0.5rem" }}
           >
             {country}
           </Typography>
@@ -423,21 +437,25 @@ const CurrentOthers = (props: CurrentOthersProps) => {
   return (
     <Paper elevation={2} className={classes.currentOthers}>
       <div className={classes.currentOthersData}>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" sx={{ color: "dodgerblue" }}>
           Precipitation {precipitationWithUnit(totalPrecipitation, units)}
         </Typography>
-        <Typography variant="subtitle2">Humidity {humidity} %</Typography>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" sx={{ color: "deepskyblue" }}>
+          Humidity {humidity} %
+        </Typography>
+        <Typography variant="subtitle2" sx={{ color: "maroon" }}>
           Pressure {pressureWithUnit(pressure, units)}
         </Typography>
       </div>
 
       <div className={classes.currentOthersData}>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" sx={{ color: "limegreen" }}>
           Visibility {visibilityWithUnit(visibility, units)}
         </Typography>
 
-        <Typography variant="subtitle2">UV index {uvi}</Typography>
+        <Typography variant="subtitle2" sx={{ color: "darkmagenta" }}>
+          UV index {uvi}
+        </Typography>
       </div>
     </Paper>
   );
@@ -464,11 +482,11 @@ const Almanac = (props: AlmanacProps) => {
           <span className={classes.sunDecoration}>Sun</span>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <i className={`wi wi-sunrise ${classes.iconSun}`} />
-          {localTime(sunrise, timezone)}
+          {timeWithTZ(sunrise, timezone)}
         </Typography>
         <Typography variant="subtitle2">
           <i className={`wi wi-sunset ${classes.iconSun}`} />
-          {localTime(sunset, timezone)}
+          {timeWithTZ(sunset, timezone)}
         </Typography>
       </div>
 
@@ -477,11 +495,11 @@ const Almanac = (props: AlmanacProps) => {
           <span className={classes.moonDecoration}>Moon</span>
           &nbsp;
           <i className={`wi wi-moonrise ${classes.iconMoon}`} />
-          {localTime(moonrise, timezone)}
+          {timeWithTZ(moonrise, timezone)}
         </Typography>
         <Typography variant="subtitle2">
           <i className={`wi wi-moonset ${classes.iconMoon}`} />
-          {localTime(moonset, timezone)}
+          {timeWithTZ(moonset, timezone)}
         </Typography>
       </div>
       <MoonIcon moon_phase={moon_phase} />

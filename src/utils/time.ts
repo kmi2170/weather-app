@@ -5,38 +5,34 @@ import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export const currentLocalTime = () => {
-  return dayjs(new Date()).format("ddd M/DD h:mm A");
+export const currentTZ = () => {
+  return dayjs.tz.guess();
 };
 
-export const localTime = (time: number, timeZone: string) => {
+export const dayDateTimeLocal = (time: number) => {
+  return dayjs.unix(time).format("ddd M/D h:mm A");
+};
+
+export const timeWithTZ = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("h:mm a");
 };
 
-export const localTime24 = (time: number, timeZone: string) => {
-  return dayjs.tz(time * 1000, timeZone).format("HH:mm");
-};
-
-export const localTimeHour = (time: number, timeZone: string) => {
+export const timeInHourWithTZ = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("h a");
 };
 
-export const localDateTime = (time: number, timeZone: string) => {
-  return dayjs.tz(time * 1000, timeZone).format("D ddd h a");
-};
-
-export const localDayTime = (time: number, timeZone: string) => {
+export const dayTimeWithTZ = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("ddd h a");
 };
 
-export const localFullDateTime = (time: number, timeZone: string) => {
-  return dayjs.tz(time * 1000, timeZone).format("M/D ddd h:mm a");
+export const dayDateTimeWithTZ = (time: number, timeZone: string) => {
+  return dayjs.tz(time * 1000, timeZone).format("ddd M/D h:mm A");
 };
 
-export const localDate = (time: number, timeZone: string) => {
+export const dateWithTZ = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("M/D");
 };
 
-export const localDay = (time: number, timeZone: string) => {
+export const dayWithTZ = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("ddd");
 };
