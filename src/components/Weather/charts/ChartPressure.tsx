@@ -14,6 +14,7 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
+import { chartBoxStyle, createBackgroundPlugin } from "./utils";
 
 ChartJS.register(
   CategoryScale,
@@ -28,11 +29,9 @@ ChartJS.register(
 const ChartPressure = ({
   chartData,
   dataTime,
-  dataIsDay,
+  backgroundRanges,
   units,
   height = "200px",
-  chartBoxStyle,
-  chartBackgroundProps,
 }: ChartProps) => {
   const data_pressure = chartData.map(({ pressure }) =>
     units === "imperial" ? (pressure / 1013.25) * 29.921 : pressure
@@ -42,9 +41,8 @@ const ChartPressure = ({
 
   const maxValue = Math.ceil(Math.max(...data_pressure) / tick) * tick;
   const minValue = Math.floor(Math.min(...data_pressure) / tick) * tick;
-  const data_isDay = dataIsDay?.map((isDay) =>
-    isDay ? 0 : maxValue
-  ) as number[];
+
+  const backgroundPlugin = createBackgroundPlugin(backgroundRanges);
 
   const options: ChartOptions<"line"> = {
     responsive: true,
@@ -86,7 +84,7 @@ const ChartPressure = ({
     },
   };
 
-  const data: ChartData<"line" | "bar"> = {
+  const data: ChartData<"line"> = {
     labels: dataTime,
     datasets: [
       {
@@ -96,18 +94,17 @@ const ChartPressure = ({
         data: data_pressure,
         yAxisID: "y",
       },
-      {
-        type: "bar",
-        data: data_isDay,
-        yAxisID: "y",
-        ...chartBackgroundProps,
-      },
     ],
   };
 
   return (
     <Box sx={{ height: height, ...chartBoxStyle }}>
-      <Chart type="line" options={options} data={data} />
+      <Chart
+        type="line"
+        options={options}
+        data={data}
+        plugins={[backgroundPlugin]}
+      />
     </Box>
   );
 };

@@ -18,6 +18,7 @@ import {
 import { ChartOptions, ChartData } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import { ChartProps } from "../../../api/types/weather";
+import { chartBoxStyle, createBackgroundPlugin } from "./utils";
 
 ChartJS.register(
   CategoryScale,
@@ -36,11 +37,9 @@ ChartJS.register(
 const ChartPrecipitation = ({
   chartData,
   dataTime,
-  dataIsDay,
+  backgroundRanges,
   units,
   height = "200px",
-  chartBoxStyle,
-  chartBackgroundProps,
 }: ChartProps) => {
   const precipitation = (fall: number) =>
     units === "imperial" ? +fall / 25.4 : fall;
@@ -60,9 +59,7 @@ const ChartPrecipitation = ({
       ? 0.2
       : 1;
 
-  const data_isDay = dataIsDay?.map((isDay) =>
-    isDay ? 0 : maxValue
-  ) as number[];
+  const backgroundPlugin = createBackgroundPlugin(backgroundRanges);
 
   const options: ChartOptions<"bar"> = {
     responsive: true,
@@ -104,7 +101,7 @@ const ChartPrecipitation = ({
     },
   };
 
-  const data: ChartData<"line" | "bar"> = {
+  const data: ChartData<"line"> = {
     labels: dataTime,
     datasets: [
       {
@@ -125,12 +122,6 @@ const ChartPrecipitation = ({
         data: data_snow,
         yAxisID: "y",
       },
-      {
-        type: "bar",
-        data: data_isDay,
-        yAxisID: "y",
-        ...chartBackgroundProps,
-      },
     ],
   };
 
@@ -138,11 +129,15 @@ const ChartPrecipitation = ({
     <Box
       sx={{
         height: height,
-
         ...chartBoxStyle,
       }}
     >
-      <Chart type="line" options={options} data={data} />
+      <Chart
+        type="line"
+        options={options}
+        data={data}
+        plugins={[backgroundPlugin]}
+      />
     </Box>
   );
 };

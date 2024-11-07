@@ -1,6 +1,6 @@
 import { memo } from "react";
 import Box from "@mui/material/Box";
-import { lime, blueGrey, blue } from "@mui/material/colors";
+import { blueGrey, blue, purple } from "@mui/material/colors";
 
 import {
   Chart as ChartJS,
@@ -18,6 +18,7 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
+import { chartBoxStyle, createBackgroundPlugin } from "./utils";
 
 ChartJS.register(
   CategoryScale,
@@ -35,16 +36,14 @@ ChartJS.register(
 const ChartHumidity = ({
   chartData,
   dataTime,
-  dataIsDay,
+  backgroundRanges,
   height = "200px",
-  chartBoxStyle,
-  chartBackgroundProps,
 }: ChartProps) => {
   const data_humidity = chartData.map(({ humidity }) => humidity);
   const data_clouds = chartData.map(({ clouds }) => clouds);
   const data_pop = chartData.map(({ pop }) => pop * 100);
 
-  const data_isDay = dataIsDay?.map((isDay) => (isDay ? 0 : 100)) as number[];
+  const backgroundPlugin = createBackgroundPlugin(backgroundRanges);
 
   const options: ChartOptions<"line"> = {
     responsive: true,
@@ -86,14 +85,14 @@ const ChartHumidity = ({
     },
   };
 
-  const data: ChartData<"line" | "bar"> = {
+  const data: ChartData<"line"> = {
     labels: dataTime,
     datasets: [
       {
         type: "line",
         label: "Humidity [%]",
-        borderColor: lime[600],
-        backgroundColor: lime[600],
+        borderColor: purple[400],
+        backgroundColor: purple[400],
         data: data_humidity,
         yAxisID: "y",
       },
@@ -113,18 +112,17 @@ const ChartHumidity = ({
         data: data_clouds,
         yAxisID: "y",
       },
-      {
-        type: "bar",
-        data: data_isDay,
-        yAxisID: "y",
-        ...chartBackgroundProps,
-      },
     ],
   };
 
   return (
     <Box sx={{ height: height, ...chartBoxStyle }}>
-      <Chart type="line" options={options} data={data} />
+      <Chart
+        type="line"
+        options={options}
+        data={data}
+        plugins={[backgroundPlugin]}
+      />
     </Box>
   );
 };

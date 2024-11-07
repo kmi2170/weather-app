@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: "0.5rem 0",
     // border: `2px solid ${theme.palette.primary.light}`,
     borderRadius: "15px",
-    backgroundColor: "cornsilk",
+    backgroundColor: "rgb(255, 248, 220)",
   },
   locationContainer: {
     display: "flex",

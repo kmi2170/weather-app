@@ -7,12 +7,16 @@ export interface ChartProps {
   chartData: WeatherHourly;
   maxValue?: number;
   dataTime: string[];
-  dataIsDay?: boolean[];
+  backgroundRanges: BackGroundRages[];
   units?: Units;
   height?: string;
-  chartBoxStyle?: SxProps;
-  chartBackgroundProps?: Record<string, string | number>;
 }
+
+export type BackGroundRages = {
+  start: string;
+  end: string;
+  color: string;
+};
 
 export type WeatherQuery = {
   lat: string;

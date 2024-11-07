@@ -15,28 +15,8 @@ import {
   ChartWind,
   ChartPressure,
 } from "./charts";
-import { Weather } from "../../api/types/weather";
+import { BackGroundRages, Weather } from "../../api/types/weather";
 import { isDay } from "../../utils/units";
-import { SxProps } from "@mui/material";
-import theme from "../../theme/theme";
-
-const chartBoxStyle: SxProps = {
-  padding: "5px 10px",
-  borderRadius: "10px",
-  boxShadow: `3px 3px 3px ${theme.palette.primary.light}`,
-  border: `1px solid ${theme.palette.primary.light}`,
-};
-
-const chartDarkBackground: Record<string, string | number> = {
-  // backgroundColor: "rgba(72, 61, 139, 0.5)",
-  // borderColor: "rgba(72, 61, 139, 0.5)",
-  borderWidth: 0,
-  // backgroundColor: "rgba(233, 213, 255, 0.5)",
-  // backgroundColor: "rgba(0, 0, 128, 0.1)",
-  borderColor: "rgba(233, 213, 255, 0.5)",
-  barPercentage: 1.0,
-  categoryPercentage: 1.0,
-};
 
 const WeatherHourly = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
@@ -49,6 +29,8 @@ const WeatherHourly = () => {
   });
 
   const { daily, hourly, timezone } = data as Weather;
+
+  const dataTime = hourly.map(({ dt }) => dayTimeWithTZ(dt, timezone));
 
   const sunAlmanac = daily.slice(0, 3).map((data) => {
     return [data.dt, data.sunrise, data.sunset];
@@ -65,7 +47,23 @@ const WeatherHourly = () => {
     return _isDay;
   });
 
-  const dataTime = hourly.map(({ dt }) => dayTimeWithTZ(dt, timezone));
+  const dataNightTime = dataIsDay
+    .map((isDay, i) => {
+      if (i === 0 && !isDay) return dataTime[i];
+      if (i === dataIsDay.length - 1 && !isDay) return dataTime[i];
+      if (!isDay && (dataIsDay[i - 1] || dataIsDay[i + 1])) return dataTime[i];
+      return null;
+    })
+    .filter((data) => data !== null);
+
+  let nightRanges: BackGroundRages[] = [];
+  for (let i = 0; i < dataNightTime.length; i += 2) {
+    nightRanges.push({
+      start: dataNightTime[i],
+      end: dataNightTime[i + 1],
+      color: "rgba(35, 42, 41, 0.1)",
+    });
+  }
 
   return (
     <>
@@ -77,52 +75,38 @@ const WeatherHourly = () => {
           gap: "0.5rem",
         }}
       >
-        {/* <Typography variant="subtitle1" align="center">
-          Hourly Forecast for 48 Hours
-        </Typography> */}
-
         <ChartTemps
           chartData={hourly}
           dataTime={dataTime}
-          dataIsDay={dataIsDay}
+          backgroundRanges={nightRanges}
           units={units}
           height="200px"
-          chartBoxStyle={chartBoxStyle}
-          chartBackgroundProps={chartDarkBackground}
         />
         <ChartHumidity
           chartData={hourly}
           dataTime={dataTime}
-          dataIsDay={dataIsDay}
+          backgroundRanges={nightRanges}
           height="250px"
-          chartBoxStyle={chartBoxStyle}
-          chartBackgroundProps={chartDarkBackground}
         />
         <ChartPrecipitation
           chartData={hourly}
           dataTime={dataTime}
-          dataIsDay={dataIsDay}
+          backgroundRanges={nightRanges}
           units={units}
-          chartBoxStyle={chartBoxStyle}
-          chartBackgroundProps={chartDarkBackground}
         />
         <ChartWind
           chartData={hourly}
           dataTime={dataTime}
-          dataIsDay={dataIsDay}
+          backgroundRanges={nightRanges}
           units={units}
           height="200px"
-          chartBoxStyle={chartBoxStyle}
-          chartBackgroundProps={chartDarkBackground}
         />
         <ChartPressure
           chartData={hourly}
           dataTime={dataTime}
-          dataIsDay={dataIsDay}
+          backgroundRanges={nightRanges}
           units={units}
           height="200px"
-          chartBoxStyle={chartBoxStyle}
-          chartBackgroundProps={chartDarkBackground}
         />
       </Paper>
     </>

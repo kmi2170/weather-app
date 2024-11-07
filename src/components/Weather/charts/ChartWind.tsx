@@ -1,6 +1,6 @@
 import { memo } from "react";
 import Box from "@mui/material/Box";
-import { green, lime } from "@mui/material/colors";
+import { green, lime, orange, teal } from "@mui/material/colors";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,6 +17,7 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
+import { chartBoxStyle, createBackgroundPlugin } from "./utils";
 
 ChartJS.register(
   CategoryScale,
@@ -34,11 +35,9 @@ ChartJS.register(
 const ChartWind = ({
   chartData,
   dataTime,
-  dataIsDay,
+  backgroundRanges,
   units,
   height = "200px",
-  chartBoxStyle,
-  chartBackgroundProps,
 }: ChartProps) => {
   const data_wind_speed = chartData.map(({ wind_speed }) => wind_speed);
   const data_wind_gust = chartData.map(({ wind_gust }) => wind_gust ?? 0);
@@ -53,9 +52,8 @@ const ChartWind = ({
     Math.floor(
       Math.min(Math.min(...data_wind_speed), Math.min(...data_wind_gust)) / tick
     ) * tick;
-  const data_isDay = dataIsDay?.map((isDay) =>
-    isDay ? 0 : maxValue
-  ) as number[];
+
+  const backgroundPlugin = createBackgroundPlugin(backgroundRanges);
 
   const options: ChartOptions<"line"> = {
     responsive: true,
@@ -97,7 +95,7 @@ const ChartWind = ({
     },
   };
 
-  const data: ChartData<"line" | "bar"> = {
+  const data: ChartData<"line"> = {
     labels: dataTime,
     datasets: [
       {
@@ -109,23 +107,22 @@ const ChartWind = ({
       },
       {
         label: units === "imperial" ? "Gust [mi]" : "Gust [m/s]",
-        borderColor: lime[600],
-        backgroundColor: lime[600],
+        borderColor: orange[500],
+        backgroundColor: orange[500],
         data: data_wind_gust,
         yAxisID: "y",
-      },
-      {
-        type: "bar",
-        data: data_isDay,
-        yAxisID: "y",
-        ...chartBackgroundProps,
       },
     ],
   };
 
   return (
     <Box sx={{ height: height, ...chartBoxStyle }}>
-      <Chart type="line" options={options} data={data} />
+      <Chart
+        type="line"
+        options={options}
+        data={data}
+        plugins={[backgroundPlugin]}
+      />
     </Box>
   );
 };

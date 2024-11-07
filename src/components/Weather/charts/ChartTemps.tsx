@@ -17,6 +17,7 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
+import { chartBoxStyle, createBackgroundPlugin } from "./utils";
 
 ChartJS.register(
   CategoryScale,
@@ -36,9 +37,7 @@ const ChartTemps = ({
   dataTime,
   units,
   height,
-  dataIsDay,
-  chartBoxStyle,
-  chartBackgroundProps,
+  backgroundRanges,
 }: ChartProps) => {
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
@@ -47,9 +46,8 @@ const ChartTemps = ({
 
   const maxValue = Math.ceil(Math.max(...data_temp) / tick) * tick;
   const minValue = Math.floor(Math.min(...data_dew_point) / tick) * tick;
-  const data_isDay = dataIsDay?.map((isDay) =>
-    isDay ? 0 : maxValue
-  ) as number[];
+
+  const backgroundPlugin = createBackgroundPlugin(backgroundRanges);
 
   const options: ChartOptions<"line"> = {
     responsive: true,
@@ -94,7 +92,7 @@ const ChartTemps = ({
     },
   };
 
-  const data: ChartData<"line" | "bar"> = {
+  const data: ChartData<"line"> = {
     labels: dataTime,
     datasets: [
       {
@@ -111,12 +109,6 @@ const ChartTemps = ({
         data: data_dew_point,
         yAxisID: "y",
       },
-      {
-        type: "bar",
-        data: data_isDay,
-        yAxisID: "y",
-        ...chartBackgroundProps,
-      },
     ],
   };
 
@@ -127,7 +119,12 @@ const ChartTemps = ({
         ...chartBoxStyle,
       }}
     >
-      <Chart type="line" options={options} data={data} />
+      <Chart
+        type="line"
+        options={options}
+        data={data}
+        plugins={[backgroundPlugin]}
+      />
     </Box>
   );
 };
