@@ -32,7 +32,7 @@ const ChartMinutely = ({
   // maxValue,
   height,
   units,
-}: ChartMinutelyProps) => {
+}: Omit<ChartMinutelyProps, "backgroundRanges">) => {
   const formatter = (x: number) => {
     if (x === 0) return null;
     return x.toFixed(2);
