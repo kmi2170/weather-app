@@ -55,7 +55,7 @@ const WeatherMinutely = () => {
         <ChartMinutely
           chartData={data_precipitation}
           // maxValue={maxPrecipitation}
-          dataTime={dataTime}
+          dataLabel={dataTime}
           units={units}
         />
       </Paper>

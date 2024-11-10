@@ -34,7 +34,7 @@ ChartJS.register(
 
 const ChartWind = ({
   chartData,
-  dataTime,
+  dataLabel,
   backgroundRanges,
   units,
   height = "200px",
@@ -70,7 +70,8 @@ const ChartWind = ({
     scales: {
       x: {
         grid: {
-          display: false,
+          display: true,
+          color: "rgba(0, 0, 0, 0.05)",
         },
       },
       y: {
@@ -96,7 +97,7 @@ const ChartWind = ({
   };
 
   const data: ChartData<"line"> = {
-    labels: dataTime,
+    labels: dataLabel,
     datasets: [
       {
         label: units === "imperial" ? "Wind Speed [mi]" : "Wind Speed [m/s]",

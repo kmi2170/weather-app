@@ -6,15 +6,15 @@ export type CookieLocation = Record<string, string> | null | undefined;
 export interface ChartProps {
   chartData: WeatherHourly;
   maxValue?: number;
-  dataTime: string[];
-  backgroundRanges: BackGroundRages[];
+  dataLabel: string[];
+  backgroundRanges: BackGroundRanges[];
   units?: Units;
   height?: string;
 }
 
-export type BackGroundRages = {
-  start: string;
-  end: string;
+export type BackGroundRanges = {
+  start: number;
+  end: number;
   color: string;
 };
 

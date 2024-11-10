@@ -36,7 +36,7 @@ ChartJS.register(
 
 const ChartPrecipitation = ({
   chartData,
-  dataTime,
+  dataLabel,
   backgroundRanges,
   units,
   height = "200px",
@@ -76,7 +76,8 @@ const ChartPrecipitation = ({
     scales: {
       x: {
         grid: {
-          display: false,
+          display: true,
+          color: "rgba(0, 0, 0, 0.05)",
         },
       },
       y: {
@@ -102,7 +103,7 @@ const ChartPrecipitation = ({
   };
 
   const data: ChartData<"line"> = {
-    labels: dataTime,
+    labels: dataLabel,
     datasets: [
       {
         type: "line",

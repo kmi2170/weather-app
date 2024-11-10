@@ -28,7 +28,7 @@ interface ChartMinutelyProps extends Omit<ChartProps, "chartData"> {
 
 const ChartMinutely = ({
   chartData,
-  dataTime,
+  dataLabel: dataTime,
   // maxValue,
   height,
   units,

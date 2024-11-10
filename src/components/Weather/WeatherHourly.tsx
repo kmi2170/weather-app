@@ -1,12 +1,11 @@
 import { memo } from "react";
 
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import { dateWithTZ, dayTimeWithTZ } from "../../utils/time";
+import { dayTimeWithTZ } from "../../utils/time";
 
 import {
   ChartTemps,
@@ -15,8 +14,7 @@ import {
   ChartWind,
   ChartPressure,
 } from "./charts";
-import { BackGroundRages, Weather } from "../../api/types/weather";
-import { isDay } from "../../utils/units";
+import { BackGroundRanges, Weather } from "../../api/types/weather";
 
 const WeatherHourly = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
@@ -30,39 +28,41 @@ const WeatherHourly = () => {
 
   const { daily, hourly, timezone } = data as Weather;
 
-  const dataTime = hourly.map(({ dt }) => dayTimeWithTZ(dt, timezone));
+  const dataTime = hourly.map(({ dt }) => dt);
+  const dataTimeLabels = hourly.map(({ dt }) => dayTimeWithTZ(dt, timezone));
 
   const sunAlmanac = daily.slice(0, 3).map((data) => {
     return [data.dt, data.sunrise, data.sunset];
   });
 
-  const dataIsDay = hourly.map((data) => {
-    const sunRiseSet = sunAlmanac.filter(
-      (times) =>
-        dateWithTZ(times[0], timezone) === dateWithTZ(data.dt, timezone)
-    )[0];
-    const [_, sunrise, sunset] = sunRiseSet;
-    const _isDay = isDay(data.dt, sunrise, sunset);
+  const dtStart = dataTime[0];
+  const dtEnd = dataTime[dataTime.length - 1];
+  const timeSpan = dtEnd - dtStart;
+  const nightRanges: BackGroundRanges[] = [];
+  for (let i = 0; i < sunAlmanac.length - 1; i++) {
+    const [_, _sunrise, sunset] = sunAlmanac[i];
+    const [__, sunrise, _sunset] = sunAlmanac[i + 1];
 
-    return _isDay;
-  });
-
-  const dataNightTime = dataIsDay
-    .map((isDay, i) => {
-      if (i === 0 && !isDay) return dataTime[i];
-      if (i === dataIsDay.length - 1 && !isDay) return dataTime[i];
-      if (!isDay && (dataIsDay[i - 1] || dataIsDay[i + 1])) return dataTime[i];
-      return null;
-    })
-    .filter((data) => data !== null);
-
-  let nightRanges: BackGroundRages[] = [];
-  for (let i = 0; i < dataNightTime.length; i += 2) {
-    nightRanges.push({
-      start: dataNightTime[i],
-      end: dataNightTime[i + 1],
-      color: "rgba(35, 42, 41, 0.1)",
-    });
+    if (sunset < dtStart) {
+      nightRanges.push({
+        start: 0,
+        end: (sunrise - dtStart) / timeSpan,
+        color: "rgba(35, 42, 41, 0.1)",
+      });
+    } else {
+      nightRanges.push({
+        start: (sunset - dtStart) / timeSpan,
+        end: (sunrise - dtStart) / timeSpan,
+        color: "rgba(35, 42, 41, 0.1)",
+      });
+    }
+    if (i + 1 === sunAlmanac.length - 1 && _sunset < dtEnd) {
+      nightRanges.push({
+        start: (_sunset - dtStart) / timeSpan,
+        end: timeSpan,
+        color: "rgba(35, 42, 41, 0.1)",
+      });
+    }
   }
 
   return (
@@ -77,33 +77,33 @@ const WeatherHourly = () => {
       >
         <ChartTemps
           chartData={hourly}
-          dataTime={dataTime}
+          dataLabel={dataTimeLabels}
           backgroundRanges={nightRanges}
           units={units}
           height="200px"
         />
         <ChartHumidity
           chartData={hourly}
-          dataTime={dataTime}
+          dataLabel={dataTimeLabels}
           backgroundRanges={nightRanges}
-          height="250px"
+          height="200px"
         />
         <ChartPrecipitation
           chartData={hourly}
-          dataTime={dataTime}
+          dataLabel={dataTimeLabels}
           backgroundRanges={nightRanges}
           units={units}
         />
         <ChartWind
           chartData={hourly}
-          dataTime={dataTime}
+          dataLabel={dataTimeLabels}
           backgroundRanges={nightRanges}
           units={units}
           height="200px"
         />
         <ChartPressure
           chartData={hourly}
-          dataTime={dataTime}
+          dataLabel={dataTimeLabels}
           backgroundRanges={nightRanges}
           units={units}
           height="200px"

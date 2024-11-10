@@ -34,20 +34,19 @@ ChartJS.register(
 
 const ChartTemps = ({
   chartData,
-  dataTime,
+  dataLabel,
   units,
   height,
-  backgroundRanges,
+  backgroundRanges: backgroundRangesInNumber,
 }: ChartProps) => {
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
 
   const tick = units === "imperial" ? 5 : 5;
-
   const maxValue = Math.ceil(Math.max(...data_temp) / tick) * tick;
   const minValue = Math.floor(Math.min(...data_dew_point) / tick) * tick;
 
-  const backgroundPlugin = createBackgroundPlugin(backgroundRanges);
+  const backgroundPlugin = createBackgroundPlugin(backgroundRangesInNumber);
 
   const options: ChartOptions<"line"> = {
     responsive: true,
@@ -64,7 +63,8 @@ const ChartTemps = ({
     scales: {
       x: {
         grid: {
-          display: false,
+          display: true,
+          color: "rgba(0, 0, 0, 0.05)",
         },
         ticks: {
           padding: 0,
@@ -93,7 +93,7 @@ const ChartTemps = ({
   };
 
   const data: ChartData<"line"> = {
-    labels: dataTime,
+    labels: dataLabel,
     datasets: [
       {
         label: units === "imperial" ? "Temp [℉]" : "Temp [℃]",

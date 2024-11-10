@@ -35,7 +35,7 @@ ChartJS.register(
 
 const ChartHumidity = ({
   chartData,
-  dataTime,
+  dataLabel,
   backgroundRanges,
   height = "200px",
 }: ChartProps) => {
@@ -60,7 +60,8 @@ const ChartHumidity = ({
     scales: {
       x: {
         grid: {
-          display: false,
+          display: true,
+          color: "rgba(0, 0, 0, 0.05)",
         },
       },
       y: {
@@ -86,7 +87,7 @@ const ChartHumidity = ({
   };
 
   const data: ChartData<"line"> = {
-    labels: dataTime,
+    labels: dataLabel,
     datasets: [
       {
         type: "line",

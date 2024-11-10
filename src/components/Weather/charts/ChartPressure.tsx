@@ -28,7 +28,7 @@ ChartJS.register(
 
 const ChartPressure = ({
   chartData,
-  dataTime,
+  dataLabel,
   backgroundRanges,
   units,
   height = "200px",
@@ -59,7 +59,8 @@ const ChartPressure = ({
     scales: {
       x: {
         grid: {
-          display: false,
+          display: true,
+          color: "rgba(0, 0, 0, 0.05)",
         },
       },
       y: {
@@ -85,7 +86,7 @@ const ChartPressure = ({
   };
 
   const data: ChartData<"line"> = {
-    labels: dataTime,
+    labels: dataLabel,
     datasets: [
       {
         label: units === "imperial" ? "Pressure [inHg]" : "Pressure [hPa]",
