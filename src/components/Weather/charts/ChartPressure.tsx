@@ -14,7 +14,11 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
-import { chartBoxStyle, createBackgroundPlugin } from "./utils";
+import {
+  chartBoxStyle,
+  createBackgroundPlugin,
+  createChartOptions,
+} from "./utils";
 
 ChartJS.register(
   CategoryScale,
@@ -43,32 +47,10 @@ const ChartPressure = ({
   const minValue = Math.floor(Math.min(...data_pressure) / tick) * tick;
 
   const backgroundPlugin = createBackgroundPlugin(backgroundRanges);
+  const chartOptions = createChartOptions({ yMax: maxValue, yMin: minValue });
 
   const options: ChartOptions<"line"> = {
-    responsive: true,
-    maintainAspectRatio: false,
-    elements: {
-      point: {
-        radius: 0,
-        hitRadius: 10,
-      },
-      line: {
-        borderWidth: 3,
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          display: true,
-          color: "rgba(0, 0, 0, 0.05)",
-        },
-      },
-      y: {
-        border: { display: false },
-        max: maxValue,
-        min: minValue,
-      },
-    },
+    ...chartOptions,
     plugins: {
       tooltip: {
         filter: function (tooltipItem) {
