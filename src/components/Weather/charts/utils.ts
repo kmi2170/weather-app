@@ -61,6 +61,7 @@ export const createChartOptions = ({
           display: true,
           color: "rgba(0, 0, 0, 0.05)",
         },
+        ticks: { maxTicksLimit: 24 },
       },
       y: {
         border: { display: false },
