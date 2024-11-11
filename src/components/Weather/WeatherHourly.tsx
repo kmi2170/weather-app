@@ -87,7 +87,7 @@ const WeatherHourly = () => {
           chartData={hourly}
           dataLabel={dataTimeLabels}
           backgroundRanges={dayRanges}
-          height="250px"
+          height="200px"
         />
         <ChartPrecipitation
           chartData={hourly}
