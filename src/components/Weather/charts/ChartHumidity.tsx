@@ -80,7 +80,7 @@ const ChartHumidity = ({
       },
       {
         type: "line",
-        label: "Chance of Precipitation [%]",
+        label: "Precipitation [%]",
         borderColor: blue[500],
         backgroundColor: blue[500],
         data: data_pop,
