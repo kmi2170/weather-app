@@ -46,26 +46,24 @@ const WeatherHourly = () => {
     const [_, _sunrise, sunset] = sunAlmanac[i];
     const [__, sunrise, _sunset] = sunAlmanac[i + 1];
 
-    if (sunset < dtStart) {
+    if (i === 0 && _sunrise > dtStart) {
       nightRanges.push({
         start: 0,
-        end: (sunrise - dtStart) / timeSpan,
+        end: (_sunrise - dtStart) / timeSpan,
         color: "rgba(35, 42, 41, 0.1)",
       });
-    } else {
-      nightRanges.push({
-        start: (sunset - dtStart) / timeSpan,
-        end: (sunrise - dtStart) / timeSpan,
-        color: "rgba(35, 42, 41, 0.1)",
-      });
-    }
-    if (i + 1 === sunAlmanac.length - 1 && _sunset < dtEnd) {
+    } else if (i + 1 === sunAlmanac.length - 1 && _sunset < dtEnd) {
       nightRanges.push({
         start: (_sunset - dtStart) / timeSpan,
         end: timeSpan,
         color: "rgba(35, 42, 41, 0.1)",
       });
     }
+    nightRanges.push({
+      start: (sunset - dtStart) / timeSpan,
+      end: (sunrise - dtStart) / timeSpan,
+      color: "rgba(35, 42, 41, 0.1)",
+    });
   }
 
   return (
