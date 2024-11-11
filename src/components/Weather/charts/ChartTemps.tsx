@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Box from "@mui/material/Box";
 import { pink, deepOrange } from "@mui/material/colors";
 import {
@@ -108,4 +107,4 @@ const ChartTemps = ({
   );
 };
 
-export default memo(ChartTemps);
+export default ChartTemps;

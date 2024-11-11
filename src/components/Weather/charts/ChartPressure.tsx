@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Box from "@mui/material/Box";
 import { brown } from "@mui/material/colors";
 import {
@@ -92,4 +91,4 @@ const ChartPressure = ({
   );
 };
 
-export default memo(ChartPressure);
+export default ChartPressure;

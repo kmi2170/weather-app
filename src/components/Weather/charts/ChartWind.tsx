@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Box from "@mui/material/Box";
 import { green, lime, orange, teal } from "@mui/material/colors";
 import {
@@ -110,4 +109,4 @@ const ChartWind = ({
   );
 };
 
-export default memo(ChartWind);
+export default ChartWind;

@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { blue } from "@mui/material/colors";
 import {
   Chart as ChartJS,
@@ -88,4 +87,4 @@ const ChartMinutely = ({
   return <Bar options={options} data={data} height={height} />;
 };
 
-export default memo(ChartMinutely);
+export default ChartMinutely;

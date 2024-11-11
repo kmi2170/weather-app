@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Box from "@mui/material/Box";
 import { blueGrey, blue, purple } from "@mui/material/colors";
 
@@ -110,4 +109,4 @@ const ChartHumidity = ({
   );
 };
 
-export default memo(ChartHumidity);
+export default ChartHumidity;
