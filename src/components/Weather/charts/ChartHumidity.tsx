@@ -100,6 +100,7 @@ const ChartHumidity = ({
   return (
     <Box sx={{ height: height, ...chartBoxStyle }}>
       <Chart
+        key={Date.now() + "humidity"}
         type="line"
         options={options}
         data={data}

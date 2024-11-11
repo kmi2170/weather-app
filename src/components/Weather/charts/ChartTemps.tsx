@@ -40,7 +40,7 @@ const ChartTemps = ({
   dataLabel,
   units,
   height,
-  backgroundRanges: backgroundRangesInNumber,
+  backgroundRanges,
 }: ChartProps) => {
   const data_temp = chartData.map(({ temp }) => temp);
   const data_dew_point = chartData.map(({ dew_point }) => dew_point);
@@ -49,7 +49,7 @@ const ChartTemps = ({
   const maxValue = Math.ceil(Math.max(...data_temp) / tick) * tick;
   const minValue = Math.floor(Math.min(...data_dew_point) / tick) * tick;
 
-  const backgroundPlugin = createBackgroundPlugin(backgroundRangesInNumber);
+  const backgroundPlugin = createBackgroundPlugin(backgroundRanges);
   const charOptions = createChartOptions({ yMax: maxValue, yMin: minValue });
 
   const options: ChartOptions<"line"> = {
@@ -98,6 +98,7 @@ const ChartTemps = ({
       }}
     >
       <Chart
+        key={Date.now().toString() + "temp"}
         type="line"
         options={options}
         data={data}

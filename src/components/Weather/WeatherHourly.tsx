@@ -19,9 +19,12 @@ import { BackGroundRanges, Weather } from "../../api/types/weather";
 const WeatherHourly = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
 
+  const { lat, lon } = location;
+  if (lat == null || lon == null) return;
+
   const { data, error } = useGetWeatherQuery({
-    lat: String(location.lat),
-    lon: String(location.lon),
+    lat: lat.toString(),
+    lon: lon.toString(),
     units,
     lang,
   });

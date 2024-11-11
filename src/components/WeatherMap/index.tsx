@@ -28,11 +28,6 @@ import Legends from "./Legends";
 const initZoom = 6;
 const minZoom = 4;
 
-// const latLngBounds = [
-//   [-90, -180],
-//   [90, 180],
-// ] as LatLngBoundsExpression;
-
 const markerIcon = new L.Icon({
   iconRetinaUrl: "/marker-icon-2x.png",
   iconUrl: "/marker-icon.png",

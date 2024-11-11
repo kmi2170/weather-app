@@ -178,7 +178,6 @@ const WeatherFortyEightHours = () => {
               ? theme.palette.primary.main
               : "lightpink";
             const bg_color = _isDay ? "lightcyan" : "darkslateblue";
-            // const bg_color = _isDay ? "lightcyan" : theme.palette.primary.main;
 
             return (
               <Box
@@ -189,14 +188,8 @@ const WeatherFortyEightHours = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   padding: "5px 2px",
-                  // borderBottom: "solid",
-                  // borderBottomWidth: "5px",
-                  // borderBottomColor: _isDay
-                  //   ? "rgba(255, 165, 0,0.5)"
-                  //   : "rgba(0,0,139,0.5)",
                   background: bg_color,
                   borderRadius: "10px",
-                  // boxShadow: "6px 4px 6px rgba(0, 0, 0, 0.1)",
                   boxShadow: `2px 2px 4px ${theme.palette.primary.dark}`,
                 })}
               >

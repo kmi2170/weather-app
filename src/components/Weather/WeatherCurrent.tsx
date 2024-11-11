@@ -293,15 +293,13 @@ const CurrentMain = (props: CurrentMainProps) => {
         >
           {dayDateTimeLocal(dt)}
         </Typography>
-        {timezone !== currentTZ() && (
-          <Typography
-            variant="subtitle1"
-            className={classes.text}
-            sx={{ color: font_color, marginTop: "0.5rem", marginLeft: "2rem" }}
-          >
-            (Local: {dayDateTimeWithTZ(dt, timezone)})
-          </Typography>
-        )}
+        <Typography
+          variant="subtitle2"
+          className={classes.text}
+          sx={{ color: font_color, marginTop: "0.5rem", marginLeft: "0.5rem" }}
+        >
+          ({timezone})
+        </Typography>
       </div>
 
       <div className={classes.locationContainer}>

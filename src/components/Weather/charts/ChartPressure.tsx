@@ -82,6 +82,7 @@ const ChartPressure = ({
   return (
     <Box sx={{ height: height, ...chartBoxStyle }}>
       <Chart
+        key={Date.now().toString() + "pressure"}
         type="line"
         options={options}
         data={data}

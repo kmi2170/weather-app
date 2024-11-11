@@ -115,6 +115,7 @@ const ChartPrecipitation = ({
       }}
     >
       <Chart
+        key={Date.now().toString() + "precipitation"}
         type="line"
         options={options}
         data={data}

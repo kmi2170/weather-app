@@ -25,6 +25,7 @@ export const createBackgroundPlugin = (
         ctx.fillStyle = range.color;
         ctx.fillRect(left + start, top, end - start, bottom - top);
       });
+      ctx.restore();
     },
   };
 };

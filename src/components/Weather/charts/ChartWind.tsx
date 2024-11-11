@@ -100,6 +100,7 @@ const ChartWind = ({
   return (
     <Box sx={{ height: height, ...chartBoxStyle }}>
       <Chart
+        key={Date.now().toString() + "wind"}
         type="line"
         options={options}
         data={data}
