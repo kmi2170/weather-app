@@ -13,6 +13,10 @@ export const dayDateTimeLocal = (time: number) => {
   return dayjs.unix(time).format("ddd M/D h:mm A");
 };
 
+export const dayDateTimeWith = (time: number, timeZone: string) => {
+  return dayjs.tz(time * 1000, timeZone).format("ddd M/D h:mm A");
+};
+
 export const timeWithTZ = (time: number, timeZone: string) => {
   return dayjs.tz(time * 1000, timeZone).format("h:mm a");
 };

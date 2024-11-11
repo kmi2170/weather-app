@@ -20,12 +20,7 @@ import {
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import MoonIcon from "./icons/MoonIcon";
-import {
-  currentTZ,
-  dayDateTimeLocal,
-  dayDateTimeWithTZ,
-  timeWithTZ,
-} from "../../utils/time";
+import { dayDateTimeWithTZ, timeWithTZ } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import theme from "../../theme/theme";
 import { Units } from "../../store/initialState";
@@ -291,7 +286,7 @@ const CurrentMain = (props: CurrentMainProps) => {
           className={classes.text}
           sx={{ color: font_color, marginTop: "0.5rem", marginLeft: "2rem" }}
         >
-          {dayDateTimeLocal(dt)}
+          {dayDateTimeWithTZ(dt, timezone)}
         </Typography>
         <Typography
           variant="subtitle2"
