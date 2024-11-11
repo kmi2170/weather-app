@@ -41,44 +41,27 @@ const WeatherHourly = () => {
   const dtStart = dataTime[0];
   const dtEnd = dataTime[dataTime.length - 1];
   const timeSpan = dtEnd - dtStart;
-  const nightRanges: BackGroundRanges[] = [];
-  for (let i = 0; i < sunAlmanac.length - 1; i++) {
-    const [_, _sunrise, sunset] = sunAlmanac[i];
-    const [__, sunrise, _sunset] = sunAlmanac[i + 1];
-
-    if (i === 0 && _sunrise > dtStart) {
-      nightRanges.push({
+  const dayRanges: BackGroundRanges[] = [];
+  const dayBackgroundColor = "rgba(255, 248, 220, 0.50)";
+  for (let i = 0; i < sunAlmanac.length; i++) {
+    const [_, sunrise, sunset] = sunAlmanac[i];
+    if (sunrise < dtStart) {
+      dayRanges.push({
         start: 0,
-        end: (_sunrise - dtStart) / timeSpan,
-        color: "rgba(35, 42, 41, 0.1)",
+        end: (sunset - dtStart) / timeSpan,
+        color: dayBackgroundColor,
       });
-    } else if (i === 0 && sunset < dtStart) {
-      nightRanges.push({
-        start: 0,
-        end: (sunrise - dtStart) / timeSpan,
-        color: "rgba(35, 42, 41, 0.1)",
-      });
-    }
-
-    if (i + 1 === sunAlmanac.length - 1 && _sunset < dtEnd) {
-      nightRanges.push({
-        start: (_sunset - dtStart) / timeSpan,
+    } else if (sunset > dtEnd) {
+      dayRanges.push({
+        start: (sunrise - dtStart) / timeSpan,
         end: timeSpan,
-        color: "rgba(35, 42, 41, 0.1)",
+        color: dayBackgroundColor,
       });
-    } else if (i + 1 === sunAlmanac.length - 1 && sunset < dtEnd) {
-      nightRanges.push({
-        start: (sunset - dtStart) / timeSpan,
-        end: timeSpan,
-        color: "rgba(35, 42, 41, 0.1)",
-      });
-    }
-
-    if (sunset > dtStart && sunrise < dtEnd) {
-      nightRanges.push({
-        start: (sunset - dtStart) / timeSpan,
-        end: (sunrise - dtStart) / timeSpan,
-        color: "rgba(35, 42, 41, 0.1)",
+    } else {
+      dayRanges.push({
+        start: (sunrise - dtStart) / timeSpan,
+        end: (sunset - dtStart) / timeSpan,
+        color: dayBackgroundColor,
       });
     }
   }
@@ -96,33 +79,34 @@ const WeatherHourly = () => {
         <ChartTemps
           chartData={hourly}
           dataLabel={dataTimeLabels}
-          backgroundRanges={nightRanges}
+          backgroundRanges={dayRanges}
           units={units}
           height="200px"
         />
         <ChartHumidity
           chartData={hourly}
           dataLabel={dataTimeLabels}
-          backgroundRanges={nightRanges}
-          height="200px"
+          backgroundRanges={dayRanges}
+          height="250px"
         />
         <ChartPrecipitation
           chartData={hourly}
           dataLabel={dataTimeLabels}
-          backgroundRanges={nightRanges}
+          backgroundRanges={dayRanges}
           units={units}
+          height="200px"
         />
         <ChartWind
           chartData={hourly}
           dataLabel={dataTimeLabels}
-          backgroundRanges={nightRanges}
+          backgroundRanges={dayRanges}
           units={units}
           height="200px"
         />
         <ChartPressure
           chartData={hourly}
           dataLabel={dataTimeLabels}
-          backgroundRanges={nightRanges}
+          backgroundRanges={dayRanges}
           units={units}
           height="200px"
         />

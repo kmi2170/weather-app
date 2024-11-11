@@ -15,13 +15,14 @@ export const createBackgroundPlugin = (
         scales: { x },
       } = chart;
       ctx.save();
-      ctx.fillStyle = "rgba(255, 248, 220, 0.35)";
+      ctx.fillStyle = "rgba(35, 42, 41, 0.2)";
       ctx.fillRect(left, top, right - left, bottom - top);
       const xSpan = right - left;
       const ranges = backgroundRanges;
       ranges.forEach((range) => {
         const start = range.start * xSpan;
         const end = range.end * xSpan;
+        ctx.clearRect(left + start, top, end - start, bottom - top);
         ctx.fillStyle = range.color;
         ctx.fillRect(left + start, top, end - start, bottom - top);
       });
