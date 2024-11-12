@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
-import { Theme } from "@mui/material/styles";
+import { styled, Theme } from "@mui/material/styles";
 import { useCustomCookies } from "../../../hooks/useCustomCookies";
 import { isUnitsValid } from "../../../utils/cookiesValidator";
 import { Typography } from "@mui/material";
@@ -34,8 +34,12 @@ const buttonUnSelected = (theme: Theme) => ({
   },
 });
 
-const buttonTheme = (button_units: string, units: string, theme: Theme) =>
-  button_units === units ? buttonSelected(theme) : buttonUnSelected(theme);
+const CustomButton = styled(Button)<{ selected: boolean; units: string }>(
+  ({ theme, selected, units }) => ({
+    borderRadius: units === "imperial" ? "20px 0 0 20px" : "0 20px 20px 0",
+    ...(selected ? buttonSelected(theme) : buttonUnSelected(theme)),
+  })
+);
 
 const buttonProps = [
   { button_units: "imperial", button_symbol: "°F" },
@@ -75,25 +79,16 @@ const Buttons = () => {
       >
         <ButtonGroup color="primary" aria-label="switch units">
           {buttonProps.map(({ button_units, button_symbol }) => (
-            <Button
+            <CustomButton
               key={button_units}
               variant={button_units === units ? "contained" : "outlined"}
               size="small"
               onClick={() => handleClick(button_units as Units)}
-              sx={[
-                (theme) => ({
-                  ...buttonTheme(button_units, units, theme),
-                }),
-                {
-                  borderRadius:
-                    button_units === "imperial"
-                      ? "20px 0 0 20px"
-                      : "0 20px 20px 0",
-                },
-              ]}
+              selected={button_units === units}
+              units={button_units}
             >
               <Typography variant="subtitle2">{button_symbol}</Typography>
-            </Button>
+            </CustomButton>
           ))}
         </ButtonGroup>
       </Box>

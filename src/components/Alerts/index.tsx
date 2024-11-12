@@ -45,7 +45,7 @@ const Alerts = () => {
                 <Grid key={i} item xs={12}>
                   <Paper
                     sx={{
-                      padding: "1rem",
+                      p: "1rem",
                     }}
                   >
                     <Typography variant="subtitle1">
@@ -67,7 +67,7 @@ const Alerts = () => {
                       variant="body1"
                       sx={{
                         color: red[900],
-                        margin: "1rem 0",
+                        m: "1rem 0",
                       }}
                     >
                       Description - {description}

@@ -1,6 +1,6 @@
 /**
  * @deprecated
- * Buttons is now used in Navbar.
+ * replaced with Buttons.
  */
 
 import { memo, useState } from "react";
