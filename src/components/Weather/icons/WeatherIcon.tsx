@@ -2,7 +2,7 @@ import { memo } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 
 const WeatherIconComponent = styled("i")<{ size: string; color: string }>(
-  ({ size, color }) => ({ fontSize: size, color, m: "0.5rem 0" })
+  ({ size, color }) => ({ fontSize: size, color })
 );
 
 interface WeatherIconProps {

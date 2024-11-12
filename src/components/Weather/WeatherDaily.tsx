@@ -146,20 +146,16 @@ const WeatherDaily = () => {
                       variant="subtitle2"
                       align="center"
                       className={classes.main}
-                      sx={{ marginTop: "10px" }}
+                      sx={{ mt: "0.5rem", mb: "0.5rem" }}
                     >
                       {data.weather[0].main}
                     </Typography>
-                    <WeatherIcon
-                      weatherId={data.weather[0].id}
-                      current={false}
-                      size="2rem"
-                    />
+                    <WeatherIcon weatherId={data.weather[0].id} size="2rem" />
                     <Typography
                       variant="subtitle2"
                       align="center"
                       className={classes.description}
-                      height="2.5rem"
+                      sx={{ mt: "0.5rem", mb: "0.25rem" }}
                     >
                       {data.weather[0].description}
                     </Typography>

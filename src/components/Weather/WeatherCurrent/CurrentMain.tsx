@@ -149,7 +149,7 @@ const CurrentMain = (props: CurrentMainProps) => {
           <Typography
             variant="h6"
             align="center"
-            sx={{ color: font_color_main }}
+            sx={{ color: font_color_main, mb: "0.25rem" }}
           >
             {weather?.[0].main}
           </Typography>
@@ -170,7 +170,7 @@ const CurrentMain = (props: CurrentMainProps) => {
           <Typography
             variant="subtitle2"
             align="center"
-            sx={{ color: font_color }}
+            sx={{ color: font_color, mt: "0.25rem" }}
           >
             {weather?.[0]?.description}
           </Typography>

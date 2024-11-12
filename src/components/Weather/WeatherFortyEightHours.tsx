@@ -203,18 +203,15 @@ const WeatherFortyEightHours = () => {
                 <Typography
                   variant="subtitle2"
                   align="center"
-                  sx={{ color: font_color_date }}
+                  sx={{ color: font_color_date, mb: "0.25rem" }}
                 >
                   {dayWithTZ(data.dt, timezone)}
                 </Typography>
                 <WeatherIcon
-                  sunset={sunset}
-                  sunrise={sunrise}
-                  time={data.dt}
                   weatherId={data.weather[0].id}
-                  current
                   size="1.5rem"
                   iconColor={icon_color}
+                  isDay={_isDay}
                 />
                 <Typography
                   variant="h6"
