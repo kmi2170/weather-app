@@ -6,46 +6,26 @@ const WeatherIconComponent = styled("i")<{ size: string; color: string }>(
 );
 
 interface WeatherIconProps {
-  sunset?: number;
-  sunrise?: number;
-  time?: number;
   weatherId: number;
-  current: boolean;
   size: string;
   iconColor?: string;
+  isDay?: boolean;
 }
 
 const WeatherIcon = ({
-  sunset,
-  sunrise,
-  time,
   weatherId,
-  current,
   size = "2rem",
   iconColor,
+  isDay = true,
 }: WeatherIconProps) => {
   const theme = useTheme();
-  const weatherIconClass = () => {
-    if (current) {
-      const t = time || Math.floor(new Date().getTime() / 1000);
-      const period =
-        sunrise && sunset
-          ? sunrise <= t && t <= sunset
-            ? "day"
-            : "night"
-          : "day";
-
-      return `wi wi-owm-${period}-${weatherId} `;
-    }
-
-    return `wi wi-owm-day-${weatherId} `;
-  };
+  const period = isDay ? "day" : "night";
 
   return (
     <WeatherIconComponent
       size={size}
       color={iconColor || theme.palette.primary.main}
-      className={weatherIconClass()}
+      className={`wi wi-owm-${period}-${weatherId} `}
     />
   );
 };

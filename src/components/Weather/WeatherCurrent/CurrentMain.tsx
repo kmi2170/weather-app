@@ -161,12 +161,10 @@ const CurrentMain = (props: CurrentMainProps) => {
             }}
           >
             <WeatherIcon
-              sunrise={sunrise}
-              sunset={sunset}
               weatherId={weather?.[0]?.id}
-              current
               size="4rem"
               iconColor={icon_color}
+              isDay={_isDay}
             />
           </div>
           <Typography
