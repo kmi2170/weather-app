@@ -42,26 +42,22 @@ const WeatherHourly = () => {
   const dtEnd = dataTime[dataTime.length - 1];
   const timeSpan = dtEnd - dtStart;
   const dayRanges: BackGroundRanges[] = [];
-  const dayBackgroundColor = "rgba(255, 248, 220, 0.50)";
   for (let i = 0; i < sunAlmanac.length; i++) {
     const [_, sunrise, sunset] = sunAlmanac[i];
     if (sunrise < dtStart) {
       dayRanges.push({
         start: 0,
         end: (sunset - dtStart) / timeSpan,
-        color: dayBackgroundColor,
       });
     } else if (sunset > dtEnd) {
       dayRanges.push({
         start: (sunrise - dtStart) / timeSpan,
         end: timeSpan,
-        color: dayBackgroundColor,
       });
     } else {
       dayRanges.push({
         start: (sunrise - dtStart) / timeSpan,
         end: (sunset - dtStart) / timeSpan,
-        color: dayBackgroundColor,
       });
     }
   }

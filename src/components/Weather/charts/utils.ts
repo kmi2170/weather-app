@@ -23,7 +23,8 @@ export const createBackgroundPlugin = (
         const start = range.start * xSpan;
         const end = range.end * xSpan;
         ctx.clearRect(left + start, top, end - start, bottom - top);
-        ctx.fillStyle = range.color;
+        // ctx.fillStyle = range.color;
+        ctx.fillStyle = "rgba(255, 248, 220, 0.50)";
         ctx.fillRect(left + start, top, end - start, bottom - top);
       });
       ctx.restore();

@@ -15,7 +15,6 @@ export interface ChartProps {
 export type BackGroundRanges = {
   start: number;
   end: number;
-  color: string;
 };
 
 export type WeatherQuery = {
