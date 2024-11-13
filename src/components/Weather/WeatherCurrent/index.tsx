@@ -34,7 +34,6 @@ const WeatherCurrent = () => {
           container
           justifyContent="space-between"
           alignItems="space-between"
-          spacing={-0}
         >
           <Grid xs={12} md={7}>
             <CurrentMain

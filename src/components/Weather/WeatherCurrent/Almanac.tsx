@@ -3,10 +3,10 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { yellow, orange } from "@mui/material/colors";
 
-import MoonIcon from "../icons/MoonIcon";
+import MoonPhaseWithIcon from "../icons/MoonPhaseWithIcon";
 import { timeWithTZ } from "../../../utils/time";
 
-const AlmanacWrapper = styled("div")({
+export const AlmanacWrapper = styled("div")({
   display: "flex",
   flexDirection: "row",
   justifyContent: "flex-start",
@@ -14,21 +14,23 @@ const AlmanacWrapper = styled("div")({
   alignItems: "center",
 });
 
-const SunLabel = styled("span")({
+export const SunLabel = styled(Typography)({
+  width: "2rem",
   borderBottom: `2px solid ${orange[500]}`,
 });
 
-const MoonLabel = styled("span")(({ theme }) => ({
+export const MoonLabel = styled(Typography)({
+  width: "2rem",
   borderBottom: `2px solid ${yellow[500]}`,
-}));
+});
 
-const IconSun = styled("i")(({ theme }) => ({
+export const IconSun = styled("i")(({ theme }) => ({
   fontSize: "1rem",
   color: theme.palette.primary.main,
   marginRight: "0.5rem",
 }));
 
-const IconMoon = styled("i")(({ theme }) => ({
+export const IconMoon = styled("i")(({ theme }) => ({
   fontSize: "1rem",
   color: theme.palette.primary.main,
   marginRight: "0.5rem",
@@ -53,9 +55,8 @@ const Almanac = (props: AlmanacProps) => {
       sx={{ padding: "1rem 2rem", background: "lightyellow" }}
     >
       <AlmanacWrapper>
+        <SunLabel>Sun</SunLabel>
         <Typography variant="subtitle2">
-          <SunLabel>Sun</SunLabel>
-          &nbsp;&nbsp;&nbsp;&nbsp;
           <IconSun className="wi wi-sunrise" />
           {timeWithTZ(sunrise, timezone)}
         </Typography>
@@ -66,18 +67,17 @@ const Almanac = (props: AlmanacProps) => {
       </AlmanacWrapper>
 
       <AlmanacWrapper>
-        <Typography variant="subtitle2">
-          <MoonLabel>Moon</MoonLabel>
-          &nbsp;
+        <MoonLabel>Moon</MoonLabel>
+        <Typography variant="subtitle1">
           <IconMoon className="wi wi-moonrise" />
           {timeWithTZ(moonrise, timezone)}
         </Typography>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle1">
           <IconMoon className="wi wi-moonset" />
           {timeWithTZ(moonset, timezone)}
         </Typography>
       </AlmanacWrapper>
-      <MoonIcon moon_phase={moon_phase} />
+      <MoonPhaseWithIcon moon_phase={moon_phase} />
     </Paper>
   );
 };

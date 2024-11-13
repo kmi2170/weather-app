@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import { styled, useTheme } from "@mui/material/styles";
 
 import { useAppSelector } from "../../store/hooks";
 import { selectWeather } from "../../slice/weatherSlice";
@@ -15,9 +16,30 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import WindIcon from "./icons/WindIcon";
 import { isDay, precipitationWithUnit, tempWithUnit } from "../../utils/units";
-import theme from "../../theme/theme";
+
+const FortyEightHoursWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-start",
+  gap: "5px",
+});
+
+const HourlyWrapper = styled("div")<{ backgroundColor: string }>(
+  ({ theme, backgroundColor }) => ({
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "5px 2px",
+    background: backgroundColor,
+    borderRadius: "10px",
+    boxShadow: `2px 2px 4px ${theme.palette.primary.dark}`,
+  })
+);
 
 const WeatherFortyEightHours = () => {
+  const theme = useTheme();
+
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
@@ -150,14 +172,7 @@ const WeatherFortyEightHours = () => {
           overflowX: "scroll",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            gap: "5px",
-          }}
-        >
+        <FortyEightHoursWrapper>
           {hourly.map((data) => {
             const sunRiseSet = sunAlmanac.filter(
               (times) =>
@@ -180,19 +195,7 @@ const WeatherFortyEightHours = () => {
             const bg_color = _isDay ? "lightcyan" : "darkslateblue";
 
             return (
-              <Box
-                key={data.dt}
-                sx={(theme) => ({
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "5px 2px",
-                  background: bg_color,
-                  borderRadius: "10px",
-                  boxShadow: `2px 2px 4px ${theme.palette.primary.dark}`,
-                })}
-              >
+              <HourlyWrapper key={data.dt} backgroundColor={bg_color}>
                 <Typography
                   variant="subtitle2"
                   align="center"
@@ -273,10 +276,10 @@ const WeatherFortyEightHours = () => {
                 >
                   {timeInHourWithTZ(data.dt, timezone)}
                 </Typography>
-              </Box>
+              </HourlyWrapper>
             );
           })}
-        </div>
+        </FortyEightHoursWrapper>
       </Paper>
     </div>
   );

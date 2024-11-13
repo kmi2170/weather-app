@@ -27,8 +27,6 @@ const WeatherMinutely = () => {
       return units === "imperial" ? precipitation / 25.4 : precipitation;
     }) || [];
 
-  // const maxPrecipitation = Math.max(...data_precipitation);
-
   const dataTime = minutely?.map(({ dt }) => timeWithTZ(dt, timezone));
 
   const isFall = minutely?.some(({ precipitation }) => precipitation > 0);
@@ -54,7 +52,6 @@ const WeatherMinutely = () => {
         </Typography>
         <ChartMinutely
           chartData={data_precipitation}
-          // maxValue={maxPrecipitation}
           dataLabel={dataTime}
           units={units}
         />

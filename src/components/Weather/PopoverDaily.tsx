@@ -3,67 +3,29 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import makeStyles from "@mui/styles/makeStyles";
-import { Theme } from "@mui/material";
-import createStyles from "@mui/styles/createStyles";
-import { orange, yellow } from "@mui/material/colors";
+import { styled } from "@mui/material/styles";
 
 import { useAppSelector } from "../../store/hooks";
 import { precipitationWithUnit, pressureWithUnit } from "../../utils/units";
-import MoonIcon from "./icons/MoonIcon";
+import MoonPhaseWithIcon from "./icons/MoonPhaseWithIcon";
 import { dayWithTZ, dateWithTZ, timeWithTZ } from "../../utils/time";
 import { WeatherDaily } from "../../api/types/weather";
-import { formatDigits } from "../../utils/formatDigits";
+import {
+  AlmanacWrapper,
+  IconMoon,
+  IconSun,
+  MoonLabel,
+  SunLabel,
+} from "./WeatherCurrent/Almanac";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    popover: {
-      pointerEvents: "none",
-    },
-    paper: {
-      padding: theme?.spacing(1),
-      minWidth: "30vw",
-    },
-    iconSun: {
-      fontSize: "1rem",
-      color: theme.palette.primary.main,
-      marginRight: "0.5rem",
-    },
-    iconMoon: {
-      fontSize: "1rem",
-      color: theme.palette.primary.main,
-      marginRight: "0.5rem",
-      marginLeft: "0.25rem",
-    },
-    children: {
-      border: `2px solid ${theme.palette.primary.light}`,
-      borderRadius: "15px",
-      "&:hover": {
-        border: `2px solid ${theme.palette.primary.main}`,
-        borderRadius: "15px",
-      },
-    },
-    sunDecoration: {
-      borderBottom: `2px solid ${orange[500]}`,
-    },
-    moonDecoration: {
-      borderBottom: `2px solid ${yellow[500]}`,
-    },
-    tempChange: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignIterator: "center",
-      marginBottom: "0.5rem",
-    },
-    temp: {
-      color: theme.palette.primary.main,
-    },
-    tempChangeName: {
-      textTransform: "capitalize",
-    },
-  })
-);
+const PopoverWrapper = styled("div")(({ theme }) => ({
+  border: `2px solid ${theme.palette.primary.light}`,
+  borderRadius: "15px",
+  "&:hover": {
+    border: `2px solid ${theme.palette.primary.main}`,
+    borderRadius: "15px",
+  },
+}));
 
 interface PopoverDailyProps {
   children: React.ReactNode;
@@ -72,8 +34,6 @@ interface PopoverDailyProps {
 }
 
 const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
-  const classes = useStyles();
-
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const units = useAppSelector((state) => state.weather.units);
 
@@ -107,21 +67,16 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
 
   return (
     <>
-      <div
+      <PopoverWrapper
         aria-owns={open ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
-        className={classes.children}
       >
         {children}
-      </div>
+      </PopoverWrapper>
       <Popover
         id="mouse-over-popover"
-        className={classes.popover}
-        classes={{
-          paper: classes.paper,
-        }}
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
@@ -135,10 +90,14 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
         transitionDuration={{ enter: 1000 }}
+        sx={{ pointerEvents: "none" }}
       >
-        <Container maxWidth="xs">
+        <Container
+          maxWidth="xs"
+          sx={{ backgroundColor: "lightcyan", pt: "1rem", pb: "1rem" }}
+        >
           <Grid item xs={12}>
-            <Typography variant="subtitle2" align="center">
+            <Typography variant="h6" align="center">
               {dateWithTZ(data.dt, timezone)} {dayWithTZ(data.dt, timezone)}
             </Typography>
           </Grid>
@@ -160,16 +119,32 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
           <Grid container alignItems="center">
             <Grid item container xs={12} spacing={4}>
               {["morn", "day", "eve", "night"].map((item) => (
-                <Grid item key={item} className={classes.tempChange}>
-                  <div className={classes.tempChangeName}>{item}</div>
-                  <div className={classes.temp}>
-                    {formatDigits(temp[item] as number)}
+                <Grid
+                  item
+                  key={item}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignIterator: "center",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  <Typography sx={{ textTransform: "capitalize" }}>
+                    {item}
+                  </Typography>
+                  <Typography
+                    sx={(theme) => ({
+                      color: theme.palette.primary.main,
+                    })}
+                  >
+                    {Number(temp[item]).toFixed(0)}
                     {units === "imperial" ? (
                       <small> °F </small>
                     ) : (
                       <small> °C</small>
                     )}
-                  </div>
+                  </Typography>
                 </Grid>
               ))}
             </Grid>
@@ -210,39 +185,31 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
                 <Typography variant="subtitle2">UV index {uvi}</Typography>
               </Grid>
 
-              <Grid item xs={6}>
+              <AlmanacWrapper sx={{ mt: "0.5rem" }}>
+                <SunLabel>Sun</SunLabel>
                 <Typography variant="subtitle2">
-                  <span className={classes.sunDecoration}>Sun</span>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <i className={`wi wi-sunrise ${classes.iconSun}`} />
+                  <IconSun className="wi wi-sunrise" />
                   {timeWithTZ(sunrise, timezone)}
                 </Typography>
-              </Grid>
-              <Grid item xs={6}>
                 <Typography variant="subtitle2">
-                  <i className={`wi wi-sunset ${classes.iconSun}`} />
+                  <IconSun className="wi wi-sunset" />
                   {timeWithTZ(sunset, timezone)}
                 </Typography>
-              </Grid>
+              </AlmanacWrapper>
 
-              <Grid item xs={6}>
+              <AlmanacWrapper>
+                <MoonLabel>Moon</MoonLabel>
                 <Typography variant="subtitle2">
-                  <span className={classes.moonDecoration}>Moon</span>
-                  &nbsp;
-                  <i className={`wi wi-moonrise ${classes.iconMoon}`} />
+                  <IconMoon className={`wi wi-moonrise`} />
                   {timeWithTZ(moonrise, timezone)}
                 </Typography>
-              </Grid>
-              <Grid item xs={6}>
                 <Typography variant="subtitle2">
-                  <i className={`wi wi-moonset ${classes.iconMoon}`} />
+                  <IconMoon className={`wi wi-moonset`} />
                   {timeWithTZ(moonset, timezone)}
                 </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <MoonIcon moon_phase={moon_phase} />
-              </Grid>
+              </AlmanacWrapper>
             </Grid>
+            <MoonPhaseWithIcon moon_phase={moon_phase} />
           </Grid>
         </Container>
       </Popover>

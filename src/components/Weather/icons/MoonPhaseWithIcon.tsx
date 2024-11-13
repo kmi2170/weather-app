@@ -25,7 +25,7 @@ const moonIconClass = (moon_phase: number) => {
   return `wi ${phase}`;
 };
 
-const moonIconLabel = (moon_phase: number) => {
+const moonPhase = (moon_phase: number) => {
   const n_phase = Math.floor((moon_phase + hstep) / step);
   return n_phase === 1 ? moon_phases_label[0] : moon_phases_label[n_phase];
 };
@@ -34,18 +34,18 @@ interface MoonIconProps {
   moon_phase: number;
 }
 
-const MoonIcon = ({ moon_phase }: MoonIconProps) => {
+const MoonPhaseWithIcon = ({ moon_phase }: MoonIconProps) => {
   return (
     <MoonIconComponent>
       <Icon className={moonIconClass(moon_phase)} />
       <Typography
-        variant="subtitle2"
+        variant="subtitle1"
         sx={{ textTransform: "capitalize", ml: "1rem" }}
       >
-        {moonIconLabel(moon_phase)}
+        {moonPhase(moon_phase)}
       </Typography>
     </MoonIconComponent>
   );
 };
 
-export default memo(MoonIcon);
+export default memo(MoonPhaseWithIcon);

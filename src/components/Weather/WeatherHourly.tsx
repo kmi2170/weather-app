@@ -20,11 +20,10 @@ const WeatherHourly = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
 
   const { lat, lon } = location;
-  if (lat == null || lon == null) return;
 
   const { data, error } = useGetWeatherQuery({
-    lat: lat.toString(),
-    lon: lon.toString(),
+    lat: String(lat),
+    lon: String(lon),
     units,
     lang,
   });

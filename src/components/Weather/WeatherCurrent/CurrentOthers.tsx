@@ -37,26 +37,26 @@ const CurrentOthers = (props: CurrentOthersProps) => {
         background: "snow",
         display: "flex",
         flexDirection: "row",
-        gap: "2rem",
+        gap: "1.5rem",
       }}
     >
       <DataWrapper>
-        <Typography variant="subtitle2" sx={{ color: "dodgerblue" }}>
+        <Typography variant="subtitle1" sx={{ color: "dodgerblue" }}>
           Precipitation {precipitationWithUnit(totalPrecipitation, units)}
         </Typography>
-        <Typography variant="subtitle2" sx={{ color: "deepskyblue" }}>
+        <Typography variant="subtitle1" sx={{ color: "deepskyblue" }}>
           Humidity {humidity} %
         </Typography>
-        <Typography variant="subtitle2" sx={{ color: "maroon" }}>
+        <Typography variant="subtitle1" sx={{ color: "maroon" }}>
           Pressure {pressureWithUnit(pressure, units)}
         </Typography>
       </DataWrapper>
 
       <DataWrapper>
-        <Typography variant="subtitle2" sx={{ color: "limegreen" }}>
+        <Typography variant="subtitle1" sx={{ color: "limegreen" }}>
           Visibility {visibilityWithUnit(visibility, units)}
         </Typography>
-        <Typography variant="subtitle2" sx={{ color: "darkmagenta" }}>
+        <Typography variant="subtitle1" sx={{ color: "darkmagenta" }}>
           UV index {uvi}
         </Typography>
       </DataWrapper>

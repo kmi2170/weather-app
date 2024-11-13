@@ -3,8 +3,7 @@ import { memo } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
+import { styled } from "@mui/material/styles";
 import { useAppSelector } from "../../store/hooks";
 
 import { selectWeather } from "../../slice/weatherSlice";
@@ -17,81 +16,11 @@ import { dayWithTZ, dateWithTZ } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import { precipitationWithUnit } from "../../utils/units";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  text: {},
-  day: {
-    color: "dodgerblue",
-    // color: theme.palette.primary.main,
-  },
-  description: {
-    color: "forestgreen",
-    // color: theme.palette.primary.main,
-  },
-  temp: {
-    color: theme.palette.primary.main,
-  },
-  pop: {
-    color: theme.palette.primary.main,
-  },
-  precipitation: {
-    color: theme.palette.primary.main,
-  },
-  paper: {
-    padding: "0.5rem 0",
-    // border: `2px solid ${theme.palette.primary.light}`,
-    borderRadius: "15px",
-    backgroundColor: "rgb(255, 248, 220)",
-  },
-  locationContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    [theme.breakpoints?.down("sm")]: {
-      flexDirection: "column",
-      justifyContent: "center",
-    },
-    alignItems: "center",
-  },
-  locationSubContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-  weatherContainer: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  main: {
-    color: theme.palette.primary.dark,
-  },
-  countryName: {
-    sm: {
-      marginLeft: "1rem",
-    },
-    [theme.breakpoints?.up("sm")]: {
-      marginLeft: "1rem",
-    },
-  },
-  iconSun: {
-    fontSize: "1rem",
-    color: theme.palette.primary.main,
-    marginRight: "0.5rem",
-  },
-  iconMoon: {
-    fontSize: "1rem",
-    color: theme.palette.primary.main,
-    marginRight: "0.5rem",
-    marginLeft: "0.25rem",
-  },
-  iconPop: {
-    color: theme.palette.primary.main,
-  },
+const IconPrecipitation = styled("i")(({ theme }) => ({
+  color: theme.palette.primary.main,
 }));
 
 const WeatherDaily = () => {
-  const classes = useStyles();
-
   const { units, lang, location } = useAppSelector(selectWeather);
 
   const { data } = useGetWeatherQuery({
@@ -104,107 +33,98 @@ const WeatherDaily = () => {
   const { timezone, daily } = data as Weather;
 
   return (
-    <>
-      <Grid
-        container
-        justifyContent="flex-start"
-        alignItems="stretch"
-        spacing={1}
-      >
-        {daily.map((data, i: number) => {
-          const totalPrecipitation = (data?.rain || 0) + (data?.snow || 0);
+    <Grid
+      container
+      justifyContent="flex-start"
+      alignItems="stretch"
+      spacing={1}
+    >
+      {daily.map((data, i: number) => {
+        const totalPrecipitation = (data?.rain || 0) + (data?.snow || 0);
 
-          return (
-            <Grid key={i} item xs={4} sm={3} md={2}>
-              <PopoverDaily data={data} timezone={timezone}>
-                <Paper elevation={2} className={classes.paper}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div>
-                      <Typography
-                        variant="subtitle2"
-                        align="center"
-                        className={classes.text}
-                      >
-                        {dateWithTZ(data.dt, timezone)}
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        align="center"
-                        className={classes.day}
-                      >
-                        {dayWithTZ(data.dt, timezone)}
-                      </Typography>
-                    </div>
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      className={classes.main}
-                      sx={{ mt: "0.5rem", mb: "0.5rem" }}
-                    >
-                      {data.weather[0].main}
-                    </Typography>
-                    <WeatherIcon weatherId={data.weather[0].id} size="2rem" />
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      className={classes.description}
-                      sx={{ mt: "0.5rem", mb: "0.25rem" }}
-                    >
-                      {data.weather[0].description}
-                    </Typography>
+        return (
+          <Grid key={i} item xs={4} sm={3} md={2}>
+            <PopoverDaily data={data} timezone={timezone}>
+              <Paper
+                elevation={2}
+                sx={{
+                  padding: "0.5rem 0",
+                  borderRadius: "15px",
+                  backgroundColor: "rgb(255, 248, 220)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="subtitle2" align="center">
+                  {dateWithTZ(data.dt, timezone)}
+                </Typography>
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  sx={{ color: "dodgerblue" }}
+                >
+                  {dayWithTZ(data.dt, timezone)}
+                </Typography>
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  sx={(theme) => ({
+                    mt: "0.5rem",
+                    mb: "0.5rem",
+                    color: theme.palette.primary.dark,
+                  })}
+                >
+                  {data.weather[0].main}
+                </Typography>
+                <WeatherIcon weatherId={data.weather[0].id} size="2rem" />
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  sx={{ mt: "0.5rem", mb: "0.25rem", color: "forestgreen" }}
+                >
+                  {data.weather[0].description}
+                </Typography>
 
-                    <Typography
-                      variant="h6"
-                      align="center"
-                      className={classes.temp}
-                    >
-                      {formatDigits(data.temp.max)}/
-                      {formatDigits(data.temp.min)}
-                      {units === "imperial" ? (
-                        <small> °F </small>
-                      ) : (
-                        <small> °C</small>
-                      )}
-                    </Typography>
+                <Typography
+                  variant="h6"
+                  align="center"
+                  sx={(theme) => ({ color: theme.palette.primary.main })}
+                >
+                  {formatDigits(data.temp.max)}/{formatDigits(data.temp.min)}
+                  {units === "imperial" ? (
+                    <small> °F </small>
+                  ) : (
+                    <small> °C</small>
+                  )}
+                </Typography>
 
-                    <WindIcon
-                      wind_speed={data.wind_speed}
-                      wind_deg={data.wind_deg}
-                      wind_gust={data?.wind_gust}
-                      current={false}
-                    />
+                <WindIcon
+                  wind_speed={data.wind_speed}
+                  wind_deg={data.wind_deg}
+                  wind_gust={data?.wind_gust}
+                  current={false}
+                />
 
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      className={classes.pop}
-                    >
-                      <i className={`wi wi-umbrella ${classes.iconPop}`} />{" "}
-                      {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      className={classes.precipitation}
-                    >
-                      <i className={`wi wi-raindrop ${classes.iconPop}`} />{" "}
-                      {precipitationWithUnit(totalPrecipitation, units)}
-                    </Typography>
-                  </div>
-                </Paper>
-              </PopoverDaily>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </>
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  sx={(theme) => ({ color: theme.palette.primary.main })}
+                >
+                  <IconPrecipitation className={`wi wi-umbrella`} />{" "}
+                  {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
+                </Typography>
+                <Typography variant="subtitle2" align="center">
+                  <IconPrecipitation className={`wi wi-raindrop`} />{" "}
+                  {precipitationWithUnit(totalPrecipitation, units)}
+                </Typography>
+              </Paper>
+            </PopoverDaily>
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 };
 
