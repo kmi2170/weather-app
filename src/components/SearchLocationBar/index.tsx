@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from "react";
+import { memo, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -27,7 +27,7 @@ const SearchLocationBar = () => {
   useKeysToOpenModal({ isMobile, handleOpen });
 
   return (
-    <div>
+    <>
       <Modal
         open={open}
         aria-labelledby="modal-modal-title"
@@ -120,7 +120,7 @@ const SearchLocationBar = () => {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

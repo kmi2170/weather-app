@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  forwardRef,
   memo,
   useCallback,
   useEffect,
@@ -40,183 +41,185 @@ type SearchLocationModalContentProps = {
   closeModal(): void;
 };
 
-const SearchLocationModalContent = (props: SearchLocationModalContentProps) => {
-  const { closeModal } = props;
+const SearchLocationModalContent = forwardRef(
+  (props: SearchLocationModalContentProps, ref) => {
+    const { closeModal } = props;
 
-  const { locations, isLoading, isError } = useAppSelector(
-    (state) => state.locations
-  );
-  const dispatch = useAppDispatch();
+    const { locations, isLoading, isError } = useAppSelector(
+      (state) => state.locations
+    );
+    const dispatch = useAppDispatch();
 
-  const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
-  const [isShortCharacter, setIsShortCharacter] = useState(true);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
+    const [isShortCharacter, setIsShortCharacter] = useState(true);
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current?.focus();
-    }
-  }, []);
-
-  useEffect(() => {
-    function handleKeyPress(e: KeyboardEvent) {
-      switch (e.key) {
-        case "ArrowUp":
-          setSelectedLocationIndex((prev) => {
-            return prev > 0 ? prev - 1 : prev;
-          });
-          break;
-        case "ArrowDown":
-          setSelectedLocationIndex((prev) => {
-            return prev < locations.length - 1 ? prev + 1 : prev;
-          });
-          break;
-        case "Enter":
-          const location = locations[selectedLocationIndex] as LocationType;
-          const { name, admin1, country, latitude, longitude } = location;
-          const displayLocation = {
-            city: name,
-            region: admin1,
-            country: country,
-            lat: latitude,
-            lon: longitude,
-          } as Location;
-          dispatch(setLocation(displayLocation));
-          closeModal();
-          break;
-        default:
-          break;
+    useEffect(() => {
+      if (inputRef.current) {
+        inputRef.current?.focus();
       }
-    }
+    }, []);
 
-    window.addEventListener("keydown", handleKeyPress);
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [selectedLocationIndex, locations]);
-
-  function onTypeWithDebounce(e: ChangeEvent) {
-    if (!inputRef.current?.value) return;
-
-    if (inputRef.current.value.length <= 1) {
-      if (locations.length !== 0) dispatch(setLocations([]));
-      if (!isShortCharacter) setIsShortCharacter(true);
-      return;
-    }
-
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-
-    timerRef.current = setTimeout(async () => {
-      const typedName = inputRef.current?.value as string;
-      try {
-        dispatch(asyncThunkFindLocations(typedName));
-      } catch (error) {
-        console.error(error);
+    useEffect(() => {
+      function handleKeyPress(e: KeyboardEvent) {
+        switch (e.key) {
+          case "ArrowUp":
+            setSelectedLocationIndex((prev) => {
+              return prev > 0 ? prev - 1 : prev;
+            });
+            break;
+          case "ArrowDown":
+            setSelectedLocationIndex((prev) => {
+              return prev < locations.length - 1 ? prev + 1 : prev;
+            });
+            break;
+          case "Enter":
+            const location = locations[selectedLocationIndex] as LocationType;
+            const { name, admin1, country, latitude, longitude } = location;
+            const displayLocation = {
+              city: name,
+              region: admin1,
+              country: country,
+              lat: latitude,
+              lon: longitude,
+            } as Location;
+            dispatch(setLocation(displayLocation));
+            closeModal();
+            break;
+          default:
+            break;
+        }
       }
 
-      if (isShortCharacter) setIsShortCharacter(false);
-      timerRef.current = null;
-    }, 500);
-  }
+      window.addEventListener("keydown", handleKeyPress);
+      return () => {
+        window.removeEventListener("keydown", handleKeyPress);
+      };
+    }, [selectedLocationIndex, locations]);
 
-  const handleHoverLocation = useCallback(function handleHoverLocation(
-    selectedIdx: number
-  ) {
-    setSelectedLocationIndex(selectedIdx);
-  },
-  []);
+    function onTypeWithDebounce(e: ChangeEvent) {
+      if (!inputRef.current?.value) return;
 
-  const handleClickLocation = useCallback(
-    function handleClickLocation(selectedIdx: number) {
-      const location = locations[selectedIdx] as LocationType;
-      const { name, admin1, country, latitude, longitude } = location;
-      const displayLocation = {
-        city: name,
-        region: admin1,
-        country: country,
-        lat: latitude,
-        lon: longitude,
-      } as Location;
-      dispatch(setLocation(displayLocation));
-      closeModal();
-    },
-    [locations]
-  );
+      if (inputRef.current.value.length <= 1) {
+        if (locations.length !== 0) dispatch(setLocations([]));
+        if (!isShortCharacter) setIsShortCharacter(true);
+        return;
+      }
 
-  const clearText = useCallback(() => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-      inputRef.current?.focus();
-
-      dispatch(setLocations([]));
-      setIsShortCharacter(true);
       if (timerRef.current) {
         clearTimeout(timerRef.current);
         timerRef.current = null;
       }
+
+      timerRef.current = setTimeout(async () => {
+        const typedName = inputRef.current?.value as string;
+        try {
+          dispatch(asyncThunkFindLocations(typedName));
+        } catch (error) {
+          console.error(error);
+        }
+
+        if (isShortCharacter) setIsShortCharacter(false);
+        timerRef.current = null;
+      }, 500);
     }
-  }, []);
 
-  return (
-    <div>
-      <Box
-        sx={(theme) => ({
-          ...style,
-          border: `2px solid ${theme.palette.primary.light}`,
-          [theme.breakpoints.down("md")]: {
-            width: "600px",
-          },
-          [theme.breakpoints.down("sm")]: {
-            width: "350px",
-            height: "600px",
-          },
-        })}
-      >
-        <CloseButton onClick={closeModal} />
+    const handleHoverLocation = useCallback(function handleHoverLocation(
+      selectedIdx: number
+    ) {
+      setSelectedLocationIndex(selectedIdx);
+    },
+    []);
 
-        <div style={{ position: "relative", marginTop: 50 }}>
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Enter City Name"
-            onChange={onTypeWithDebounce}
-            onKeyDown={() => {}}
-            spellCheck="false"
-            autoComplete="off"
-            style={{
-              paddingLeft: 50,
-              height: "3rem",
-              width: "100%",
-              border: `2px solid ${purple[200]}`,
-              borderRadius: "10px",
-              outline: "none",
-            }}
+    const handleClickLocation = useCallback(
+      function handleClickLocation(selectedIdx: number) {
+        const location = locations[selectedIdx] as LocationType;
+        const { name, admin1, country, latitude, longitude } = location;
+        const displayLocation = {
+          city: name,
+          region: admin1,
+          country: country,
+          lat: latitude,
+          lon: longitude,
+        } as Location;
+        dispatch(setLocation(displayLocation));
+        closeModal();
+      },
+      [locations]
+    );
+
+    const clearText = useCallback(() => {
+      if (inputRef.current) {
+        inputRef.current.value = "";
+        inputRef.current?.focus();
+
+        dispatch(setLocations([]));
+        setIsShortCharacter(true);
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+          timerRef.current = null;
+        }
+      }
+    }, []);
+
+    return (
+      <div>
+        <Box
+          sx={(theme) => ({
+            ...style,
+            border: `2px solid ${theme.palette.primary.light}`,
+            [theme.breakpoints.down("md")]: {
+              width: "600px",
+            },
+            [theme.breakpoints.down("sm")]: {
+              width: "350px",
+              height: "600px",
+            },
+          })}
+        >
+          <CloseButton onClick={closeModal} />
+
+          <div style={{ position: "relative", marginTop: 50 }}>
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Enter City Name"
+              onChange={onTypeWithDebounce}
+              onKeyDown={() => {}}
+              spellCheck="false"
+              autoComplete="off"
+              style={{
+                paddingLeft: 50,
+                height: "3rem",
+                width: "100%",
+                border: `2px solid ${purple[200]}`,
+                borderRadius: "10px",
+                outline: "none",
+              }}
+            />
+            <MGlassButton />
+            <ClearButton onClick={clearText} />
+          </div>
+
+          <LocationList
+            locations={locations}
+            selectedLocationIndex={selectedLocationIndex}
+            handleClickLocation={handleClickLocation}
+            handleHoverLocation={handleHoverLocation}
           />
-          <MGlassButton />
-          <ClearButton onClick={clearText} />
-        </div>
 
-        <LocationList
-          locations={locations}
-          selectedLocationIndex={selectedLocationIndex}
-          handleClickLocation={handleClickLocation}
-          handleHoverLocation={handleHoverLocation}
-        />
-
-        <Message
-          isShortCharacter={isShortCharacter}
-          listLength={locations.length}
-          isLoading={isLoading}
-          isError={isError}
-        />
-      </Box>
-    </div>
-  );
-};
+          <Message
+            isShortCharacter={isShortCharacter}
+            listLength={locations.length}
+            isLoading={isLoading}
+            isError={isError}
+          />
+        </Box>
+      </div>
+    );
+  }
+);
 
 export default SearchLocationModalContent;
 
