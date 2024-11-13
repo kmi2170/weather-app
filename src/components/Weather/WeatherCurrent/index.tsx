@@ -14,11 +14,10 @@ const WeatherCurrent = () => {
   const { units, location, lang } = useAppSelector((state) => state.weather);
 
   const { lat, lon } = location;
-  if (lat == null || lon == null) return;
 
   const { data } = useGetWeatherQuery({
-    lat: lat.toString(),
-    lon: lon.toString(),
+    lat: String(lat),
+    lon: String(lon),
     units,
     lang,
   });
@@ -31,8 +30,13 @@ const WeatherCurrent = () => {
   return (
     <>
       <div>
-        <Grid container justifyContent="center" alignItems="center" spacing={1}>
-          <Grid item xs={12} sm={7}>
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="space-between"
+          spacing={-0}
+        >
+          <Grid xs={12} md={7}>
             <CurrentMain
               current={current}
               location={location}
@@ -42,24 +46,27 @@ const WeatherCurrent = () => {
           </Grid>
 
           <Grid
-            item
             container
             xs={12}
-            sm={5}
-            flexDirection="column"
+            md={5}
             justifyContent="space-between"
             alignItems="space-between"
-            gap="0.75rem"
+            gap="0.5rem"
+            sx={{ pt: { xs: "0.5rem", md: 0 }, pl: { xs: 0, md: "0.75rem" } }}
           >
-            <CurrentOthers current={current} units={units} />
-            <Almanac
-              sunrise={sunrise}
-              sunset={sunset}
-              moonrise={moonrise}
-              moonset={moonset}
-              moon_phase={moon_phase}
-              timezone={timezone}
-            />
+            <Grid xs={12}>
+              <CurrentOthers current={current} units={units} />
+            </Grid>
+            <Grid xs={12}>
+              <Almanac
+                sunrise={sunrise}
+                sunset={sunset}
+                moonrise={moonrise}
+                moonset={moonset}
+                moon_phase={moon_phase}
+                timezone={timezone}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </div>
