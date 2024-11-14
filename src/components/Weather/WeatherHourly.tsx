@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import Paper from "@mui/material/Paper";
 
 import { useAppSelector } from "../../store/hooks";
@@ -110,4 +108,4 @@ const WeatherHourly = () => {
   );
 };
 
-export default memo(WeatherHourly);
+export default WeatherHourly;

@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import Grid from "@mui/material/Grid";
 
 import { useAppSelector } from "../../../store/hooks";
@@ -73,4 +71,4 @@ const WeatherCurrent = () => {
   );
 };
 
-export default memo(WeatherCurrent);
+export default WeatherCurrent;

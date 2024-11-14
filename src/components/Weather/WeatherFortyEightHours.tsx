@@ -109,6 +109,8 @@ const WeatherFortyEightHours = () => {
     }
   };
 
+  console.log("check");
+
   return (
     <div style={{ position: "relative" }}>
       {showLeftArrow && (

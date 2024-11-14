@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
@@ -60,4 +58,4 @@ const WeatherMinutely = () => {
   );
 };
 
-export default memo(WeatherMinutely);
+export default WeatherMinutely;

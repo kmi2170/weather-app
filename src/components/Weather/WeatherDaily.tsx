@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -128,4 +126,4 @@ const WeatherDaily = () => {
   );
 };
 
-export default memo(WeatherDaily);
+export default WeatherDaily;
