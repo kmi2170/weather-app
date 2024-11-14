@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { setUnits } from "../../../slice/weatherSlice";
 import { Units } from "../../../store/initialState";
@@ -96,4 +96,4 @@ const Buttons = () => {
   );
 };
 
-export default memo(Buttons);
+export default Buttons;

@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 
 const WeatherIconComponent = styled("i")<{ size: string; color: string }>(
@@ -30,4 +29,4 @@ const WeatherIcon = ({
   );
 };
 
-export default memo(WeatherIcon);
+export default WeatherIcon;

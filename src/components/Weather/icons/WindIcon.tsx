@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Typography from "@mui/material/Typography";
 import { useAppSelector } from "../../../store/hooks";
 
@@ -81,4 +80,4 @@ const WindIcon = ({
   );
 };
 
-export default memo(WindIcon);
+export default WindIcon;

@@ -16,11 +16,17 @@ import { ClearIcon, CloseIcon, MGlassIcon } from "../../../assets/icons";
 import { purple } from "@mui/material/colors";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { asyncThunkFindLocations } from "../../../slice/locationsAsyncThunk";
-import { LocationList } from "./locationList";
 import { LocationType } from "../../../api/types/weather";
 import { setLocations } from "../../../slice/locationsSlice";
 import { setLocation } from "../../../slice/weatherSlice";
 import { Location } from "../../../store/initialState";
+
+import { styled, useTheme } from "@mui/material/styles";
+import { LocationListItem } from "./locationListItem";
+
+const ListWrapper = styled("div")({
+  marginTop: "1.5rem",
+});
 
 const style = {
   position: "absolute" as "absolute",
@@ -43,6 +49,8 @@ type SearchLocationModalContentProps = {
 
 const SearchLocationModalContent = forwardRef(
   (props: SearchLocationModalContentProps, ref) => {
+    const theme = useTheme();
+
     const { closeModal } = props;
 
     const { locations, isLoading, isError } = useAppSelector(
@@ -131,7 +139,27 @@ const SearchLocationModalContent = forwardRef(
       setSelectedLocationIndex(selectedIdx);
     },
     []);
+    // const handleHoverLocation = function handleHoverLocation(
+    //   selectedIdx: number
+    // ) {
+    //   setSelectedLocationIndex(selectedIdx);
+    // };
 
+    // const handleClickLocation = function handleClickLocation(
+    //   selectedIdx: number
+    // ) {
+    //   const location = locations[selectedIdx] as LocationType;
+    //   const { name, admin1, country, latitude, longitude } = location;
+    //   const displayLocation = {
+    //     city: name,
+    //     region: admin1,
+    //     country: country,
+    //     lat: latitude,
+    //     lon: longitude,
+    //   } as Location;
+    //   dispatch(setLocation(displayLocation));
+    //   closeModal();
+    // };
     const handleClickLocation = useCallback(
       function handleClickLocation(selectedIdx: number) {
         const location = locations[selectedIdx] as LocationType;
@@ -202,12 +230,20 @@ const SearchLocationModalContent = forwardRef(
             <ClearButton onClick={clearText} />
           </div>
 
-          <LocationList
-            locations={locations}
-            selectedLocationIndex={selectedLocationIndex}
-            handleClickLocation={handleClickLocation}
-            handleHoverLocation={handleHoverLocation}
-          />
+          <ListWrapper>
+            {locations?.map((location, i) => {
+              return (
+                <LocationListItem
+                  key={i}
+                  index={i}
+                  location={location}
+                  isSelected={selectedLocationIndex === i}
+                  handleClickLocation={handleClickLocation}
+                  handleHoverLocation={handleHoverLocation}
+                />
+              );
+            })}
+          </ListWrapper>
 
           <Message
             isShortCharacter={isShortCharacter}
@@ -263,7 +299,7 @@ function Message(props: MessageProps) {
   );
 }
 
-const MGlassButton = () => {
+const MGlassButton = memo(() => {
   return (
     <Box
       sx={(theme) => ({
@@ -276,7 +312,7 @@ const MGlassButton = () => {
       <MGlassIcon />
     </Box>
   );
-};
+});
 
 const ClearButton = memo(({ onClick }: { onClick: () => void }) => {
   return (

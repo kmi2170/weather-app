@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import Typography from "@mui/material/Typography";
 import { Theme } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -14,7 +12,7 @@ type LocationListItemProps = {
   handleHoverLocation(selectedIdx: number): void;
 };
 
-export const LocationListItem = memo((props: LocationListItemProps) => {
+export const LocationListItem = (props: LocationListItemProps) => {
   const {
     index,
     location,
@@ -22,6 +20,14 @@ export const LocationListItem = memo((props: LocationListItemProps) => {
     handleClickLocation,
     handleHoverLocation,
   } = props;
+
+  console.log("item");
+
+  const { name, admin1, admin2, country } = location;
+  let locationName = `${name}, `;
+  if (admin1) locationName += `${admin1}, `;
+  if (admin2) locationName += `${admin2}, `;
+  locationName += `${country}`;
 
   const bgColor = (theme: Theme) =>
     isSelected
@@ -31,12 +37,6 @@ export const LocationListItem = memo((props: LocationListItemProps) => {
       : grey[100];
   const textColor = isSelected ? "white" : "black";
   const fontWeight = isSelected ? "bold" : "normal";
-
-  const { name, admin1, admin2, country } = location;
-  let locationName = `${name}, `;
-  if (admin1) locationName += `${admin1}, `;
-  if (admin2) locationName += `${admin2}, `;
-  locationName += `${country}`;
 
   return (
     <Typography
@@ -56,4 +56,4 @@ export const LocationListItem = memo((props: LocationListItemProps) => {
       {locationName}
     </Typography>
   );
-});
+};

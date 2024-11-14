@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import Typography from "@mui/material/Typography";
 import { moon_phases, moon_phases_label } from "../../../constants/moon";
 import { purple } from "@mui/material/colors";
@@ -48,4 +46,4 @@ const MoonPhaseWithIcon = ({ moon_phase }: MoonIconProps) => {
   );
 };
 
-export default memo(MoonPhaseWithIcon);
+export default MoonPhaseWithIcon;
