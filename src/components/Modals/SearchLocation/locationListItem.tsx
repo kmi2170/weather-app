@@ -3,6 +3,7 @@ import { Theme } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
 import { LocationType } from "../../../api/types/weather";
+import { memo } from "react";
 
 type LocationListItemProps = {
   index: number;
@@ -12,7 +13,7 @@ type LocationListItemProps = {
   handleHoverLocation(selectedIdx: number): void;
 };
 
-export const LocationListItem = (props: LocationListItemProps) => {
+export const LocationListItem = memo((props: LocationListItemProps) => {
   const {
     index,
     location,
@@ -20,8 +21,6 @@ export const LocationListItem = (props: LocationListItemProps) => {
     handleClickLocation,
     handleHoverLocation,
   } = props;
-
-  console.log("item");
 
   const { name, admin1, admin2, country } = location;
   let locationName = `${name}, `;
@@ -56,4 +55,4 @@ export const LocationListItem = (props: LocationListItemProps) => {
       {locationName}
     </Typography>
   );
-};
+});

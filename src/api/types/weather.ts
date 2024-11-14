@@ -150,6 +150,7 @@ export type Weather = {
   alerts: Alerts;
 };
 export type LocationType = {
+  id: number;
   name: string;
   country: string;
   admin1?: string;

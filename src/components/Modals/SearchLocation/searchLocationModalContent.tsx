@@ -1,7 +1,6 @@
 import {
   ChangeEvent,
   forwardRef,
-  memo,
   useCallback,
   useEffect,
   useRef,
@@ -11,7 +10,6 @@ import {
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
-import { ClearIcon, CloseIcon, MGlassIcon } from "../../../assets/icons";
 
 import { purple } from "@mui/material/colors";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -23,6 +21,12 @@ import { Location } from "../../../store/initialState";
 
 import { styled, useTheme } from "@mui/material/styles";
 import { LocationListItem } from "./locationListItem";
+import { ClearButton, CloseButton, MGlassButton } from "./buttons";
+
+const InputWrapper = styled("div")({
+  position: "relative",
+  marginTop: 50,
+});
 
 const ListWrapper = styled("div")({
   marginTop: "1.5rem",
@@ -139,27 +143,7 @@ const SearchLocationModalContent = forwardRef(
       setSelectedLocationIndex(selectedIdx);
     },
     []);
-    // const handleHoverLocation = function handleHoverLocation(
-    //   selectedIdx: number
-    // ) {
-    //   setSelectedLocationIndex(selectedIdx);
-    // };
 
-    // const handleClickLocation = function handleClickLocation(
-    //   selectedIdx: number
-    // ) {
-    //   const location = locations[selectedIdx] as LocationType;
-    //   const { name, admin1, country, latitude, longitude } = location;
-    //   const displayLocation = {
-    //     city: name,
-    //     region: admin1,
-    //     country: country,
-    //     lat: latitude,
-    //     lon: longitude,
-    //   } as Location;
-    //   dispatch(setLocation(displayLocation));
-    //   closeModal();
-    // };
     const handleClickLocation = useCallback(
       function handleClickLocation(selectedIdx: number) {
         const location = locations[selectedIdx] as LocationType;
@@ -192,67 +176,65 @@ const SearchLocationModalContent = forwardRef(
     }, []);
 
     return (
-      <div>
-        <Box
-          sx={(theme) => ({
-            ...style,
-            border: `2px solid ${theme.palette.primary.light}`,
-            [theme.breakpoints.down("md")]: {
-              width: "600px",
-            },
-            [theme.breakpoints.down("sm")]: {
-              width: "350px",
-              height: "600px",
-            },
-          })}
-        >
-          <CloseButton onClick={closeModal} />
+      <Box
+        sx={(theme) => ({
+          ...style,
+          border: `2px solid ${theme.palette.primary.light}`,
+          [theme.breakpoints.down("md")]: {
+            width: "600px",
+          },
+          [theme.breakpoints.down("sm")]: {
+            width: "350px",
+            height: "600px",
+          },
+        })}
+      >
+        <CloseButton onClick={closeModal} />
 
-          <div style={{ position: "relative", marginTop: 50 }}>
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Enter City Name"
-              onChange={onTypeWithDebounce}
-              onKeyDown={() => {}}
-              spellCheck="false"
-              autoComplete="off"
-              style={{
-                paddingLeft: 50,
-                height: "3rem",
-                width: "100%",
-                border: `2px solid ${purple[200]}`,
-                borderRadius: "10px",
-                outline: "none",
-              }}
-            />
-            <MGlassButton />
-            <ClearButton onClick={clearText} />
-          </div>
-
-          <ListWrapper>
-            {locations?.map((location, i) => {
-              return (
-                <LocationListItem
-                  key={i}
-                  index={i}
-                  location={location}
-                  isSelected={selectedLocationIndex === i}
-                  handleClickLocation={handleClickLocation}
-                  handleHoverLocation={handleHoverLocation}
-                />
-              );
-            })}
-          </ListWrapper>
-
-          <Message
-            isShortCharacter={isShortCharacter}
-            listLength={locations.length}
-            isLoading={isLoading}
-            isError={isError}
+        <InputWrapper>
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Enter City Name"
+            onChange={onTypeWithDebounce}
+            onKeyDown={() => {}}
+            spellCheck="false"
+            autoComplete="off"
+            style={{
+              paddingLeft: 50,
+              height: "3rem",
+              width: "100%",
+              border: `2px solid ${purple[200]}`,
+              borderRadius: "10px",
+              outline: "none",
+            }}
           />
-        </Box>
-      </div>
+          <MGlassButton />
+          <ClearButton onClick={clearText} />
+        </InputWrapper>
+
+        <ListWrapper>
+          {locations?.map((location, i) => {
+            return (
+              <LocationListItem
+                key={location.id}
+                index={i}
+                location={location}
+                isSelected={selectedLocationIndex === i}
+                handleClickLocation={handleClickLocation}
+                handleHoverLocation={handleHoverLocation}
+              />
+            );
+          })}
+        </ListWrapper>
+
+        <Message
+          isShortCharacter={isShortCharacter}
+          listLength={locations.length}
+          isLoading={isLoading}
+          isError={isError}
+        />
+      </Box>
     );
   }
 );
@@ -298,50 +280,3 @@ function Message(props: MessageProps) {
     </>
   );
 }
-
-const MGlassButton = memo(() => {
-  return (
-    <Box
-      sx={(theme) => ({
-        position: "absolute",
-        top: 15,
-        left: 10,
-        color: theme.palette.primary.main,
-      })}
-    >
-      <MGlassIcon />
-    </Box>
-  );
-});
-
-const ClearButton = memo(({ onClick }: { onClick: () => void }) => {
-  return (
-    <Box
-      sx={(theme) => ({
-        position: "absolute",
-        top: 15,
-        right: 10,
-        color: theme.palette.primary.main,
-      })}
-      onClick={onClick}
-    >
-      <ClearIcon />
-    </Box>
-  );
-});
-
-const CloseButton = memo(({ onClick }: { onClick: () => void }) => {
-  return (
-    <Box
-      sx={(theme) => ({
-        position: "absolute",
-        top: 15,
-        right: 20,
-        color: theme.palette.primary.main,
-      })}
-      onClick={onClick}
-    >
-      <CloseIcon />
-    </Box>
-  );
-});
