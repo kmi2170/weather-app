@@ -53,7 +53,7 @@ const Navbar = () => {
         }}
       >
         <Box sx={{ display: { xs: "block", md: "none" } }}>
-          <Button onClick={() => toggle(true)}>
+          <Button onClick={() => toggle(true)} aria-label="menu">
             <MenuIcon />
           </Button>
           <Drawer
