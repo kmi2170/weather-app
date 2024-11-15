@@ -27,7 +27,9 @@ const CurrentOthers = (props: CurrentOthersProps) => {
 
   const { rain, snow, humidity, pressure, visibility, uvi } = current;
 
-  const totalPrecipitation = (rain?.["1h"] || 0) + (snow?.["1h"] || 0);
+  // const totalPrecipitation = (rain?.["1h"] || 0) + (snow?.["1h"] || 0);
+  const precipitation_rain = rain?.["1h"] || 0;
+  const precipitation_snow = snow?.["1h"];
 
   return (
     <Paper
@@ -42,7 +44,7 @@ const CurrentOthers = (props: CurrentOthersProps) => {
     >
       <DataWrapper>
         <Typography variant="subtitle1" sx={{ color: "dodgerblue" }}>
-          Precipitation {precipitationWithUnit(totalPrecipitation, units)}
+          Rain {precipitationWithUnit(precipitation_rain, units)}
         </Typography>
         <Typography variant="subtitle1" sx={{ color: "deepskyblue" }}>
           Humidity {humidity} %
@@ -53,6 +55,11 @@ const CurrentOthers = (props: CurrentOthersProps) => {
       </DataWrapper>
 
       <DataWrapper>
+        {precipitation_snow && (
+          <Typography variant="subtitle1" sx={{ color: "dodgerblue" }}>
+            Snow {precipitationWithUnit(precipitation_snow, units)}
+          </Typography>
+        )}
         <Typography variant="subtitle1" sx={{ color: "limegreen" }}>
           Visibility {visibilityWithUnit(visibility, units)}
         </Typography>
