@@ -1,22 +1,16 @@
 import { useState } from "react";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
 import { useAppSelector } from "../../store/hooks";
-import { precipitationWithUnit, pressureWithUnit } from "../../utils/units";
-import MoonPhaseWithIcon from "./icons/MoonPhaseWithIcon";
-import { dayWithTZ, dateWithTZ, timeWithTZ } from "../../utils/time";
+import { dayWithTZ, dateWithTZ } from "../../utils/time";
 import { WeatherDaily } from "../../api/types/weather";
-import {
-  AlmanacWrapper,
-  IconMoon,
-  IconSun,
-  MoonLabel,
-  SunLabel,
-} from "./WeatherCurrent/Almanac";
+import Almanac from "./WeatherCurrent/Almanac";
+import Others from "./WeatherCurrent/Others";
 
 const PopoverWrapper = styled("div")(({ theme }) => ({
   border: `2px solid ${theme.palette.primary.light}`,
@@ -94,123 +88,90 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
       >
         <Container
           maxWidth="xs"
-          sx={{ backgroundColor: "lightcyan", pt: "1rem", pb: "1rem" }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.75rem",
+            pt: "0.75rem",
+            pb: "1rem",
+            backgroundColor: "lightcyan",
+          }}
         >
-          <Grid item xs={12}>
-            <Typography variant="h6" align="center">
-              {dateWithTZ(data.dt, timezone)} {dayWithTZ(data.dt, timezone)}
+          <Typography variant="h6" align="center">
+            {dateWithTZ(data.dt, timezone)} {dayWithTZ(data.dt, timezone)}
+          </Typography>
+          {summary && (
+            <Typography
+              variant="h6"
+              sx={(theme) => ({
+                color: theme.palette.primary.dark,
+              })}
+              align="center"
+              noWrap={false}
+            >
+              {summary}
             </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            {summary && (
-              <Typography
-                variant="h6"
-                sx={(theme) => ({
-                  marginTop: "10px",
-                  marginBottom: "25px",
-                  width: "100%",
-                  color: theme.palette.primary.dark,
-                })}
+          )}
+
+          <Paper
+            elevation={2}
+            sx={{
+              p: "0.75rem",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center",
+              backgroundColor: "palegreen",
+            }}
+          >
+            {["morn", "day", "eve", "night"].map((item) => (
+              <Box
+                key={item}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignIterator: "center",
+                  marginBottom: "0.5rem",
+                }}
               >
-                {summary}
-              </Typography>
-            )}
-          </Grid>
-          <Grid container alignItems="center">
-            <Grid item container xs={12} spacing={4}>
-              {["morn", "day", "eve", "night"].map((item) => (
-                <Grid
-                  item
-                  key={item}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignIterator: "center",
-                    marginBottom: "0.5rem",
-                  }}
+                <Typography sx={{ textTransform: "capitalize" }}>
+                  {item}
+                </Typography>
+                <Typography
+                  sx={(theme) => ({
+                    color: theme.palette.primary.main,
+                  })}
                 >
-                  <Typography sx={{ textTransform: "capitalize" }}>
-                    {item}
-                  </Typography>
-                  <Typography
-                    sx={(theme) => ({
-                      color: theme.palette.primary.main,
-                    })}
-                  >
-                    {Number(temp[item]).toFixed(0)}
-                    {units === "imperial" ? (
-                      <small> °F </small>
-                    ) : (
-                      <small> °C</small>
-                    )}
-                  </Typography>
-                </Grid>
-              ))}
-            </Grid>
+                  {Number(temp[item]).toFixed(0)}
+                  {units === "imperial" ? (
+                    <small> °F </small>
+                  ) : (
+                    <small> °C</small>
+                  )}
+                </Typography>
+              </Box>
+            ))}
+          </Paper>
 
-            <Grid item xs={12}>
-              {rain && (
-                <Typography variant="subtitle2">
-                  Rain {precipitationWithUnit(rain, units)}
-                </Typography>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              {snow && (
-                <Typography variant="subtitle2">
-                  Snow {precipitationWithUnit(snow, units)}
-                </Typography>
-              )}
-            </Grid>
+          <Others
+            rain={rain || 0}
+            snow={snow}
+            humidity={humidity}
+            clouds={clouds}
+            uvi={uvi}
+            pressure={pressure}
+            units={units}
+          />
 
-            <Grid item xs={12} container>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2">
-                  Cloud Cover {clouds} %
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2">
-                  Humidity {humidity} %
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2">
-                  Pressure {pressureWithUnit(pressure, units)}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={6}>
-                <Typography variant="subtitle2">UV index {uvi}</Typography>
-              </Grid>
-
-              <AlmanacWrapper sx={{ mt: "0.5rem" }}>
-                <SunLabel>Sun</SunLabel>
-                <Typography variant="subtitle2">
-                  <IconSun className="wi wi-sunrise" />
-                  {timeWithTZ(sunrise, timezone)}
-                </Typography>
-                <Typography variant="subtitle2">
-                  <IconSun className="wi wi-sunset" />
-                  {timeWithTZ(sunset, timezone)}
-                </Typography>
-              </AlmanacWrapper>
-
-              <AlmanacWrapper>
-                <MoonLabel>Moon</MoonLabel>
-                <Typography variant="subtitle2">
-                  <IconMoon className={`wi wi-moonrise`} />
-                  {timeWithTZ(moonrise, timezone)}
-                </Typography>
-                <Typography variant="subtitle2">
-                  <IconMoon className={`wi wi-moonset`} />
-                  {timeWithTZ(moonset, timezone)}
-                </Typography>
-              </AlmanacWrapper>
-            </Grid>
-            <MoonPhaseWithIcon moon_phase={moon_phase} />
-          </Grid>
+          <Almanac
+            sunrise={sunrise}
+            sunset={sunset}
+            moonrise={moonrise}
+            moonset={moonset}
+            moon_phase={moon_phase}
+            timezone={timezone}
+          />
         </Container>
       </Popover>
     </>

@@ -17,19 +17,19 @@ const DataWrapper = styled("div")({
   alignItems: "flex-start",
 });
 
-type CurrentOthersProps = {
-  current: WeatherCurrent;
+type Others = {
+  rain: number;
+  snow?: number;
+  humidity: number;
+  pressure: number;
+  visibility?: number;
+  clouds?: number;
+  uvi: number;
   units: Units;
 };
 
-const CurrentOthers = (props: CurrentOthersProps) => {
-  const { current, units } = props;
-
-  const { rain, snow, humidity, pressure, visibility, uvi } = current;
-
-  // const totalPrecipitation = (rain?.["1h"] || 0) + (snow?.["1h"] || 0);
-  const precipitation_rain = rain?.["1h"] || 0;
-  const precipitation_snow = snow?.["1h"];
+const Others = (props: Others) => {
+  const { rain, snow, humidity, pressure, visibility, uvi, units } = props;
 
   return (
     <Paper
@@ -44,7 +44,7 @@ const CurrentOthers = (props: CurrentOthersProps) => {
     >
       <DataWrapper>
         <Typography variant="subtitle1" sx={{ color: "dodgerblue" }}>
-          Rain {precipitationWithUnit(precipitation_rain, units)}
+          Rain {precipitationWithUnit(rain, units)}
         </Typography>
         <Typography variant="subtitle1" sx={{ color: "deepskyblue" }}>
           Humidity {humidity} %
@@ -55,14 +55,16 @@ const CurrentOthers = (props: CurrentOthersProps) => {
       </DataWrapper>
 
       <DataWrapper>
-        {precipitation_snow && (
+        {snow && (
           <Typography variant="subtitle1" sx={{ color: "dodgerblue" }}>
-            Snow {precipitationWithUnit(precipitation_snow, units)}
+            Snow {precipitationWithUnit(snow, units)}
           </Typography>
         )}
-        <Typography variant="subtitle1" sx={{ color: "limegreen" }}>
-          Visibility {visibilityWithUnit(visibility, units)}
-        </Typography>
+        {visibility && (
+          <Typography variant="subtitle1" sx={{ color: "limegreen" }}>
+            Visibility {visibilityWithUnit(visibility, units)}
+          </Typography>
+        )}
         <Typography variant="subtitle1" sx={{ color: "darkmagenta" }}>
           UV index {uvi}
         </Typography>
@@ -71,4 +73,4 @@ const CurrentOthers = (props: CurrentOthersProps) => {
   );
 };
 
-export default CurrentOthers;
+export default Others;

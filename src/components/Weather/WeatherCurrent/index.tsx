@@ -5,7 +5,7 @@ import { useGetWeatherQuery } from "../../../services/weatherApi";
 
 import { Weather } from "../../../api/types/weather";
 import CurrentMain from "./CurrentMain";
-import CurrentOthers from "./CurrentOthers";
+import Others from "./Others";
 import Almanac from "./Almanac";
 
 const WeatherCurrent = () => {
@@ -22,8 +22,12 @@ const WeatherCurrent = () => {
 
   const { timezone, current, daily } = data as Weather;
 
-  const { sunrise, sunset } = current;
+  const { rain, snow, humidity, pressure, visibility, uvi, sunrise, sunset } =
+    current;
   const { moonrise, moonset, moon_phase } = daily[0];
+
+  const precipitation_rain = rain?.["1h"] || 0;
+  const precipitation_snow = snow?.["1h"];
 
   return (
     <>
@@ -52,7 +56,15 @@ const WeatherCurrent = () => {
             sx={{ pt: { xs: "0.5rem", md: 0 }, pl: { xs: 0, md: "0.75rem" } }}
           >
             <Grid xs={12}>
-              <CurrentOthers current={current} units={units} />
+              <Others
+                rain={precipitation_rain}
+                snow={precipitation_snow}
+                pressure={pressure}
+                humidity={humidity}
+                visibility={visibility}
+                uvi={uvi}
+                units={units}
+              />
             </Grid>
             <Grid xs={12}>
               <Almanac
