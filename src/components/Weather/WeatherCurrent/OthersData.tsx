@@ -7,7 +7,6 @@ import {
   pressureWithUnit,
   visibilityWithUnit,
 } from "../../../utils/units";
-import { WeatherCurrent } from "../../../api/types/weather";
 import { Units } from "../../../store/initialState";
 
 const DataWrapper = styled("div")({
@@ -17,7 +16,7 @@ const DataWrapper = styled("div")({
   alignItems: "flex-start",
 });
 
-type Others = {
+type OtherData = {
   rain: number;
   snow?: number;
   humidity: number;
@@ -28,7 +27,7 @@ type Others = {
   units: Units;
 };
 
-const Others = (props: Others) => {
+const OtherData = (props: OtherData) => {
   const { rain, snow, humidity, pressure, visibility, uvi, units } = props;
 
   return (
@@ -73,4 +72,4 @@ const Others = (props: Others) => {
   );
 };
 
-export default Others;
+export default OtherData;

@@ -10,7 +10,7 @@ import { useAppSelector } from "../../store/hooks";
 import { dayWithTZ, dateWithTZ } from "../../utils/time";
 import { WeatherDaily } from "../../api/types/weather";
 import Almanac from "./WeatherCurrent/Almanac";
-import Others from "./WeatherCurrent/Others";
+import OtherData from "./WeatherCurrent/OthersData";
 
 const PopoverWrapper = styled("div")(({ theme }) => ({
   border: `2px solid ${theme.palette.primary.light}`,
@@ -154,7 +154,7 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
             ))}
           </Paper>
 
-          <Others
+          <OtherData
             rain={rain || 0}
             snow={snow}
             humidity={humidity}

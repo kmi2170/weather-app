@@ -5,7 +5,7 @@ import { useGetWeatherQuery } from "../../../services/weatherApi";
 
 import { Weather } from "../../../api/types/weather";
 import CurrentMain from "./CurrentMain";
-import Others from "./Others";
+import OtherData from "./OthersData";
 import Almanac from "./Almanac";
 
 const WeatherCurrent = () => {
@@ -56,7 +56,7 @@ const WeatherCurrent = () => {
             sx={{ pt: { xs: "0.5rem", md: 0 }, pl: { xs: 0, md: "0.75rem" } }}
           >
             <Grid xs={12}>
-              <Others
+              <OtherData
                 rain={precipitation_rain}
                 snow={precipitation_snow}
                 pressure={pressure}
