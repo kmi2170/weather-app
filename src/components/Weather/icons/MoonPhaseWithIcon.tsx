@@ -10,6 +10,7 @@ const MoonIconComponent = styled("div")({
 });
 
 const Icon = styled("i")({
+  marginLeft: "0.5rem",
   fontSize: "1.75rem",
   color: purple[500],
 });
