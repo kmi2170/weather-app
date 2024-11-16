@@ -8,6 +8,7 @@ import {
   visibilityWithUnit,
 } from "../../../utils/units";
 import { Units } from "../../../store/initialState";
+import { clouds } from "../../../constants/legends";
 
 const DataWrapper = styled("div")({
   display: "flex",
@@ -28,13 +29,14 @@ type OtherData = {
 };
 
 const OtherData = (props: OtherData) => {
-  const { rain, snow, humidity, pressure, visibility, uvi, units } = props;
+  const { rain, snow, humidity, pressure, visibility, clouds, uvi, units } =
+    props;
 
   return (
     <Paper
       elevation={2}
       sx={{
-        padding: "1rem 2rem",
+        padding: "1rem 1rem",
         background: "snow",
         display: "flex",
         flexDirection: "row",
@@ -45,27 +47,35 @@ const OtherData = (props: OtherData) => {
         <Typography variant="subtitle1" sx={{ color: "dodgerblue" }}>
           Rain {precipitationWithUnit(rain, units)}
         </Typography>
+        {snow && (
+          <Typography variant="subtitle1" sx={{ color: "dodgerblue" }}>
+            Snow {precipitationWithUnit(snow, units)}
+          </Typography>
+        )}
+      </DataWrapper>
+
+      <DataWrapper>
         <Typography variant="subtitle1" sx={{ color: "deepskyblue" }}>
           Humidity {humidity} %
         </Typography>
         <Typography variant="subtitle1" sx={{ color: "maroon" }}>
           Pressure {pressureWithUnit(pressure, units)}
         </Typography>
-      </DataWrapper>
-
-      <DataWrapper>
-        {snow && (
-          <Typography variant="subtitle1" sx={{ color: "dodgerblue" }}>
-            Snow {precipitationWithUnit(snow, units)}
-          </Typography>
-        )}
         {visibility && (
           <Typography variant="subtitle1" sx={{ color: "limegreen" }}>
             Visibility {visibilityWithUnit(visibility, units)}
           </Typography>
         )}
+        {clouds && (
+          <Typography variant="subtitle1" sx={{ color: "dimgrey" }}>
+            Cloud Cover {clouds.toFixed(0)} %
+          </Typography>
+        )}
+      </DataWrapper>
+
+      <DataWrapper>
         <Typography variant="subtitle1" sx={{ color: "darkmagenta" }}>
-          UV index {uvi}
+          UV {uvi}
         </Typography>
       </DataWrapper>
     </Paper>
