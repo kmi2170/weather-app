@@ -5,7 +5,7 @@ import { useGetWeatherQuery } from "../../../services/weatherApi";
 
 import { Weather } from "../../../api/types/weather";
 import CurrentMain from "./CurrentMain";
-import OtherData from "./OthersData";
+import Details from "./Details";
 import Almanac from "./Almanac";
 
 const WeatherCurrent = () => {
@@ -32,12 +32,8 @@ const WeatherCurrent = () => {
   return (
     <>
       <div>
-        <Grid
-          container
-          justifyContent="space-between"
-          alignItems="space-between"
-        >
-          <Grid xs={12} md={7}>
+        <Grid container>
+          <Grid xs={12} sm={7}>
             <CurrentMain
               current={current}
               location={location}
@@ -49,14 +45,14 @@ const WeatherCurrent = () => {
           <Grid
             container
             xs={12}
-            md={5}
-            justifyContent="space-between"
-            alignItems="space-between"
-            gap="0.5rem"
-            sx={{ pt: { xs: "0.5rem", md: 0 }, pl: { xs: 0, md: "0.75rem" } }}
+            sm={5}
+            sx={{
+              pt: { xs: "0.5rem", md: 0 },
+              pl: { xs: 0, md: "0.75rem" },
+            }}
           >
             <Grid xs={12}>
-              <OtherData
+              <Details
                 rain={precipitation_rain}
                 snow={precipitation_snow}
                 pressure={pressure}

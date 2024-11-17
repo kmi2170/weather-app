@@ -102,7 +102,7 @@ const Home = () => {
             {!isLoading ? (
               <WeatherCurrent />
             ) : (
-              <Skeleton variant="rectangular" height={275} />
+              <Skeleton variant="rectangular" height={450} />
             )}
           </Grid>
 

@@ -10,15 +10,26 @@ import { isDay, tempWithUnit } from "../../../utils/units";
 import { Location, Units } from "../../../store/initialState";
 import { WeatherCurrent } from "../../../api/types/weather";
 
-const LocationWrapper = styled("div")(({ theme }) => ({
-  mb: "0.5rem",
+const DateTimeWrapper = styled("div")(({ theme }) => ({
   display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
-  [theme.breakpoints?.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     justifyContent: "center",
   },
+  [theme.breakpoints.up("md")]: {
+    marginLeft: "1rem",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    gap: "1rem",
+  },
+  alignItems: "center",
+}));
+
+const LocationWrapper = styled("div")(({ theme }) => ({
+  margin: "1rem 0",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
   alignItems: "center",
 }));
 
@@ -68,59 +79,47 @@ const CurrentMain = (props: CurrentMainProps) => {
     <Paper
       elevation={2}
       sx={{
+        p: "2rem 1.5rem",
         display: "flex",
         flexDirection: "column",
         backgroundColor: bg_color,
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-        }}
-      >
-        <Typography
-          variant="subtitle1"
-          sx={{ color: font_color, mt: "0.5rem", ml: "2rem" }}
-        >
+      <DateTimeWrapper>
+        <Typography variant="h5" sx={{ color: font_color }}>
           {dayDateTimeWithTZ(dt, timezone)}
         </Typography>
-        <Typography
-          variant="subtitle2"
-          sx={{ color: font_color, mt: "0.5rem", ml: "0.5rem" }}
-        >
+        <Typography variant="h6" sx={{ color: font_color }}>
           ({timezone})
         </Typography>
-      </div>
+      </DateTimeWrapper>
 
       <LocationWrapper>
         <LocationSubWrapper>
-          <Typography variant="h5" sx={{ color: font_color_date }}>
+          <Typography variant="h4" sx={{ color: font_color_date }}>
             {city}
             {region && <span>,&nbsp;</span>}
           </Typography>
-          <Typography variant="h6" sx={{ color: font_color_date }}>
+          <Typography variant="h5" sx={{ color: font_color_date }}>
             {region}
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={(theme) => ({
-              color: font_color_date,
-              ml: "0.5rem",
-              fontStyle: "italic",
-              [theme.breakpoints?.up("sm")]: {
-                ml: "1rem",
-              },
-            })}
-          >
-            {country}
           </Typography>
         </LocationSubWrapper>
 
+        <Typography
+          variant="h5"
+          sx={{
+            mt: "0.5rem",
+            mb: "0.25rem",
+            color: font_color_date,
+            fontStyle: "italic",
+          }}
+        >
+          {country}
+        </Typography>
+
         {lat && lon && (
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
             sx={{ color: font_color, ml: "1rem", mt: "0.25rem" }}
           >
             lat: {lat.toFixed(3)}, lon: {lon.toFixed(3)}
@@ -147,7 +146,7 @@ const CurrentMain = (props: CurrentMainProps) => {
           }}
         >
           <Typography
-            variant="h6"
+            variant="h5"
             align="center"
             sx={{ color: font_color_main, mb: "0.75rem" }}
           >
@@ -162,15 +161,15 @@ const CurrentMain = (props: CurrentMainProps) => {
           >
             <WeatherIcon
               weatherId={weather?.[0]?.id}
-              size="4rem"
+              size="3.75rem"
               iconColor={icon_color}
               isDay={_isDay}
             />
           </div>
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
             align="center"
-            sx={{ color: font_color, mt: "0.75rem" }}
+            sx={{ color: font_color, mt: "1.5rem" }}
           >
             {weather?.[0]?.description}
           </Typography>
@@ -179,14 +178,14 @@ const CurrentMain = (props: CurrentMainProps) => {
         <Grid item xs={4}>
           <div>
             <Typography
-              variant="h4"
+              variant="h3"
               align="center"
               sx={{ color: font_color_temp }}
             >
               {tempWithUnit(temp, units)}
             </Typography>
             <Typography
-              variant="subtitle2"
+              variant="h6"
               color="textSecondary"
               align="center"
               sx={{ color: font_color }}
@@ -208,12 +207,11 @@ const CurrentMain = (props: CurrentMainProps) => {
         </Grid>
 
         <Typography
-          variant="subtitle2"
-          color="textSecondary"
+          variant="h6"
           align="center"
-          sx={{ color: font_color, width: "100%", mb: "1rem" }}
+          sx={{ color: font_color, width: "100%" }}
         >
-          Cloud Cover {clouds} %
+          Cloudiness {clouds} %
         </Typography>
       </Grid>
     </Paper>

@@ -212,16 +212,16 @@ const WeatherFortyEightHours = () => {
                 </Typography>
                 <WeatherIcon
                   weatherId={data.weather[0].id}
-                  size="1.5rem"
+                  size="2rem"
                   iconColor={icon_color}
                   isDay={_isDay}
                 />
                 <Typography
-                  variant="h6"
+                  variant="h5"
                   align="center"
-                  sx={(theme) => ({
+                  sx={() => ({
                     width: "5rem",
-                    marginBottom: "5px",
+                    mt: "0.5rem",
                     color: font_color_temp,
                   })}
                 >

@@ -58,22 +58,30 @@ const WindIcon = ({
   return (
     <>
       {current && (
-        <Typography variant="h6" align="center" sx={{ color: fontColor }}>
+        <Typography variant="h4" align="center" sx={{ color: fontColor }}>
           {windDirection(wind_deg)}
         </Typography>
       )}
-      <Typography variant="subtitle2" align="center" sx={{ color: fontColor }}>
+      <Typography
+        variant={current ? "h6" : "subtitle1"}
+        align="center"
+        sx={{ color: fontColor, mt: "0.25rem", mb: "0.25rem" }}
+      >
         {(wind_speed || 0).toFixed(1)}
         {speedUnit()}
       </Typography>
       <IconWrapper>
         <Icon
           className={windIconClass(wind_deg)}
-          size={current ? "3rem" : "1.75rem"}
+          size={current ? "4rem" : "2.5rem"}
           color={iconColor || theme.palette.primary.main}
         />
       </IconWrapper>
-      <Typography variant="subtitle2" align="center" sx={{ color: fontColor }}>
+      <Typography
+        variant={current ? "h6" : "subtitle1"}
+        align="center"
+        sx={{ color: fontColor, mt: "0.25rem" }}
+      >
         Gust {wind_gust?.toFixed(1)}
       </Typography>
     </>

@@ -55,7 +55,7 @@ const WeatherDaily = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography variant="subtitle2" align="center">
+                <Typography variant="subtitle1" align="center">
                   {dateWithTZ(data.dt, timezone)}
                 </Typography>
                 <Typography
@@ -66,17 +66,17 @@ const WeatherDaily = () => {
                   {dayWithTZ(data.dt, timezone)}
                 </Typography>
                 <Typography
-                  variant="subtitle2"
+                  variant="subtitle1"
                   align="center"
                   sx={(theme) => ({
                     mt: "0.5rem",
-                    mb: "0.5rem",
+                    mb: "1.0rem",
                     color: theme.palette.primary.dark,
                   })}
                 >
                   {data.weather[0].main}
                 </Typography>
-                <WeatherIcon weatherId={data.weather[0].id} size="2rem" />
+                <WeatherIcon weatherId={data.weather[0].id} size="2.5rem" />
                 <Typography
                   variant="subtitle2"
                   align="center"
@@ -86,7 +86,7 @@ const WeatherDaily = () => {
                 </Typography>
 
                 <Typography
-                  variant="h6"
+                  variant="h5"
                   align="center"
                   sx={(theme) => ({ color: theme.palette.primary.main })}
                 >
@@ -106,14 +106,14 @@ const WeatherDaily = () => {
                 />
 
                 <Typography
-                  variant="subtitle2"
+                  variant="subtitle1"
                   align="center"
                   sx={(theme) => ({ color: theme.palette.primary.main })}
                 >
                   <IconPrecipitation className={`wi wi-umbrella`} />{" "}
                   {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
                 </Typography>
-                <Typography variant="subtitle2" align="center">
+                <Typography variant="subtitle1" align="center">
                   <IconPrecipitation className={`wi wi-raindrop`} />{" "}
                   {precipitationWithUnit(totalPrecipitation, units)}
                 </Typography>
