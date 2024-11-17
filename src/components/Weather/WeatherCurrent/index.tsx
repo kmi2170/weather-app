@@ -48,7 +48,7 @@ const WeatherCurrent = () => {
             sm={5}
             sx={{
               pt: { xs: "0.5rem", md: 0 },
-              pl: { xs: 0, md: "0.75rem" },
+              pl: { xs: 0, sm: "0.75rem" },
             }}
           >
             <Grid xs={12}>
