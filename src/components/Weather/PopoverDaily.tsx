@@ -3,7 +3,6 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
 import { useAppSelector } from "../../store/hooks";
@@ -21,6 +20,26 @@ const PopoverWrapper = styled("div")(({ theme }) => ({
   },
 }));
 
+const DayWrapper = styled("span")({
+  marginLeft: "0.25rem",
+  color: "dodgerblue",
+});
+
+const TempWrapper = styled("div")({
+  padding: "0.75rem",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-around",
+  alignItems: "center",
+});
+
+const TempSubWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignIterator: "center",
+  marginBottom: "0.5rem",
+});
 interface PopoverDailyProps {
   children: React.ReactNode;
   data: WeatherDaily;
@@ -94,54 +113,46 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
             gap: "0.75rem",
             pt: "0.75rem",
             pb: "1rem",
-            backgroundColor: "lightcyan",
+            backgroundColor: "whitesmoke",
           }}
         >
-          <Typography variant="h6" align="center">
-            {dateWithTZ(data.dt, timezone)} {dayWithTZ(data.dt, timezone)}
+          <Typography variant="h5" component="h6" align="center">
+            {dateWithTZ(data.dt, timezone)}{" "}
+            <DayWrapper>{dayWithTZ(data.dt, timezone)}</DayWrapper>
           </Typography>
           {summary && (
-            <Typography
-              variant="h6"
-              sx={(theme) => ({
-                color: theme.palette.primary.dark,
-              })}
-              align="center"
-              noWrap={false}
-            >
-              {summary}
-            </Typography>
+            <Paper elevation={2} sx={{ p: "0.5rem" }}>
+              <Typography
+                variant="h6"
+                sx={() => ({
+                  color: "forestgreen",
+                })}
+                align="center"
+                noWrap={false}
+              >
+                {summary}
+              </Typography>
+            </Paper>
           )}
 
-          <Paper
-            elevation={2}
-            sx={{
-              p: "0.75rem",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center",
-              backgroundColor: "palegreen",
-            }}
-          >
+          <TempWrapper>
             {["morn", "day", "eve", "night"].map((item) => (
-              <Box
-                key={item}
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignIterator: "center",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                <Typography sx={{ textTransform: "capitalize" }}>
+              <TempSubWrapper key={item}>
+                <Typography
+                  variant="h5"
+                  component="h6"
+                  align="center"
+                  sx={{ textTransform: "capitalize" }}
+                >
                   {item}
                 </Typography>
                 <Typography
+                  variant="h5"
+                  component="h6"
                   sx={(theme) => ({
                     color: theme.palette.primary.main,
                   })}
+                  align="center"
                 >
                   {Number(temp[item]).toFixed(0)}
                   {units === "imperial" ? (
@@ -150,9 +161,9 @@ const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
                     <small> °C</small>
                   )}
                 </Typography>
-              </Box>
+              </TempSubWrapper>
             ))}
-          </Paper>
+          </TempWrapper>
 
           <Details
             rain={rain || 0}
