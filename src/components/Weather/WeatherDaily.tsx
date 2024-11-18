@@ -6,7 +6,6 @@ import { useAppSelector } from "../../store/hooks";
 
 import { selectWeather } from "../../slice/weatherSlice";
 import { useGetWeatherQuery } from "../../services/weatherApi";
-import { formatDigits } from "../../utils/formatDigits";
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
@@ -90,7 +89,7 @@ const WeatherDaily = () => {
                   align="center"
                   sx={(theme) => ({ color: theme.palette.primary.main })}
                 >
-                  {formatDigits(data.temp.max)}/{formatDigits(data.temp.min)}
+                  {data.temp.max.toFixed(0)}/{data.temp.min.toFixed(0)}
                   {units === "imperial" ? (
                     <small> °F </small>
                   ) : (
