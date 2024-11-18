@@ -7,6 +7,7 @@ import { useGetWeatherQuery } from "../../services/weatherApi";
 import { timeWithTZ } from "../../utils/time";
 import { ChartMinutely } from "./charts";
 import { Weather } from "../../api/types/weather";
+import theme from "../../theme/theme";
 
 const WeatherMinutely = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
@@ -33,28 +34,32 @@ const WeatherMinutely = () => {
     units === "imperial" ? "Precipitation [in]" : "Precipitation [mm]";
 
   return (
-    <>
-      <Paper
-        sx={{
-          padding: "1rem",
-          height: "200px",
-          paddingBottom: "50px",
-        }}
-      >
-        <Typography variant="subtitle1" align="center">
-          {isFall
-            ? `Precipitation for the next 1 Hour ${unitsLabel}`
-            : data_precipitation.length > 0
-            ? `No Precipitation for the next 1 Hour`
-            : "Precipitation Data is Not Available"}
-        </Typography>
-        <ChartMinutely
-          chartData={data_precipitation}
-          dataLabel={dataTime}
-          units={units}
-        />
-      </Paper>
-    </>
+    <Paper
+      sx={(theme) => ({
+        padding: "1rem",
+        [theme.breakpoints.down("sm")]: {
+          height: "225px",
+        },
+        [theme.breakpoints.up("sm")]: {
+          height: "210px",
+        },
+        paddingBottom: "50px",
+      })}
+    >
+      <Typography variant="subtitle1" align="center">
+        {isFall
+          ? `Precipitation for the next 1 Hour ${unitsLabel}`
+          : data_precipitation.length > 0
+          ? `No Precipitation for the next 1 Hour`
+          : "Precipitation Data is Not Available"}
+      </Typography>
+      <ChartMinutely
+        chartData={data_precipitation}
+        dataLabel={dataTime}
+        units={units}
+        height="150px"
+      />
+    </Paper>
   );
 };
 

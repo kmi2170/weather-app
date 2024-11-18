@@ -1,4 +1,6 @@
+import Box from "@mui/material/Box";
 import { blue } from "@mui/material/colors";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +12,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
-import { ChartProps, WeatherMinutely } from "../../../api/types/weather";
+import { ChartProps } from "../../../api/types/weather";
 
 ChartJS.register(
   CategoryScale,
@@ -83,7 +85,11 @@ const ChartMinutely = ({
     ],
   };
 
-  return <Bar options={options} data={data} height={height} />;
+  return (
+    <Box sx={{ height }}>
+      <Bar options={options} data={data} />
+    </Box>
+  );
 };
 
 export default ChartMinutely;
