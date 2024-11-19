@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { styled, useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 
 import WeatherIcon from "../icons/WeatherIcon";
 import WindIcon from "../icons/WindIcon";
@@ -50,6 +51,7 @@ type CurrentMainProps = {
 const CurrentMain = (props: CurrentMainProps) => {
   const { location, current, timezone, units } = props;
   const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
 
   const {
     dt,
@@ -185,8 +187,7 @@ const CurrentMain = (props: CurrentMainProps) => {
               {tempWithUnit(temp, units)}
             </Typography>
             <Typography
-              variant="h6"
-              color="textSecondary"
+              variant={isXs ? "subtitle2" : "h6"}
               align="center"
               sx={{ color: font_color }}
             >
