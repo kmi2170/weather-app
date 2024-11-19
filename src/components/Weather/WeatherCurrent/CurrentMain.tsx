@@ -91,7 +91,7 @@ const CurrentMain = (props: CurrentMainProps) => {
         <Typography variant="h5" sx={{ color: font_color }}>
           {dayDateTimeWithTZ(dt, timezone)}
         </Typography>
-        <Typography variant="h6" sx={{ color: font_color }}>
+        <Typography variant="subtitle1" sx={{ color: font_color }}>
           ({timezone})
         </Typography>
       </DateTimeWrapper>
