@@ -51,8 +51,9 @@ const WeatherDaily = () => {
   return (
     <Grid
       container
+      flexDirection="row"
       justifyContent="flex-start"
-      alignItems="stretch"
+      flexWrap="wrap"
       spacing={1}
     >
       {data_yesterday && (
@@ -69,7 +70,6 @@ const WeatherDaily = () => {
             sx={{
               padding: "0.5rem 0",
               borderRadius: "15px",
-              // backgroundColor: "rgb(255, 248, 220)",
               backgroundColor: "whitesmoke",
               display: "flex",
               flexDirection: "column",
@@ -82,11 +82,11 @@ const WeatherDaily = () => {
               opacity: "0.8",
             }}
           >
-            <Typography variant="subtitle1" align="center">
+            <Typography variant="h6" align="center">
               Yesterday
             </Typography>
             <Typography
-              variant="subtitle2"
+              variant="h6"
               align="center"
               sx={{ color: "dodgerblue" }}
             >
@@ -141,18 +141,18 @@ const WeatherDaily = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography variant="subtitle1" align="center">
-                  {dateWithTZ(data.dt, timezone)}
+                <Typography variant="h6" align="center">
+                  {i === 0 ? "Today" : dateWithTZ(data.dt, timezone)}
                 </Typography>
                 <Typography
-                  variant="subtitle2"
+                  variant="h6"
                   align="center"
                   sx={{ color: "dodgerblue" }}
                 >
                   {dayWithTZ(data.dt, timezone)}
                 </Typography>
                 <Typography
-                  variant="subtitle1"
+                  variant="h6"
                   align="center"
                   sx={(theme) => ({
                     mt: "0.5rem",
@@ -164,7 +164,7 @@ const WeatherDaily = () => {
                 </Typography>
                 <WeatherIcon weatherId={data.weather[0].id} size="2.5rem" />
                 <Typography
-                  variant="subtitle2"
+                  variant="subtitle1"
                   align="center"
                   sx={{ mt: "0.5rem", mb: "0.25rem", color: "forestgreen" }}
                 >
@@ -192,14 +192,14 @@ const WeatherDaily = () => {
                 />
 
                 <Typography
-                  variant="subtitle1"
+                  variant="h6"
                   align="center"
                   sx={(theme) => ({ color: theme.palette.primary.main })}
                 >
                   <IconPrecipitation className={`wi wi-umbrella`} />{" "}
                   {data.pop != null ? (data.pop * 100).toFixed(0) : "-"}%
                 </Typography>
-                <Typography variant="subtitle1" align="center">
+                <Typography variant="h6" align="center">
                   <IconPrecipitation className={`wi wi-raindrop`} />{" "}
                   {precipitationWithUnit(totalPrecipitation, units)}
                 </Typography>
