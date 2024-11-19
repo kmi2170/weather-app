@@ -1,4 +1,3 @@
-import { SxProps } from "@mui/material";
 import { Units } from "../../store/initialState";
 
 export type CookieLocation = Record<string, string> | null | undefined;
@@ -22,6 +21,49 @@ export type WeatherQuery = {
   lon: string;
   units: string;
   lang: string;
+};
+
+export type WeatherHistoryQuery = {
+  lat: string;
+  lon: string;
+  date: string;
+  tz?: string;
+  units: string;
+  lang: string;
+};
+
+export type WeatherHistoryResponse = {
+  lat: number;
+  lon: number;
+  tz: string;
+  date: string;
+  units: string;
+  cloud_cover: {
+    afternoon: number;
+  };
+  humidity: {
+    afternoon: number;
+  };
+  precipitation: {
+    total: number;
+  };
+  temperature: {
+    min: number;
+    max: number;
+    afternoon: number;
+    night: number;
+    evening: number;
+    morning: number;
+  };
+  pressure: {
+    afternoon: number;
+  };
+  wind: {
+    max: {
+      speed: number;
+      direction: number;
+    };
+  };
 };
 
 export type WeatherSummary = {
@@ -149,6 +191,7 @@ export type Weather = {
   daily: WeatherDaily[];
   alerts: Alerts;
 };
+
 export type LocationType = {
   id: number;
   name: string;

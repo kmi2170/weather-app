@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Weather, WeatherQuery } from "../api/types/weather";
+import {
+  Weather,
+  WeatherHistoryQuery,
+  WeatherHistoryResponse,
+  WeatherQuery,
+} from "../api/types/weather";
 import { WeatherMapQuery, WeatherMapResponse } from "../api/types/map";
 import { CustomResponse } from "../api/types";
 
@@ -26,10 +31,22 @@ export const weatherApi = createApi({
       WeatherMapQuery
     >({
       query: ({ lat, lon, zoom, layer }) => {
-        return `weathermap?layer=${layer}&lat=${lat}&lon=${lon}&zoom=${zoom}`;
+        return `weather-map?layer=${layer}&lat=${lat}&lon=${lon}&zoom=${zoom}`;
+      },
+    }),
+    getWeatherHistory: builder.query<
+      WeatherHistoryResponse,
+      WeatherHistoryQuery
+    >({
+      query: ({ lat, lon, date, tz, units, lang }) => {
+        return `weather-history?&lat=${lat}&lon=${lon}&date=${date}&tz=${tz}&units=${units}&lang=${lang}`;
       },
     }),
   }),
 });
 
-export const { useGetWeatherQuery, useGetWeatherMapQuery } = weatherApi;
+export const {
+  useGetWeatherQuery,
+  useGetWeatherMapQuery,
+  useGetWeatherHistoryQuery,
+} = weatherApi;

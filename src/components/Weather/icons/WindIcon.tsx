@@ -77,13 +77,15 @@ const WindIcon = ({
           color={iconColor || theme.palette.primary.main}
         />
       </IconWrapper>
-      <Typography
-        variant={current ? "h6" : "subtitle1"}
-        align="center"
-        sx={{ color: fontColor, mt: "0.25rem" }}
-      >
-        Gust {wind_gust?.toFixed(1)}
-      </Typography>
+      {wind_gust != null && (
+        <Typography
+          variant={current ? "h6" : "subtitle1"}
+          align="center"
+          sx={{ color: fontColor, mt: "0.25rem" }}
+        >
+          Gust {wind_gust?.toFixed(1)}
+        </Typography>
+      )}
     </>
   );
 };

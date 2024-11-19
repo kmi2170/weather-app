@@ -5,13 +5,22 @@ import { styled } from "@mui/material/styles";
 import { useAppSelector } from "../../store/hooks";
 
 import { selectWeather } from "../../slice/weatherSlice";
-import { useGetWeatherQuery } from "../../services/weatherApi";
+import {
+  useGetWeatherQuery,
+  useGetWeatherHistoryQuery,
+} from "../../services/weatherApi";
 import WeatherIcon from "./icons/WeatherIcon";
 import WindIcon from "./icons/WindIcon";
 import PopoverDaily from "./PopoverDaily";
-import { dayWithTZ, dateWithTZ } from "../../utils/time";
+import {
+  dayWithTZ,
+  dateWithTZ,
+  fullDateOfYesterdayWithTZ,
+  dayOfYesterdayWithTZ,
+} from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import { precipitationWithUnit } from "../../utils/units";
+import { time } from "console";
 
 const IconPrecipitation = styled("i")(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -29,6 +38,16 @@ const WeatherDaily = () => {
 
   const { timezone, daily } = data as Weather;
 
+  const yesterday = fullDateOfYesterdayWithTZ(daily[0].dt, timezone);
+
+  const { data: data_yesterday } = useGetWeatherHistoryQuery({
+    lat: String(location.lat),
+    lon: String(location.lon),
+    date: yesterday,
+    units,
+    lang,
+  });
+
   return (
     <Grid
       container
@@ -36,11 +55,79 @@ const WeatherDaily = () => {
       alignItems="stretch"
       spacing={1}
     >
+      {data_yesterday && (
+        <Grid
+          xs={4}
+          sm={3}
+          md={2}
+          sx={{
+            display: "flex",
+          }}
+        >
+          <Paper
+            elevation={2}
+            sx={{
+              padding: "0.5rem 0",
+              borderRadius: "15px",
+              // backgroundColor: "rgb(255, 248, 220)",
+              backgroundColor: "whitesmoke",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexGrow: 1,
+              mt: "2px",
+              mb: "2px",
+              mr: "2px",
+              opacity: "0.8",
+            }}
+          >
+            <Typography variant="subtitle1" align="center">
+              Yesterday
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              align="center"
+              sx={{ color: "dodgerblue" }}
+            >
+              {dayOfYesterdayWithTZ(daily[0].dt, timezone)}
+            </Typography>
+            <Typography
+              variant="h5"
+              align="center"
+              sx={(theme) => ({
+                color: theme.palette.primary.main,
+                mt: "7.75rem",
+              })}
+            >
+              {data_yesterday.temperature.max.toFixed(0)}/
+              {data_yesterday.temperature.min.toFixed(0)}
+              {units === "imperial" ? <small> °F </small> : <small> °C</small>}
+            </Typography>
+
+            <WindIcon
+              wind_speed={data_yesterday.wind.max.speed}
+              wind_deg={data_yesterday.wind.max.direction}
+              current={false}
+            />
+
+            <Typography
+              variant="subtitle1"
+              align="center"
+              sx={{ mt: "3.5rem" }}
+            >
+              <IconPrecipitation className={`wi wi-raindrop`} />{" "}
+              {precipitationWithUnit(data_yesterday.precipitation.total, units)}
+            </Typography>
+          </Paper>
+        </Grid>
+      )}
+
       {daily.map((data, i: number) => {
         const totalPrecipitation = (data?.rain || 0) + (data?.snow || 0);
 
         return (
-          <Grid key={i} item xs={4} sm={3} md={2}>
+          <Grid key={i} xs={4} sm={3} md={2}>
             <PopoverDaily data={data} timezone={timezone} units={units}>
               <Paper
                 elevation={2}
