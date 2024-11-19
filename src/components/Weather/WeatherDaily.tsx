@@ -41,7 +41,7 @@ const WeatherDaily = () => {
 
         return (
           <Grid key={i} item xs={4} sm={3} md={2}>
-            <PopoverDaily data={data} timezone={timezone}>
+            <PopoverDaily data={data} timezone={timezone} units={units}>
               <Paper
                 elevation={2}
                 sx={{

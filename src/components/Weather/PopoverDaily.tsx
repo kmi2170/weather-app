@@ -5,11 +5,11 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 
-import { useAppSelector } from "../../store/hooks";
 import { dayWithTZ, dateWithTZ } from "../../utils/time";
 import { WeatherDaily } from "../../api/types/weather";
 import Almanac from "./WeatherCurrent/Almanac";
 import Details from "./WeatherCurrent/Details";
+import { Units } from "../../store/initialState";
 
 const PopoverWrapper = styled("div")(({ theme }) => ({
   border: `2px solid ${theme.palette.primary.light}`,
@@ -44,11 +44,16 @@ interface PopoverDailyProps {
   children: React.ReactNode;
   data: WeatherDaily;
   timezone: string;
+  units: Units;
 }
 
-const PopoverDaily = ({ children, data, timezone }: PopoverDailyProps) => {
+const PopoverDaily = ({
+  children,
+  data,
+  timezone,
+  units,
+}: PopoverDailyProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const units = useAppSelector((state) => state.weather.units);
 
   const {
     summary,
