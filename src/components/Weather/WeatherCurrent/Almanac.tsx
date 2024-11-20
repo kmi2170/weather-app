@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 
 import MoonPhaseWithIcon from "../icons/MoonPhaseWithIcon";
 import { timeWithTZ } from "../../../utils/time";
@@ -47,6 +47,9 @@ type AlmanacProps = {
 const Almanac = (props: AlmanacProps) => {
   const { sunrise, sunset, moonrise, moonset, moon_phase, timezone } = props;
 
+  const theme = useTheme();
+  const fontColor = theme.palette.primary.dark;
+
   return (
     <Paper
       elevation={2}
@@ -64,7 +67,12 @@ const Almanac = (props: AlmanacProps) => {
             <IconSun className="wi wi-sunrise" />
             <Typography variant="subtitle2">Sun Rise</Typography>
           </LabelWrapper>
-          <Typography variant="h5" component="h6" align="center">
+          <Typography
+            variant="h5"
+            component="h6"
+            align="center"
+            sx={{ color: fontColor }}
+          >
             {timeWithTZ(sunrise, timezone)}
           </Typography>
         </AlmanacSubWrapper>
@@ -73,7 +81,12 @@ const Almanac = (props: AlmanacProps) => {
             <IconSun className="wi wi-sunset" />
             <Typography variant="subtitle2">Sun Set</Typography>
           </LabelWrapper>
-          <Typography variant="h5" component="h6" align="center">
+          <Typography
+            variant="h5"
+            component="h6"
+            align="center"
+            sx={{ color: fontColor }}
+          >
             {timeWithTZ(sunset, timezone)}
           </Typography>
         </AlmanacSubWrapper>
@@ -85,7 +98,12 @@ const Almanac = (props: AlmanacProps) => {
             <IconMoon className="wi wi-moonrise" />
             <Typography variant="subtitle2">Moon Rise</Typography>
           </LabelWrapper>
-          <Typography variant="h5" component="h6" align="center">
+          <Typography
+            variant="h5"
+            component="h6"
+            align="center"
+            sx={{ color: fontColor }}
+          >
             {timeWithTZ(moonrise, timezone)}
           </Typography>
         </AlmanacSubWrapper>
@@ -94,7 +112,12 @@ const Almanac = (props: AlmanacProps) => {
             <IconMoon className="wi wi-moonset" />
             <Typography variant="subtitle2">Moon Set</Typography>
           </LabelWrapper>
-          <Typography variant="h5" component="h6" align="center">
+          <Typography
+            variant="h5"
+            component="h6"
+            align="center"
+            sx={{ color: fontColor }}
+          >
             {timeWithTZ(moonset, timezone)}
           </Typography>
         </AlmanacSubWrapper>

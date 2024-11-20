@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 
 import {
   precipitationWithUnit,
@@ -58,6 +58,9 @@ const Details = (props: Details) => {
 
   const _snow = snow || 0;
 
+  const theme = useTheme();
+  const fontColor = theme.palette.primary.dark;
+
   return (
     <Paper
       elevation={2}
@@ -75,7 +78,12 @@ const Details = (props: Details) => {
             <Icon className="wi wi-raindrops" sx={{ color: "dodgerblue" }} />
             <Typography variant="subtitle2">Rain</Typography>
           </Label>
-          <Typography variant="h5" component="h6" align="center">
+          <Typography
+            variant="h5"
+            component="h6"
+            align="center"
+            sx={{ color: fontColor }}
+          >
             {precipitationWithUnit(rain, units)}
           </Typography>
         </Wrapper>
@@ -84,7 +92,12 @@ const Details = (props: Details) => {
             <Icon className="wi wi-barometer" sx={{ color: "maroon" }} />
             <Typography variant="subtitle2">Pressure</Typography>
           </Label>
-          <Typography variant="h5" component="h6" align="center">
+          <Typography
+            variant="h5"
+            component="h6"
+            align="center"
+            sx={{ color: fontColor }}
+          >
             {pressureWithUnit(pressure, units)}
           </Typography>
         </Wrapper>
@@ -108,7 +121,7 @@ const Details = (props: Details) => {
             variant="h5"
             component="h6"
             align="center"
-            color={_snow === 0 ? "lightgrey" : "black"}
+            color={_snow === 0 ? "lightgrey" : fontColor}
           >
             {precipitationWithUnit(_snow, units)}
           </Typography>
@@ -118,7 +131,12 @@ const Details = (props: Details) => {
             <Icon className="wi wi-day-sunny" sx={{ color: "purple" }} />
             <Typography variant="subtitle2">UV Index</Typography>
           </Label>
-          <Typography variant="h5" component="h6" align="center">
+          <Typography
+            variant="h5"
+            component="h6"
+            align="center"
+            sx={{ color: fontColor }}
+          >
             {uvi.toFixed(0)}
           </Typography>
         </Wrapper>
@@ -130,7 +148,12 @@ const Details = (props: Details) => {
             <Icon className="wi wi-humidity" sx={{ color: "lightskyblue" }} />
             <Typography variant="subtitle2">Humidity</Typography>
           </Label>
-          <Typography variant="h5" component="h6" align="center">
+          <Typography
+            variant="h5"
+            component="h6"
+            align="center"
+            sx={{ color: fontColor }}
+          >
             {humidity} %
           </Typography>
         </Wrapper>
@@ -142,7 +165,12 @@ const Details = (props: Details) => {
               </EyeIconWrapper>
               <Typography variant="subtitle2">Visibility</Typography>
             </Label>
-            <Typography variant="h5" component="h6" align="center">
+            <Typography
+              variant="h5"
+              component="h6"
+              align="center"
+              sx={{ color: fontColor }}
+            >
               {visibilityWithUnit(visibility, units)}
             </Typography>
           </Wrapper>
@@ -153,7 +181,12 @@ const Details = (props: Details) => {
               <Icon className="wi wi-cloud" sx={{ color: "dimgray" }} />
               <Typography variant="subtitle2">Cloudiness</Typography>
             </Label>
-            <Typography variant="h5" component="h6" align="center">
+            <Typography
+              variant="h5"
+              component="h6"
+              align="center"
+              sx={{ color: fontColor }}
+            >
               {clouds.toFixed(0)} %
             </Typography>
           </Wrapper>
