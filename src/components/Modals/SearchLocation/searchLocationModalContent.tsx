@@ -9,9 +9,9 @@ import {
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
-
 import { purple } from "@mui/material/colors";
+import { styled, useTheme } from "@mui/material/styles";
+
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { asyncThunkFindLocations } from "../../../slice/locationsAsyncThunk";
 import { LocationType } from "../../../api/types/weather";
@@ -19,9 +19,9 @@ import { setLocations } from "../../../slice/locationsSlice";
 import { setLocation } from "../../../slice/weatherSlice";
 import { Location } from "../../../store/initialState";
 
-import { styled, useTheme } from "@mui/material/styles";
 import { LocationListItem } from "./locationListItem";
 import { ClearButton, CloseButton, MGlassButton } from "./buttons";
+import LoadingIndicator from "./loadingIndicator";
 
 const InputWrapper = styled("div")({
   position: "relative",
@@ -267,9 +267,9 @@ function Message(props: MessageProps) {
     <>
       {isLoading && (
         <Box
-          sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+          sx={{ display: "flex", justifyContent: "center", marginTop: "6rem" }}
         >
-          <CircularProgress color="primary" />
+          <LoadingIndicator />
         </Box>
       )}
       {message && (
