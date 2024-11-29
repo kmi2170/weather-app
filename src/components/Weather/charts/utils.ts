@@ -1,11 +1,11 @@
 import { SxProps } from "@mui/material";
 import { BackGroundRanges } from "../../../api/types/weather";
 import theme from "../../../theme/theme";
-import { ChartOptions } from "chart.js";
+import { ChartOptions, Plugin } from "chart.js";
 
 export const createBackgroundPlugin = (
   backgroundRanges: BackGroundRanges[]
-) => {
+): Plugin => {
   return {
     id: "backgroundPlugin",
     beforeDraw: (chart) => {
