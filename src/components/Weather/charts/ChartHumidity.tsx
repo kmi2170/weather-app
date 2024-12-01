@@ -17,11 +17,9 @@ import {
 import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
-import {
-  chartBoxStyle,
-  createBackgroundPlugin,
-} from "../../../utils/chart/background";
+import { createBackgroundPlugin } from "../../../utils/chart/background";
 import { createChartOptions } from "../../../utils/chart/options";
+import { chartBoxStyle } from "../../../utils/chart/style";
 
 ChartJS.register(
   CategoryScale,

@@ -1,6 +1,4 @@
-import { SxProps } from "@mui/material";
 import { BackGroundRanges } from "../../api/types/weather";
-import theme from "../../theme/theme";
 import { Plugin } from "chart.js";
 
 export const createBackgroundPlugin = (
@@ -31,13 +29,6 @@ export const createBackgroundPlugin = (
       ctx.restore();
     },
   };
-};
-
-export const chartBoxStyle: SxProps = {
-  padding: "5px 10px",
-  borderRadius: "10px",
-  boxShadow: `3px 3px 3px ${theme.palette.primary.light}`,
-  border: `1px solid ${theme.palette.primary.light}`,
 };
 
 // export const createBackgroundPluginForLabelsInString = (
