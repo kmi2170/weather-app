@@ -16,8 +16,8 @@ import { ChartProps } from "../../../api/types/weather";
 import {
   chartBoxStyle,
   createBackgroundPlugin,
-  createChartOptions,
 } from "../../../utils/chart/background";
+import { createChartOptions } from "../../../utils/chart/options";
 
 ChartJS.register(
   CategoryScale,

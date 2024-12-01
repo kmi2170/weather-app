@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { BackGroundRanges } from "../../api/types/weather";
 import theme from "../../theme/theme";
-import { ChartOptions, Plugin } from "chart.js";
+import { Plugin } from "chart.js";
 
 export const createBackgroundPlugin = (
   backgroundRanges: BackGroundRanges[]
@@ -38,42 +38,6 @@ export const chartBoxStyle: SxProps = {
   borderRadius: "10px",
   boxShadow: `3px 3px 3px ${theme.palette.primary.light}`,
   border: `1px solid ${theme.palette.primary.light}`,
-};
-
-export const createChartOptions = ({
-  yMax,
-  yMin,
-}: {
-  yMax: number;
-  yMin: number;
-}): ChartOptions<"line"> => {
-  return {
-    responsive: true,
-    maintainAspectRatio: false,
-    elements: {
-      point: {
-        radius: 0,
-        hitRadius: 10,
-      },
-      line: {
-        borderWidth: 3,
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          display: true,
-          color: "rgba(0, 0, 0, 0.05)",
-        },
-        ticks: { maxTicksLimit: 24 },
-      },
-      y: {
-        border: { display: false },
-        max: yMax,
-        min: yMin,
-      },
-    },
-  };
 };
 
 // export const createBackgroundPluginForLabelsInString = (
