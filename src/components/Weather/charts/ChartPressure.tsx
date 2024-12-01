@@ -17,7 +17,7 @@ import {
   chartBoxStyle,
   createBackgroundPlugin,
   createChartOptions,
-} from "./utils";
+} from "../../../utils/chart/background";
 
 ChartJS.register(
   CategoryScale,
