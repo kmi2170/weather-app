@@ -67,7 +67,6 @@ const ChartMinutely = ({
         },
       },
     },
-
     plugins: {
       legend: {
         display: false,
