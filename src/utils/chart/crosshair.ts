@@ -1,6 +1,6 @@
 import { Plugin } from "chart.js";
 
-export const verticalLineOnHover: Plugin<"line"> = {
+export const verticalLineOnHover: Plugin = {
   id: "verticalLineOnHover",
   beforeDatasetsDraw(chart, args, plugins) {
     const {

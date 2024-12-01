@@ -20,6 +20,7 @@ import { ChartProps } from "../../../api/types/weather";
 import { createBackgroundPlugin } from "../../../utils/chart/background";
 import { createChartOptions } from "../../../utils/chart/options";
 import { chartBoxStyle } from "../../../utils/chart/style";
+import { verticalLineOnHover } from "../../../utils/chart/crosshair";
 
 ChartJS.register(
   CategoryScale,
@@ -49,20 +50,6 @@ const ChartHumidity = ({
 
   const options: ChartOptions<"line"> = {
     ...chartOptions,
-    plugins: {
-      tooltip: {
-        filter: function (tooltipItem) {
-          return tooltipItem.datasetIndex !== 3;
-        },
-      },
-      legend: {
-        labels: {
-          filter: function (labelItem) {
-            return labelItem.datasetIndex !== 3;
-          },
-        },
-      },
-    },
   };
 
   const data: ChartData<"line"> = {
@@ -107,7 +94,7 @@ const ChartHumidity = ({
         type="line"
         options={options}
         data={data}
-        plugins={[backgroundPlugin]}
+        plugins={[backgroundPlugin, verticalLineOnHover]}
       />
     </Box>
   );

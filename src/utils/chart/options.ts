@@ -10,6 +10,10 @@ export const createChartOptions = ({
   return {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: "index",
+      intersect: false,
+    },
     elements: {
       point: {
         radius: 0,

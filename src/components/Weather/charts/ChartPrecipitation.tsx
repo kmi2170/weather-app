@@ -20,6 +20,7 @@ import { ChartProps } from "../../../api/types/weather";
 import { createBackgroundPlugin } from "../../../utils/chart/background";
 import { createChartOptions } from "../../../utils/chart/options";
 import { chartBoxStyle } from "../../../utils/chart/style";
+import { verticalLineOnHover } from "../../../utils/chart/crosshair";
 
 ChartJS.register(
   CategoryScale,
@@ -65,20 +66,7 @@ const ChartPrecipitation = ({
 
   const options: ChartOptions<"line"> = {
     ...charOptions,
-    plugins: {
-      tooltip: {
-        filter: function (tooltipItem) {
-          return tooltipItem.datasetIndex !== 2;
-        },
-      },
-      legend: {
-        labels: {
-          filter: function (labelItem) {
-            return labelItem.datasetIndex !== 2;
-          },
-        },
-      },
-    },
+    plugins: {},
   };
 
   const data: ChartData<"line"> = {
@@ -87,13 +75,7 @@ const ChartPrecipitation = ({
       {
         type: "line",
         label: units === "imperial" ? "Rain [in]" : "Rain [mm]",
-        // borderColor: blue[500],
-        // backgroundColor: blue[200],
-        // borderWidth: 0,
         backgroundColor: "rgba(31, 164, 255, 0.6)",
-        // backgroundColor: "rgba(115, 194, 251, 0.6)",
-        // backgroundColor: "rgba(0, 191, 255, 0.5)",
-        // backgroundColor: "rgba(0, 0, 128, 0.4)",
         data: data_rain,
         fill: true,
         yAxisID: "y",
@@ -101,13 +83,7 @@ const ChartPrecipitation = ({
       {
         type: "line",
         label: units === "imperial" ? "Snow [in]" : "Snow [mm]",
-        // borderColor: purple[500],
-        // backgroundColor: purple[200],
-        // borderWidth: 0,
         backgroundColor: "rgba(148, 0, 211, 0.5)",
-        // backgroundColor: "rgba(218, 112, 214, 0.6)",
-        // backgroundColor: "rgba(191, 0, 255, 0.5)",
-        // backgroundColor: "rgba(128, 0, 128, 0.4)",
         fill: true,
         data: data_snow,
         yAxisID: "y",
@@ -127,7 +103,7 @@ const ChartPrecipitation = ({
         type="line"
         options={options}
         data={data}
-        plugins={[backgroundPlugin]}
+        plugins={[backgroundPlugin, verticalLineOnHover]}
       />
     </Box>
   );

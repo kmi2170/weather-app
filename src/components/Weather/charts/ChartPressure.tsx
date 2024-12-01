@@ -16,6 +16,7 @@ import { ChartProps } from "../../../api/types/weather";
 import { createBackgroundPlugin } from "../../../utils/chart/background";
 import { createChartOptions } from "../../../utils/chart/options";
 import { chartBoxStyle } from "../../../utils/chart/style";
+import { verticalLineOnHover } from "../../../utils/chart/crosshair";
 
 ChartJS.register(
   CategoryScale,
@@ -84,7 +85,7 @@ const ChartPressure = ({
         type="line"
         options={options}
         data={data}
-        plugins={[backgroundPlugin]}
+        plugins={[backgroundPlugin, verticalLineOnHover]}
       />
     </Box>
   );

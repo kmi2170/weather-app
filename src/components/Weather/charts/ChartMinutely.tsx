@@ -13,6 +13,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
+import { verticalLineOnHover } from "../../../utils/chart/crosshair";
 
 ChartJS.register(
   CategoryScale,
@@ -87,7 +88,7 @@ const ChartMinutely = ({
 
   return (
     <Box sx={{ height }}>
-      <Bar options={options} data={data} />
+      <Bar options={options} data={data} plugins={[verticalLineOnHover]} />
     </Box>
   );
 };
