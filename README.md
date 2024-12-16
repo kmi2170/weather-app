@@ -1,18 +1,30 @@
 # My Weather Station
 
-An app to display weather information, fetched from [OpenWeather API](https://openweathermap.org/api).
+A weather information app, using [OpenWeather API](https://openweathermap.org/api) (API key is requried).
 
 ## Features
-
-- By default, look up your location by the IP address and display the weather information
-  - Current
-  - 1 hour precipitation predicton
-  - 1 hour predictions for 48 hours
-  - 7 days forecast
-  - Alerts (when issued)
-- Switch between imperial and metric units.
-- Search locations around the world.
-- If cookie is enabled, last displayed location and selected units are saved and retrieved when you launch the app next time.
+- Weather information
+  - Current Weather
+    - precipitation predicton for the next 1 hour
+    - 1 hour predictions for the next 48 hours
+    - 7 days forecast
+  - The next 48 hours weather data on charts
+    - Temperature, Dew point
+    - Humidity, cloudiness, chance of precipitation
+    - precipitation (rain and snow)
+    - Wind speed, gust
+    - Pressure
+  - Current weather data on Map
+    - Temperature
+    - Precipitation
+    - Wind speed
+    - Pressure
+  - Aerts (when issued)
+- Switch between imperial and metric units
+- Location
+  - On the first launch of the app, location is identified by the IP address
+  - Search location around the world
+- The last displayed location and selected units are saved and retrieved when you launch the app next time (cookie must be enabled).
 
 ## Technicals
 
