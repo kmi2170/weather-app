@@ -64,6 +64,7 @@ const ChartTemps = ({
         backgroundColor: pink[400],
         data: data_temp,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
       {
         label: units === "imperial" ? "Dew Point [℉]" : "Dew Point [℃]",
@@ -71,6 +72,7 @@ const ChartTemps = ({
         backgroundColor: deepOrange[900],
         data: data_dew_point,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
     ],
   };

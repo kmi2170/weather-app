@@ -71,6 +71,7 @@ const ChartWind = ({
         backgroundColor: green[500],
         data: data_wind_speed,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
       {
         label: units === "imperial" ? "Gust [mi]" : "Gust [m/s]",
@@ -78,6 +79,7 @@ const ChartWind = ({
         backgroundColor: orange[500],
         data: data_wind_gust,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
     ],
   };

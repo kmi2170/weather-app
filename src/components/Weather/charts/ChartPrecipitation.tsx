@@ -74,18 +74,22 @@ const ChartPrecipitation = ({
       {
         type: "line",
         label: units === "imperial" ? "Rain [in]" : "Rain [mm]",
+        borderColor: blue[500],
         backgroundColor: "rgba(31, 164, 255, 0.6)",
         data: data_rain,
         fill: true,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
       {
         type: "line",
         label: units === "imperial" ? "Snow [in]" : "Snow [mm]",
+        borderColor: purple[500],
         backgroundColor: "rgba(148, 0, 211, 0.5)",
         fill: true,
         data: data_snow,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
     ],
   };
