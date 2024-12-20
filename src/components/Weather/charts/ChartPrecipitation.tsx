@@ -66,7 +66,6 @@ const ChartPrecipitation = ({
 
   const options: ChartOptions<"line"> = {
     ...charOptions,
-    plugins: {},
   };
 
   const data: ChartData<"line"> = {
