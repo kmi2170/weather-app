@@ -62,6 +62,7 @@ const ChartHumidity = ({
         backgroundColor: purple[400],
         data: data_humidity,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
       {
         type: "line",
@@ -70,6 +71,7 @@ const ChartHumidity = ({
         backgroundColor: blue[500],
         data: data_pop,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
       {
         type: "line",
@@ -78,6 +80,7 @@ const ChartHumidity = ({
         backgroundColor: blueGrey[400],
         data: data_clouds,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
     ],
   };

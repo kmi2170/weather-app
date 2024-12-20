@@ -34,11 +34,6 @@ const ChartMinutely = ({
   height,
   units,
 }: Omit<ChartMinutelyProps, "backgroundRanges">) => {
-  const formatter = (x: number) => {
-    if (x === 0) return null;
-    return x.toFixed(2);
-  };
-
   const tick = units === "imperial" ? 0.2 : 5;
 
   const maxValue = Math.ceil(Math.max(...chartData) / tick) * tick;

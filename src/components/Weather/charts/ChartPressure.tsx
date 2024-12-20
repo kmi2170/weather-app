@@ -74,6 +74,7 @@ const ChartPressure = ({
         backgroundColor: brown[500],
         data: data_pressure,
         yAxisID: "y",
+        cubicInterpolationMode: "monotone",
       },
     ],
   };
