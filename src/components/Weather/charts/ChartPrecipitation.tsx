@@ -13,12 +13,16 @@ import {
   BarController,
   LineController,
   Filler,
+  ChartDataset,
 } from "chart.js";
 import { ChartOptions, ChartData } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import { ChartProps } from "../../../api/types/weather";
 import { createBackgroundPlugin } from "../../../utils/chart/background";
-import { createChartOptions } from "../../../utils/chart/options";
+import {
+  createChartOptions,
+  interpolationMode,
+} from "../../../utils/chart/options";
 import { chartBoxStyle } from "../../../utils/chart/style";
 import { verticalLineOnHover } from "../../../utils/chart/crosshair";
 
@@ -79,7 +83,7 @@ const ChartPrecipitation = ({
         data: data_rain,
         fill: true,
         yAxisID: "y",
-        cubicInterpolationMode: "monotone",
+        cubicInterpolationMode: interpolationMode,
       },
       {
         type: "line",
@@ -89,7 +93,7 @@ const ChartPrecipitation = ({
         fill: true,
         data: data_snow,
         yAxisID: "y",
-        cubicInterpolationMode: "monotone",
+        cubicInterpolationMode: interpolationMode,
       },
     ],
   };

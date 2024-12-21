@@ -17,7 +17,10 @@ import { Chart } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
 import { ChartProps } from "../../../api/types/weather";
 import { createBackgroundPlugin } from "../../../utils/chart/background";
-import { createChartOptions } from "../../../utils/chart/options";
+import {
+  createChartOptions,
+  interpolationMode,
+} from "../../../utils/chart/options";
 import { chartBoxStyle } from "../../../utils/chart/style";
 import { verticalLineOnHover } from "../../../utils/chart/crosshair";
 
@@ -71,7 +74,7 @@ const ChartWind = ({
         backgroundColor: green[500],
         data: data_wind_speed,
         yAxisID: "y",
-        cubicInterpolationMode: "monotone",
+        cubicInterpolationMode: interpolationMode,
       },
       {
         label: units === "imperial" ? "Gust [mi]" : "Gust [m/s]",
@@ -79,7 +82,7 @@ const ChartWind = ({
         backgroundColor: orange[500],
         data: data_wind_gust,
         yAxisID: "y",
-        cubicInterpolationMode: "monotone",
+        cubicInterpolationMode: interpolationMode,
       },
     ],
   };
