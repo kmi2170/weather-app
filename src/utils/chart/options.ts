@@ -39,3 +39,5 @@ export const createChartOptions = ({
     },
   };
 };
+
+export const interpolationMode: "default" | "monotone" = "monotone";
