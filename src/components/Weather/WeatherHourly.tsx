@@ -15,7 +15,7 @@ import {
 import { BackGroundRanges, Weather } from "../../api/types/weather";
 
 const WeatherHourly = () => {
-  const { units, lang, location } = useAppSelector(selectWeather);
+  const { units, lang, location, isLoading } = useAppSelector(selectWeather);
 
   const { lat, lon } = location;
 
@@ -25,6 +25,8 @@ const WeatherHourly = () => {
     units,
     lang,
   });
+
+  if (!data) return;
 
   const { daily, hourly, timezone } = data as Weather;
 

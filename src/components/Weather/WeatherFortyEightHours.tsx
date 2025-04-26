@@ -46,7 +46,7 @@ const WeatherFortyEightHours = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { units, lang, location } = useAppSelector(selectWeather);
+  const { units, lang, location, isLoading } = useAppSelector(selectWeather);
 
   const { data, error } = useGetWeatherQuery({
     lat: String(location.lat),
@@ -54,6 +54,8 @@ const WeatherFortyEightHours = () => {
     units,
     lang,
   });
+
+  if (!data) return;
 
   const { daily, hourly, timezone } = data as Weather;
   const sunAlmanac = daily.slice(0, 3).map((data) => {

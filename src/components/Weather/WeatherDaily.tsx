@@ -20,14 +20,13 @@ import {
 } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import { precipitationWithUnit } from "../../utils/units";
-import { time } from "console";
 
 const IconPrecipitation = styled("i")(({ theme }) => ({
   color: theme.palette.primary.main,
 }));
 
 const WeatherDaily = () => {
-  const { units, lang, location } = useAppSelector(selectWeather);
+  const { units, lang, location, isLoading } = useAppSelector(selectWeather);
 
   const { data } = useGetWeatherQuery({
     lat: String(location.lat),
@@ -35,6 +34,8 @@ const WeatherDaily = () => {
     units,
     lang,
   });
+
+  if (!data) return;
 
   const { timezone, daily } = data as Weather;
 

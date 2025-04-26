@@ -9,7 +9,9 @@ import Details from "./Details";
 import Almanac from "./Almanac";
 
 const WeatherCurrent = () => {
-  const { units, location, lang } = useAppSelector((state) => state.weather);
+  const { units, location, lang, isLoading } = useAppSelector(
+    (state) => state.weather
+  );
 
   const { lat, lon } = location;
 
@@ -19,6 +21,8 @@ const WeatherCurrent = () => {
     units,
     lang,
   });
+
+  if (!data) return;
 
   const { timezone, current, daily } = data as Weather;
 

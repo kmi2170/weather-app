@@ -19,6 +19,8 @@ const WeatherMinutely = () => {
     lang,
   });
 
+  if (!data) return;
+
   const { timezone, minutely } = data as Weather;
 
   const data_precipitation: number[] =
