@@ -14,7 +14,7 @@ const searchParams = new URLSearchParams(defaultSearchParamsObj);
 export async function findLocations(
   locationName: string,
   signal: AbortSignal
-): Promise<LocationType[] | string> {
+): Promise<LocationType[]> {
   try {
     searchParams.set("name", locationName);
     const url = `${baseUrl}?${searchParams}`;
@@ -27,10 +27,10 @@ export async function findLocations(
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw new Error(error.message);
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw new Error("An unexpected error occurred");
     }
   }
 }

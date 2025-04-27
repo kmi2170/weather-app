@@ -8,7 +8,7 @@ export const fetchWeather = async ({
   lon,
   units,
   lang,
-}: WeatherQuery): Promise<Weather | string> => {
+}: WeatherQuery): Promise<Weather> => {
   const url = `https://api.openweathermap.org/data/3.0/onecall`;
   try {
     const { data } = await axios.get<Weather>(url, {
@@ -19,17 +19,17 @@ export const fetchWeather = async ({
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw new Error(error.message);
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw new Error("An unexpected error occurred");
     }
   }
 };
 
 export const fetchGeocodingByLocationName = async (
   q: string
-): Promise<Geocoding[] | string> => {
+): Promise<Geocoding[]> => {
   const url = "https://api.openweathermap.org/geo/1.0/direct";
   try {
     const { data } = await axios.get<Geocoding[]>(url, {
@@ -39,10 +39,10 @@ export const fetchGeocodingByLocationName = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw new Error(error.message);
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw new Error("An unexpected error occurred");
     }
   }
 };

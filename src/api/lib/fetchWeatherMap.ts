@@ -16,7 +16,7 @@ export const fetchWeatherMap = async ({
   lon,
   zoom,
   layer,
-}: WeatherMapQuery): Promise<CustomResponse<WeatherMapResponse>[] | string> => {
+}: WeatherMapQuery): Promise<CustomResponse<WeatherMapResponse>[]> => {
   try {
     const numOfDivision = Math.pow(2, zoom);
 
@@ -104,10 +104,10 @@ export const fetchWeatherMap = async ({
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw new Error(error.message);
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw new Error("An unexpected error occurred");
     }
   }
 };
