@@ -1,3 +1,5 @@
+"use client";
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setLocation, setIsNotFound } from "../slice/weatherSlice";
 import axios from "axios";
