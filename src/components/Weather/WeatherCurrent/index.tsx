@@ -20,6 +20,8 @@ const WeatherCurrent = () => {
     lang,
   });
 
+  if (data == null) return;
+
   const { timezone, current, daily } = data as Weather;
 
   const { rain, snow, humidity, pressure, visibility, uvi, sunrise, sunset } =

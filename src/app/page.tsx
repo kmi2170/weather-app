@@ -1,17 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-
-import { setLocation } from "../slice/weatherSlice";
-import { asyncThunkIpLookupLocation } from "../slice/weatherAsyncThunk";
-import { useGetWeatherQuery } from "../services/weatherApi";
-import { useCustomCookies } from "../hooks/useCustomCookies";
 import Navbar from "../components/Navbar";
 import SearchLocationBar from "../components/SearchLocationBar";
 import Alerts from "../components/Alerts";
@@ -23,40 +16,12 @@ import {
   WeatherMinutely,
   WeatherFortyEightHours,
 } from "../components/Weather";
-import { isLocationValid } from "../utils/cookiesValidator";
-import { Location } from "../store/initialState";
 import ErrorModal from "../components/Modals/errorModal";
 import WeatherMap from "./weathermap/page";
+import { useLocation } from "../hooks/useLocation";
 
 const Home = () => {
-  const dispatch = useAppDispatch();
-  const { units, lang, location } = useAppSelector((state) => state.weather);
-
-  const { data, isLoading, isError } = useGetWeatherQuery({
-    lat: String(location.lat),
-    lon: String(location.lon),
-    units,
-    lang,
-  });
-
-  const { cookies, setLocationCookie } = useCustomCookies();
-
-  useEffect(() => {
-    if (isLocationValid(cookies.weather_location)) {
-      dispatch(setLocation(cookies.weather_location as Location));
-      return;
-    }
-
-    dispatch(asyncThunkIpLookupLocation()).catch((error) =>
-      console.error(error)
-    );
-  }, []);
-
-  useEffect(() => {
-    if (isLocationValid(location)) {
-      setLocationCookie(location);
-    }
-  }, [location]);
+  const { isLoading, isError } = useLocation();
 
   return (
     <Box

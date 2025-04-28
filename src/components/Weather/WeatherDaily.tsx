@@ -20,7 +20,6 @@ import {
 } from "../../utils/time";
 import { Weather } from "../../api/types/weather";
 import { precipitationWithUnit } from "../../utils/units";
-import { time } from "console";
 
 const IconPrecipitation = styled("i")(({ theme }) => ({
   color: theme.palette.primary.main,

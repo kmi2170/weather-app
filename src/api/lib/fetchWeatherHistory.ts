@@ -10,7 +10,7 @@ export const fetchWeatherHistory = async ({
   tz,
   units,
   lang,
-}: WeatherHistoryQuery): Promise<WeatherHistoryResponse | string> => {
+}: WeatherHistoryQuery): Promise<WeatherHistoryResponse> => {
   try {
     const url = "https://api.openweathermap.org/data/3.0/onecall/day_summary";
     const { data } = await axios.get<WeatherHistoryResponse>(url, {
@@ -20,10 +20,10 @@ export const fetchWeatherHistory = async ({
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      return error.message;
+      throw new Error(error.message);
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw new Error("An unexpected error occurred");
     }
   }
 };

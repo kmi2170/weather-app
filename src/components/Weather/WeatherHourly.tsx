@@ -19,12 +19,14 @@ const WeatherHourly = () => {
 
   const { lat, lon } = location;
 
-  const { data, error } = useGetWeatherQuery({
+  const { data } = useGetWeatherQuery({
     lat: String(lat),
     lon: String(lon),
     units,
     lang,
   });
+
+  if (!data) return;
 
   const { daily, hourly, timezone } = data as Weather;
 
