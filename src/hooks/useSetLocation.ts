@@ -9,7 +9,7 @@ import { setLocation } from "../slice/weatherSlice";
 import { asyncThunkIpLookupLocation } from "../slice/weatherAsyncThunk";
 import { Location } from "../store/initialState";
 
-export const useLocation = () => {
+export const useSetLocation = () => {
   const dispatch = useAppDispatch();
 
   const { units, lang, location } = useAppSelector((state) => state.weather);
