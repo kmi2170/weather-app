@@ -18,10 +18,10 @@ import {
 } from "../components/Weather";
 import ErrorModal from "../components/Modals/errorModal";
 import WeatherMap from "./weathermap/page";
-import { useLocation } from "../hooks/useLocation";
+import { useSetLocation } from "../hooks/useSetLocation";
 
 const Home = () => {
-  const { isLoading, isError } = useLocation();
+  const { isLoading, isError } = useSetLocation();
 
   return (
     <Box

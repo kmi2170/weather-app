@@ -28,24 +28,30 @@ const IconPrecipitation = styled("i")(({ theme }) => ({
 const WeatherDaily = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data } = useGetWeatherQuery({
-    lat: String(location.lat),
-    lon: String(location.lon),
-    units,
-    lang,
-  });
+  const { data } = useGetWeatherQuery(
+    {
+      lat: String(location.lat),
+      lon: String(location.lon),
+      units,
+      lang,
+    },
+    { skip: !location.lat || !location.lon }
+  );
 
   const { timezone, daily } = data as Weather;
 
   const yesterday = fullDateOfYesterdayWithTZ(daily[0].dt, timezone);
 
-  const { data: data_yesterday } = useGetWeatherHistoryQuery({
-    lat: String(location.lat),
-    lon: String(location.lon),
-    date: yesterday,
-    units,
-    lang,
-  });
+  const { data: data_yesterday } = useGetWeatherHistoryQuery(
+    {
+      lat: String(location.lat),
+      lon: String(location.lon),
+      date: yesterday,
+      units,
+      lang,
+    },
+    { skip: !location.lat || !location.lon || !yesterday }
+  );
 
   return (
     <Grid
