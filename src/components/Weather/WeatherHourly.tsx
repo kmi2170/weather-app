@@ -19,12 +19,15 @@ const WeatherHourly = () => {
 
   const { lat, lon } = location;
 
-  const { data } = useGetWeatherQuery({
-    lat: String(lat),
-    lon: String(lon),
-    units,
-    lang,
-  });
+  const { data } = useGetWeatherQuery(
+    {
+      lat: String(lat),
+      lon: String(lon),
+      units,
+      lang,
+    },
+    { skip: !lat || !lon }
+  );
 
   if (!data) return;
 

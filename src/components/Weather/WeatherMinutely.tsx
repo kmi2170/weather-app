@@ -12,12 +12,15 @@ import theme from "../../theme/theme";
 const WeatherMinutely = () => {
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data, error } = useGetWeatherQuery({
-    lat: String(location.lat),
-    lon: String(location.lon),
-    units,
-    lang,
-  });
+  const { data, error } = useGetWeatherQuery(
+    {
+      lat: String(location.lat),
+      lon: String(location.lon),
+      units,
+      lang,
+    },
+    { skip: !location.lat || !location.lon }
+  );
 
   if (!data) return;
 

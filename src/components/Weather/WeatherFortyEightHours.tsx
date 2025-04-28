@@ -48,12 +48,15 @@ const WeatherFortyEightHours = () => {
 
   const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data } = useGetWeatherQuery({
-    lat: String(location.lat),
-    lon: String(location.lon),
-    units,
-    lang,
-  });
+  const { data } = useGetWeatherQuery(
+    {
+      lat: String(location.lat),
+      lon: String(location.lon),
+      units,
+      lang,
+    },
+    { skip: !location.lat || !location.lon }
+  );
 
   useEffect(() => {
     const handleScroll = () => {
