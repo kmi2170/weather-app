@@ -213,7 +213,7 @@ const SearchLocationModalContent = forwardRef(
           <ClearButton onClick={clearText} />
         </InputWrapper>
 
-        <ListWrapper>
+        <ListWrapper data-testid="location-list">
           {locations?.map((location, i) => {
             return (
               <LocationListItem

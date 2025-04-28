@@ -15,11 +15,11 @@ import {
 import { BackGroundRanges, Weather } from "../../api/types/weather";
 
 const WeatherHourly = () => {
-  const { units, lang, location, isLoading } = useAppSelector(selectWeather);
+  const { units, lang, location } = useAppSelector(selectWeather);
 
   const { lat, lon } = location;
 
-  const { data, error } = useGetWeatherQuery({
+  const { data } = useGetWeatherQuery({
     lat: String(lat),
     lon: String(lon),
     units,

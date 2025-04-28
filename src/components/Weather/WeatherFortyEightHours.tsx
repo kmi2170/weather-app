@@ -46,25 +46,18 @@ const WeatherFortyEightHours = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { units, lang, location, isLoading } = useAppSelector(selectWeather);
+  const { units, lang, location } = useAppSelector(selectWeather);
 
-  const { data, error } = useGetWeatherQuery({
+  const { data } = useGetWeatherQuery({
     lat: String(location.lat),
     lon: String(location.lon),
     units,
     lang,
   });
 
-  if (!data) return;
-
-  const { daily, hourly, timezone } = data as Weather;
-  const sunAlmanac = daily.slice(0, 3).map((data) => {
-    return [data.dt, data.sunrise, data.sunset];
-  });
-
   useEffect(() => {
     const handleScroll = () => {
-      if (!scrollRef) return;
+      if (!scrollRef.current) return;
 
       const scrollLeft = scrollRef.current?.scrollLeft;
       const scrollWidth = scrollRef.current?.scrollWidth;
@@ -92,6 +85,13 @@ const WeatherFortyEightHours = () => {
       };
     }
   }, []);
+
+  if (!data) return;
+
+  const { daily, hourly, timezone } = data as Weather;
+  const sunAlmanac = daily.slice(0, 3).map((data) => {
+    return [data.dt, data.sunrise, data.sunset];
+  });
 
   const startScroll = (direction: "left" | "right") => {
     if (scrollRef?.current) {

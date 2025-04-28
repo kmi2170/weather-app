@@ -26,7 +26,7 @@ const IconPrecipitation = styled("i")(({ theme }) => ({
 }));
 
 const WeatherDaily = () => {
-  const { units, lang, location, isLoading } = useAppSelector(selectWeather);
+  const { units, lang, location } = useAppSelector(selectWeather);
 
   const { data } = useGetWeatherQuery({
     lat: String(location.lat),
@@ -34,8 +34,6 @@ const WeatherDaily = () => {
     units,
     lang,
   });
-
-  if (!data) return;
 
   const { timezone, daily } = data as Weather;
 
