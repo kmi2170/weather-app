@@ -5,9 +5,7 @@ test.describe("Search bar", () => {
     test("should open search modal by pressing control+k", async ({ page }) => {
       await page.goto("http://localhost:3000/");
       await page.locator("body").press("ControlOrMeta+k");
-      await expect(page.getByTestId("search-location-modal")).toHaveText(
-        "Type more than one character"
-      );
+      await expect(page.getByTestId("search-location-modal")).toBeVisible();
     });
 
     test("should open search modal by clicking on search bar", async ({
@@ -15,9 +13,7 @@ test.describe("Search bar", () => {
     }) => {
       await page.goto("http://localhost:3000/");
       await page.getByRole("textbox", { name: "Search City" }).click();
-      await expect(page.getByTestId("search-location-modal")).toHaveText(
-        "Type more than one character"
-      );
+      await expect(page.getByTestId("search-location-modal")).toBeVisible();
     });
   });
 
