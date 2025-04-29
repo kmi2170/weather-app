@@ -16,6 +16,7 @@ export const asyncThunkIpLookupLocation = createAsyncThunk(
       const { city, region, country, lat, lon } = data as Location;
 
       dispatch(setLocation({ city, region, country, lat, lon }));
+      return { city, region, country, lat, lon };
     } catch (error) {
       return rejectWithValue(error);
     }

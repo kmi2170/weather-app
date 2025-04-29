@@ -13,7 +13,6 @@ const url = "https://ipapi.co/json";
 export const ipLookup = async (): Promise<Location> => {
   try {
     const { data } = await axios.get<IpType>(url);
-    console.log(data);
     const {
       city,
       latitude: lat,
