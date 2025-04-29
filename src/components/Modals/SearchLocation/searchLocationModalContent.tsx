@@ -177,6 +177,7 @@ const SearchLocationModalContent = forwardRef(
 
     return (
       <Box
+        data-testid="search-location-modal"
         sx={(theme) => ({
           ...style,
           border: `2px solid ${theme.palette.primary.light}`,
