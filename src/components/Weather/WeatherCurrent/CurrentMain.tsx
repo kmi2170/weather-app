@@ -98,16 +98,25 @@ const CurrentMain = (props: CurrentMainProps) => {
 
       <LocationWrapper>
         <LocationSubWrapper>
-          <Typography variant="h4" sx={{ color: font_color_date }}>
+          <Typography
+            data-testid="city-name"
+            variant="h4"
+            sx={{ color: font_color_date }}
+          >
             {city}
             {region && <span>,&nbsp;</span>}
           </Typography>
-          <Typography variant="h5" sx={{ color: font_color_date }}>
+          <Typography
+            data-testid="region-name"
+            variant="h5"
+            sx={{ color: font_color_date }}
+          >
             {region}
           </Typography>
         </LocationSubWrapper>
 
         <Typography
+          data-testid="country-name"
           variant="h5"
           sx={{
             mt: "0.5rem",
