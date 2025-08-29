@@ -34,18 +34,28 @@ export const ClearButton = memo(({ onClick }: { onClick: () => void }) => {
   );
 });
 
-export const CloseButton = memo(({ onClick }: { onClick: () => void }) => {
-  return (
-    <Box
-      sx={(theme) => ({
-        position: "absolute",
-        top: 15,
-        right: 20,
-        color: theme.palette.primary.main,
-      })}
-      onClick={onClick}
-    >
-      <CloseIcon />
-    </Box>
-  );
-});
+export const CloseButton = memo(
+  ({
+    onClick,
+    top = 15,
+    right = 20,
+  }: {
+    onClick: () => void;
+    top?: number;
+    right?: number;
+  }) => {
+    return (
+      <Box
+        sx={(theme) => ({
+          position: "absolute",
+          top,
+          right,
+          color: theme.palette.primary.main,
+        })}
+        onClick={onClick}
+      >
+        <CloseIcon />
+      </Box>
+    );
+  }
+);

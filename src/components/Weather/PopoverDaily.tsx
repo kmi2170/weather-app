@@ -10,6 +10,7 @@ import { WeatherDaily } from "../../api/types/weather";
 import Almanac from "./WeatherCurrent/Almanac";
 import Details from "./WeatherCurrent/Details";
 import { Units } from "../../store/initialState";
+import { CloseButton } from "../Modals/SearchLocation/buttons";
 
 const PopoverWrapper = styled("div")(({ theme }) => ({
   border: `2px solid ${theme.palette.primary.light}`,
@@ -71,9 +72,8 @@ const PopoverDaily = ({
     temp,
   } = data;
 
-  const handlePopoverOpen = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  const handlePopoverOpen = (event: React.SyntheticEvent<HTMLElement>) => {
+    event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
 
@@ -88,8 +88,8 @@ const PopoverDaily = ({
       <PopoverWrapper
         aria-owns={open ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
+        onClick={handlePopoverOpen}
+        onTouchStart={handlePopoverOpen}
       >
         {children}
       </PopoverWrapper>
@@ -97,18 +97,15 @@ const PopoverDaily = ({
         id="mouse-over-popover"
         open={open}
         anchorEl={anchorEl}
+        onClose={handlePopoverClose}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
+          vertical: "center",
+          horizontal: "center",
         }}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
-        transitionDuration={{ enter: 1000 }}
-        sx={{ pointerEvents: "none" }}
       >
         <Container
           maxWidth="xs"
@@ -116,7 +113,7 @@ const PopoverDaily = ({
             display: "flex",
             flexDirection: "column",
             gap: "0.75rem",
-            pt: "0.75rem",
+            pt: "1.5em",
             pb: "1rem",
             backgroundColor: "whitesmoke",
           }}
@@ -125,11 +122,13 @@ const PopoverDaily = ({
             {dateWithTZ(data.dt, timezone)}{" "}
             <DayWrapper>{dayWithTZ(data.dt, timezone)}</DayWrapper>
           </Typography>
+          <CloseButton onClick={handlePopoverClose} top={10} right={10} />
           {summary && (
             <Paper elevation={2} sx={{ p: "0.5rem" }}>
               <Typography
                 variant="h6"
                 sx={() => ({
+                  pt: "0.5rem",
                   color: "forestgreen",
                 })}
                 align="center"
