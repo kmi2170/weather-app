@@ -89,7 +89,6 @@ const PopoverDaily = ({
         aria-owns={open ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
         onClick={handlePopoverOpen}
-        onTouchStart={handlePopoverOpen}
       >
         {children}
       </PopoverWrapper>
