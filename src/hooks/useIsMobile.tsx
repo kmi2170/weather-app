@@ -9,7 +9,7 @@ const useIsMobile = ({ breakpoint }: UseMobileParams) => {
 
   function handelResize() {
     const width = window.innerWidth;
-    if (width < breakpoint) {
+    if (width > breakpoint) {
       setIsMobile(false);
     } else {
       setIsMobile(true);

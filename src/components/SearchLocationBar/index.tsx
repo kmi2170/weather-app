@@ -76,7 +76,7 @@ const SearchLocationBar = () => {
           >
             <MGlassIcon />
           </Box>
-          {isMobile && (
+          {!isMobile && (
             <Box
               sx={(theme) => ({
                 position: "absolute",

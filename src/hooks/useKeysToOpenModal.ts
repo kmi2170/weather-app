@@ -13,7 +13,7 @@ const useKeysToOpenModal = ({
     let keyPressed = {};
 
     function handleKeyPress(e: KeyboardEvent) {
-      if (!isMobile) {
+      if (isMobile) {
         return;
       }
 
