@@ -16,7 +16,7 @@ const SearchLocationBar = () => {
 
   const dispatch = useAppDispatch();
 
-  const { isMobile } = useIsMobile({ breakpoint: 600 });
+  const { isMobile } = useIsMobile({ breakpoint: 768 });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
